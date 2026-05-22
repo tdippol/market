@@ -171,13 +171,15 @@
         <class>com.axiante.mui.dbpromo.persistence.entities.MuiMacrospazioMediaEntity</class>
         <class>com.axiante.mui.dbpromo.persistence.entities.MuiEventoRetailEntity</class>
 
-        <!-- rifatturazione -->
-        <class>com.axiante.mui.dbpromo.persistence.entities.PromoFatturazioneDefaultEntity</class>
-        <class>com.axiante.mui.dbpromo.persistence.entities.PromoFatturazioneEntity</class>
-        <class>com.axiante.mui.dbpromo.persistence.entities.PromozioneCostiContattoEntity</class>
-        <class>com.axiante.mui.dbpromo.persistence.entities.TipoPromoRifatturazioneEntity</class>
+        <!-- special promotion -->
+        <class>com.axiante.mui.dbpromo.persistence.entities.MuiSpStatoEntity</class>
+        <class>com.axiante.mui.dbpromo.persistence.entities.MuiSpTestataEntity</class>
+        <class>com.axiante.mui.dbpromo.persistence.entities.MuiSpStatiConsentitiEntity</class>
+        <class>com.axiante.mui.dbpromo.persistence.entities.MuiSpStatiTransizioneEntity</class>
+        <class>com.axiante.mui.dbpromo.persistence.entities.VMuiSpRepartoCompratoreEntity</class>
+        <class>com.axiante.mui.dbpromo.persistence.entities.MuiSpRepartoEntity</class>
+        <class>com.axiante.mui.dbpromo.persistence.entities.MuiSpContribCompratoreEntity</class>
 
-        <class>com.axiante.mui.dbpromo.persistence.entities.PromozioneAttiva</class>
         <shared-cache-mode>NONE</shared-cache-mode>
 <!--
         <properties>

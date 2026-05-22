@@ -151,9 +151,8 @@ defaultGridOptions = {
         Sottoscrizioni_DeleteSottoscrizioneRenderer: Sottoscrizioni_DeleteSottoscrizioneRenderer,
         Default_EditBtnRenderer: Default_EditBtnRenderer,
         EventiRetail_BtnRenderer: EventiRetail_BtnRenderer,
-        SchedaPromoSottoscrizioni_DeleteSottoscrizioneRenderer: SchedaPromoSottoscrizioni_DeleteSottoscrizioneRenderer,
-        RifatturazioneInitialLoadActionsRenderer: RifatturazioneInitialLoadActionsRenderer,
-        MacrospaziRetail_BtnRenderer: MacrospaziRetail_BtnRenderer
+        MacrospaziRetail_BtnRenderer: MacrospaziRetail_BtnRenderer,
+        SchedaPromoSottoscrizioni_DeleteSottoscrizioneRenderer: SchedaPromoSottoscrizioni_DeleteSottoscrizioneRenderer
     },
     onBodyScroll: function (params) {
         if(params.left%10==0){

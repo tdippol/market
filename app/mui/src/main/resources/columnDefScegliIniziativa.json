@@ -4,7 +4,7 @@
       "headerName": "ID",
       "field": "id",
       "width": 100,
-      "hide": false,
+      "hide": true,
       "type": "string",
       "editable": false,
       "checkboxSelection": false,

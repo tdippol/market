@@ -4,14 +4,13 @@ import com.axiante.mui.dbpromo.persistence.dao.CanalePromozioneDAO;
 import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
 import com.axiante.mui.dbpromo.persistence.entities.GruppoPromozioneEntity;
 import com.axiante.mui.dbpromo.persistence.service.CanalePromozioneService;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
+import java.util.Collections;
+import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.List;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @Dependent
 @Transactional
@@ -51,11 +50,6 @@ public class CanalePromozioneServiceImpl extends AbstractDbPromoService<CanalePr
 			return Collections.emptyList();
 		}
 		return dao.findByCodiciCanale(codiciCanale);
-	}
-
-	@Override
-	public List<CanalePromozioneEntity> findByFlagRateSingolaAttivita() {
-		return dao.findByFlagRateSingolaAttivita();
 	}
 
 	@Override

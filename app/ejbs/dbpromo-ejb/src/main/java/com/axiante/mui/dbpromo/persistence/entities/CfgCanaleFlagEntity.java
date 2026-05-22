@@ -1,10 +1,7 @@
 package com.axiante.mui.dbpromo.persistence.entities;
 
 import com.axiante.mui.dbpromo.persistence.Metadata;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -17,7 +14,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -26,15 +25,11 @@ import java.io.Serializable;
 @EntityListeners(DbPromoReadOnlyEntity.class)
 @NoArgsConstructor
 @NamedQueries({
-        @NamedQuery(name = "CfgCanaleFlagEntity.findActiveByChannel",
-                query = "SELECT c FROM CfgCanaleFlagEntity c WHERE c.canale.id = :idCanale and c.flag.attivo = true")
+        @NamedQuery(name = "CfgCanaleFlagEntity.findActiveByChannel", query = "SELECT c FROM CfgCanaleFlagEntity c WHERE c.canale.id = :idCanale and c.flag.attivo = true")
 })
 public class CfgCanaleFlagEntity implements Serializable, DbPromoEntityInterface{
-    private static final long serialVersionUID = -7110931583435884458L;
-
     @Id
-    @SequenceGenerator(schema = Metadata.SCHEMA, allocationSize = 1, name = "MUI_CFG_CANALE_FLAG_ID_GENERATOR",
-            sequenceName = "MUI_CFG_CANALE_FLAG_ID_SEQ")
+    @SequenceGenerator(schema=Metadata.SCHEMA, allocationSize = 1, name = "MUI_CFG_CANALE_FLAG_ID_GENERATOR", sequenceName = "MUI_CFG_CANALE_FLAG_ID_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MUI_CFG_CANALE_FLAG_ID_GENERATOR")
     @Column(unique = true, nullable = false, precision = 16)
     private Long id;
@@ -46,4 +41,5 @@ public class CfgCanaleFlagEntity implements Serializable, DbPromoEntityInterface
     @ManyToOne
     @JoinColumn(name="ID_FLAG", referencedColumnName = "ID")
     private MuiFlagEntity flag;
+
 }

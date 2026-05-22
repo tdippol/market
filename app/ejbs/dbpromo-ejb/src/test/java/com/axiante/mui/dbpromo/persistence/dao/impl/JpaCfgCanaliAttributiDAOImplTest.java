@@ -1,5 +1,7 @@
 package com.axiante.mui.dbpromo.persistence.dao.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import com.axiante.mui.dbpromo.persistence.DbPromo;
 import com.axiante.mui.dbpromo.persistence.DbPromoTestsEntityManagerProducer;
 import com.axiante.mui.dbpromo.persistence.EntityManagerFactoryProducer;
@@ -11,17 +13,14 @@ import com.axiante.mui.dbpromo.persistence.entities.CfgCanaliAttributiEntity;
 import com.axiante.mui.dbpromo.persistence.entities.GruppoPromozioneEntity;
 import com.axiante.mui.dbpromo.persistence.support.builders.CanalePromozioneEntityBuilder;
 import com.axiante.mui.dbpromo.persistence.support.builders.GruppoPromozioneEntityBuilder;
+import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 public class JpaCfgCanaliAttributiDAOImplTest extends AbstractDaoTest {
     @Inject

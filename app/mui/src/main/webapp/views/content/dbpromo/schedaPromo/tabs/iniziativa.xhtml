@@ -115,7 +115,7 @@
                                 <div>
                                     <p:inputText id="descIniziativa" readonly="true" styleClass="updateableContent"
                                                  class="input-field" style="width: 100%;"
-                                                 value="#{templateView.currentView.iniziativaBean.iniziativaFullDescription}" />
+                                                 value="#{templateView.currentView.iniziativaBean.iniziativa != null ? templateView.currentView.iniziativaBean.iniziativa.descrizione : '' }" />
                                 </div>
                             </div>
                             <div class="ui-g-12 ui-md-6 ui-lg-3">

@@ -290,10 +290,4 @@ public class PromoServiceImpl extends AbstractDbPromoService<PromozioneTestataEn
 	public Long copiaPromozione(String source, String codiceUtente, Long idPromozione, Date dataInizio, Date dataFine) {
 		return dao.copiaPromozione(source, codiceUtente, idPromozione, dataInizio, dataFine);
 	}
-
-	@Override
-	public List<PromozioneTestataEntity> findOverlappingPromoWithAttributo(PromozioneTestataEntity promozioneTestataEntity,
-																		   Long idAttributo, String valoreAttributo) {
-		return dao.findOverlappingPromoWithAttributo(promozioneTestataEntity, idAttributo, valoreAttributo);
-	}
 }

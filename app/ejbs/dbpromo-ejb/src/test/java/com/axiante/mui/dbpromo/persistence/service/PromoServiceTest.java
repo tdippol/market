@@ -1,35 +1,5 @@
 package com.axiante.mui.dbpromo.persistence.service;
 
-import com.axiante.mui.dbpromo.persistence.dao.CategoriaDAO;
-import com.axiante.mui.dbpromo.persistence.dao.CompratoreDAO;
-import com.axiante.mui.dbpromo.persistence.dao.FornitoreDAO;
-import com.axiante.mui.dbpromo.persistence.dao.NegozioDAO;
-import com.axiante.mui.dbpromo.persistence.dao.PromozioneTestataDAO;
-import com.axiante.mui.dbpromo.persistence.dao.ResponsabileDAO;
-import com.axiante.mui.dbpromo.persistence.dao.TipoNegozioDAO;
-import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
-import com.axiante.mui.dbpromo.persistence.entities.CfgConfHeaderEntity;
-import com.axiante.mui.dbpromo.persistence.entities.CfgPianificazioneEntity;
-import com.axiante.mui.dbpromo.persistence.entities.CfgSetPianificazioneEntity;
-import com.axiante.mui.dbpromo.persistence.entities.FornitoreEntity;
-import com.axiante.mui.dbpromo.persistence.entities.PromozioneTestataEntity;
-import com.axiante.mui.dbpromo.persistence.service.impl.PromoServiceImpl;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
@@ -47,8 +17,35 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+
+import com.axiante.mui.dbpromo.persistence.dao.CategoriaDAO;
+import com.axiante.mui.dbpromo.persistence.dao.CompratoreDAO;
+import com.axiante.mui.dbpromo.persistence.dao.FornitoreDAO;
+import com.axiante.mui.dbpromo.persistence.dao.NegozioDAO;
+import com.axiante.mui.dbpromo.persistence.dao.PromozioneTestataDAO;
+import com.axiante.mui.dbpromo.persistence.dao.ResponsabileDAO;
+import com.axiante.mui.dbpromo.persistence.dao.TipoNegozioDAO;
+import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
+import com.axiante.mui.dbpromo.persistence.entities.CfgConfHeaderEntity;
+import com.axiante.mui.dbpromo.persistence.entities.CfgPianificazioneEntity;
+import com.axiante.mui.dbpromo.persistence.entities.CfgSetPianificazioneEntity;
+import com.axiante.mui.dbpromo.persistence.entities.PromozioneTestataEntity;
+import com.axiante.mui.dbpromo.persistence.service.impl.PromoServiceImpl;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PromoServiceTest {
@@ -198,35 +195,15 @@ public class PromoServiceTest {
 		ex.expect(NullPointerException.class);
 		service.findAllFornitoriByCodiciCompratore(null);
 	}
-
 	@Test
 	public void testFindAllFornitoriByCodiciCompratoreReturnsEmptyListWhenListIsEmpty() {
 		assertThat(service.findAllFornitoriByCodiciCompratore(Collections.emptyList()).isEmpty(), is(true));
 	}
-
 	@Test
 	public void testFindAllFornitoriByCodiciCompratore(){
 		List<String> codes = Collections.singletonList("code");
 		service.findAllFornitoriByCodiciCompratore(codes);
 		verify(fornitoreDAO).findAllByCodiciCompratore(codes);
-	}
-
-	@Test
-	public void findAllFornitoriAttiviByCodiceCompratore_throwsException_whenCodiceCompratoreIsNull() {
-		ex.expect(NullPointerException.class);
-		service.findAllFornitoriAttiviByCodiceCompratore(null);
-		verifyZeroInteractions(fornitoreDAO);
-	}
-
-	@Test
-	public void findAllFornitoriAttiviByCodiceCompratore() {
-		List<FornitoreEntity> mockedResult = new ArrayList<>();
-		mockedResult.add(mock(FornitoreEntity.class));
-		mockedResult.add(mock(FornitoreEntity.class));
-		when(fornitoreDAO.findAllFornitoriAttiviByCodiceCompratore("S01")).thenReturn(mockedResult);
-		List<FornitoreEntity> result = service.findAllFornitoriAttiviByCodiceCompratore("S01");
-		assertEquals(2, result.size());
-		verify(fornitoreDAO, times(1)).findAllFornitoriAttiviByCodiceCompratore("S01");
 	}
 
 	@Test

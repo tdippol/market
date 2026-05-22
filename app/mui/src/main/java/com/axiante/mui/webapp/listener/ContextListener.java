@@ -5,15 +5,14 @@ import com.axiante.mui.dbpromo.persistence.service.UuiUtilityService;
 import com.axiante.mui.persistence.entity.ApplicationPropertiesEntity;
 import com.axiante.mui.persistence.service.ApplicationPropertiesService;
 import com.axiante.mui.persistence.service.MuiService;
-import lombok.extern.slf4j.Slf4j;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicBoolean;
+import lombok.extern.slf4j.Slf4j;
 
 @WebListener
 @Slf4j
@@ -22,7 +21,6 @@ public class ContextListener implements ServletContextListener {
 
 	@Inject
 	ApplicationProperties props;
-
 	@Inject
 	ApplicationPropertiesService appService;
 

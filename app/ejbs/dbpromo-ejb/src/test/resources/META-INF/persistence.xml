@@ -172,13 +172,6 @@
 		<class>com.axiante.mui.dbpromo.persistence.entities.MuiMacrospazioMediaEntity</class>
 		<class>com.axiante.mui.dbpromo.persistence.entities.MuiEventoRetailEntity</class>
 
-		<!-- rifatturazione -->
-		<class>com.axiante.mui.dbpromo.persistence.entities.PromoFatturazioneDefaultEntity</class>
-		<class>com.axiante.mui.dbpromo.persistence.entities.PromoFatturazioneEntity</class>
-		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneCostiContattoEntity</class>
-		<class>com.axiante.mui.dbpromo.persistence.entities.TipoPromoRifatturazioneEntity</class>
-		
-		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneAttiva</class>
 		<properties>
 			<!-- h2 -->
 			<!-- posso ricreare lo schema senza reinizializzare il db, 50% + veloce -->

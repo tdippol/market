@@ -4,12 +4,11 @@ import com.axiante.mui.dbpromo.persistence.entities.IniziativaEntity;
 import com.axiante.mui.dbpromo.persistence.entities.IniziativaStatoEntity;
 import com.axiante.mui.dbpromo.persistence.service.IniziativeService;
 import com.axiante.mui.webapp.views.FacesContextAware;
+import java.util.Map;
+import javax.faces.event.ActionEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.faces.event.ActionEvent;
-import java.util.Map;
 
 @Slf4j
 public class IniziativaBackingBean implements FacesContextAware {
@@ -93,9 +92,5 @@ public class IniziativaBackingBean implements FacesContextAware {
         } else {
             dlgRemoveRifMessage = "Errore di caricamento";
         }
-    }
-
-    public String getIniziativaFullDescription() {
-        return iniziativa != null ? String.format("%d - %s", iniziativa.getId(), iniziativa.getDescrizione()) : "";
     }
 }

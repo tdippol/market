@@ -1,10 +1,7 @@
 package com.axiante.mui.dbpromo.persistence.entities;
 
 import com.axiante.mui.dbpromo.persistence.Metadata;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -19,7 +16,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -32,13 +31,11 @@ import java.io.Serializable;
 )
 @NamedQueries({
         @NamedQuery(name="CfgCanaliAttributiEntity.getListaByCanaleAndAttributo", query = "select c.lista from CfgCanaliAttributiEntity c where c.canale.id = :idCanale and c.attributo.id = :idAttributo"),
-        @NamedQuery(name = "CfgCanaliAttributiEntity.getAllByCanale", query = "select c from CfgCanaliAttributiEntity c where c.canale.id = :idCanale")
+        @NamedQuery(name="CfgCanaliAttributiEntity.getAllByCanale", query = "select c from CfgCanaliAttributiEntity c where c.canale.id = :idCanale")
 })
 @EntityListeners(DbPromoReadOnlyEntity.class)
 @NoArgsConstructor
 public class CfgCanaliAttributiEntity implements Serializable, DbPromoEntityInterface {
-    private static final long serialVersionUID = 3092311768476918507L;
-
     @Id
     @SequenceGenerator(schema=Metadata.SCHEMA, allocationSize = 1, name = "MUI_CFG_CANALE_ATTRIBUTI_ID_GENERATOR", sequenceName = "MUI_CFG_CANALE_ATTR_ID_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MUI_CFG_CANALE_ATTRIBUTI_ID_GENERATOR")
@@ -53,7 +50,7 @@ public class CfgCanaliAttributiEntity implements Serializable, DbPromoEntityInte
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ATTRIBUTO", nullable = false)
     AttributiPromoEntity attributo;
-
+    
     @Column(name="VALORE_DEFAULT", length = 50)
     String valoreDefault;
 

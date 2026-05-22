@@ -26,7 +26,6 @@ import com.axiante.mui.dbpromo.persistence.entities.PromozionePianificazioneEnti
 import com.axiante.mui.dbpromo.persistence.entities.PromozioneStatoEntity;
 import com.axiante.mui.dbpromo.persistence.entities.PromozioneTestataEntity;
 import com.axiante.mui.dbpromo.persistence.entities.StatoPromozioneEntity;
-import com.axiante.mui.dbpromo.persistence.service.CanalePromozioneService;
 import com.axiante.mui.dbpromo.persistence.service.ConfigurazioneMeccanicheCanaleService;
 import com.axiante.mui.dbpromo.persistence.service.IniziativeService;
 import com.axiante.mui.dbpromo.persistence.service.MuiPlanoDbPromoService;
@@ -35,7 +34,6 @@ import com.axiante.mui.dbpromo.persistence.service.PromoPubblicazioneTestataServ
 import com.axiante.mui.dbpromo.persistence.service.PromoRepartoMarchioPrivatoService;
 import com.axiante.mui.dbpromo.persistence.service.PromoService;
 import com.axiante.mui.dbpromo.persistence.service.PromoStatiTransizioneService;
-import com.axiante.mui.dbpromo.persistence.service.PromozioneCostiContattoService;
 import com.axiante.mui.dbpromo.persistence.service.PromozioneMarchioPrivatoService;
 import com.axiante.mui.dbpromo.persistence.service.PromozioneNegozioService;
 import com.axiante.mui.dbpromo.persistence.service.RepartoService;
@@ -50,7 +48,6 @@ import com.axiante.mui.webapp.utils.RoleMenuUtil;
 import com.axiante.mui.webapp.views.AbstractDBPromoNavigation;
 import com.axiante.mui.webapp.views.MuiViewModel;
 import com.axiante.mui.webapp.views.content.dbpromo.data.ClonaPromozioneBean;
-import com.axiante.mui.webapp.views.content.dbpromo.data.ContattiBackingBean;
 import com.axiante.mui.webapp.views.content.dbpromo.data.IniziativaBackingBean;
 import com.axiante.mui.webapp.views.content.dbpromo.data.MeccanicheBackingBean;
 import com.axiante.mui.webapp.views.content.dbpromo.data.ModificaTestataBackingBean;
@@ -97,6 +94,7 @@ import java.util.stream.Collectors;
 @Dependent
 @Slf4j
 public class SchedaPromoView extends AbstractDBPromoNavigation {
+
     private static final long serialVersionUID = -4985183993092027769L;
 
     @Inject
@@ -129,16 +127,10 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
     @Inject
     private SottoscrizioneService sottoscrizioneService;
 
-    @Inject
-    private PromozioneCostiContattoService promoCostiContattoService;
-
-    @Inject
-    private CanalePromozioneService canalePromozioneService;
-
     private final UserFilterUtils userFilterUtils = new UserFilterUtils();
 
-    @Getter
     @Setter
+    @Getter
     PromozioneTestataEntity promotionSelected;
 
     @Getter
@@ -155,12 +147,12 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
     @Getter
     Object idPromozioneCorrente;
 
-    @Getter
     @Setter
+    @Getter
     Object idStatoTransizioneCorrente;
 
-    @Getter
     @Setter
+    @Getter
     List<PromoStatiTransizioneEntity> statiTransizione;
 
     @Getter
@@ -186,10 +178,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
 
     @Getter
     SottoscrizioniBackingBean sottoscrizioniBean;
-
-    @Inject
-    @Getter
-    ContattiBackingBean contattiBean;
 
     @Getter
     RepartiBackingBean reparti;
@@ -273,9 +261,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
     private boolean tabSottoscrizioniRendered = false;
 
     @Getter
-    private boolean tabContattiRendered = false;
-
-    @Getter
     private boolean btnAggiungiTipoCassaActive = false;
 
     @Getter
@@ -351,7 +336,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
 
     @Inject
     Instance<PromozioneMarchioPrivatoService> promozioneMarchioPrivatoServiceInstance;
-
     @Inject
     Instance<PromoRepartoMarchioPrivatoService> promoRepartoMarchioPrivatoServiceInstance;
 
@@ -902,7 +886,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
                 this.tipoCassa.setPromozioneCorrente(promozione);
                 this.reparti.setPromozioneCorrente(promozione);
                 this.sottoscrizioniBean.setPromozioneCorrente(promozione);
-                this.contattiBean.setPromozioneCorrente(promozione);
 
                 MuiPromoDbPromoEntity promoRiferimento = null;
                 final String codicePromoRiferimento = promozione.getCodicePromoRiferimento();
@@ -930,7 +913,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
                 this.reparti.setPromozioneCorrente(null);
                 this.promoRifBean.setPromoRiferimento(null);
                 this.sottoscrizioniBean.setPromozioneCorrente(null);
-                this.contattiBean.setPromozioneCorrente(null);
             }
             updateMarchioPrivato(this.promotionSelected);
             updateEditTestata(this.promotionSelected);
@@ -1766,9 +1748,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
         if (tabSottoscrizioniRendered) {
             renderedTabs.add(TabEnum.TAB_SOTTOSCRIZIONI);
         }
-        if (tabContattiRendered) {
-            renderedTabs.add(TabEnum.TAB_CONTATTI);
-        }
         renderedTabItems =
                 renderedTabs.stream()
                         .map(this::findByName)
@@ -2092,7 +2071,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
                                     canaleConsegnaRendered);
                     tabSottoscrizioniRendered = "CONFIGURATORE".equalsIgnoreCase(contesto)
                             || "'CONFIGURATORE'".equalsIgnoreCase(contesto);
-                    tabContattiRendered = handleTabContattiRendered();
                 }
             } catch (Exception ex) {
                 log.error("Error applying rules", ex);
@@ -2128,7 +2106,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
         btnEliminaIniziativaActive = false;
         tabSottoscrizioniRendered = false;
         btnClonaPromoRendered = handleButtonClonaPromo();
-        tabContattiRendered = false;
     }
 
     private boolean handleButtonClonaPromo() {
@@ -2159,7 +2136,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
         tabs.add(new TabItem("Controlli", "tabs/controlliPromo.xhtml", TabEnum.TAB_CONTROLLI));
         tabs.add(new TabItem("Marchio Privato", "tabs/marchioPrivato.xhtml", TabEnum.TAB_MARCHIO_PRIVATO));
         tabs.add(new TabItem("Sottoscrizioni", "tabs/sottoscrizioniPromo.xhtml", TabEnum.TAB_SOTTOSCRIZIONI));
-        tabs.add(new TabItem("Contatti", "tabs/contattiPromo.xhtml", TabEnum.TAB_CONTATTI));
     }
 
     private TabItem findByName(TabEnum name) {
@@ -2336,53 +2312,6 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
         return sb.toString();
     }
 
-    public void validateAttributoPreUpdate() {
-        String handleSponsorMessage = null;
-        boolean showConfirmDialog = false;
-        boolean showError = false;
-        try {
-            Map<String, String> params = getRequestParameterMap();
-            Long idAttributo = Long.parseLong(params.get("idAttributo"));
-            String nomeAttributo = params.get("nomeAttributo");
-            String valoreAttributo = params.get("valoreAttributo");
-            if ("NUMERO_SPONSOR".equalsIgnoreCase(nomeAttributo)) {
-                if (valoreAttributo != null && valoreAttributo.trim().equals("1")) {
-                    handleSponsorMessage = "Il valore scelto prevede l'assenza del castelletto";
-                }
-                String overlappedPromo = validateOverlappedPromo(idAttributo, valoreAttributo);
-                if (overlappedPromo != null) {
-                    if (handleSponsorMessage != null) {
-                        handleSponsorMessage += "<br/>";
-                    } else {
-                        handleSponsorMessage = "";
-                    }
-                    handleSponsorMessage += String.format("Il valore scelto viene usato anche nelle seguenti promozioni:<br/>%s",
-                            overlappedPromo);
-                }
-                if (handleSponsorMessage != null) {
-                    handleSponsorMessage += "<br/><br/>Confermi la modifica?";
-                    showConfirmDialog = true;
-                }
-            }
-        } catch (Exception ex) {
-            log.error("Errore durante la validazione dell'attributo", ex);
-            showError = true;
-        }
-        getAjax().addCallbackParam("handleSponsorMessage", handleSponsorMessage);
-        getAjax().addCallbackParam("showConfirmDialog", showConfirmDialog);
-        getAjax().addCallbackParam("showError", showError);
-    }
-
-    private String validateOverlappedPromo(Long idAttributo, String valoreAttributo) {
-        List<PromozioneTestataEntity> overlapped = promoService.findOverlappingPromoWithAttributo(promotionSelected,
-                idAttributo, valoreAttributo);
-        return overlapped == null || overlapped.isEmpty()
-                ? null
-                : overlapped.stream()
-                .map(PromozioneTestataEntity::getDescrizioneEstesa)
-                .collect(Collectors.joining("<br/>"));
-    }
-
     private PromozioneTestataEntity getTestataById(@NonNull Long id) {
         return promoService.findById(id);
     }
@@ -2392,17 +2321,5 @@ public class SchedaPromoView extends AbstractDBPromoNavigation {
                 .filter(st -> st.getDataFineStato() == null)
                 .findFirst()
                 .orElse(null);
-    }
-
-    /**
-     * Tab contatti visibile solo se la promozione ha il canale 'Buoni Brand' o 'Buoni Prodotto' o 'Buoni Prodotto Omaggio'
-     * (rispettivamente codice canale 43, 14 e 44)
-     *
-     * @return true se promozione nei canali specificati, false altrimenti
-     */
-    private boolean handleTabContattiRendered() {
-        return promotionSelected != null
-                && promotionSelected.getMuiCanalePromozione() != null
-                && canalePromozioneService.countByIdWithTipologiaInitialLoad(promotionSelected.getMuiCanalePromozione().getId()) > 0;
     }
 }

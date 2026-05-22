@@ -1,28 +1,5 @@
 package com.axiante.mui.webapp.webservice.util;
 
-import com.axiante.mui.common.promo.grid.DBPromoCellTypeEnum;
-import com.axiante.mui.dbpromo.persistence.entities.AttributiPromoEntity;
-import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
-import com.axiante.mui.dbpromo.persistence.entities.PromozioneAttributiEntity;
-import com.axiante.mui.dbpromo.persistence.entities.PromozioneTestataEntity;
-import com.axiante.mui.dbpromo.persistence.service.CfgCanaliAttributiService;
-import com.axiante.mui.dbpromo.persistence.service.PromozioneAttributiService;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.enterprise.inject.Instance;
-import java.util.Collections;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static com.jayway.jsonassert.impl.matcher.IsCollectionWithSize.hasSize;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.isJson;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
@@ -38,6 +15,28 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+
+import com.axiante.mui.common.promo.grid.DBPromoCellTypeEnum;
+import com.axiante.mui.dbpromo.persistence.entities.AttributiPromoEntity;
+import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
+import com.axiante.mui.dbpromo.persistence.entities.PromozioneAttributiEntity;
+import com.axiante.mui.dbpromo.persistence.entities.PromozioneTestataEntity;
+import com.axiante.mui.dbpromo.persistence.service.CfgCanaliAttributiService;
+import com.axiante.mui.dbpromo.persistence.service.PromozioneAttributiService;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.enterprise.inject.Instance;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PromozioneAttributiUtilTest {

@@ -1,19 +1,5 @@
 package com.axiante.mui.common.utility;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -27,6 +13,17 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import org.hamcrest.CoreMatchers;
+import org.junit.Test;
+
 public class DateTimeUtilsTest {
 	// Rappresenta la data 10/02/2021 in formato stringa Excel
 	private static final String EXCEL_DATE_AS_STRING = "44237.0";
@@ -34,14 +31,31 @@ public class DateTimeUtilsTest {
 
 	DateTimeUtils dateTimeUtils = new DateTimeUtils();
 
-	@Rule
-	public ExpectedException ex = ExpectedException.none();
-
+//	@Test
+//	public void multipleConversionsReturnCorrectValue() {
+//		String excelValue = "44110";
+//
+//		Date twoRounds = dateTimeUtils.excelToDate(dateTimeUtils.toExcelDate(dateTimeUtils.excelToDate(excelValue)));
+//		Date oneRound = dateTimeUtils.excelToDate(excelValue);
+//
+//		assertEquals(twoRounds, oneRound);
+//	}
+//
+//	@Test
+//	public void testConversionToNumberWorks() {
+//		String date = "06/10/2020";
+//		String excelValue = "44110";
+//
+//		assertEquals(dateTimeUtils.toExcelDate(dateTimeUtils.toDate(date)), excelValue);
+//	}
+//
 	@Test
 	public void testTodayAt() {
+
 		ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
 		Date ora = new Date(System.currentTimeMillis());
 		String time = String.format("%02d:%02d", now.getHour(), now.getMinute());
+
 		LocalDateTime result = null;
 		try {
 			result = dateTimeUtils.todayAt(time);
@@ -51,6 +65,7 @@ public class DateTimeUtilsTest {
 		assertNotNull(result);
 		assertThat(result.getHour(), CoreMatchers.equalTo(now.getHour()));
 		assertThat(result.getMinute(), CoreMatchers.equalTo(now.getMinute()));
+
 		SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
 		time = fmt.format(ora);
 		try {
@@ -131,6 +146,8 @@ public class DateTimeUtilsTest {
 
 	@Test(expected = NullPointerException.class)
 	public void calculateExtendedDescription_givenNullCodicePromozione_shouldThrowException() {
+//		final Date startDate = new GregorianCalendar(2021, Calendar.FEBRUARY, 1).getTime();
+//		final Date endDate = new GregorianCalendar(2021, Calendar.FEBRUARY, 15).getTime();
 		dateTimeUtils.calculateExtendedDescription(null, new Date(), new Date(), "MY DESC");
 	}
 
@@ -398,32 +415,5 @@ public class DateTimeUtilsTest {
 	public void toTime_givenValidTimeAndNotLenient_shouldReturnDateAtEpoch() {
 		assertEquals(new GregorianCalendar(1970, Calendar.JANUARY, 1, 10, 10).getTime(),
 				DateTimeUtils.toTime("10:10", false));
-	}
-
-	@Test
-	public void daysBetween_givenNullStartDate_shouldThrowException() {
-		ex.expect(NullPointerException.class);
-		dateTimeUtils.daysBetween(null, new Date());
-	}
-
-	@Test
-	public void daysBetween_givenNullEndDate_shouldThrowException() {
-		ex.expect(NullPointerException.class);
-		dateTimeUtils.daysBetween(new Date(), null);
-	}
-
-	@Test
-	public void daysBetween_givenStartDateAfterEndDate_shouldThrowException() {
-		ex.expect(RuntimeException.class);
-		Date startDate = new GregorianCalendar(2026, Calendar.APRIL, 1).getTime();
-		Date endDate = new GregorianCalendar(2026, Calendar.FEBRUARY, 1).getTime();
-		dateTimeUtils.daysBetween(startDate, endDate);
-	}
-
-	@Test
-	public void daysBetween() {
-		Date startDate = new GregorianCalendar(2026, Calendar.JANUARY, 1).getTime();
-		Date endDate = new GregorianCalendar(2026, Calendar.FEBRUARY, 1).getTime();
-		assertEquals(31, (long) dateTimeUtils.daysBetween(startDate, endDate));
 	}
 }

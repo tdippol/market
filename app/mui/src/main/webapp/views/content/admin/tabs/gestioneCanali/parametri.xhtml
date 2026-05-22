@@ -184,7 +184,6 @@
                                 </p:panel>
                             </div>
                         </div>
-
                         <div class="ui-g-12" style="padding: 10px;">
                             <div class="ui-g-4 ui-md-4 ui-lg-4">
                                 <p:panel header="Consenti duplicazione" styleClass="updateableCanale">
@@ -254,7 +253,6 @@
                                 </p:panel>
                             </div>
                         </div>
-
                         <div class="ui-g-12" style="padding: 10px;">
                             <div class="ui-g-1 ui-md-1 ui-lg-2">
                                 <p:panel header="Calcola Reparto" styleClass="updateableCanale">
@@ -315,50 +313,6 @@
                                                            inputStyle="width: 50% !important; max-height: 30px !important; padding-top: 0; margin-left: 10px">
                                                 <p:ajax />
                                             </p:inputNumber>
-                                        </div>
-                                    </div>
-                                </p:panel>
-                            </div>
-                        </div>
-
-                        <div class="ui-g-12" style="padding: 10px;">
-                            <div class="ui-g-6 ui-md-4 ui-lg-6">
-                                <p:panel header="Rifatorizzazione a fornitore" styleClass="updateableCanale">
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <p:selectBooleanCheckbox id="flRateCifraFissa"
-                                                                     value="#{templateView.currentView.flRateCifraFissa}"
-                                                                     itemLabel="Rate Cifra Fissa">
-                                                <p:ajax event="valueChange"/>
-                                            </p:selectBooleanCheckbox>
-                                        </div>
-                                        <div class="col-3">
-                                            <p:selectBooleanCheckbox id="flRateCostoContatto"
-                                                                     value="#{templateView.currentView.flRateCostoContatto}"
-                                                                     itemLabel="Rate Costo Contatto">
-                                                <p:ajax event="valueChange"/>
-                                            </p:selectBooleanCheckbox>
-                                        </div>
-                                        <div class="col-3">
-                                            <p:selectBooleanCheckbox id="flRateSingolaAttivita"
-                                                                     value="#{templateView.currentView.flRateSingolaAttivita}"
-                                                                     itemLabel="Rate Singola Attivita">
-                                                <p:ajax event="valueChange"/>
-                                            </p:selectBooleanCheckbox>
-                                        </div>
-                                        <div class="col-3">
-                                            <div>
-                                                <p:outputLabel for="valoreCostoContatto" value="Valore Costo Contatto"
-                                                               class="input-field-label"/>
-                                            </div>
-                                            <div>
-                                                <p:inputText value="#{templateView.currentView.valoreCostoContatto}"
-                                                             id="valoreCostoContatto"
-                                                             styleClass="updateableCanale"
-                                                             style="width: 100% !important">
-                                                    <p:ajax/>
-                                                </p:inputText>
-                                            </div>
                                         </div>
                                     </div>
                                 </p:panel>

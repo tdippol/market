@@ -1,0 +1,46 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Pubblica",
+      "field": "selected",
+      "type": "string",
+      "editable": true,
+      "width": 110
+    },
+    {
+      "headerName": "Codice Compratore",
+      "field": "codiceCompratore",
+      "type": "string",
+      "editable": false,
+      "width": 180
+    },
+    {
+      "headerName": "Descrizione Compratore",
+      "field": "descrizioneCompratore",
+      "type": "string",
+      "editable": false,
+      "width": 260
+    },
+    {
+      "headerName": "Esito",
+      "field": "esito",
+      "type": "string",
+      "editable": false,
+      "width": 180
+    },
+    {
+      "headerName": "Data Inserimento",
+      "field": "dataInserimento",
+      "type": "date",
+      "editable": false,
+      "width": 180
+    },
+    {
+      "headerName": "Utente",
+      "field": "utente",
+      "type": "string",
+      "editable": false,
+      "width": 180
+    }
+  ]
+}

@@ -1,0 +1,407 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <div class="row">
+        <div class="col-12">
+
+            <div id="k_grid_portletValidazioneArticoloVenduto" class="k-portlet">
+
+                <p:panel id="expandable_db_grid_validazioneArticoloVenduto"
+                         toggleable="true"
+                         toggleSpeed="500"
+                         closeSpeed="500"
+                         styleClass="pnlGrid_Header updateableContent">
+
+                    <f:facet name="header">
+                        <p:outputLabel value="Validazione Articolo Venduto"/>
+                    </f:facet>
+
+                    <h:panelGroup layout="block"
+                                  style="height: 60vh; width: 100%;"
+                                  class="ag-theme-balham grid_validazioneArticoloVenduto"
+                                  pt:gridid="db_grid_validazioneArticoloVenduto"/>
+
+                    <f:facet name="actions">
+
+                        <p:inputText
+                                id="filterGrid"
+                                autocomplete="off"
+                                placeholder="Filtra..."
+                                styleClass="pnlGrid_Header filterInputText"
+                                onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_validazioneArticoloVenduto', this.value)"/>
+
+                        <p:commandLink
+                                title="Espandi Griglia"
+                                styleClass="pnlGrid_Header expandButton"
+                                onclick="expandGrid('db_grid_validazioneArticoloVenduto')"
+                                onerror="redirectToExpiredPage()"/>
+
+                        <p:commandLink
+                                title="Esporta Excel"
+                                styleClass="pnlGrid_Header exportButton"
+                                onclick="onBtExport('db_grid_validazioneArticoloVenduto', 'Validazione Articolo Venduto')"
+                                onerror="redirectToExpiredPage()"/>
+
+                    </f:facet>
+
+                    <script type="text/javascript">
+                        var spPianificazioneApi = null;
+                        var spPianificazioneRenderersInstalled = false;
+
+                        function getSpPianificazioneCellValue(row, field) {
+                            if (!row || row[field] === null || row[field] === undefined) {
+                                return "";
+                            }
+
+                            if (typeof row[field] === "object" &amp;&amp; row[field].value !== undefined) {
+                                return row[field].value;
+                            }
+
+                            return row[field];
+                        }
+
+                        function setSpPianificazioneCellValue(row, field, value) {
+                            if (!row) {
+                                return;
+                            }
+
+                            if (row[field] !== undefined &amp;&amp; typeof row[field] === "object") {
+                                row[field].value = value;
+                            } else {
+                                row[field] = value;
+                            }
+                        }
+
+                        function normalizeSpPianificazioneNumberForSave(value) {
+                            if (value === null || value === undefined || String(value).trim() === "") {
+                                return null;
+                            }
+
+                            return Number(String(value).replace(",", "."));
+                        }
+
+
+                        function isSpPianificazionePercentageInvalid(value) {
+                            if (value === null || value === undefined || String(value).trim() === "") {
+                                return false;
+                            }
+
+                            var normalized = String(value).replace(",", ".");
+                            var numberValue = Number(normalized);
+
+                            if (isNaN(numberValue)) {
+                                return true;
+                            }
+
+                            if (numberValue &lt; 0 || numberValue &gt; 100) {
+                                return true;
+                            }
+
+                            var decimalPart = normalized.indexOf(".") &gt; -1 ? normalized.split(".")[1] : "";
+                            return decimalPart.length &gt; 2;
+                        }
+
+
+                        function cleanSpPianificazioneRowData(row) {
+                            var cleaned = {};
+
+                            for (var key in row) {
+                                if (row[key] &amp;&amp; typeof row[key] === "object" &amp;&amp; row[key].value !== undefined) {
+                                    cleaned[key] = row[key].value;
+                                } else {
+                                    cleaned[key] = row[key];
+                                }
+                            }
+
+                            delete cleaned.fornitore;
+                            delete cleaned.compratore;
+                            delete cleaned.articolo;
+
+                            delete cleaned.descrizioneFornitore;
+                            delete cleaned.descrizioneCompratore;
+                            delete cleaned.descrizioneItem;
+                            delete cleaned.idCompratore;
+
+                            delete cleaned.premioCf;
+                            delete cleaned.premioPerc;
+                            delete cleaned.tipoBaseImp;
+                            delete cleaned.sogliaMax;
+                            delete cleaned.modLiq;
+
+                            delete cleaned.baseImponibileTotale;
+                            delete cleaned.baseImponibileNoVendPromo;
+
+                            delete cleaned.updateMessage;
+                            delete cleaned.errorMessage;
+
+                            delete cleaned.editable;
+
+                            cleaned.esc = normalizeSpPianificazioneNumberForSave(cleaned.esc);
+                            cleaned.escPezziKg = normalizeSpPianificazioneNumberForSave(cleaned.escPezziKg);
+                            cleaned.premioPercU = normalizeSpPianificazioneNumberForSave(cleaned.premioPercU);
+                            cleaned.premioFinale = normalizeSpPianificazioneNumberForSave(cleaned.premioFinale);
+
+                            return cleaned;
+                        }
+
+
+
+                        function showSpPianificazioneUpdateMessage(message) {
+                            var growlWidget = null;
+
+                            if (typeof PF === "function") {
+                                growlWidget = PF('growl');
+
+                                if (!growlWidget) {
+                                    growlWidget = PF('widget_formGrowl_growl');
+                                }
+                            }
+
+                            if (!growlWidget &amp;&amp; typeof PrimeFaces !== "undefined" &amp;&amp; PrimeFaces.widgets) {
+                                for (var widgetName in PrimeFaces.widgets) {
+                                    if (PrimeFaces.widgets[widgetName]
+                                            &amp;&amp; typeof PrimeFaces.widgets[widgetName].renderMessage === "function") {
+                                        growlWidget = PrimeFaces.widgets[widgetName];
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (growlWidget) {
+                                growlWidget.renderMessage({
+                                    severity: 'info',
+                                    summary: 'Pianificazione',
+                                    detail: message
+                                });
+                            } else {
+                                console.log("Growl non trovato - Pianificazione - " + message);
+                            }
+                        }
+
+                       function saveSpPianificazioneRow(row) {
+                            var cleaned = cleanSpPianificazioneRowData(row);
+
+                            console.log("SAVE PIANIFICAZIONE SP", cleaned);
+
+                            return fetch(contextPath + '/resources/specialpromotion/pianificazione/save' + addUrlParamContesto(#{templateView.currentView.contesto}), {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(cleaned)
+                            }).then(function (response) {
+                                if (!response.ok) {
+                                    throw new Error("HTTP " + response.status);
+                                }
+
+                                return response.json();
+                            }).then(function (json) {
+                                showSpPianificazioneUpdateMessage("Aggiornamento effettuato");
+                                console.log("Pianificazione SP salvata correttamente");
+                            }).catch(function (error) {
+                                showSpPianificazioneUpdateMessage("Errore durante l'aggiornamento");
+                                console.log("Errore salvataggio pianificazione Special Promotion", error);
+                            });
+                       }
+
+                      function spPianificazioneVendutoUpdateCell(rowIndex, field, value) {
+                        if (!spPianificazioneApi) {
+                            return;
+                        }
+
+                        var rowNode = spPianificazioneApi.getDisplayedRowAtIndex(rowIndex);
+
+                        if (!rowNode || !rowNode.data) {
+                            return;
+                        }
+
+                        if (rowNode.data.editable === false) {
+                            return;
+                        }
+
+                        if (field === "premioPercU" &amp;&amp; isSpPianificazionePercentageInvalid(value)) {
+                            showSpPianificazioneUpdateMessage("Il % supera il limite di 100%");
+                            spPianificazioneApi.refreshCells({
+                                rowNodes: [rowNode],
+                                force: true
+                            });
+                            return;
+                        }
+
+                        setSpPianificazioneCellValue(rowNode.data, field, value);
+                        saveSpPianificazioneRow(rowNode.data);
+
+                        spPianificazioneApi.refreshCells({
+                            rowNodes: [rowNode],
+                            force: true
+                        });
+                      }
+
+                        function spPianificazioneFlagRenderer(params, field) {
+
+                        if (params.node &amp;&amp; params.node.group) {
+                            return "";
+                        }
+                            var value = getSpPianificazioneCellValue(params.data, field);
+
+                            if (value === null || value === undefined) {
+                                value = "";
+                            }
+
+                            if (params.data &amp;&amp; params.data.editable === false) {
+                                if (String(value) === "1") {
+                                    return "SI";
+                                }
+                                if (String(value) === "0") {
+                                    return "NO";
+                                }
+                                return "";
+                            }
+
+                            return '&lt;select style="width:100%; height:24px;" '
+                                    + 'onchange="spPianificazioneVendutoUpdateCell(' + params.node.rowIndex + ', \'' + field + '\', this.value)"&gt;'
+                                    + '&lt;option value="" ' + (value === "" ? 'selected="selected"' : '') + '&gt;&lt;/option&gt;'
+                                    + '&lt;option value="0" ' + (String(value) === '0' ? 'selected="selected"' : '') + '&gt;NO&lt;/option&gt;'
+                                    + '&lt;option value="1" ' + (String(value) === '1' ? 'selected="selected"' : '') + '&gt;SI&lt;/option&gt;'
+                                    + '&lt;/select&gt;';
+                        }
+
+                        function spPianificazionePercentualeRenderer(params, field) {
+
+                            if (params.node &amp;&amp; params.node.group) {
+                                return "";
+                            }
+                            var value = getSpPianificazioneCellValue(params.data, field);
+
+                            if (params.data &amp;&amp; params.data.editable === false) {
+                                return value;
+                            }
+
+                            return '&lt;input type="text" value="' + value + '" style="width:100%; height:24px;" '
+                                    + 'onchange="spPianificazioneVendutoUpdateCell(' + params.node.rowIndex + ', \'' + field + '\', this.value)" /&gt;';
+                        }
+
+                        function spPianificazionePremioFinaleRenderer(params) {
+                            if (params.node &amp;&amp; params.node.group) {
+                                if (params.node.field === "fornitore") {
+                                    return spPianificazioneSumPremioFinaleTotali(params.node).toFixed(2);
+                                }
+
+                                return "";
+                            }
+
+                            return getSpPianificazioneCellValue(params.data, "premioFinale");
+                        }
+                            function spPianificazioneSumPremioFinaleTotali(node) {
+                            var totale = 0;
+                            var children = node.childrenAfterFilter || node.childrenAfterGroup || [];
+
+                            for (var i = 0; i &lt; children.length; i++) {
+                                if (children[i].group) {
+                                    totale += spPianificazioneSumPremioFinaleTotali(children[i]);
+                                } else if (getSpPianificazioneCellValue(children[i].data, "articolo") === "TOTALE FORNITORE") {
+                                    var value = getSpPianificazioneCellValue(children[i].data, "premioFinale");
+                                    var numberValue = Number(String(value).replace(",", "."));
+
+                                    if (!isNaN(numberValue)) {
+                                        totale += numberValue;
+                                    }
+                                }
+                            }
+
+                            return totale;
+                        }
+
+                        function installPianificazioneRenderers(api) {
+                            if (!api || spPianificazioneRenderersInstalled) {
+                                return;
+                            }
+
+                            var columnDefs = api.getColumnDefs();
+
+                            if (!columnDefs) {
+                                return;
+                            }
+
+                            columnDefs.forEach(function (colDef) {
+                                if (colDef.field === "esc") {
+                                    colDef.editable = false;
+                                    colDef.cellRenderer = function (params) {
+                                        return spPianificazioneFlagRenderer(params, "esc");
+                                    };
+                                } else if (colDef.field === "escPezziKg") {
+                                    colDef.editable = false;
+                                    colDef.cellRenderer = function (params) {
+                                        return spPianificazioneFlagRenderer(params, "escPezziKg");
+                                    };
+                                } else if (colDef.field === "premioPercU") {
+                                    colDef.editable = false;
+                                    colDef.cellRenderer = function (params) {
+                                        return spPianificazionePercentualeRenderer(params, "premioPercU");
+                                    };
+                                } else if (colDef.field === "premioFinale") {
+                                    colDef.cellRenderer = spPianificazionePremioFinaleRenderer;
+                                }
+                            });
+
+                            spPianificazioneRenderersInstalled = true;
+                            api.setColumnDefs(columnDefs);
+                        }
+
+                        var gridParamsValidazioneArticoloVenduto = {
+                            gridCode: 'db_grid_validazioneArticoloVenduto',
+                            gridTitle: 'Validazione Articolo Venduto',
+                            url_columnDefs: contextPath + '/resources/specialpromotion/pianificazione/columnDef/v' + addUrlParamContesto(#{templateView.currentView.contesto}),
+                            url_rowData: contextPath + '/resources/specialpromotion/pianificazione/rowData/v/#{templateView.currentView.idPromozioneCorrente}',
+                            url_customSort: contextPath + '/resources/grid/sorting/db_grid_validazioneArticoloVenduto'
+                        };
+
+                        var gridOptionsValidazioneArticoloVenduto = {
+
+                            groupDefaultExpanded: 2,
+                                autoGroupColumnDef: {
+                                    headerName: "Fornitore / Compratore",
+                                    minWidth: 300
+                                },
+                                onGridReady: function (params) {
+                                    spPianificazioneApi = params.api;
+                                    params.api.sizeColumnsToFit();
+                                },
+                                onFirstDataRendered: function (params) {
+                                    spPianificazioneApi = params.api;
+
+                                    installPianificazioneRenderers(params.api);
+
+                                    params.api.refreshCells({force: true});
+                                    params.api.sizeColumnsToFit();
+                                },
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParamsValidazioneArticoloVenduto.gridCode);
+                                }
+                        };
+
+                        gridParamsValidazioneArticoloVenduto.gridOptions = gridOptionsValidazioneArticoloVenduto;
+
+                        $(document).ready(function () {
+                            creaGriglia(gridParamsValidazioneArticoloVenduto);
+                        });
+
+
+                    </script>
+
+                </p:panel>
+
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>
+
+</html>

@@ -1,18 +1,15 @@
 package com.axiante.mui.webapp.listener;
 
-import lombok.extern.slf4j.Slf4j;
-
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LogoutPhaseListener implements PhaseListener {
-    private static final long serialVersionUID = -4718067912006923856L;
-
     @Override
     public PhaseId getPhaseId() {
         return PhaseId.RENDER_RESPONSE;

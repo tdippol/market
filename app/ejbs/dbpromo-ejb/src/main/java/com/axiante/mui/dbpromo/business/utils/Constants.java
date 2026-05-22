@@ -21,6 +21,10 @@ public class Constants {
     public static final String P_MUI_EXPORT_CUMUL_ESCLUS = "P_MUI_EXPORT_CUMUL_ESCLUS";
     public static final String P_AGGIORNA_COMULABILITA = "P_AGGIORNA_COMULABILITA";
 
+
+    public static final String P_MUI_SP_ASSOCIA_REPARTI = "p_mui_sp_associa_reparti";
+    public static final String P_MUI_SP_ASSOCIA_COMPRATORI = "p_mui_sp_associa_compratori";
+
     public static final String P_MUI_EXPORT_SOTTOCLASSE = "P_MUI_EXPORT_SOTTOCLASSE";
 
     public static final String P_MUI_EXPORT_INCL_ESCL = "P_MUI_EXPORT_INCL_ESCL";

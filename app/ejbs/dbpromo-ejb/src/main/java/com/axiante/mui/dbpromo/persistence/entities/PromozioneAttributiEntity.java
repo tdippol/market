@@ -3,11 +3,8 @@ package com.axiante.mui.dbpromo.persistence.entities;
 import com.axiante.mui.common.UUIDEnabledEntity;
 import com.axiante.mui.common.utility.AxUUID;
 import com.axiante.mui.dbpromo.persistence.Metadata;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,8 +20,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
-import java.util.Date;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "MUI_PROMOZIONE_ATTRIBUTI", schema = Metadata.SCHEMA)
@@ -35,8 +34,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class PromozioneAttributiEntity implements Serializable, AuditLogInterface, UUIDEnabledEntity{
-    private static final long serialVersionUID = 4662928809613478290L;
-
     @Id
     @SequenceGenerator(schema = Metadata.SCHEMA, allocationSize = 1, name = "MUI_PROMOZIONE_ATTRIBUTI_ID_GENERATOR", sequenceName = "MUI_PROMOZIONE_ATTR_ID_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MUI_PROMOZIONE_ATTRIBUTI_ID_GENERATOR")

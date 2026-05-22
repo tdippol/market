@@ -3,12 +3,12 @@ package com.axiante.mui.dbpromo.persistence.dao.impl;
 import com.axiante.mui.dbpromo.persistence.dao.DbPromoJpaDao;
 import com.axiante.mui.dbpromo.persistence.dao.FornitoreDAO;
 import com.axiante.mui.dbpromo.persistence.entities.FornitoreEntity;
-import lombok.NonNull;
-
 import java.util.List;
+import lombok.NonNull;
 
 @DbPromoJpaDao
 public class JpaFornitoreDAOImpl extends JpaDbPromoDAO<FornitoreEntity> implements FornitoreDAO {
+
     private static final long serialVersionUID = -6249355335093684830L;
 
     @Override

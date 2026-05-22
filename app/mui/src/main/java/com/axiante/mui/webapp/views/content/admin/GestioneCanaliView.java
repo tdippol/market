@@ -27,13 +27,11 @@ import com.axiante.mui.webapp.views.content.admin.pojos.ControlliConfigurati;
 import com.axiante.mui.webapp.views.content.admin.pojos.ControlliConfigurati.ConfigurazioneDTO;
 import com.axiante.mui.webapp.views.content.admin.pojos.StatiBlocco;
 import com.axiante.tm1.mdx.objects.Query;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import org.primefaces.component.tabview.TabView;
-import org.primefaces.event.TabChangeEvent;
-
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Instance;
@@ -41,12 +39,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.primefaces.component.tabview.TabView;
+import org.primefaces.event.TabChangeEvent;
 
 @Slf4j
 @MuiViewModel("gestioneCanali")
@@ -173,18 +171,6 @@ public class GestioneCanaliView extends AbstractAdminView {
 
 	@Getter
 	boolean flListaCondizionale = false;
-
-	@Getter
-	boolean flRateCifraFissa = false;
-
-	@Getter
-	boolean flRateCostoContatto = false;
-
-	@Getter
-	boolean flRateSingolaAttivita = false;
-
-	@Getter
-	BigDecimal valoreCostoContatto = null;
 
 	private static final int TAB_MECCANICHE = 0;
 	private static final int TAB_CODICI = 1;
@@ -348,10 +334,6 @@ public class GestioneCanaliView extends AbstractAdminView {
 				flCbMultitransazione = c.getFlTotalizzatori();
 				flDifferenziazioneNegozi = c.getFlDifferenziazioneNegozi();
 				flListaCondizionale = c.getFlListaCondizionale();
-				flRateCifraFissa = c.getFlRateCifraFissa();
-				flRateCostoContatto = c.getFlRateCostoContatto();
-				flRateSingolaAttivita = c.getFlRateSingolaAttivita();
-				valoreCostoContatto = c.getValoreCostoContatto();
 				calcolaRepartiConfigurati();
 			}
 		}
@@ -865,14 +847,14 @@ public class GestioneCanaliView extends AbstractAdminView {
 		}
 	}
 
-	public void setTolleranzaDataInizio(Integer inizio) {
+	public void setTolleranzaDataInizio(Integer inizio){
 		if (canaleSelezionato != null ){
 			canaleSelezionato.setTolleranzaDataInizio(inizio);
 			canaleService.persist(canaleSelezionato);
 		}
 	}
 
-	public Integer getTolleranzaDataFine() {
+	public Integer getTolleranzaDataFine(){
 		if (canaleSelezionato != null ){
 			return canaleSelezionato.getTolleranzaDataFine();
 		} else {
@@ -880,14 +862,13 @@ public class GestioneCanaliView extends AbstractAdminView {
 		}
 	}
 
-	public void setTolleranzaDataFine(Integer fine) {
+	public void setTolleranzaDataFine(Integer fine){
 		if (canaleSelezionato != null ){
 			canaleSelezionato.setTolleranzaDataFine(fine);
 			canaleService.persist(canaleSelezionato);
 		}
 	}
-
-	public Integer getGiorniDopoDataFine() {
+	public Integer getGiorniDopoDataFine(){
 		if (canaleSelezionato != null ){
 			return canaleSelezionato.getDeleteActiveDaysAfterDataFine();
 		} else {
@@ -895,14 +876,14 @@ public class GestioneCanaliView extends AbstractAdminView {
 		}
 	}
 
-	public void setGiorniDopoDataFine(Integer fine) {
+	public void setGiorniDopoDataFine(Integer fine){
 		if (canaleSelezionato != null ){
 			canaleSelezionato.setDeleteActiveDaysAfterDataFine(fine);
 			canaleService.persist(canaleSelezionato);
 		}
 	}
 
-	public void setLimiteTestateAttivo(boolean attivo) {
+	public void setLimiteTestateAttivo(boolean attivo){
 		if ( getCanaleSelezionato() != null  ){
 			if ( attivo ){
 				getCanaleSelezionato().setMaxPromo(0L);
@@ -998,34 +979,6 @@ public class GestioneCanaliView extends AbstractAdminView {
 	public void setOverlapOffsetEnd(Integer end) {
 		if (canaleSelezionato != null) {
 			canaleSelezionato.setOverlapOffsetEnd(end);
-			canaleService.persist(canaleSelezionato);
-		}
-	}
-
-	public void setFlRateCifraFissa(boolean flRateCifraFissa) {
-		if (canaleSelezionato != null) {
-			canaleSelezionato.setFlRateCifraFissa(flRateCifraFissa);
-			canaleService.persist(canaleSelezionato);
-		}
-	}
-
-	public void setFlRateCostoContatto(boolean flRateCostoContatto) {
-		if (canaleSelezionato != null) {
-			canaleSelezionato.setFlRateCostoContatto(flRateCostoContatto);
-			canaleService.persist(canaleSelezionato);
-		}
-	}
-
-	public void setFlRateSingolaAttivita(boolean flRateSingolaAttivita) {
-		if (canaleSelezionato != null) {
-			canaleSelezionato.setFlRateSingolaAttivita(flRateSingolaAttivita);
-			canaleService.persist(canaleSelezionato);
-		}
-	}
-
-	public void setValoreCostoContatto(BigDecimal valoreCostoContatto) {
-		if (canaleSelezionato != null) {
-			canaleSelezionato.setValoreCostoContatto(valoreCostoContatto);
 			canaleService.persist(canaleSelezionato);
 		}
 	}

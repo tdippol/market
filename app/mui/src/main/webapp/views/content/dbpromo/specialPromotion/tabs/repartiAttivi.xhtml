@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <h:form id="repartiAttiviForm">
+
+                        <p:panel id="repartiAttiviPanel"
+                                 toggleable="true"
+                                 toggleSpeed="500"
+                                 closeSpeed="500"
+                                 styleClass="pnlGrid_Header">
+
+                            <f:facet name="header">
+                                <p:outputLabel value="Reparti Attivi"/>
+                            </f:facet>
+
+                            <h:panelGroup rendered="#{empty templateView.currentView.repartiAttiviBean.repartiAttivi}">
+                                <div style="padding: 15px;">
+                                    <h:outputText value="Nessun dato disponibile"/>
+                                </div>
+                            </h:panelGroup>
+
+                            <ui:repeat value="#{templateView.currentView.repartiAttiviBean.repartiAttivi}" var="reparto">
+
+                                <div style="padding: 8px 12px; border-bottom: 1px solid #e5e5e5;">
+
+                                    <div style="display: flex; align-items: center;">
+
+                                        <p:selectBooleanCheckbox value="#{reparto.attivo}">
+                                            <p:ajax event="valueChange"
+                                                    process="@this"
+                                                    listener="#{templateView.currentView.repartiAttiviBean.onToggleReparto(reparto)}"
+                                                    update=":schedaSpecialPromotionForm"/>
+                                        </p:selectBooleanCheckbox>
+
+                                        <p:commandLink value="#{reparto.codiceReparto} - #{reparto.descrizioneReparto}"
+                                                       style="margin-left: 10px; font-weight: 600; color: #333333; text-decoration: none;"
+                                                       process="@this"
+                                                       update="@form"
+                                                       actionListener="#{templateView.currentView.repartiAttiviBean.toggleEspanso(reparto)}"/>
+                                    </div>
+
+                                    <h:panelGroup rendered="#{reparto.espanso}">
+                                        <div style="padding-left: 42px; padding-top: 8px; padding-bottom: 4px;">
+
+                                            <ui:repeat value="#{reparto.compratori}" var="compratore">
+                                                <div style="padding: 4px 0;">
+                                                    <h:outputText value="#{compratore.codiceCompratore} - #{compratore.descrizioneCompratore}"/>
+                                                </div>
+                                            </ui:repeat>
+
+                                        </div>
+                                    </h:panelGroup>
+
+                                </div>
+
+                            </ui:repeat>
+
+                        </p:panel>
+
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>
+</html>

@@ -755,8 +755,12 @@ MessaggiPianificazione_ButtonsRenderer=function (params) {
     }
     span.appendChild(insertAboveButton);
     insertAboveCell.appendChild(span);
+
+
+
     div.appendChild(table);
     return div;
+
 }
 
 // Messaggi Pianificazione - Delete button renderer
@@ -949,47 +953,6 @@ EventiRetail_BtnRenderer = function(params) {
     }
     cell_2.appendChild(cancelSpan);
 
-    div.appendChild(table);
-    return div;
-}
-
-// Rifatturazione Initial Load
-RifatturazioneInitialLoadActionsRenderer = function (params) {
-    // noinspection JSUnresolvedReference
-    let editEnabled = params.data.editEnabled;
-    // noinspection JSUnresolvedReference
-    let deleteEnabled = params.data.deleteEnabled;
-    var table = document.createElement("table");
-    var row = table.insertRow();
-    var div = document.createElement("div");
-    // edit button
-    if (editEnabled != undefined && editEnabled.value === "true") {
-        var cellEdit = row.insertCell();
-        cellEdit.style.width = '25px';
-        cellEdit.style.padding = '0';
-        var spanEdit = document.createElement("span");
-        var elemEdit = gridActionButtonElem('edit');
-        elemEdit.onclick = function () {
-            // noinspection JSUnresolvedReference
-            openRifatturazioneInitialLoadEditDialog(params.data);
-        }
-        spanEdit.appendChild(elemEdit);
-        cellEdit.appendChild(spanEdit);
-    }
-    // delete button
-    if (deleteEnabled != undefined && deleteEnabled.value === "true") {
-        var cellDelete = row.insertCell();
-        cellDelete.style.width = '25px';
-        cellDelete.style.padding = '0';
-        var spanDelete = document.createElement("span");
-        var elemDelete = gridActionButtonElem('trash');
-        elemDelete.onclick = function () {
-            // noinspection JSUnresolvedReference
-            openRifatturazioneInitialLoadDeleteDialog(params.data);
-        }
-        spanDelete.appendChild(elemDelete);
-        cellDelete.appendChild(spanDelete);
-    }
     div.appendChild(table);
     return div;
 }

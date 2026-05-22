@@ -1,0 +1,49 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Fornitore",
+      "field": "fornitore",
+      "width": 320,
+      "type": "string",
+      "editable": false,
+      "hide": false,
+      "valueGetter": "data.fornitore && data.fornitore.value !== undefined ? data.fornitore.value : data.fornitore"
+    },
+    {
+      "headerName": "Premio da Consegnato",
+      "field": "premioDaConsegnato",
+      "width": 180,
+      "type": "numericColumn",
+      "editable": false,
+      "hide": false,
+      "valueGetter": "data.premioDaConsegnato && data.premioDaConsegnato.value !== undefined ? data.premioDaConsegnato.value : data.premioDaConsegnato"
+    },
+    {
+      "headerName": "Premio da Venduto",
+      "field": "premioDaVenduto",
+      "width": 180,
+      "type": "numericColumn",
+      "editable": false,
+      "hide": false,
+      "valueGetter": "data.premioDaVenduto && data.premioDaVenduto.value !== undefined ? data.premioDaVenduto.value : data.premioDaVenduto"
+    },
+    {
+      "headerName": "Cifra Fissa",
+      "field": "cifraFissa",
+      "width": 150,
+      "type": "numericColumn",
+      "editable": false,
+      "hide": false,
+      "valueGetter": "data.cifraFissa && data.cifraFissa.value !== undefined ? data.cifraFissa.value : data.cifraFissa"
+    },
+    {
+      "headerName": "Premio Totale",
+      "field": "premioTotale",
+      "width": 150,
+      "type": "numericColumn",
+      "editable": false,
+      "hide": false,
+      "valueGetter": "data.premioTotale && data.premioTotale.value !== undefined ? data.premioTotale.value : data.premioTotale"
+    }
+  ]
+}

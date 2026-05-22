@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <div class="row">
+        <div class="col-12">
+
+            <div id="k_grid_portletContributiFornitoriCifraFissa" class="k-portlet">
+
+                <p:panel id="expandable_db_grid_contributiFornitoriCifraFissa"
+                         toggleable="true"
+                         toggleSpeed="500"
+                         closeSpeed="500"
+                         styleClass="pnlGrid_Header updateableContent">
+
+                    <f:facet name="header">
+                        <p:outputLabel value="Cifra Fissa"/>
+                    </f:facet>
+
+                    <h:panelGroup layout="block"
+                                  style="height: 60vh; width: 100%;"
+                                  class="ag-theme-balham grid_contributiFornitoriCifraFissa"
+                                  pt:gridid="db_grid_contributiFornitoriCifraFissa"/>
+
+                    <f:facet name="actions">
+
+                        <p:inputText
+                                id="filterGrid"
+                                autocomplete="off"
+                                placeholder="Filtra..."
+                                styleClass="pnlGrid_Header filterInputText"
+                                onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_contributiFornitoriCifraFissa', this.value)"/>
+
+                        <p:commandLink
+                                title="Espandi Griglia"
+                                styleClass="pnlGrid_Header expandButton"
+                                onclick="expandGrid('db_grid_contributiFornitoriCifraFissa')"
+                                onerror="redirectToExpiredPage()"/>
+
+                        <p:commandLink
+                                title="Esporta Excel"
+                                styleClass="pnlGrid_Header exportButton"
+                                onclick="onBtExport('db_grid_contributiFornitoriCifraFissa', 'Contributi Fornitori Cifra Fissa')"
+                                onerror="redirectToExpiredPage()"/>
+
+                    </f:facet>
+
+                    <script type="text/javascript">
+                        var gridParamsContributiFornitoriCifraFissa = {
+                            gridCode: 'db_grid_contributiFornitoriCifraFissa',
+                            gridTitle: 'Contributi Fornitori Cifra Fissa',
+                            url_columnDefs: contextPath + '/resources/specialpromotion/cifra-fissa/columnDef' + addUrlParamContesto(#{templateView.currentView.contesto}),
+                            url_rowData: contextPath + '/resources/specialpromotion/cifra-fissa/rowData/#{templateView.currentView.idPromozioneCorrente}' + '?_=' + new Date().getTime(),
+                            url_customSort: contextPath + '/resources/grid/sorting/db_grid_contributiFornitoriCifraFissa'
+                        };
+
+                        var gridOptionsContributiFornitoriCifraFissa = {
+                            onGridReady: function (params) {
+                                params.api.sizeColumnsToFit();
+                            },
+                            onFirstDataRendered: function (params) {
+                                params.api.sizeColumnsToFit();
+                            },
+                            onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParamsContributiFornitoriCifraFissa.gridCode);
+                            }
+                        };
+
+                        gridParamsContributiFornitoriCifraFissa.gridOptions = gridOptionsContributiFornitoriCifraFissa;
+
+                        $(document).ready(function () {
+                            creaGriglia(gridParamsContributiFornitoriCifraFissa);
+                        });
+                    </script>
+
+                </p:panel>
+
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>
+
+</html>

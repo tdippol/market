@@ -81,7 +81,7 @@
     <div class="row" style="margin-top: 10px;">
         <div class="col-12">
             <p:tabView dynamic="true" cache="false" styleClass="dispositivi-tabs" widgetVar="outerTab"
-                       onTabChange="return handleTabChange('outerTab', index);" onTabShow="handleTabShow(index)"
+                       onTabChange="return handleTabChange('outerTab', index);"
                        activeIndex="#{templateView.currentView.messaggiCastellettiBean.selectedTab}">
                 <p:tab id="messaggiTab" title="Messaggi" rendered="#{templateView.currentView.messaggiCastellettiBean.logoMessaggiRendered}">
                     <ui:include src="dialogTabs/messaggiTab.xhtml" />
@@ -116,9 +116,6 @@
     <p:remoteCommand name="prepareOuterTabChange"
                      actionListener="#{templateView.currentView.messaggiCastellettiBean.prepareOuterTabChange}"
                      update="@(.updatableMessageContent)"/>
-    <p:remoteCommand name="handleTabCategoriaBuoni"
-                     actionListener="#{templateView.currentView.messaggiCastellettiBean.handleTabCategoriaBuoni}"
-                     update="@(.addCategoriaBuonoBtnClass)"/>
 
     <script type="text/javascript">
         var changeAllowed = false;
@@ -147,10 +144,6 @@
                 return true;
             }
             return true;
-        }
-
-        function handleTabShow(index) {
-            handleTabCategoriaBuoni();
         }
 
         function handleTabChangedResponse(args) {

@@ -21,17 +21,16 @@ import com.axiante.mui.dbpromo.persistence.service.PromoService;
 import com.axiante.mui.dbpromo.persistence.service.RepartoService;
 import com.axiante.mui.dbpromo.persistence.service.StatoPromoService;
 import com.axiante.mui.webapp.webservice.util.pianificazione.helper.PromozionePianificazioneEntityHelper;
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 @Dependent
 @Slf4j
@@ -159,7 +158,7 @@ public class PromozioneTestataHelper {
     }
 
     public void addPromozioneFlags(PromozioneTestataEntity promozione, String user) throws Exception {
-        if (promozione.getPromozioneFlags() != null && !promozione.getPromozioneFlags().isEmpty()) {
+        if (promozione.getPromozioneFlags() != null && promozione.getPromozioneFlags().size() > 0) {
             throw new IllegalArgumentException("La promozione " + promozione.getDescrizione() + " contiene gia' dei flag");
         }
         Set<CfgCanaleFlagEntity> canaleFlags = promozione.getMuiCanalePromozione().getMuiCfgCanaleFlagEntities();
@@ -168,7 +167,7 @@ public class PromozioneTestataHelper {
                 MuiPromozioneFlagEntity promoFlag = (MuiPromozioneFlagEntity) AuditLogFiller.fillAuditLogFields(new MuiPromozioneFlagEntity(), user);
                 promoFlag.setFlag(flag);
                 List<MuiFlagDominioEntity> l = flagDominioService.get().findAllAttiviAndDefaultByFlag(flag.getId());
-                if (l != null && !l.isEmpty()) {
+                if (l != null && l.size() > 0) {
                     promoFlag.setValore(l.get(0).getValore());
                 } else {
                     promoFlag.setValore(null);
@@ -181,11 +180,11 @@ public class PromozioneTestataHelper {
     }
 
     public void addPromozioneAttributi(PromozioneTestataEntity promozione, String user) throws Exception {
-        if (promozione.getPromozioneAttributiEntity() != null && !promozione.getPromozioneAttributiEntity().isEmpty()) {
+        if (promozione.getPromozioneAttributiEntity() != null && promozione.getPromozioneAttributiEntity().size() > 0) {
             throw new IllegalArgumentException("La promozione " + promozione.getDescrizione() + " contiene gia' degli attributi di testata");
         }
         List<CfgCanaliAttributiEntity> attributiConfigurati = cfgCanaliAttributiService.get().getAllByCanale(promozione.getCanalePromozioneEntity().getId());
-        if (attributiConfigurati != null && !attributiConfigurati.isEmpty()) {
+        if (attributiConfigurati != null && attributiConfigurati.size() > 0) {
             attributiConfigurati.stream().forEach(att -> {
                 PromozioneAttributiEntity attributo = (PromozioneAttributiEntity) AuditLogFiller.fillAuditLogFields(new PromozioneAttributiEntity(), user);
                 attributo.setValore(att.getValoreDefault());

@@ -110,10 +110,6 @@ public class ApplicationProperties implements Serializable {
 
     public static final String MESSAGGI_LOCAL_IMG_PATH = "MESSAGGI_LOCAL_IMG_PATH";
     public static final String DEFAULT_MESSAGGI_LOCAL_IMG_PATH = "/wlsmnt/muidoc/messaggi";
-
-	// #5728 Rifatturazione al fornitore
-	public static final String GIORNI_DURATA_TESTATA_EDIT_FLG_FATT_PER = "GIORNI_DURATA_TESTATA_EDIT_FLG_FATT_PER";
-	public static final Integer DEFAULT_GIORNI_DURATA_TESTATA_EDIT_FLG_FATT_PER = 90;
 	public static final String GIORNI_CUTOFF_FATT_SINGOLA_ATTIVITA = "GIORNI_CUTOFF_FATT_SINGOLA_ATTIVITA";
 	public static final Integer DEFAULT_GIORNI_CUTOFF_FATT_SINGOLA_ATTIVITA = 7;
 

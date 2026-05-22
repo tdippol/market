@@ -1,0 +1,78 @@
+{
+        "columnDef": [
+                {
+                        "headerName": "Fornitori",
+                        "field": "fornitore",
+                        "type": "string",
+                        "editable": false,
+                        "width": 260
+                },
+                {
+                        "headerName": "Codice Compratore",
+                        "field": "codiceCompratore",
+                        "type": "string",
+                        "editable": false,
+                        "width": 160
+                },
+                {
+                        "headerName": "Compratore",
+                        "field": "compratore",
+                        "type": "string",
+                        "editable": false,
+                        "width": 220
+                },
+                {
+                        "headerName": "Tipo Premio",
+                        "field": "tipoPremio",
+                        "type": "string",
+                        "editable": true,
+                        "cellEditor": "select",
+                        "cellEditorParams": {
+                                "values": ["Cifra fissa", "Premio %"]
+                        },
+                        "width": 160
+                },
+                {
+                        "headerName": "Cifra Fissa",
+                        "field": "premioCf",
+                        "type": "string",
+                        "editable": true,
+                        "width": 140
+                },
+                {
+                        "headerName": "% Premio",
+                        "field": "premioPerc",
+                        "type": "string",
+                        "editable": true,
+                        "width": 140
+                },
+                {
+                        "headerName": "Tipo Base imponibile",
+                        "field": "tipoBaseImp",
+                        "type": "string",
+                        "editable": true,
+                        "width": 190
+                },
+                {
+                        "headerName": "Soglia MAX",
+                        "field": "sogliaMax",
+                        "type": "string",
+                        "editable": true,
+                        "width": 140
+                },
+                {
+                        "headerName": "Modalità liquidazione",
+                        "field": "modLiq",
+                        "type": "string",
+                        "editable": true,
+                        "width": 190
+                },
+                {
+                        "headerName": "Verifica",
+                        "field": "checkValue",
+                        "type": "string",
+                        "editable": false,
+                        "width": 260
+                }
+        ]
+}

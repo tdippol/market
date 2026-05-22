@@ -1,10 +1,8 @@
 package com.axiante.mui.webapp.webservice.util;
 
-import com.axiante.mui.backing.ApplicationProperties;
 import com.axiante.mui.common.promo.grid.ComboBoxValues;
 import com.axiante.mui.common.promo.grid.DBPromoAgCell;
 import com.axiante.mui.common.promo.grid.DBPromoCellTypeEnum;
-import com.axiante.mui.common.utility.DateTimeUtils;
 import com.axiante.mui.common.utility.DbPromoConstants;
 import com.axiante.mui.common.utility.JsonUtils;
 import com.axiante.mui.dbpromo.business.utils.ComboBoxFactory;
@@ -17,16 +15,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.extern.slf4j.Slf4j;
-
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Dependent
@@ -40,9 +37,6 @@ public class PromozioneFlagUtil {
 
     @Inject
     private Instance<PromozioneFlagService> promoFlagServiceInstance;
-
-    @Inject
-    private ApplicationProperties applicationProperties;
 
     /**
      * Crea rowData flags promozione
@@ -153,11 +147,6 @@ public class PromozioneFlagUtil {
         List<ComboBoxValues> availableFlags = comboBoxFactoryInstance.get().from(activeflags, false, false);
         final Map<String, DBPromoAgCell> map = new HashMap<>();
 
-        // #5713: override editable for 'FLG_FATT_PER'
-        if ("FLG_FATT_PER".equalsIgnoreCase(flag.getFlag().getCodice())) {
-            editable = isEditableForRifatturazione(flag.getPromozioneTestata());
-        }
-
         DBPromoAgCell cell = DBPromoAgCell.builder().name("Id").editable(false).type(DBPromoCellTypeEnum.STRING.getType())
                 .value(String.valueOf(flag.getFlag().getId())).build();
         map.put("id", cell);
@@ -175,31 +164,5 @@ public class PromozioneFlagUtil {
         map.put("valore", cell);
 
         return JsonUtils.getMapper().valueToTree(map);
-    }
-
-    /**
-     * Editable per canali 'Buoni Potenziamento', 'Buoni Categoria', 'Buoni Brand', 'Buoni Prodotto'
-     * (li prendo "agganciati" al canale della promo)
-     * e se durata promozione superiore al parametro impostato in 'GIORNI_DURATA_TESTATA_EDIT_FLG_FATT_PER'
-     *
-     * @param promozioneTestata testata promozionale
-     * @return true se editabile, false altrimenti
-     */
-    private boolean isEditableForRifatturazione(PromozioneTestataEntity promozioneTestata) {
-        try {
-            boolean isRighChannel = promozioneTestata.getCanalePromozioneEntity().getMuiCfgCanaleFlagEntities().stream()
-                    .map(cf -> cf.getFlag().getCodice())
-                    .anyMatch("FLG_FATT_PER"::equalsIgnoreCase);
-            if (!isRighChannel) {
-                return false;
-            }
-            Integer gg = applicationProperties.getProperty(ApplicationProperties.GIORNI_DURATA_TESTATA_EDIT_FLG_FATT_PER,
-                    ApplicationProperties.DEFAULT_GIORNI_DURATA_TESTATA_EDIT_FLG_FATT_PER);
-            DateTimeUtils dtUtils = new DateTimeUtils();
-            return dtUtils.daysBetween(promozioneTestata.getDataInizio(), promozioneTestata.getDataFine()) > gg;
-        } catch (Exception ex) {
-            log.error("Error getting days between dataInizio and dataFine", ex);
-            return false;
-        }
     }
 }

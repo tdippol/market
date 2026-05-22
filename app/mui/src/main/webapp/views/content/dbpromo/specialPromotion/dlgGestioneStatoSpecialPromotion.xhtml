@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <p:dialog id="dlgGestioneStatoSP"
+              widgetVar="dlgGestioneStatoSP"
+              header="Gestione Stato"
+              modal="true"
+              closable="false"
+              resizable="false"
+              styleClass="dlgGestioneStatoSPClass"
+              width="500"
+              contentStyle="overflow:hidden; padding-bottom:10px;">
+
+        <h:form id="dlgGestioneStatoSPForm">
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div>
+                        <p:outputLabel for="promozione" value="Promozione" style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:inputText id="promozione"
+                                     readonly="true"
+                                     style="width: 100%;"
+                                     value="#{templateView.currentView.specialPromotionSelected != null ? templateView.currentView.specialPromotionSelected.descrizioneEstesa : ''}" />
+                    </div>
+                </div>
+
+                <div class="col-12" style="margin-top: 20px;">
+                    <div>
+                        <p:outputLabel for="statoCorrente" value="Stato Corrente" style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:inputText id="statoCorrente"
+                                     readonly="true"
+                                     style="width: 100%;"
+                                     value="#{templateView.currentView.statoCorrente != null ? templateView.currentView.statoCorrente.statoPromozioneEntity.codiceStato.concat(' - ').concat(templateView.currentView.statoCorrente.statoPromozioneEntity.label) : ''}" />
+                    </div>
+                </div>
+
+                <div class="col-12" style="margin-top: 20px;">
+                    <div>
+                        <p:outputLabel for="nuovoStato" value="Nuovo Stato" style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:selectOneMenu id="nuovoStato"
+                                         value="#{templateView.currentView.idStatoTransizioneCorrente}"
+                                         style="width: 100%;">
+
+                            <f:selectItem itemLabel="Seleziona..." noSelectionOption="true" />
+
+                            <f:selectItems value="#{templateView.currentView.statiTransizione}"
+                                           var="st"
+                                           itemLabel="#{st.codiceStato} - #{st.descrizione}"
+                                           itemValue="#{st.id}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+
+                <div class="col-6">
+                    <p:commandButton value="Annulla"
+                                     type="button"
+                                     styleClass="ui-confirmdialog-no"
+                                     onclick="PF('dlgGestioneStatoSP').hide()" />
+                </div>
+
+                <div class="col-6">
+                    <p:commandButton value="Conferma"
+                                     styleClass="ui-confirmdialog-yes"
+                                     action="#{templateView.currentView.confirmCambioStato}"
+                                     oncomplete="PF('dlgGestioneStatoSP').hide()"
+                                     update="@(.dlgGestioneStatoSPClass) @(.formScheda) @(.tabScheda)" />
+                </div>
+
+            </div>
+
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>
+</html>

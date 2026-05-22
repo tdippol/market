@@ -1,0 +1,113 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Fornitore",
+      "field": "fornitore",
+      "type": "string",
+      "editable": false,
+      "width": 260,
+      "rowGroup": true,
+      "hide": true
+    },
+    {
+      "headerName": "Compratore",
+      "field": "compratore",
+      "type": "string",
+      "editable": false,
+      "width": 220,
+      "rowGroup": true,
+      "hide": true
+    },
+    {
+      "headerName": "Articolo",
+      "field": "articolo",
+      "type": "string",
+      "editable": false,
+      "width": 260
+    },
+    {
+      "headerName": "Primo Prezzo",
+      "field": "primoPrezzo",
+      "type": "string",
+      "editable": false,
+      "width": 120
+    },
+    {
+      "headerName": "Marchio Privato",
+      "field": "marchioPrivato",
+      "type": "string",
+      "editable": false,
+      "width": 140
+    },
+    {
+      "headerName": "% Premio",
+      "field": "premioPerc",
+      "type": "string",
+      "editable": false,
+      "width": 120
+    },
+    {
+      "headerName": "Tipo Base Imponibile",
+      "field": "tipoBaseImp",
+      "type": "string",
+      "editable": false,
+      "width": 220
+    },
+    {
+      "headerName": "Soglia MAX",
+      "field": "sogliaMax",
+      "type": "string",
+      "editable": false,
+      "width": 120
+    },
+    {
+      "headerName": "Modalità liquidazione",
+      "field": "modLiq",
+      "type": "string",
+      "editable": false,
+      "width": 180
+    },
+    {
+      "headerName": "Escludere art",
+      "field": "esc",
+      "type": "string",
+      "editable": true,
+      "width": 130
+    },
+    {
+      "headerName": "Escludere Q.ta Promo",
+      "field": "escPezziKg",
+      "type": "string",
+      "editable": true,
+      "width": 170
+    },
+    {
+      "headerName": "% Premio Eccezione Articolo",
+      "field": "premioPercU",
+      "type": "string",
+      "editable": true,
+      "width": 220
+    },
+    {
+      "headerName": "Base Imponibile Totale",
+      "field": "baseImponibileTotale",
+      "type": "string",
+      "editable": false,
+      "width": 190
+    },
+    {
+      "headerName": "Base Imponibile Senza Vendite Promo",
+      "field": "baseImponibileNoVendPromo",
+      "type": "string",
+      "editable": false,
+      "width": 260
+    },
+    {
+      "headerName": "Premio finale",
+      "field": "premioFinale",
+      "type": "string",
+      "editable": false,
+      "width": 150
+    }
+  ]
+}

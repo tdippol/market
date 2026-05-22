@@ -1,0 +1,92 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Anno",
+      "field": "anno",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Canale",
+      "field": "canale",
+      "width": 180,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Promozione",
+      "field": "descrizioneEstesa",
+      "width": 320,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Attiva",
+      "field": "attiva",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 150,
+      "hide": false,
+      "type": "date",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 150,
+      "hide": false,
+      "type": "date",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Stato Promozione",
+      "field": "stato",
+      "width": 220,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Data Reminder",
+      "field": "dataReminder",
+      "width": 150,
+      "hide": false,
+      "type": "date",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

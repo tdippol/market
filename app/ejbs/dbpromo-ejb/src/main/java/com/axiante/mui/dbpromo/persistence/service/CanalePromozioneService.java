@@ -2,7 +2,6 @@ package com.axiante.mui.dbpromo.persistence.service;
 
 import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
 import com.axiante.mui.dbpromo.persistence.entities.GruppoPromozioneEntity;
-
 import java.util.List;
 
 public interface CanalePromozioneService extends DbPromoService<CanalePromozioneEntity> {
@@ -16,8 +15,6 @@ public interface CanalePromozioneService extends DbPromoService<CanalePromozione
 	CanalePromozioneEntity findByCodiceCanale(Long codiceCanale);
 
 	List<CanalePromozioneEntity> findByCodiciCanale(List<Long> codiciCanale);
-
-	List<CanalePromozioneEntity> findByFlagRateSingolaAttivita();
 
 	Long countByIdWithTipologiaInitialLoad(Long id);
 }

@@ -2,12 +2,11 @@ package com.axiante.mui.webapp.views.filter;
 
 import com.axiante.mui.common.utility.DateTimeUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
+import javax.faces.bean.SessionScoped;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.faces.bean.SessionScoped;
-import java.io.Serializable;
 
 @SessionScoped
 @Data
@@ -74,7 +73,7 @@ public class FiltredJsonBean implements Serializable {
 		if ("datePicker".equals(getAttribute_type())) {
 			String value = selectedValues[0];
 			final DateTimeUtils utils = new DateTimeUtils();
-			value = DateTimeUtils.getFormatoItaliano().format(utils.excelToDate(value));
+			value = utils.getFormatoItaliano().format(utils.excelToDate(value));
 			return new String[] {value};
 		}
 		return selectedValues;

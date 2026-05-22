@@ -10,11 +10,6 @@
         <div class="row">
             <div class="col-12">
                 <div id="k_grid_portletpromoGrid" class="k-portlet">
-                    <p:confirmDialog widgetVar="updateCellConfirmDlg" header="Conferma Modifica" severity="alert">
-                        <p:commandButton value="SI" type="button" onclick="confirmUpdateCell()" style="float: right;" />
-                        <p:commandButton value="NO" type="button" onclick="discardUpdateCell()" style="float: left;" />
-                    </p:confirmDialog>
-
                     <p:panel id="expandable_db_schedapromo_attributi" toggleable="true" toggleSpeed="500" closeSpeed="500"
                              styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_attributi">
                         <f:facet name="header">
@@ -42,15 +37,7 @@
                                            onerror="redirectToExpiredPage()" />
                         </f:facet>
 
-                        <h:form>
-                            <p:remoteCommand name="onValidateAttributoPreUpdate"
-                                             action="#{templateView.currentView.validateAttributoPreUpdate}"
-                                             oncomplete="handleValidateAttributoPreUpdate(xhr, status, args)"/>
-                        </h:form>
-
                         <script type="text/javascript">
-                        var pendingEditParams = null;
-
                 		var gridParams_schedaPromoAttributi = {
                             gridId: 'attributi',
                             gridTabGroup: 'schedaPromo_tabs',
@@ -74,14 +61,17 @@
                         };
                         gridParams_schedaPromoAttributi.gridOptions = options_schedaPromoAttributi;
 
-                        function callUpdateWs(rowIndex, rowData, idAttributo, valoreAttributo) {
+                        function updateCellAttributi(event) {
                             let gridCode = 'db_schedapromo_attributi';
+                            var rowIndex = getRowNodeId(event);
+                            var rowData = getRowData(gridCode);
+                            var singleRow = rowData[rowIndex];
                             let url = contextPath + '/resources/grid/schedapromo/attributi/update/'
                                 + #{templateView.currentView.idPromozioneCorrente}
-                            + addUrlParamContesto(#{muiContext});
+                                + addUrlParamContesto(#{muiContext});
                             var payload = {
-                                idAttributo: idAttributo,
-                                valoreAttributo: valoreAttributo
+                                idAttributo: singleRow.id.value,
+                                valoreAttributo: singleRow.valore.value
                             }
                             $.ajax({
                                 type: "POST",
@@ -101,95 +91,6 @@
                                     ajaxErrorHandler(jqXHR, exception, thrownError, event);
                                 }
                             });
-                        }
-
-                        function updateCellAttributi(event) {
-                            let gridCode = 'db_schedapromo_attributi';
-                            var rowIndex = getRowNodeId(event);
-                            var rowData = getRowData(gridCode);
-                            var singleRow = rowData[rowIndex];
-                            let idAttributo = singleRow.id.value;
-                            let nomeAttributo = singleRow.attributo.value;
-                            let valoreAttributo = singleRow.valore.value;
-                            if (checkForSponsor(event.data)) {
-                                pendingEditParams = {
-                                    payload: {
-                                        idAttributo: idAttributo,
-                                        valoreAttributo: valoreAttributo
-                                    },
-                                    rowIndex: rowIndex,
-                                    rowData: rowData,
-                                    oldValue: event.oldValue
-                                }
-                                onValidateAttributoPreUpdate([
-                                    {name: 'idAttributo', value: idAttributo},
-                                    {name: 'nomeAttributo', value: nomeAttributo},
-                                    {name: 'valoreAttributo', value: valoreAttributo}
-                                ]);
-                            } else {
-                                callUpdateWs(rowIndex, rowData, idAttributo, valoreAttributo);
-                            }
-                        }
-
-                        function checkForSponsor(data) {
-                            return data &amp;&amp; data.attributo.value === 'NUMERO_SPONSOR';
-                        }
-
-                        function handleValidateAttributoPreUpdate(xhr, status, args) {
-                            if (args) {
-                                if (args.showError) {
-                                    addErrorGrowl([
-                                        {name: 'title', value: 'Attenzione'},
-                                        {
-                                            name: 'message',
-                                            value: 'Errore durante la validazione dell\'attributo; contattare l\'assistenza tecnica'
-                                        }
-                                    ]);
-                                } else if (args.showConfirmDialog) {
-                                    let message = args.handleSponsorMessage ? args.handleSponsorMessage : 'Sei sicuro di voler modificare questo valore?';
-                                    PF('updateCellConfirmDlg').jq.find('.ui-confirm-dialog-message').html(message);
-                                    PF('updateCellConfirmDlg').show();
-                                } else {
-                                    let rowIndex = pendingEditParams.rowIndex;
-                                    let rowData = pendingEditParams.rowData;
-                                    let idAttributo = pendingEditParams.payload.idAttributo;
-                                    let valoreAttributo = pendingEditParams.payload.valoreAttributo;
-                                    callUpdateWs(rowIndex, rowData, idAttributo, valoreAttributo);
-                                }
-                            } else {
-                                addErrorGrowl([
-                                    { name: 'title', value: 'Attenzione' },
-                                    { name: 'message', value: 'Errore durante la validazione dell\'attributo; contattare l\'assistenza tecnica' }
-                                ]);
-                            }
-                        }
-
-                        function confirmUpdateCell() {
-                            PF('updateCellConfirmDlg').hide();
-                            if (pendingEditParams) {
-                                callUpdateWs(pendingEditParams.rowIndex, pendingEditParams.rowData, pendingEditParams.payload.idAttributo, pendingEditParams.payload.valoreAttributo);
-                                pendingEditParams = null;
-                            } else {
-                                addErrorGrowl([
-                                    {name: 'title', value: 'Errore'},
-                                    {name: 'message', value: 'Impossibile eseguire aggiornamento'}
-                                ]);
-                            }
-                        }
-
-                        function discardUpdateCell() {
-                            PF('updateCellConfirmDlg').hide();
-                            if (pendingEditParams &amp;&amp; pendingEditParams.oldValue) {
-                                let gridCode = 'db_schedapromo_attributi';
-                                pendingEditParams.rowData[pendingEditParams.rowIndex].valore.value = pendingEditParams.oldValue;
-                                getGridOptionFromGridMap(gridCode).api.setRowData(pendingEditParams.rowData);
-                                pendingEditParams = null;
-                            } else {
-                                addErrorGrowl([
-                                    {name: 'title', value: 'Errore'},
-                                    {name: 'message', value: 'Impossibile eseguire aggiornamento'}
-                                ]);
-                            }
                         }
 
                         $(document).ready(function() {

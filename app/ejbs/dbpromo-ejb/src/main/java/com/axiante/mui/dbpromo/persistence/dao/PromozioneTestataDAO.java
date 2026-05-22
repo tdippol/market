@@ -63,5 +63,5 @@ public interface PromozioneTestataDAO extends DbPromoDAO<PromozioneTestataEntity
     Long copiaPromozione(String source, String codiceUtente, Long idPromozione, Date dataInizio, Date dataFine);
 
     List<PromozioneTestataEntity> findOverlappingPromoWithAttributo(PromozioneTestataEntity promozioneTestataEntity,
-                                                                    Long idAttributo, String valoreAttributo);
+                                                                   Long idAttributo, String valoreAttributo);
 }

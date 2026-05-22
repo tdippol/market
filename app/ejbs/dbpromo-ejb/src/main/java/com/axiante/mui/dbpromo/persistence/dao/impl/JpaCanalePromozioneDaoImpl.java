@@ -4,13 +4,12 @@ import com.axiante.mui.dbpromo.persistence.dao.CanalePromozioneDAO;
 import com.axiante.mui.dbpromo.persistence.dao.DbPromoJpaDao;
 import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
 import com.axiante.mui.dbpromo.persistence.entities.GruppoPromozioneEntity;
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
-
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @DbPromoJpaDao
@@ -58,7 +57,7 @@ public class JpaCanalePromozioneDaoImpl extends JpaDbPromoDAO<CanalePromozioneEn
 
 	@Override
 	public List<CanalePromozioneEntity> findByCodiciCanale(@NonNull final List<Long> codiciCanale) {
-		if (!codiciCanale.isEmpty()) {
+		if (codiciCanale != null && !codiciCanale.isEmpty()) {
 			return getEm().createNamedQuery("MuiCanalePromozione.findByCodiciCanale", CanalePromozioneEntity.class)
 					.setParameter("codiciCanale", codiciCanale)
 					.getResultList();
@@ -68,14 +67,9 @@ public class JpaCanalePromozioneDaoImpl extends JpaDbPromoDAO<CanalePromozioneEn
 	}
 
 	@Override
-	public List<CanalePromozioneEntity> findByFlagRateSingolaAttivita() {
-		return getEm().createNamedQuery("MuiCanalePromozione.findByFlagRateSingolaAttivita", CanalePromozioneEntity.class)
-				.getResultList();
-	}
-
-	@Override
 	public Long countByIdWithTipologiaInitialLoad(Long id) {
 		return getEm().createNamedQuery("MuiCanalePromozione.countByIdWithTipologiaInitialLoad", Long.class)
 				.setParameter("id", id).getSingleResult();
 	}
+
 }

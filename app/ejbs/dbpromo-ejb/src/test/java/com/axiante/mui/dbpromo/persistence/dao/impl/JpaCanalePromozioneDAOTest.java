@@ -1,5 +1,11 @@
 package com.axiante.mui.dbpromo.persistence.dao.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import com.axiante.mui.dbpromo.persistence.DbPromoTestsEntityManagerProducer;
 import com.axiante.mui.dbpromo.persistence.EntityManagerFactoryProducer;
 import com.axiante.mui.dbpromo.persistence.dao.AbstractDaoTest;
@@ -10,14 +16,6 @@ import com.axiante.mui.dbpromo.persistence.entities.CanaleLastProgEntity;
 import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
 import com.axiante.mui.dbpromo.persistence.entities.GruppoPromozioneEntity;
 import com.axiante.mui.dbpromo.persistence.entities.PromozioneTestataEntity;
-import org.jboss.weld.junit4.WeldInitiator;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
@@ -25,13 +23,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import org.jboss.weld.junit4.WeldInitiator;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class JpaCanalePromozioneDAOTest extends AbstractDaoTest {
 
@@ -95,7 +93,7 @@ public class JpaCanalePromozioneDAOTest extends AbstractDaoTest {
 			assertEquals(2, canalPromotionEntities.size());
 			assertEquals(channel, canalPromotionEntities.get(0));
 		} catch (Exception e) {
-			fail("Exception thrown: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

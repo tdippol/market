@@ -12,6 +12,7 @@ public class CfgCanaleRepartoDTO {
     CanalePromozioneEntity canale;
     @Setter
     RepartoEntity reparto;
+    @Setter
     Integer maxTestate=0;
 
     boolean selected = false;

@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
-import java.math.BigDecimal;
 
 @Dependent
 public class MacrospaziMediaUtils {
@@ -21,7 +20,7 @@ public class MacrospaziMediaUtils {
 
     public boolean isValid(MuiMacrospazioMediaEntity entity, boolean editMode) {
         return dateUtils.isValidForMacrospazio(entity.getDataInizio(), entity.getDataFine(), editMode)
-                && entity.getListino() != null && entity.getListino().compareTo(BigDecimal.ZERO) >= 0;
+                && entity.getListino() != null && entity.getListino() >= 0;
     }
 
     public boolean canDelete(MuiMacrospazioMediaEntity macrospazio) {

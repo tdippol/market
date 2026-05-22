@@ -8,8 +8,8 @@ public enum TipologiaArticoliEnum {
     OWN("Articoli esclusivamente di propria competenza", "OWN"),
     ALL("Tutti gli articoli dell'attività in oggetto", "ALL");
 
-    private final String label;
-    private final String value;
+    private String label;
+    private String value;
 
     TipologiaArticoliEnum(String label, String value) {
         this.label = label;

@@ -1,14 +1,14 @@
 package com.axiante.mui.utils;
 
-import com.axiante.mui.backing.ApplicationProperties;
+import java.io.Serializable;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.io.Serializable;
+
+import com.axiante.mui.backing.ApplicationProperties;
 
 @ApplicationScoped
-public class ApplicationConfiguration implements Serializable {
-    private static final long serialVersionUID = -5178649812347859966L;
+public class ApplicationConfiguration implements Serializable{
 
     @Inject
     ApplicationProperties properties;

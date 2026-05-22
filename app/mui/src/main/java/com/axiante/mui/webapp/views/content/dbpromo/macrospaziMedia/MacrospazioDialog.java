@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.primefaces.event.SelectEvent;
 
 import javax.faces.event.AjaxBehaviorEvent;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -129,7 +128,7 @@ public class MacrospazioDialog {
 
     public void onListinoChange(AjaxBehaviorEvent event) {
         try {
-            BigDecimal value = UiUtils.getEventBigDecimalValue(event);
+            Double value = UiUtils.getEventDoubleValue(event);
             if (bean != null && value != null) {
                 bean.setListino(value);
             }
@@ -142,6 +141,7 @@ public class MacrospazioDialog {
                     "Impossibile impostare il listino macrospazio, contattare l'assistenza");
         }
     }
+
 
     public void onDataInizioSelect(SelectEvent event) {
         try {

@@ -10,16 +10,6 @@ import com.axiante.mui.dbpromo.persistence.entities.RepartoEntity;
 import com.axiante.mui.dbpromo.persistence.service.GrmService;
 import com.axiante.mui.dbpromo.persistence.service.ItemService;
 import com.axiante.mui.dbpromo.persistence.service.RepartoService;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,6 +22,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 @Dependent
 public class UploadExcelServiceImpl implements UploadExcelService {
@@ -74,13 +72,9 @@ public class UploadExcelServiceImpl implements UploadExcelService {
         }
         if (sheet != null) {
             Stream<Row> stream = StreamSupport.stream(sheet.spliterator(), false);
-            codes = stream.skip(1).parallel()
-                    .filter(Objects::nonNull)
-                    .map(row -> row.getCell(FIRST_COLUMN))
-                    .filter(Objects::nonNull)
-                    .filter(cell -> CellType.STRING.equals(cell.getCellTypeEnum()))
-                    .map(Cell::getStringCellValue)
-                    .filter(code -> validate(elementType, code))
+            codes = stream.skip(1).parallel().filter(Objects::nonNull).map(row -> row.getCell(FIRST_COLUMN))
+                    .filter(Objects::nonNull).filter(cell -> cell.getCellType() == CellType.STRING.getCode())
+                    .map(cell -> cell.getStringCellValue()).filter(code -> validate(elementType, code))
                     .collect(Collectors.toSet());
         }
         return codes;
@@ -139,25 +133,29 @@ public class UploadExcelServiceImpl implements UploadExcelService {
         if (sheet != null) {
             Stream<Row> stream = StreamSupport.stream(sheet.spliterator(), false);
             final Iterator<String> iterator = stream.skip(1).map(row -> row.getCell(FIRST_COLUMN)).map(cell -> {
-                if (CellType.STRING.equals(cell.getCellTypeEnum()) || CellType.BLANK.equals(cell.getCellTypeEnum())) {
-                    return cell.getStringCellValue();
-                } else if (CellType.NUMERIC.equals(cell.getCellTypeEnum())) {
-                    return "" + ((int) cell.getNumericCellValue());
-                } else {
-                    return null;
-                }
-            }).filter(Objects::nonNull).iterator();
+                        if (cell.getCellType() == CellType.STRING.getCode() || cell.getCellType() == CellType.BLANK.getCode()) {
+                            return cell.getStringCellValue();
+                        } else if (cell.getCellType() == CellType.NUMERIC.getCode()) {
+                            return "" + ((int) cell.getNumericCellValue());
+                        } else {
+                            return null;
+                        }
+                    }).filter(Objects::nonNull)
+                    .iterator();
             Integer rows = 0;
-            while (iterator.hasNext()) {
-                if (++rows > maxRows) {
-                    codes.clear();
-                    return null;
+            if (iterator != null) {
+                while (iterator.hasNext()) {
+                    if (++rows > maxRows) {
+                        codes.clear();
+                        return null;
+                    }
+                    String code = iterator.next();
+                    if (code.trim().isEmpty()) {
+                        break;
+                    }
+
+                    codes.add(validateUpload(elementType, code, buyerId));
                 }
-                String code = iterator.next();
-                if (code.trim().isEmpty()) {
-                    break;
-                }
-                codes.add(validateUpload(elementType, code, buyerId));
             }
         }
         return codes;
@@ -215,6 +213,7 @@ public class UploadExcelServiceImpl implements UploadExcelService {
                     if (repartoEntity == null) {
                         return new ItemUpload(code, "STRING");
                     }
+
                     return new ItemUpload(repartoEntity.getId(), buyerId, repartoEntity.getCodiceReparto() == null ? ""
                             : String.format("%s - %s", repartoEntity.getCodiceReparto(),
                             repartoEntity.getDescrizione() != null ? repartoEntity.getDescrizione().toUpperCase() : ""),
@@ -224,6 +223,7 @@ public class UploadExcelServiceImpl implements UploadExcelService {
                     break;
             }
             return new ItemUpload(entityId, true, "STRING");
+
         } else {
             return new ItemUpload(entityId, true, "STRING");
         }
@@ -235,6 +235,7 @@ public class UploadExcelServiceImpl implements UploadExcelService {
         emptyRowFound = false;
         Set<ShopItemUpload> codes = new HashSet<>();
         final String ext = FilenameUtils.getExtension(file.getName());
+
         FileInputStream fis = new FileInputStream(file);
         Sheet sheet;
         switch (ext) {
@@ -251,14 +252,12 @@ public class UploadExcelServiceImpl implements UploadExcelService {
 
         if (sheet != null) {
             Stream<Row> stream = StreamSupport.stream(sheet.spliterator(), false);
-            final Iterator<String> iterator = stream.skip(1)
-                    .map(row -> row.getCell(FIRST_COLUMN))
+
+            final Iterator<String> iterator = stream.skip(1).map(row -> row.getCell(FIRST_COLUMN))
                     .filter(Objects::nonNull)
-                    .filter(cell -> CellType.STRING.equals(cell.getCellTypeEnum()) || CellType.BLANK.equals(cell.getCellTypeEnum()))
-                    .map(Cell::getStringCellValue)
-                    .filter(Objects::nonNull)
-                    .map(String::trim)
-                    .iterator();
+                    .filter(cell -> cell.getCellType() == CellType.STRING.getCode()
+                            || cell.getCellType() == CellType.BLANK.getCode())
+                    .map(cell -> cell.getStringCellValue()).iterator();
             Integer rows = 0;
             while (iterator.hasNext()) {
                 if (++rows > maxRows) {
@@ -279,4 +278,5 @@ public class UploadExcelServiceImpl implements UploadExcelService {
         }
         return codes;
     }
+
 }

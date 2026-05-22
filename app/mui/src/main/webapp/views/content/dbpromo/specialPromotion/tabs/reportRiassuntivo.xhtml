@@ -1,0 +1,243 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <div class="row">
+        <div class="col-12">
+
+            <div id="k_grid_portletReportRiassuntivo" class="k-portlet">
+
+                <p:panel id="expandable_db_grid_reportRiassuntivo"
+                         toggleable="true"
+                         toggleSpeed="500"
+                         closeSpeed="500"
+                         styleClass="pnlGrid_Header updateableContent">
+
+                    <f:facet name="header">
+                        <p:outputLabel value="Report Riassuntivo"/>
+                    </f:facet>
+
+                    <h:form id="reportRiassuntivoForm">
+
+                        <div style="margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 70px;">
+
+                            <div style="display: flex; flex-direction: column; gap: 5px;">
+
+                                <div style="display: flex; align-items: center;">
+                                    <label style="font-weight: bold; width: 90px; text-align: right; margin-right: 5px;">
+                                        Compratore
+                                    </label>
+
+                                    <p:selectOneMenu id="spReportCompratore"
+                                                     widgetVar="spReportCompratoreWidget"
+                                                     value="#{templateView.currentView.idReportCompratoreSelezionato}"
+                                                     style="height: 28px; min-width: 360px;">
+
+                                        <f:selectItems value="#{templateView.currentView.reportCompratoriSelectItems}"/>
+
+                                        <p:ajax process="@this"
+                                                listener="#{templateView.currentView.onReportCompratoreChange}"
+                                                update="spReportFornitoreWrapper"/>
+                                    </p:selectOneMenu>
+                                </div>
+
+                                <h:panelGroup id="spReportFornitoreWrapper" layout="block">
+                                    <div style="display: flex; align-items: center;">
+                                        <label style="font-weight: bold; width: 90px; text-align: right; margin-right: 5px;">
+                                            Fornitore
+                                        </label>
+
+                                        <p:selectOneMenu id="spReportFornitore"
+                                                         widgetVar="spReportFornitoreWidget"
+                                                         value="#{templateView.currentView.idReportFornitoreSelezionato}"
+                                                         style="height: 28px; min-width: 360px;">
+
+                                            <f:selectItem itemValue="#{null}" itemLabel="Totale Fornitori"/>
+                                            <f:selectItems value="#{templateView.currentView.reportFornitoriSelectItems}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </h:panelGroup>
+
+                            </div>
+
+                            <p:commandButton value="Aggiorna Report"
+                                             style="height: 34px; min-width: 170px;"
+                                             type="button"
+                                             onclick="spReportRefreshGrid(); return false;"/>
+
+                        </div>
+
+                    </h:form>
+
+                    <h:panelGroup layout="block"
+                                  style="height: 45vh; width: 100%;"
+                                  class="ag-theme-balham grid_reportRiassuntivo"
+                                  pt:gridid="db_grid_reportRiassuntivo"/>
+
+                    <f:facet name="actions">
+
+                        <p:inputText
+                                id="filterGrid"
+                                autocomplete="off"
+                                placeholder="Filtra..."
+                                styleClass="pnlGrid_Header filterInputText"
+                                onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_reportRiassuntivo', this.value)"/>
+
+                        <p:commandLink
+                                title="Espandi Griglia"
+                                styleClass="pnlGrid_Header expandButton"
+                                onclick="expandGrid('db_grid_reportRiassuntivo')"
+                                onerror="redirectToExpiredPage()"/>
+
+                        <p:commandLink
+                                title="Esporta Excel"
+                                styleClass="pnlGrid_Header exportButton"
+                                onclick="onBtExport('db_grid_reportRiassuntivo', 'Report Riassuntivo')"
+                                onerror="redirectToExpiredPage()"/>
+
+                    </f:facet>
+
+                    <script type="text/javascript">
+                        var spReportApi = null;
+
+                    function spReportGetSelectValue(id) {
+                        if (id === "spReportCompratore" &amp;&amp; typeof PF === "function" &amp;&amp; PF("spReportCompratoreWidget")) {
+                            return PF("spReportCompratoreWidget").getSelectedValue();
+                        }
+
+                        if (id === "spReportFornitore" &amp;&amp; typeof PF === "function" &amp;&amp; PF("spReportFornitoreWidget")) {
+                            return PF("spReportFornitoreWidget").getSelectedValue();
+                        }
+
+                        var input = document.getElementById('reportRiassuntivoForm:' + id + '_input');
+
+                        if (!input) {
+                            input = document.getElementById('reportRiassuntivoForm:' + id);
+                        }
+
+                        if (!input) {
+                            return "";
+                        }
+
+                        return input.value;
+                    }
+
+                        function spReportBuildRowDataUrl() {
+                            var idCompratore = spReportGetSelectValue('spReportCompratore');
+                            var idFornitore = spReportGetSelectValue('spReportFornitore');
+
+                            var url = contextPath
+                                    + '/resources/specialpromotion/reportRiassuntivo/rowData/#{templateView.currentView.idPromozioneCorrente}'
+                                    + '?idCompratore=' + encodeURIComponent(idCompratore);
+
+                            if (idFornitore !== null
+                                    &amp;&amp; idFornitore !== undefined
+                                    &amp;&amp; String(idFornitore).trim() !== "") {
+                                url += '&amp;idFornitore=' + encodeURIComponent(idFornitore);
+                            }
+
+                            return url;
+                        }
+
+                        function spReportRefreshGrid() {
+                            if (!spReportApi) {
+                                return;
+                            }
+
+                            fetch(spReportBuildRowDataUrl())
+                                    .then(function (response) {
+                                        if (!response.ok) {
+                                            throw new Error("HTTP " + response.status);
+                                        }
+
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        spReportApi.setRowData(data);
+                                        spReportApi.sizeColumnsToFit();
+                                    })
+                                    .catch(function (error) {
+                                        console.log("Errore refresh Report Riassuntivo", error);
+                                    });
+                        }
+
+                        var gridParamsReportRiassuntivo = {
+                            gridCode: 'db_grid_reportRiassuntivo',
+                            gridTitle: 'Report Riassuntivo',
+                            url_columnDefs: contextPath + '/resources/specialpromotion/reportRiassuntivo/columnDef' + addUrlParamContesto(#{templateView.currentView.contesto}),
+                            url_rowData: contextPath + '/resources/specialpromotion/reportRiassuntivo/rowData/#{templateView.currentView.idPromozioneCorrente}' + '?idCompratore=#{templateView.currentView.idReportCompratoreSelezionato}',
+                            url_customSort: contextPath + '/resources/grid/sorting/db_grid_reportRiassuntivo'
+                        };
+
+var gridOptionsReportRiassuntivo = {
+    onGridReady: function (params) {
+        spReportApi = params.api;
+        params.api.sizeColumnsToFit();
+    },
+
+    onFirstDataRendered: function (params) {
+        spReportApi = params.api;
+        params.api.sizeColumnsToFit();
+    },
+
+    onSortChanged: function (event) {
+        onSortChanged(
+            event,
+            contextPath + '/resources/grid/sorting/save/' + gridParamsReportRiassuntivo.gridCode
+        );
+    },
+
+    getRowStyle: function (params) {
+
+        if (params.data
+                &amp;&amp; params.data.fornitore
+                &amp;&amp; params.data.fornitore.value === 'Totale Fornitori') {
+
+            return {
+                backgroundColor: '#d9edf7',
+                fontWeight: 'bold'
+            };
+        }
+
+        return null;
+    },
+
+    defaultColDef: {
+        cellStyle: function (params) {
+
+            if (params.colDef
+                    &amp;&amp; params.colDef.field === 'premioTotale') {
+
+                return {
+                    backgroundColor: '#d9edf7',
+                    fontWeight: 'bold'
+                };
+            }
+
+            return null;
+        }
+    }
+};
+
+                        gridParamsReportRiassuntivo.gridOptions = gridOptionsReportRiassuntivo;
+
+                        $(document).ready(function () {
+                            creaGriglia(gridParamsReportRiassuntivo);
+                        });
+                    </script>
+
+                </p:panel>
+
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>
+
+</html>

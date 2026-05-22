@@ -2,8 +2,6 @@ package com.axiante.mui.dbpromo.persistence.support.builders;
 
 import com.axiante.mui.dbpromo.persistence.entities.FornitoreEntity;
 
-import java.util.HashSet;
-
 public class FornitoreEntityBuilder {
 
     private Long id;
@@ -31,7 +29,6 @@ public class FornitoreEntityBuilder {
         entity.setId(id);
         entity.setCodiceFornitore(codice);
         entity.setDescrizione(descrizione != null ? descrizione : String.format("Fornitore %s", codice));
-        entity.setMuiAssortimentoFornitores(new HashSet<>());
         return entity;
     }
 }

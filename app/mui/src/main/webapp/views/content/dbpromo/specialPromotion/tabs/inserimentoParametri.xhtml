@@ -1,0 +1,489 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <div class="row">
+        <div class="col-12">
+
+            <div id="k_grid_portletInserimentoParametri" class="k-portlet">
+
+                <p:panel id="expandable_db_grid_inserimentoParametri"
+                         toggleable="true"
+                         toggleSpeed="500"
+                         closeSpeed="500"
+                         styleClass="pnlGrid_Header updateableContent">
+
+                    <f:facet name="header">
+                        <p:outputLabel value="Inserimento Parametri"/>
+                    </f:facet>
+
+                    <h:panelGroup layout="block"
+                                  style="height: 60vh; width: 100%;"
+                                  class="ag-theme-balham grid_inserimentoParametri"
+                                  pt:gridid="db_grid_inserimentoParametri"/>
+
+                    <f:facet name="actions">
+
+                        <p:inputText
+                                id="filterGrid"
+                                autocomplete="off"
+                                placeholder="Filtra..."
+                                styleClass="pnlGrid_Header filterInputText"
+                                onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_inserimentoParametri', this.value)"/>
+
+                        <p:commandLink
+                                title="Espandi Griglia"
+                                styleClass="pnlGrid_Header expandButton"
+                                onclick="expandGrid('db_grid_inserimentoParametri')"
+                                onerror="redirectToExpiredPage()"/>
+
+                        <p:commandLink
+                                title="Esporta Excel"
+                                styleClass="pnlGrid_Header exportButton"
+                                onclick="onBtExport('db_grid_inserimentoParametri', 'Inserimento Parametri')"
+                                onerror="redirectToExpiredPage()"/>
+
+                    </f:facet>
+
+                    <script type="text/javascript">
+                        var spParamApi = null;
+                        var spParamRenderersInstalled = false;
+
+                        function getSpParamCellValue(row, field) {
+                            if (!row || row[field] === null || row[field] === undefined) {
+                                return "";
+                            }
+
+                            if (typeof row[field] === "object" &amp;&amp; row[field].value !== undefined) {
+                                return row[field].value;
+                            }
+
+                            return row[field];
+                        }
+
+                        function setSpParamCellValue(row, field, value) {
+                            if (!row) {
+                                return;
+                            }
+
+                            if (row[field] !== undefined &amp;&amp; typeof row[field] === "object") {
+                                row[field].value = value;
+                            } else {
+                                row[field] = value;
+                            }
+                        }
+
+                        function normalizeSpParamNumber(value) {
+                            if (value === null || value === undefined || value === "") {
+                                return "0";
+                            }
+
+                            return String(value).replace(",", ".");
+                        }
+
+                        function isSpParamPercentageInvalid(value) {
+                            var normalized = normalizeSpParamNumber(value);
+                            var numberValue = Number(normalized);
+
+                            if (isNaN(numberValue)) {
+                                return true;
+                            }
+
+                            if (numberValue &lt; 0 || numberValue &gt; 100) {
+                                return true;
+                            }
+
+                            var decimalPart = normalized.indexOf(".") &gt; -1 ? normalized.split(".")[1] : "";
+                            return decimalPart.length &gt; 2;
+                        }
+
+                        function applyInserimentoParametriRules(row) {
+                            if (!row) {
+                                return;
+                            }
+
+                            var tipoPremio = getSpParamCellValue(row, "tipoPremio");
+                            var premioCf;
+                            var premioPerc;
+                            var tipoBaseImp;
+                            var modLiq;
+
+                            if (tipoPremio === null || tipoPremio === undefined || String(tipoPremio).trim() === "") {
+                                setSpParamCellValue(row, "premioCf", "0");
+                                setSpParamCellValue(row, "premioPerc", "0");
+                                setSpParamCellValue(row, "sogliaMax", "");
+                                setSpParamCellValue(row, "tipoBaseImp", "");
+                                setSpParamCellValue(row, "modLiq", "IM");
+                                setSpParamCellValue(row, "checkValue", "Nessun parametro inserito");
+                                return;
+                            }
+
+                            if (tipoPremio === "Cifra fissa") {
+                                setSpParamCellValue(row, "premioPerc", "0");
+                                setSpParamCellValue(row, "sogliaMax", "");
+                                setSpParamCellValue(row, "tipoBaseImp", "");
+                                setSpParamCellValue(row, "modLiq", "IM");
+
+                                premioCf = normalizeSpParamNumber(getSpParamCellValue(row, "premioCf"));
+
+                                if (Number(premioCf) === 0) {
+                                    setSpParamCellValue(row, "checkValue", "Uno o più campi richiesti non sono compilati correttamente!");
+                                } else {
+                                    setSpParamCellValue(row, "checkValue", "OK");
+                                }
+
+                                return;
+                            }
+
+                            if (tipoPremio === "Premio %") {
+                                setSpParamCellValue(row, "premioCf", "0");
+
+                                if (String(getSpParamCellValue(row, "modLiq")).trim() === "") {
+                                    setSpParamCellValue(row, "modLiq", "IM");
+                                }
+
+                                premioPerc = getSpParamCellValue(row, "premioPerc");
+                                tipoBaseImp = getSpParamCellValue(row, "tipoBaseImp");
+                                modLiq = getSpParamCellValue(row, "modLiq");
+
+                                if (isSpParamPercentageInvalid(premioPerc)) {
+                                    setSpParamCellValue(row, "checkValue", "Il % supera il limite di 100%");
+                                    return;
+                                }
+
+                                if (Number(normalizeSpParamNumber(premioPerc)) === 0
+                                        || tipoBaseImp === null
+                                        || tipoBaseImp === undefined
+                                        || String(tipoBaseImp).trim() === ""
+                                        || modLiq === null
+                                        || modLiq === undefined
+                                        || String(modLiq).trim() === "") {
+                                    setSpParamCellValue(row, "checkValue", "Uno o più campi richiesti non sono compilati correttamente!");
+                                } else {
+                                    setSpParamCellValue(row, "checkValue", "OK");
+                                }
+                            }
+                        }
+
+    function cleanSpParamRowData(row) {
+    var cleaned = {};
+
+    for (var key in row) {
+        if (row[key] &amp;&amp; typeof row[key] === "object" &amp;&amp; row[key].value !== undefined) {
+            cleaned[key] = row[key].value;
+        } else {
+            cleaned[key] = row[key];
+        }
+    }
+
+    delete cleaned.fornitore;
+    delete cleaned.compratore;
+    delete cleaned.editable;
+    delete cleaned.updateMessage;
+    delete cleaned.errorMessage;
+
+    cleaned.premioCf = normalizeSpParamNumberForSave(cleaned.premioCf);
+    cleaned.premioPerc = normalizeSpParamNumberForSave(cleaned.premioPerc);
+    cleaned.sogliaMax = normalizeSpParamNumberForSave(cleaned.sogliaMax);
+    cleaned.premioFinale = normalizeSpParamNumberForSave(cleaned.premioFinale);
+
+    return cleaned;
+}
+
+function normalizeSpParamNumberForSave(value) {
+    if (value === null || value === undefined || String(value).trim() === "") {
+        return null;
+    }
+
+    return Number(String(value).replace(",", "."));
+}
+
+function saveSpParamRow(row) {
+    if (getSpParamCellValue(row, "tipoPremio") === "Premio %"
+            &amp;&amp; isSpParamPercentageInvalid(getSpParamCellValue(row, "premioPerc"))) {
+        console.log("Salvataggio bloccato: Premio % non valido");
+        return;
+    }
+
+    var cleaned = cleanSpParamRowData(row);
+
+    console.log("SAVE PARAMETRO SP", cleaned);
+
+    return fetch(contextPath + '/resources/specialpromotion/parametri/save' + addUrlParamContesto(#{templateView.currentView.contesto}), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cleaned)
+    }).then(function (response) {
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        return response.json();
+    }).then(function (json) {
+        var updateMessage = getSpParamCellValue(json, "updateMessage");
+
+        if (updateMessage === null || updateMessage === undefined || String(updateMessage).trim() === "") {
+            updateMessage = "Aggiornamento effettuato";
+        }
+
+        showSpParamUpdateMessage(updateMessage);
+
+        console.log("Parametro SP salvato correttamente");
+    }).catch(function (error) {
+        console.log("Errore salvataggio parametro Special Promotion", error);
+    });
+}
+
+                        function spParamUpdateCell(rowIndex, field, value) {
+                            if (!spParamApi) {
+                                return;
+                            }
+
+                            var rowNode = spParamApi.getDisplayedRowAtIndex(rowIndex);
+
+                            if (!rowNode || !rowNode.data) {
+                                return;
+                            }
+                            if (!isRowEditable(rowNode)) {
+                                return;
+                            }
+
+                            setSpParamCellValue(rowNode.data, field, value);
+                            applyInserimentoParametriRules(rowNode.data);
+                            saveSpParamRow(rowNode.data);
+
+                            spParamApi.refreshCells({
+                                rowNodes: [rowNode],
+                                force: true
+                            });
+                        }
+
+function showSpParamUpdateMessage(message) {
+    var growlWidget = null;
+
+    if (typeof PF === "function") {
+        growlWidget = PF('growl');
+
+        if (!growlWidget) {
+            growlWidget = PF('widget_formGrowl_growl');
+        }
+    }
+
+    if (!growlWidget &amp;&amp; typeof PrimeFaces !== "undefined" &amp;&amp; PrimeFaces.widgets) {
+        for (var widgetName in PrimeFaces.widgets) {
+            if (PrimeFaces.widgets[widgetName]
+                    &amp;&amp; typeof PrimeFaces.widgets[widgetName].renderMessage === "function") {
+                growlWidget = PrimeFaces.widgets[widgetName];
+                break;
+            }
+        }
+    }
+
+    if (growlWidget) {
+        growlWidget.renderMessage({
+            severity: 'info',
+            summary: 'Pianificazione',
+            detail: message
+        });
+    } else {
+        console.log("Growl non trovato - Pianificazione - " + message);
+    }
+}
+
+
+                    function isRowEditable(params) {
+                        return !(params.data &amp;&amp; params.data.editable === false);
+                    }
+
+                    function spParamTextRenderer(params, field, enabled) {
+                        var value = getSpParamCellValue(params.data, field);
+
+                        if (!enabled || !isRowEditable(params)) {
+                            return value;
+                        }
+
+                        return '&lt;input type="text" value="' + value + '" style="width:100%; height:24px;" '
+                                + 'onchange="spParamUpdateCell(' + params.node.rowIndex + ', \'' + field + '\', this.value)" '
+                                + 'onblur="spParamUpdateCell(' + params.node.rowIndex + ', \'' + field + '\', this.value)" /&gt;';
+                    }
+
+                    function flushSpParamEditing() {
+                        var activeElement = document.activeElement;
+
+                        if (activeElement
+                                &amp;&amp; activeElement.tagName
+                                &amp;&amp; (activeElement.tagName.toLowerCase() === "input"
+                                        || activeElement.tagName.toLowerCase() === "select")) {
+                            activeElement.blur();
+                        }
+                    }
+
+
+                    function spTipoPremioRenderer(params) {
+                        var value = getSpParamCellValue(params.data, "tipoPremio");
+
+                        if (!isRowEditable(params)) {
+                            return value;
+                        }
+
+                        var selectedCf = value === "Cifra fissa" ? "selected" : "";
+                        var selectedPerc = value === "Premio %" ? "selected" : "";
+
+                        return '&lt;select style="width:100%; height:24px;" onchange="spParamUpdateCell('
+                                + params.node.rowIndex + ', \'tipoPremio\', this.value)"&gt;'
+                                + '&lt;option value=""&gt;&lt;/option&gt;'
+                                + '&lt;option value="Premio %" ' + selectedPerc + '&gt;Premio %&lt;/option&gt;'
+                                + '&lt;option value="Cifra fissa" ' + selectedCf + '&gt;Cifra fissa&lt;/option&gt;'
+                                + '&lt;/select&gt;';
+                    }
+
+
+                        function spPremioCfRenderer(params) {
+                            return spParamTextRenderer(params, "premioCf", getSpParamCellValue(params.data, "tipoPremio") === "Cifra fissa");
+                        }
+
+                        function spPremioPercRenderer(params) {
+                            return spParamTextRenderer(params, "premioPerc", getSpParamCellValue(params.data, "tipoPremio") === "Premio %");
+                        }
+
+                        function spTipoBaseImpRenderer(params) {
+                            var enabled = getSpParamCellValue(params.data, "tipoPremio") === "Premio %";
+                            var value = getSpParamCellValue(params.data, "tipoBaseImp");
+
+                            if (!enabled || !isRowEditable(params)) {
+                                return value;
+                            }
+
+                            var selectedBlank = value === "" ? "selected" : "";
+                            var selectedQuota = value === "QUOTA CONSEGNATO DA FORNITORE" ? "selected" : "";
+                            var selectedVenduto = value === "VENDUTO" ? "selected" : "";
+                            var selectedCosto = value === "COSTO ASSEGNATO ALLA VENDITA" ? "selected" : "";
+
+                            return '&lt;select style="width:100%; height:24px;" onchange="spParamUpdateCell('
+                                    + params.node.rowIndex + ', \'tipoBaseImp\', this.value)"&gt;'
+                                    + '&lt;option value="" ' + selectedBlank + '&gt;&lt;/option&gt;'
+                                    + '&lt;option value="QUOTA CONSEGNATO DA FORNITORE" ' + selectedQuota + '&gt;QUOTA CONSEGNATO DA FORNITORE&lt;/option&gt;'
+                                    + '&lt;option value="VENDUTO" ' + selectedVenduto + '&gt;VENDUTO&lt;/option&gt;'
+                                    + '&lt;option value="COSTO ASSEGNATO ALLA VENDITA" ' + selectedCosto + '&gt;COSTO ASSEGNATO ALLA VENDITA&lt;/option&gt;'
+                                    + '&lt;/select&gt;';
+                        }
+
+                        function spSogliaMaxRenderer(params) {
+                            return spParamTextRenderer(params, "sogliaMax", getSpParamCellValue(params.data, "tipoPremio") === "Premio %");
+                        }
+
+                        function spModLiqRenderer(params) {
+                            var tipoPremio = getSpParamCellValue(params.data, "tipoPremio");
+                            var value = getSpParamCellValue(params.data, "modLiq");
+
+                            if (tipoPremio !== "Premio %" || !isRowEditable(params)) {
+                                return value;
+                            }
+
+                            if (value === null || value === undefined || String(value).trim() === "") {
+                                value = "IM";
+                            }
+
+                            var selectedNd = value === "ND" ? "selected" : "";
+                            var selectedNc = value === "NC" ? "selected" : "";
+                            var selectedIm = value === "IM" ? "selected" : "";
+
+                            return '&lt;select style="width:100%; height:24px;" onchange="spParamUpdateCell('
+                                    + params.node.rowIndex + ', \'modLiq\', this.value)"&gt;'
+                                    + '&lt;option value="ND" ' + selectedNd + '&gt;ND&lt;/option&gt;'
+                                    + '&lt;option value="NC" ' + selectedNc + '&gt;NC&lt;/option&gt;'
+                                    + '&lt;option value="IM" ' + selectedIm + '&gt;IM&lt;/option&gt;'
+                                    + '&lt;/select&gt;';
+                        }
+
+                        function spCheckRenderer(params) {
+                            return getSpParamCellValue(params.data, "checkValue");
+                        }
+
+                        function installInserimentoParametriRenderers(api) {
+                            if (!api || spParamRenderersInstalled) {
+                                return;
+                            }
+
+                            var columnDefs = api.getColumnDefs();
+
+                            if (!columnDefs) {
+                                return;
+                            }
+
+                            columnDefs.forEach(function (colDef) {
+                                if (colDef.field === "tipoPremio") {
+                                    colDef.cellRenderer = spTipoPremioRenderer;
+                                } else if (colDef.field === "premioCf") {
+                                    colDef.cellRenderer = spPremioCfRenderer;
+                                } else if (colDef.field === "premioPerc") {
+                                    colDef.cellRenderer = spPremioPercRenderer;
+                                } else if (colDef.field === "tipoBaseImp") {
+                                    colDef.cellRenderer = spTipoBaseImpRenderer;
+                                } else if (colDef.field === "sogliaMax") {
+                                    colDef.cellRenderer = spSogliaMaxRenderer;
+                                } else if (colDef.field === "modLiq") {
+                                    colDef.cellRenderer = spModLiqRenderer;
+                                } else if (colDef.field === "checkValue") {
+                                    colDef.cellRenderer = spCheckRenderer;
+                                }
+                            });
+
+                            spParamRenderersInstalled = true;
+                            api.setColumnDefs(columnDefs);
+                        }
+
+var gridParamsInserimentoParametri = {
+    gridCode: 'db_grid_inserimentoParametri',
+    gridTitle: 'Inserimento Parametri',
+    url_columnDefs: contextPath + '/resources/specialpromotion/parametri/columnDef' + addUrlParamContesto(#{templateView.currentView.contesto}),
+    url_rowData: contextPath + '/resources/specialpromotion/parametri/rowData/#{templateView.currentView.idPromozioneCorrente}' + '?_=' + new Date().getTime(),
+    url_customSort: contextPath + '/resources/grid/sorting/db_grid_inserimentoParametri'
+};
+
+                        var gridOptionsInserimentoParametri = {
+                            onGridReady: function (params) {
+                                spParamApi = params.api;
+                                params.api.sizeColumnsToFit();
+                            },
+                            onFirstDataRendered: function (params) {
+                                spParamApi = params.api;
+
+                                params.api.forEachNode(function (node) {
+                                    applyInserimentoParametriRules(node.data);
+                                });
+
+                                installInserimentoParametriRenderers(params.api);
+
+                                params.api.refreshCells({force: true});
+                                params.api.sizeColumnsToFit();
+                            },
+                            onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParamsInserimentoParametri.gridCode);
+                            }
+                        };
+
+                        gridParamsInserimentoParametri.gridOptions = gridOptionsInserimentoParametri;
+
+                        $(document).ready(function () {
+                            creaGriglia(gridParamsInserimentoParametri);
+                        });
+                    </script>
+
+                </p:panel>
+
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>
+
+</html>

@@ -33,15 +33,7 @@ import com.axiante.mui.dbpromo.persistence.entities.PromozioneTipoTerminaleEntit
 import com.axiante.mui.dbpromo.persistence.entities.RepartoEntity;
 import com.axiante.mui.dbpromo.persistence.entities.SottoscrizioneEntity;
 import com.axiante.mui.dbpromo.persistence.entities.StatoPromozioneEntity;
-import com.axiante.mui.dbpromo.persistence.service.CanalePromozioneService;
-import com.axiante.mui.dbpromo.persistence.service.CreatePromotionService;
-import com.axiante.mui.dbpromo.persistence.service.GruppoPromozioniService;
-import com.axiante.mui.dbpromo.persistence.service.MuiPlanoDbPromoService;
-import com.axiante.mui.dbpromo.persistence.service.MuiPromoDbPromoService;
-import com.axiante.mui.dbpromo.persistence.service.NegoziPromoService;
-import com.axiante.mui.dbpromo.persistence.service.PromoPubblicazioneTestataService;
-import com.axiante.mui.dbpromo.persistence.service.SottoscrizioneService;
-import com.axiante.mui.dbpromo.persistence.service.ValorePuntoService;
+import com.axiante.mui.dbpromo.persistence.service.*;
 import com.axiante.mui.persistence.entity.UsersEntity;
 import com.axiante.mui.persistence.service.MuiService;
 import com.axiante.mui.validator.model.PromoUpdate;
@@ -72,6 +64,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 
+import com.axiante.mui.dbpromo.persistence.service.MuiSpTestataService;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
@@ -103,6 +96,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+
 
 @Path("/grid")
 @Slf4j
@@ -188,6 +182,8 @@ public class GridServiceResource extends SessionEnabledResource {
 	@Inject
 	private transient Instance<CanalePromozioneService> canalePromozioneServiceInstance;
 
+
+
 	@GET
 	@Path("/columnDef/visualizza")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -229,6 +225,7 @@ public class GridServiceResource extends SessionEnabledResource {
 	public Response getRowDataCreaPromozione(@QueryParam("contesto") String context,
 			@Context HttpServletRequest request) {
 		try {
+			
 			final UserDTO userDto = getApplicationUser(context);
 			final String username = getCurrentUser().getName();
 			final String rowData = creaPromozioneFactory.createRowData(createPromotionService.findSlotCreaPromoValue(),

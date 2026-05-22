@@ -76,7 +76,7 @@ public class EventiMediaRowdataUtils {
         map.put("causale", cell);
 
         cell = DBPromoAgCell.builder().name("contributo").editable(false).type(DBPromoCellTypeEnum.NUMERIC.getType())
-                .dataTypeParams(DataTypeParams.builder().precision(2).build())
+                .dataTypeParams(DataTypeParams.builder().precision(0).build())
                 .value(evento.getValoreContributo() == null
                         ? ""
                         : String.valueOf(evento.getValoreContributo().doubleValue())).build();

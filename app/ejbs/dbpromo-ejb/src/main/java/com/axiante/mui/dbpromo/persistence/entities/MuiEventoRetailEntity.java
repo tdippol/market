@@ -81,6 +81,10 @@ import java.util.Date;
                         + "LEFT JOIN CausaliRetailEntity c ON e.codiceCausale = c.codice "
                         + "LEFT JOIN FornitoriRetailEntity f ON e.codiceFornitore = f.codice "
                         + "WHERE e.id = :id"),
+
+
+
+
 })
 public class MuiEventoRetailEntity implements Serializable, AuditLogInterface {
     private static final long serialVersionUID = 1L;

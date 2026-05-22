@@ -52,7 +52,7 @@ public class MacrospaziMediaRowdataUtils {
         map.put("descrizione", cell);
 
         cell = DBPromoAgCell.builder().name("listino").editable(false).type(DBPromoCellTypeEnum.NUMERIC.getType())
-                .dataTypeParams(DataTypeParams.builder().precision(2).build())
+                .dataTypeParams(DataTypeParams.builder().precision(0).build())
                 .value(macrospazio.getListino() == null ? "" : macrospazio.getListino().toString()).build();
         map.put("listino", cell);
 

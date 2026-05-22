@@ -50,7 +50,7 @@ public class EventiDialog {
         if (bean != null) {
             bean.setMacrospazio(macrospazio);
             if (macrospazio.getListino() != null) {
-                bean.setValoreContributo(macrospazio.getListino());
+                bean.setValoreContributo(BigDecimal.valueOf(macrospazio.getListino()));
             }
         }
     }
@@ -201,10 +201,8 @@ public class EventiDialog {
             String note = UiUtils.getEventStringValue(event);
             if (bean != null) {
                 bean.setNote(note);
-                btnSalvaEventoDisabled = btnSalvaEventoDisabledOnFornitore() || btnSalvaEventoDisabledOnRequiredFields();
             }
         } catch (Exception e) {
-            btnSalvaEventoDisabled = true;
             log.error("Error getting note from event", e);
             context.addErrorMessage("Errore applicativo",
                     "Impossibile impostare le note, contattare l'assistenza");
@@ -291,6 +289,7 @@ public class EventiDialog {
     private void updateLabelDataEliminazioneFornitore(String codiceFornitore) {
         FornitoriRetailEntity fornitore = getFornitoreFromCodice(codiceFornitore);
         if (fornitore == null) {
+            //noinspection ConstantValue
             context.addErrorMessage("Attenzione",
                     String.format("Errore recupero fornitore con codice %s.", codiceFornitore));
             btnSalvaEventoDisabled = true;
@@ -310,6 +309,7 @@ public class EventiDialog {
             return true;
         }
         FornitoriRetailEntity fornitore = getFornitoreFromCodice(bean.getCodiceFornitore());
+        //noinspection ConstantValue
         if (fornitore == null) {
             return true;
         }
@@ -326,11 +326,9 @@ public class EventiDialog {
         BigDecimal valoreContributo = bean.getValoreContributo();
         Date dataInizio = bean.getDataInizio();
         Date dataFine = bean.getDataFine();
-        String note = bean.getNote();
         boolean result = codiceFornitore == null || codiceFornitore.trim().isEmpty()
                 || causale == null || causale.trim().isEmpty()
                 || valoreContributo == null
-                || note == null || note.trim().isEmpty()
                 || dataInizio == null || dataFine == null || dataFine.before(dataInizio);
         return editing
                 ? result
@@ -354,6 +352,7 @@ public class EventiDialog {
             return;
         }
         FornitoriRetailEntity fornitore = getFornitoreFromCodice(codiceFornitore);
+        //noinspection ConstantValue
         if (fornitore == null || fornitore.getDataEliminazione() == null) {
             return;
         }
@@ -384,6 +383,7 @@ public class EventiDialog {
             return false;
         }
         FornitoriRetailEntity fornitore = getFornitoreFromCodice(bean.getCodiceFornitore());
+        //noinspection ConstantValue
         if (fornitore != null && fornitore.getDataEliminazione() != null) {
             Date dataEliminazioneFornitore = fornitore.getDataEliminazione();
             DateTimeUtils dateTimeUtils = new DateTimeUtils();

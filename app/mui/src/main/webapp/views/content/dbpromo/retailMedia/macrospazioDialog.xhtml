@@ -51,7 +51,7 @@
                                    styleClass="updateableMacrospaziContent"
                                    style="text-transform: capitalize; width: 100%; background-color: transparent;"
                                    value="#{templateView.currentView.macrospazioDialog.bean.listino}"
-                                   minValue="0" decimalPlaces="2">
+                                   minValue="0" decimalPlaces="0">
                         <p:ajax event="change" listener="#{templateView.currentView.macrospazioDialog.onListinoChange}"
                                 update="@(.addMacrospazioBtn)"/>
                     </p:inputNumber>

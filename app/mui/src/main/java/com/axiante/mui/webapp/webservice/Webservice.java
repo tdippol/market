@@ -33,7 +33,7 @@ public class Webservice extends Application {
 		webservices.add(SottoscrizioniResource.class);
         webservices.add(MacrospaziMediaServiceResource.class);
         webservices.add(EventiMediaServiceResource.class);
-		webservices.add(RifatturazioneResource.class);
+		webservices.add(GridServiceSPResource.class);
 		return webservices;
 	}
 }

@@ -197,9 +197,8 @@ public class MessaggiCastellettiBean implements Serializable, FacesContextAware,
     }
 
     public void handleTabChanged() {
-        boolean pendingChanges = dispositivi != null && !dispositivi.isEmpty()
-                && getMessaggiBean() != null && getMessaggiBean().isPendingChanges();
-        if (!pendingChanges && getMessaggiBean() != null) {
+        boolean pendingChanges = getMessaggiBean().isPendingChanges();
+        if (!pendingChanges) {
             getMessaggiBean().setMessaggioSelected(null);
             getMessaggiBean().clearForm();
         }
@@ -214,12 +213,6 @@ public class MessaggiCastellettiBean implements Serializable, FacesContextAware,
     public void prepareOuterTabChange() {
         pendingReason = PendingReason.OUTER_TAB;
         tabIndexToGo = retrieveTabIndexToGo();
-    }
-
-    public void handleTabCategoriaBuoni() {
-        if (dispositivi == null || dispositivi.isEmpty()) {
-            categoriaBuoniBean.setAddCategoriaBuonoBtnDisabled(true);
-        }
     }
 
     public void prepareDispositiviRowIndex() {

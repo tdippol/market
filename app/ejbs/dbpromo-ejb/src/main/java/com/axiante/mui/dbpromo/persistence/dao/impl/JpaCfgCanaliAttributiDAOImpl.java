@@ -1,15 +1,10 @@
 package com.axiante.mui.dbpromo.persistence.dao.impl;
 
 import com.axiante.mui.dbpromo.persistence.dao.CfgCanaliAttributiDAO;
-import com.axiante.mui.dbpromo.persistence.dao.DbPromoJpaDao;
 import com.axiante.mui.dbpromo.persistence.entities.CfgCanaliAttributiEntity;
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
+import lombok.NonNull;
 
-@DbPromoJpaDao
-@Slf4j
 public class JpaCfgCanaliAttributiDAOImpl extends JpaDbPromoDAO<CfgCanaliAttributiEntity> implements CfgCanaliAttributiDAO {
     private static final long serialVersionUID = 1623397023927662183L;
 

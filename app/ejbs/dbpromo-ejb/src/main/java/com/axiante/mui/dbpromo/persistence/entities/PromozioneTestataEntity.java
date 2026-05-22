@@ -100,6 +100,7 @@ import java.util.Set;
                         "LEFT JOIN FETCH pp.meccanicaEntity " +
                         "LEFT JOIN FETCH p.owners " +
                         "WHERE p.id = :id"),
+
         @NamedQuery(name = "PromozioneTestataEntity.findOverlappingPromoWithAttributo",
                 query = "SELECT p FROM PromozioneTestataEntity p " +
                         "INNER JOIN FETCH p.promozioneStatoEntities st " +

@@ -2,7 +2,6 @@ package com.axiante.mui.dbpromo.persistence.dao;
 
 import com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity;
 import com.axiante.mui.dbpromo.persistence.entities.GruppoPromozioneEntity;
-
 import java.util.List;
 
 public interface CanalePromozioneDAO extends DbPromoDAO<CanalePromozioneEntity> {
@@ -17,7 +16,6 @@ public interface CanalePromozioneDAO extends DbPromoDAO<CanalePromozioneEntity> 
 
 	List<CanalePromozioneEntity> findByCodiciCanale(List<Long> codiciCanale);
 
-	List<CanalePromozioneEntity> findByFlagRateSingolaAttivita();
-
 	Long countByIdWithTipologiaInitialLoad(Long id);
+
 }

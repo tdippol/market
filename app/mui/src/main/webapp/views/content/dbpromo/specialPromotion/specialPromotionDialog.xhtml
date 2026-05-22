@@ -1,0 +1,125 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="specialPromotionDialog"
+          widgetVar="specialPromotionDialog"
+          modal="true"
+          closable="false"
+          resizable="true"
+          header="Crea Promozione"
+          width="60%"
+          height="50vh"
+          styleClass="disable-horizontal-scroll">
+
+    <h:form id="specialPromotionDialogForm"
+            style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="specialPromotionDialogForm">
+
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <p:outputLabel for="descrizione" value="Descrizione" styleClass="input-field-label"/>
+                </div>
+                <div>
+                    <p:inputText id="descrizione"
+                                 styleClass="updateableSpecialPromotion input-field"
+                                 style="width: 100%;"
+                                 maxlength="100"
+                                 value="#{templateView.currentView.specialPromotionDialog.bean.descrizione}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 2rem;">
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="dataInizio" value="Data Inizio" styleClass="input-field-label"/>
+                </div>
+                <div>
+                    <p:datePicker id="dataInizio"
+                                  widgetVar="specialPromotionDataInizio"
+                                  styleClass="updateableSpecialPromotion input-field"
+                                  style="background-color: transparent;"
+                                  value="#{templateView.currentView.specialPromotionDialog.bean.dataInizio}"
+                                  readonlyInput="true"
+                                  pattern="dd/MM/yyyy"
+                                  mindate="#{templateView.currentView.specialPromotionDialog.today}">
+                        <p:ajax event="dateSelect"
+                                listener="#{templateView.currentView.specialPromotionDialog.onDataInizioSelect}"
+                                update="dataInizio dataFine dataReminder"/>
+                        <f:ajax event="change"
+                                listener="#{templateView.currentView.specialPromotionDialog.onDataInizioChange}"
+                                render="dataInizio dataFine dataReminder"/>
+                    </p:datePicker>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="dataFine" value="Data Fine" styleClass="input-field-label"/>
+                </div>
+                <div>
+                    <p:datePicker id="dataFine"
+                                  widgetVar="specialPromotionDataFine"
+                                  styleClass="updateableSpecialPromotion input-field"
+                                  style="background-color: transparent;"
+                                  value="#{templateView.currentView.specialPromotionDialog.bean.dataFine}"
+                                  readonlyInput="true"
+                                  pattern="dd/MM/yyyy"
+                                  mindate="#{templateView.currentView.specialPromotionDialog.today}">
+                        <p:ajax event="dateSelect"
+                                listener="#{templateView.currentView.specialPromotionDialog.onDataFineSelect}"
+                                update="dataInizio dataFine dataReminder"/>
+                        <f:ajax event="change"
+                                listener="#{templateView.currentView.specialPromotionDialog.onDataFineChange}"
+                                render="dataInizio dataFine dataReminder"/>
+                    </p:datePicker>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="dataReminder" value="Data Reminder" styleClass="input-field-label"/>
+                </div>
+                <div>
+                    <p:datePicker id="dataReminder"
+                                  widgetVar="specialPromotionDataReminder"
+                                  styleClass="updateableSpecialPromotion input-field"
+                                  style="background-color: transparent;"
+                                  value="#{templateView.currentView.specialPromotionDialog.bean.dataReminderInsParam}"
+                                  readonlyInput="true"
+                                  mindate="#{templateView.currentView.specialPromotionDialog.today}"
+                                  pattern="dd/MM/yyyy">
+                    </p:datePicker>
+                </div>
+            </div>
+        </div>
+
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla"
+                                 type="button"
+                                 form="specialPromotionDialogForm"
+                                 styleClass="ui-confirmdialog-no"
+                                 style="float: left;"
+                                 onclick="PF('specialPromotionDialog').hide()"
+                                 update=":specialPromotionDialogForm"/>
+            </div>
+            <div class="col-6">
+                <p:commandButton id="specialPromotionDialogConfirmButton"
+                                 value="Salva"
+                                 form="specialPromotionDialogForm"
+                                 styleClass="ui-confirmdialog-yes"
+                                 action="#{templateView.currentView.saveSpecialPromotion}"
+                                 update=":specialPromotionDialogForm :formGrowl:growl"
+                                 oncomplete="if (args.validationFailed) { return; } showGlobalLoader(); PF('specialPromotionDialog').hide(); if (args.createdPromoId &amp;&amp; args.landingPage) { openSchedaSpecialPromotionAfterCreate(args.createdPromoId, args.landingPage); } else { hideGlobalLoader(); reloadVisualizzaSpecialPromotionGrid(); }"/>
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+</html>

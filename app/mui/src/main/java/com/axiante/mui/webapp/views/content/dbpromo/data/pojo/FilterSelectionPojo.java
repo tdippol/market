@@ -1,13 +1,12 @@
 package com.axiante.mui.webapp.views.content.dbpromo.data.pojo;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @AllArgsConstructor
 @NoArgsConstructor
-public class FilterSelectionPojo implements Serializable, Comparable<FilterSelectionPojo> {
+public class FilterSelectionPojo implements Serializable, Comparable<FilterSelectionPojo>{
     private static final long serialVersionUID = -3761509330362692947L;
 
     private String key;

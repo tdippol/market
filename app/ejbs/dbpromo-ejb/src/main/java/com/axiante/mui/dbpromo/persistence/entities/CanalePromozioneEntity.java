@@ -3,13 +3,11 @@ package com.axiante.mui.dbpromo.persistence.entities;
 import com.axiante.mui.business.BooleanConverter;
 import com.axiante.mui.common.interfaces.ComboBoxCapable;
 import com.axiante.mui.dbpromo.persistence.Metadata;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
+import java.beans.Transient;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -27,11 +25,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.beans.Transient;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The persistent class for the MUI_CANALE_PROMOZIONE database table.
@@ -43,17 +42,15 @@ import java.util.Set;
 @Slf4j
 @Table(name = "MUI_CANALE_PROMOZIONE", schema = Metadata.SCHEMA)
 @NamedQueries({
-		@NamedQuery(name = "MuiCanalePromozione.findAll", query = "SELECT m FROM CanalePromozioneEntity m"),
-		@NamedQuery(name = "MuiCanalePromozione.findAllByGroup",
-				query = "SELECT c FROM CanalePromozioneEntity c WHERE c.gruppoPromozioneEntity = :gruppoPromozioneEntity"),
-		@NamedQuery(name = "MuiCanalePromozione.findByDescription",
-				query = "SELECT c FROM CanalePromozioneEntity c WHERE c.descrizione = :descrizione"),
-		@NamedQuery(name = "MuiCanalePromozione.findByCodiceCanale",
-				query = "SELECT c FROM CanalePromozioneEntity c WHERE c.codiceCanale = :codiceCanale"),
-		@NamedQuery(name = "MuiCanalePromozione.findByCodiciCanale",
-				query = "SELECT c FROM CanalePromozioneEntity c WHERE c.codiceCanale IN :codiciCanale"),
-		@NamedQuery(name = "MuiCanalePromozione.findByFlagRateSingolaAttivita",
-				query = "SELECT c FROM CanalePromozioneEntity c WHERE c.flRateSingolaAttivita = true"),
+	@NamedQuery(name = "MuiCanalePromozione.findAll", query = "SELECT m FROM CanalePromozioneEntity m"),
+	@NamedQuery(name = "MuiCanalePromozione.findAllByGroup",
+			query = "SELECT c FROM CanalePromozioneEntity c WHERE c.gruppoPromozioneEntity = :gruppoPromozioneEntity"),
+	@NamedQuery(name = "MuiCanalePromozione.findByDescription",
+			query = "SELECT c FROM CanalePromozioneEntity c WHERE c.descrizione = :descrizione"),
+	@NamedQuery(name = "MuiCanalePromozione.findByCodiceCanale",
+			query = "SELECT c FROM CanalePromozioneEntity c WHERE c.codiceCanale = :codiceCanale"),
+	@NamedQuery(name = "MuiCanalePromozione.findByCodiciCanale",
+			query = "SELECT c FROM CanalePromozioneEntity c WHERE c.codiceCanale IN :codiciCanale"),
 		@NamedQuery(name = "MuiCanalePromozione.countByIdWithTipologiaInitialLoad",
 				query = "SELECT count(c) FROM CanalePromozioneEntity c JOIN c.tipologiaRifatturazione t WHERE c.id = :id AND c.flRateSingolaAttivita = true")
 })

@@ -3,6 +3,7 @@ package com.axiante.mui.common.utility;
 import java.math.BigDecimal;
 
 public class DbPromoConstants {
+
 	public static final String COLUMN_DEF = "columnDef";
 	public static final String ROW_DATA = "rowData";
 
@@ -32,6 +33,5 @@ public class DbPromoConstants {
 
 	public final static String PIANO_MEDIA_DEFAULT_COLOR = "1066A8";
 	public final static String PIANO_MEDIA_BLACK_COLOR = "000000";
-
 	public final static String FLAG_SCONTO_RIFATTURABILE = "FLG_SCNT_RIF";
 }

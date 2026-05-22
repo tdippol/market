@@ -8,6 +8,7 @@ import com.axiante.mui.dbpromo.persistence.entities.FornitoreEntity;
 import com.axiante.mui.dbpromo.persistence.entities.PromozioneTestataEntity;
 import com.axiante.mui.dbpromo.persistence.entities.ResponsabileEntity;
 import com.axiante.mui.dbpromo.persistence.entities.TipoNegozioEntity;
+import lombok.NonNull;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -63,8 +64,6 @@ public interface PromoService extends DbPromoService<PromozioneTestataEntity>, S
 
 	List<FornitoreEntity> findAllFornitoriByCodiciCompratore(List<String> codiciCompratore);
 
-	List<FornitoreEntity> findAllFornitoriAttiviByCodiceCompratore(String codiceCompratore);
-
 	boolean runFunctionAccodamentoPubblicazioni(Long idPromozione, String username, Long idNuovoStatoPromozione)
 			throws Exception;
 
@@ -89,8 +88,7 @@ public interface PromoService extends DbPromoService<PromozioneTestataEntity>, S
 
 	List<String> findAllDistinctCedi();
 
-	Long copiaPromozione(String source, String codiceUtente, Long idPromozione, Date dataInizio, Date dataFine);
+	public List<FornitoreEntity> findAllFornitoriAttiviByCodiceCompratore(@NonNull String codiceCompratore);
 
-	List<PromozioneTestataEntity> findOverlappingPromoWithAttributo(final PromozioneTestataEntity promozioneTestataEntity,
-																	Long idAttributo, String valoreAttributo);
+	Long copiaPromozione(String source, String codiceUtente, Long idPromozione, Date dataInizio, Date dataFine);
 }

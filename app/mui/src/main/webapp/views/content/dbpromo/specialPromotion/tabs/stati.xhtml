@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <ui:include src="../dlgGestioneStatoSpecialPromotion.xhtml" />
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <div class="col-12">
+                        <p:commandButton value="Gestione Stato"
+                                         id="manageStatus"
+                                         styleClass="pf-btn-confirm"
+                                         actionListener="#{templateView.currentView.prepareGestioneStato}"
+                                         oncomplete="PF('dlgGestioneStatoSP').show()"
+                                         update="@(.dlgGestioneStatoSPClass)"
+                                         disabled="#{templateView.currentView.idSpecialPromotionCorrente == null}" />
+                    </div>
+
+                    <p:panel id="expandable_db_schedaspecialpromotion_stati"
+                             toggleable="true"
+                             toggleSpeed="500"
+                             closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedaspecialpromotion_stati">
+
+                        <f:facet name="header">
+                            <p:outputLabel value="Storico Stati" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham scheda_stati"
+                                      pt:gridid="db_schedaspecialpromotion_stati">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off"
+                                         id="stati_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedaspecialpromotion_stati',this.value)" />
+
+                            <p:commandLink title="Espandi Griglia"
+                                           styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedaspecialpromotion_stati')"
+                                           onerror="redirectToExpiredPage()" />
+
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedaspecialpromotion_stati','Storico Stati',true)"
+                                           onerror="redirectToExpiredPage()" />
+
+                            <p:commandLink title="Esporta Excel"
+                                           styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedaspecialpromotion_stati','Storico Stati')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+
+                            var specialPromotionID = #{templateView.currentView.idSpecialPromotionCorrente == null ? "null" : templateView.currentView.idSpecialPromotionCorrente};
+
+                            var gridParams_schedaSpecialPromotionStati = {
+                                gridTabGroup: 'schedaSpecialPromotion_tabs',
+                                gridTabPosition: #{templateView.currentView.indexOf(templateView.currentView.tabStati)},
+                                gridCode: 'db_schedaspecialpromotion_stati',
+                                gridTitle: 'SchedaPromo - Stati',
+                                url_columnDefs: contextPath + '/resources/specialpromotion/stati/columnDef' + addUrlParamContesto(#{templateView.currentView.contesto}),
+                                url_rowData: contextPath + '/resources/specialpromotion/stati/rowData/' + specialPromotionID,
+                                url_customSort: contextPath + '/resources/grid/sorting/db_schedaspecialpromotion_stati'
+                            };
+
+                            var gridOptions = {
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_schedaSpecialPromotionStati.gridCode);
+                                }
+                            };
+
+                            gridParams_schedaSpecialPromotionStati.gridOptions = gridOptions;
+
+                            $(document).ready(function() {
+                                if ($('.statiIdSpecialPromotion').text() !== '' &amp;&amp; currentActiveTab == gridParams_schedaSpecialPromotionStati.gridTabPosition) {
+                                    creaGriglia(gridParams_schedaSpecialPromotionStati);
+                                }
+                            });
+
+                        </script>
+
+                        <p:outputLabel value="#{templateView.currentView.idSpecialPromotionCorrente}"
+                                       class="statiIdSpecialPromotion"
+                                       style="visibility: hidden;" />
+
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

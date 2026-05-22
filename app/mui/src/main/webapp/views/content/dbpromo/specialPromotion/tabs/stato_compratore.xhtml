@@ -1,0 +1,236 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <h:panelGroup rendered="#{templateView.currentView.statoCompratoreBackingBean.disponibile}">
+                        <p:panel id="expandable_db_schedaspecialpromotion_pubblicazioni"
+                                 toggleable="true"
+                                 toggleSpeed="500"
+                                 closeSpeed="500"
+                                 styleClass="pnlGrid_Header updateableContent expandable_db_schedaspecialpromotion_pubblicazioni">
+
+                            <f:facet name="header">
+                                <p:outputLabel value="Stato Compratore" />
+                            </f:facet>
+
+
+
+                            <h:panelGroup layout="block"
+                                          style="height: 60vh; width: 100%;"
+                                          class="ag-theme-balham scheda_pubblicazioni"
+                                          pt:gridid="db_schedaspecialpromotion_pubblicazioni">
+                            </h:panelGroup>
+
+                            <f:facet name="actions">
+                                <p:inputText autocomplete="off"
+                                             id="pubblicazioni_quickfilter"
+                                             placeholder="Filtra..."
+                                             styleClass="pnlGrid_Header filterInputText"
+                                             onkeyup="onFilterTextBoxChangedpromoGrid('db_schedaspecialpromotion_pubblicazioni',this.value)" />
+
+                                <p:commandLink title="Espandi Griglia"
+                                               styleClass="pnlGrid_Header expandButton"
+                                               onclick="expandGrid('db_schedaspecialpromotion_pubblicazioni')"
+                                               onerror="redirectToExpiredPage()" />
+
+                                <p:commandLink title="Esporta con raggruppamenti"
+                                               styleClass="pnlGrid_Header exportButtonGrouped"
+                                               onclick="onBtExport('db_schedaspecialpromotion_pubblicazioni','Stato Compratore',true)"
+                                               onerror="redirectToExpiredPage()" />
+
+                                <p:commandLink title="Esporta Excel"
+                                               styleClass="pnlGrid_Header exportButton"
+                                               onclick="onBtExport('db_schedaspecialpromotion_pubblicazioni','Stato Compratore')"
+                                               onerror="redirectToExpiredPage()" />
+                            </f:facet>
+
+                            <script type="text/javascript">
+                                var specialPromotionIDStatoCompratore = #{templateView.currentView.idSpecialPromotionCorrente == null ? "null" : templateView.currentView.idSpecialPromotionCorrente};
+
+                                var gridParams_schedaSpecialPromotionStatoCompratore = {
+                                    gridTabGroup: 'schedaSpecialPromotion_tabs',
+                                    gridTabPosition: #{templateView.currentView.indexOf('TAB_STATO_COMPRATORE')},
+                                    gridCode: 'db_schedaspecialpromotion_pubblicazioni',
+                                    gridTitle: 'SchedaSpecialPromotion - Stato Compratore',
+                                    url_columnDefs: contextPath + '/resources/specialpromotion/pubblicazioni/columnDef' + addUrlParamContesto(#{templateView.currentView.contesto}),
+                                    url_rowData: contextPath + '/resources/specialpromotion/pubblicazioni/rowData/' + specialPromotionIDStatoCompratore,
+                                    url_customSort: contextPath + '/resources/grid/sorting/db_schedaspecialpromotion_pubblicazioni'
+                                };
+
+
+
+
+                                function confermaCambioSemaforo(idCompratore) {
+                                    if (!specialPromotionIDStatoCompratore || !idCompratore) {
+                                        return false;
+                                    }
+
+                                    if (!confirm('Confermi il cambio semaforo per questo compratore?')) {
+                                        return false;
+                                    }
+
+                                    $.ajax({
+                                        url: contextPath + '/resources/specialpromotion/pubblicazioni/toggle' + addUrlParamContesto(#{templateView.currentView.contesto}),
+                                        type: 'POST',
+                                        data: {
+                                            idPromozione: specialPromotionIDStatoCompratore,
+                                            idCompratore: idCompratore
+                                        },
+                                        success: function() {
+                                            creaGriglia(gridParams_schedaSpecialPromotionStatoCompratore);
+                                            location.reload();
+                                        },
+                                        error: function() {
+                                            alert('Errore durante l aggiornamento dello stato compratore');
+                                        }
+                                    });
+
+                                    return false;
+                                }
+
+                                var statoCompratoreCellRenderer = function(params) {
+                                    if (params.node.group) {
+                                        var firstLeaf = params.node.allLeafChildren &amp;&amp; params.node.allLeafChildren.length &gt; 0
+                                            ? params.node.allLeafChildren[0]
+                                            : null;
+
+                                        return firstLeaf &amp;&amp; firstLeaf.data &amp;&amp; firstLeaf.data.statoGruppo
+                                            ? firstLeaf.data.statoGruppo.value
+                                            : '';
+                                    }
+
+                                    return params.value ? params.value : '';
+                                };
+
+                        var azioneCambioSemaforoCellRenderer = function(params) {
+                            if (params.node.group) {
+                                return '';
+                            }
+
+                            var idCompratore = '';
+                            if (params.data != null &amp;&amp; params.data.idCompratore != null) {
+                                idCompratore = params.data.idCompratore.value;
+                            }
+
+                            if (!idCompratore) {
+                                return '';
+                            }
+
+                            var link = document.createElement('span');
+                            link.style.cursor = 'pointer';
+                            link.style.textDecoration = 'underline';
+                            link.textContent = 'Cambio semaforo';
+                            link.onclick = function() {
+                                return confermaCambioSemaforo(idCompratore);
+                            };
+
+                            return link;
+                        };
+
+                                var gridOptionsStatoCompratore = {
+                                    groupDisplayType: 'singleColumn',
+                                    autoGroupColumnDef: {
+                                        headerName: 'Descrizione',
+                                        width: 650,
+                                        cellStyle: {fontWeight: 'bold'},
+                                        field: 'descrizione.value',
+                                        cellRendererParams: {
+                                            suppressCount: true,
+                                            innerRenderer: function(params) {
+                                                if (params.node.group) {
+                                                    return params.node.key || '';
+                                                }
+
+                                                return params.data &amp;&amp; params.data.descrizione
+                                                    ? params.data.descrizione.value
+                                                    : '';
+                                            }
+                                        }
+                                    },
+                                    groupDefaultExpanded: 1,
+
+                                    onFirstDataRendered: function(event) {
+                                        event.columnApi.applyColumnState({
+                                            state: [
+                                                {colId: 'gruppo', hide: true},
+                                                {colId: 'descrizione', hide: true},
+                                                {colId: 'statoGruppo', hide: true},
+                                                {colId: 'stato', hide: false},
+                                                {colId: 'idCompratore', hide: true},
+                                                {colId: 'azione', hide: false}
+                                            ],
+                                            applyOrder: false
+                                        });
+
+                                        var statoColumn = event.columnApi.getColumn('stato');
+                                        if (statoColumn) {
+                                            statoColumn.getColDef().cellRenderer = statoCompratoreCellRenderer;
+                                        }
+
+                                        var azioneColumn = event.columnApi.getColumn('azione');
+                                        if (azioneColumn) {
+                                            azioneColumn.getColDef().cellRenderer = azioneCambioSemaforoCellRenderer;
+                                        }
+
+                                        event.api.refreshCells({
+                                            columns: ['stato', 'azione'],
+                                            force: true
+                                        });
+                                    },
+
+                                    onSortChanged: function(event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_schedaSpecialPromotionStatoCompratore.gridCode);
+                                    }
+                                };
+
+                                gridParams_schedaSpecialPromotionStatoCompratore.gridOptions = gridOptionsStatoCompratore;
+
+                                $(document).ready(function() {
+                                    if ($('.pubblicazioniIdSpecialPromotion').text() !== '' &amp;&amp; currentActiveTab == gridParams_schedaSpecialPromotionStatoCompratore.gridTabPosition) {
+                                        creaGriglia(gridParams_schedaSpecialPromotionStatoCompratore);
+                                    }
+                                });
+                            </script>
+
+                            <p:outputLabel value="#{templateView.currentView.idSpecialPromotionCorrente}"
+                                           class="pubblicazioniIdSpecialPromotion"
+                                           style="visibility: hidden;" />
+
+                        </p:panel>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{not templateView.currentView.statoCompratoreBackingBean.disponibile}">
+                        <p:panel id="pubblicazioniEmptyPanel"
+                                 toggleable="true"
+                                 toggleSpeed="500"
+                                 closeSpeed="500"
+                                 styleClass="pnlGrid_Header updateableContent">
+
+                            <f:facet name="header">
+                                <p:outputLabel value="Stato Compratore" />
+                            </f:facet>
+
+                            <div style="padding: 15px;">
+                                <h:outputText value="Contenuto disponibile solo per Special Promotion diverso da stato 10 - Non pubblicata." />
+                            </div>
+
+                        </p:panel>
+                    </h:panelGroup>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>
+</html>

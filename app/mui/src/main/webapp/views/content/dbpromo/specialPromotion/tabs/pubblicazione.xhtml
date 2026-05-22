@@ -1,0 +1,238 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <div class="row">
+        <div class="col-12">
+
+            <div id="k_grid_portletPubblicazione" class="k-portlet">
+
+                <p:panel id="expandable_db_grid_pubblicazione"
+                         toggleable="true"
+                         toggleSpeed="500"
+                         closeSpeed="500"
+                         styleClass="pnlGrid_Header updateableContent">
+
+                    <f:facet name="header">
+                        <p:outputLabel value="Pubblicazione"/>
+                    </f:facet>
+
+                    <h:panelGroup layout="block"
+                                  style="height: 60vh; width: 100%;"
+                                  class="ag-theme-balham grid_pubblicazione"
+                                  pt:gridid="db_grid_pubblicazione"/>
+
+                    <f:facet name="actions">
+
+                        <p:commandButton
+                                value="Pubblica"
+                                type="button"
+                                styleClass="ui-button-success"
+                                style="margin-right: 10px;"
+                                onclick="pubblicaCompratoriSP();"/>
+
+                        <p:inputText
+                                id="filterGrid"
+                                autocomplete="off"
+                                placeholder="Filtra..."
+                                styleClass="pnlGrid_Header filterInputText"
+                                onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_pubblicazione', this.value)"/>
+
+                        <p:commandLink
+                                title="Espandi Griglia"
+                                styleClass="pnlGrid_Header expandButton"
+                                onclick="expandGrid('db_grid_pubblicazione')"
+                                onerror="redirectToExpiredPage()"/>
+
+                        <p:commandLink
+                                title="Esporta Excel"
+                                styleClass="pnlGrid_Header exportButton"
+                                onclick="onBtExport('db_grid_pubblicazione', 'Pubblicazione')"
+                                onerror="redirectToExpiredPage()"/>
+
+                    </f:facet>
+
+                    <script type="text/javascript">
+
+                        var pubblicazioneApi = null;
+
+                        function getPubblicazioneCellValue(row, field) {
+
+                            if (!row || row[field] === null || row[field] === undefined) {
+                                return "";
+                            }
+
+                            if (typeof row[field] === "object"
+                                    &amp;&amp; row[field].value !== undefined) {
+
+                                return row[field].value;
+                            }
+
+                            return row[field];
+                        }
+
+                function pubblicaCompratoriSP() {
+
+                    if (!pubblicazioneApi) {
+                        return false;
+                    }
+
+                    var idCompratori = [];
+
+                    pubblicazioneApi.forEachNode(function(node) {
+
+                        if (!node || !node.data) {
+                            return;
+                        }
+
+                        var selected =
+                                getPubblicazioneCellValue(
+                                        node.data,
+                                        "selected"
+                                );
+
+                        if (selected === true || selected === "true") {
+
+                            var idCompratore =
+                                    getPubblicazioneCellValue(
+                                            node.data,
+                                            "idCompratore"
+                                    );
+
+                            if (idCompratore) {
+                                idCompratori.push(idCompratore);
+                            }
+                        }
+                    });
+
+                    if (idCompratori.length === 0) {
+
+                        alert('Seleziona almeno un compratore');
+
+                        return false;
+                    }
+
+                    if (!confirm('Confermi la pubblicazione dei compratori selezionati?')) {
+                        return false;
+                    }
+
+                    var completedCalls = 0;
+
+                    idCompratori.forEach(function(idCompratore) {
+
+                        $.ajax({
+
+                            url:
+                                contextPath
+                                + '/resources/specialpromotion/pubblicazioni/toggle'
+                                + addUrlParamContesto(#{templateView.currentView.contesto}),
+
+                            type: 'POST',
+
+                            data: {
+
+                                idPromozione:
+                                    #{templateView.currentView.idPromozioneCorrente},
+
+                                idCompratore:
+                                    idCompratore
+                            },
+
+                            success: function() {
+
+                                completedCalls++;
+
+                                if (completedCalls === idCompratori.length) {
+
+                                    creaGriglia(gridParamsPubblicazione);
+
+                                    location.reload();
+                                }
+                            },
+
+                            error: function() {
+
+                                alert(
+                                    'Errore durante la pubblicazione del compratore '
+                                    + idCompratore
+                                );
+                            }
+                        });
+                    });
+
+                    return false;
+                }
+
+                        var gridParamsPubblicazione = {
+
+                            gridCode: 'db_grid_pubblicazione',
+
+                            gridTitle: 'Pubblicazione',
+
+                            url_columnDefs:
+                                contextPath
+                                + '/resources/specialpromotion/pubblicazione/columnDef'
+                                + addUrlParamContesto(#{templateView.currentView.contesto}),
+
+                            url_rowData:
+                                contextPath
+                                + '/resources/specialpromotion/pubblicazione/rowData/#{templateView.currentView.idPromozioneCorrente}',
+
+                            url_customSort:
+                                contextPath
+                                + '/resources/grid/sorting/db_grid_pubblicazione'
+                        };
+
+                        var gridOptionsPubblicazione = {
+
+                            onGridReady: function(params) {
+
+                                pubblicazioneApi = params.api;
+
+                                params.api.sizeColumnsToFit();
+                            },
+
+                            onFirstDataRendered: function(params) {
+
+                                pubblicazioneApi = params.api;
+
+                                params.api.sizeColumnsToFit();
+                            },
+
+                            onSortChanged: function(event) {
+
+                                onSortChanged(
+                                    event,
+                                    contextPath
+                                    + '/resources/grid/sorting/save/'
+                                    + gridParamsPubblicazione.gridCode
+                                );
+                            }
+                        };
+
+                        gridParamsPubblicazione.gridOptions =
+                                gridOptionsPubblicazione;
+
+                        $(document).ready(function() {
+
+                            creaGriglia(gridParamsPubblicazione);
+
+                        });
+
+                    </script>
+
+                </p:panel>
+
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>
+
+</html>

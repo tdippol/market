@@ -1,0 +1,67 @@
+{
+  "columnDef": [
+    {
+      "field": "gruppo",
+      "rowGroup": true,
+      "width": 300,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "width": 350,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Stato",
+      "field": "stato",
+      "width": 220,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "field": "statoGruppo",
+      "width": 200,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Azione",
+      "field": "azione",
+      "width": 180,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "field": "idCompratore",
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

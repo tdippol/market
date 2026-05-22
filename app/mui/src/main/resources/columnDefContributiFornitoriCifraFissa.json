@@ -1,0 +1,25 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Fornitore",
+      "field": "fornitore",
+      "type": "string",
+      "editable": false,
+      "width": 260
+    },
+    {
+      "headerName": "Compratore",
+      "field": "compratore",
+      "type": "string",
+      "editable": false,
+      "width": 220
+    },
+    {
+      "headerName": "Cifra Fissa",
+      "field": "cifraFissa",
+      "type": "string",
+      "editable": false,
+      "width": 140
+    }
+  ]
+}

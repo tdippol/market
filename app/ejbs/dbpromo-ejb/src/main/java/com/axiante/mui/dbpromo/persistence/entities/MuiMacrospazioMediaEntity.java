@@ -18,7 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -37,50 +36,50 @@ import java.util.Date;
                 query = "SELECT COUNT(m) FROM MuiMacrospazioMediaEntity m WHERE m.descrizione = :descrizioneMacrospazio AND m.id NOT IN :excludedIds")
 })
 public class MuiMacrospazioMediaEntity implements Serializable, AuditLogInterface {
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @SequenceGenerator(
-            schema = Metadata.SCHEMA,
-            allocationSize = 1,
-            name = "MUI_MACROSPAZIO_MEDIA_ID_GENERATOR",
-            sequenceName = "MUI_MACROSPAZIO_MEDIA_ID_SEQ")
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "MUI_MACROSPAZIO_MEDIA_ID_GENERATOR")
-    @Column(name = "ID_MACROSPAZIO_MEDIA", unique = true, nullable = false, precision = 16)
-    private Long id;
+  @Id
+  @SequenceGenerator(
+      schema = Metadata.SCHEMA,
+      allocationSize = 1,
+      name = "MUI_MACROSPAZIO_MEDIA_ID_GENERATOR",
+      sequenceName = "MUI_MACROSPAZIO_MEDIA_ID_SEQ")
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "MUI_MACROSPAZIO_MEDIA_ID_GENERATOR")
+  @Column(name = "ID_MACROSPAZIO_MEDIA", unique = true, nullable = false, precision = 16)
+  private Long id;
 
-    @Column(name = "CODICE", length = 10, nullable = false)
-    private String codice;
+  @Column(name = "CODICE", length = 10, nullable = false)
+  private String codice;
 
-    @Column(name = "DESCRIZIONE", length = 255)
-    private String descrizione;
+  @Column(name = "DESCRIZIONE", length = 255)
+  private String descrizione;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATA_INIZIO", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date dataInizio;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "DATA_INIZIO", nullable = false)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+  private Date dataInizio;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATA_FINE", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date dataFine;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "DATA_FINE", nullable = false)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+  private Date dataFine;
 
-    @Column(name = "LISTINO", precision = 16, scale = 2)
-    private BigDecimal listino;
+  @Column(name="listino")
+  private Double listino;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATA_INSERIMENTO")
-    private Date dataInserimento;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "DATA_INSERIMENTO")
+  private Date dataInserimento;
 
-    @Column(name = "CODICE_UTENTE_INSERIMENTO", length = 50)
-    private String codiceUtenteInserimento;
+  @Column(name = "CODICE_UTENTE_INSERIMENTO", length = 50)
+  private String codiceUtenteInserimento;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATA_AGGIORNAMENTO")
-    private Date dataAggiornamento;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "DATA_AGGIORNAMENTO")
+  private Date dataAggiornamento;
 
-    @Column(name = "CODICE_UTENTE_AGGIORNAMENTO", length = 50)
-    private String codiceUtenteAggiornamento;
+  @Column(name = "CODICE_UTENTE_AGGIORNAMENTO", length = 50)
+  private String codiceUtenteAggiornamento;
 }
