@@ -1,0 +1,40 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Codice Attributo",
+      "field": "codiceAttributo",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Descrizione Attributo",
+      "field": "descrizioneAttributo",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName":"Seleziona tutti",
+      "field":"selected",
+      "width":140,
+      "type": "checkbox",
+      "editable":true,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":true,
+      "headerCheckboxSelection":true,
+      "headerCheckboxSelectionFilteredOnly":true
+    }
+  ]
+}

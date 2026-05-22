@@ -1,0 +1,248 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <ui:include src="./dialog/addCumulabilita.xhtml" />
+    <div class="col-5" style="padding:0;">
+        <p:panel id="gridCodeexpandable_db_cumulabilita" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                 styleClass="pnlGrid_Header updateableContent expandable_db_cumulabilita">
+            <f:facet name="header">
+                <p:commandButton title="Aggiungi #{templateView.currentView.currentTab.title}" value="+"
+                                 style="margin: 0 10px 0 0; border-radius: 5px;"
+                                 action="#{templateView.currentView.initDialog}"
+                                 oncomplete="PF('addCumulabilitaDialog').show()"
+                                 update="@(.addCumulabilitaDialogClass)"
+                                 id="gridCodeaddCumulabilita"
+                                 class="pf-btn-confirm btnAddCumulabilita">
+                    <p:resetInput target="addCumulabilitaDialog" />
+                </p:commandButton>
+                <p:outputLabel value="Anagrafica #{templateView.currentView.currentTab.title}" />
+            </f:facet>
+
+            <h:panelGroup layout="block" style="height: 50vh; width: 100%;" class="ag-theme-balham"
+                          pt:gridid="db_cumulabilita">
+            </h:panelGroup>
+
+            <f:facet name="actions">
+                <p:inputText autocomplete="off" id="db_cumulabilita_quickfilter" placeholder="Filtra..."
+                             styleClass="pnlGrid_Header filterInputText"
+                             onkeyup="onFilterTextBoxChangedpromoGrid('db_cumulabilita',this.value)" />
+                <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                               onclick="expandGrid('db_cumulabilita')"
+                               onerror="redirectToExpiredPage()" />
+                <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                               onclick="onBtExport('db_cumulabilita','${templateView.currentView.currentTab}')"
+                               onerror="redirectToExpiredPage()" />
+            </f:facet>
+
+            <script type="text/javascript">
+                var idCumulabilita = ''
+
+                var gridParams_cumulabilita = {};
+                var gridOptions = {};
+
+                $(document).ready(function() {
+                    prepareGrid();
+                    creaGriglia(gridParams_cumulabilita);
+                });
+
+                function prepareGrid(){
+
+                    gridParams_cumulabilita = {
+                        gridCode: 'db_cumulabilita',
+                        gridTitle: 'Cumulabilità',
+                        url_columnDefs: contextPath + '/resources/grid/cumulabilita/columnDef' + addUrlParamContesto(#{muiContext}),
+                        url_rowData: contextPath + '/resources/grid/cumulabilita/#{templateView.currentView.currentTab.value}/rowData',
+                        url_customSort: contextPath + '/resources/grid/sorting/db_cumulabilita'
+                    };
+                    gridOptions = {
+                        rowSelection: 'single',
+                        onSelectionChanged: onSelectionCumulabilita,
+                        onRowDataChanged: function (event) {
+                            //check is single row
+                            if (getRowData('db_cumulabilita').length == 1) {
+                                let row = getRowData('db_cumulabilita');
+                                idCumulabilita = row[0].id.value;
+                            }
+                            if (idCumulabilita != '') {
+                                setCurrentSelection(event, idCumulabilita);
+                            }
+                        },
+                        onSortChanged: function (event) {
+                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_cumulabilita.gridCode);
+                        }
+                    };
+                    gridParams_cumulabilita.additionColumnDefs = [
+                        { headerName: '', width: 75, cellRenderer: 'Cumulabilita_BtnCellRenderer', position:'prepend', pinned: 'left' }
+                    ];
+
+                    gridParams_cumulabilita.gridOptions = gridOptions;
+                }
+
+                function tabChanged(){
+                    let tab = $('.updateableTabValue').text();
+                    showAgGridLoadingOverlay('db_buoni');
+                    let gridOptions = getGridOptionFromGridMap('db_cumulabilita');
+                    // per qualche motivo sparisce il columnDef
+                    $.ajax({
+                            type: "GET",
+                            url: contextPath + '/resources/grid/cumulabilita/columnDef' + addUrlParamContesto(#{muiContext}),
+                            contentType: "application/json",
+                            success: function (data) {
+                                LT('Refreshed columndef => ', data);
+                                getGridOptionFromGridMap('db_cumulabilita').api.columnModel.setColumnDefs(data.columnDef);
+                            },
+                            error: ajaxErrorHandler
+                        });
+
+                    $.ajax({
+                            type: "GET",
+                            url: contextPath + '/resources/grid/cumulabilita/'+tab+'/rowData',
+                            contentType: "application/json",
+                            success: function (data) {
+                                getGridOptionFromGridMap('db_cumulabilita').api.setRowData(data.rowData);
+                            },
+                            error: ajaxErrorHandler
+                        });
+
+                    idCumulabilita = '';
+                }
+
+                function onSelectionCumulabilita() {
+                    var selectedRows = getGridOptionFromGridMap('db_cumulabilita').api.getSelectedRows()
+                    if(selectedRows.length > 0) {
+                        CL();
+                        //Aggiorno le griglie con i dati relative alla testata selezionata
+                        idCumulabilita = selectedRows[0].id.value;
+                        refreshRowData_buoni(idCumulabilita);
+                        updateIdCumulabilita([{ name: "idCumulabilita", value: idCumulabilita }])
+                    } else {
+                        updateIdCumulabilita([{ name: "idCumulabilita", value: "" }])
+                        //Svuota le griglie subordinate alla testata
+                        refreshRowData_buoni()
+                    }
+                    refreshStatusBtnAdd(selectedRows.length > 0);
+                }
+
+                function refreshStatusBtnAdd(rowSelected){
+                    //Chiamata al remote command
+                    updateGridButtons([{ name: "rowSelected", value: rowSelected }]);
+                }
+
+                function onCancelCumulabilita() {
+                    var idCumulabilita = $('.remove_idCumulabilita').text();
+                    if (idCumulabilita != '') {
+                        $.ajax({
+                            type: "DELETE",
+                            url: contextPath + '/resources/grid/cumulabilita/' + idCumulabilita,
+                            contentType: "text/plain",
+                            success: function (data) {
+                                getGridOptionFromGridMap('db_cumulabilita').api.setRowData(data.rowData);
+                                addInfoGrowl([
+                                    { name: 'title', value: 'Annullamento eseguito' },
+                                    { name: 'message', value: data.callbackMessage }
+                                ]);
+                                idCumulabilita = '';
+                                resetCumulabilitaId();
+                            },
+                            error: ajaxErrorHandler
+                        });
+                    }
+                    refreshRowData_buoni();
+                    PF('cancelCumulabilita_dialog').hide();
+                }
+
+                function onPublishCumulabilita() {
+                    var idCumulabilita = $('.publish_idCumulabilita').text();
+                    if (idCumulabilita != '') {
+                        $.ajax({
+                            type: "POST",
+                            url: contextPath + '/resources/grid/cumulabilita/' + idCumulabilita,
+                            contentType: "text/plain",
+                            success: function (data) {
+                                getGridOptionFromGridMap('db_cumulabilita').api.setRowData(data.rowData);
+                                addInfoGrowl([
+                                    { name: 'title', value: 'Pubblicazione eseguita' },
+                                    {name: 'message', value: data.callbackMessage}
+                                ]);
+                                idCumulabilita = '';
+                                resetCumulabilitaId();
+                            },
+                            error: ajaxErrorHandler
+                        });
+                    }
+                    refreshRowData_buoni();
+                    PF('publishCumulabilita_dialog').hide();
+                }
+
+                function setCurrentSelection(event, idCumulabilitaSelected) {
+                    //SET SELECTED NODE IN GRID HEADER
+                    var selectedNode = null;
+                    getGridOptionFromGridMap('db_cumulabilita').api.forEachNode(function (node) {
+                        if (node.data.id.value === idCumulabilitaSelected) {
+                            selectedNode = node;
+                            node.setSelected(true);
+                        }
+
+                    });
+                    //AUTO SCROLL TO SELECTED NODE
+                    getGridOptionFromGridMap('db_cumulabilita').api.ensureNodeVisible(selectedNode, 'middle');
+                    //REFRESH TABLES
+                    refreshRowData_buoni(idCumulabilitaSelected);
+                }
+            </script>
+            <p:remoteCommand name="updateAddCumulabilitaDialogOnTableSelection"
+                             update="@(.ui-confirmdialog-yes) @(.updateableDialogContent)"
+                             action="#{templateView.currentView.updateDialogOnTableSelection}" />
+
+            <p:remoteCommand name="updateGridButtons" actionListener="#{templateView.currentView.updateGridButtons}"
+                             update="@(.btnAddCumulabilita),@(.btnAddBuono)" />
+
+            <p:remoteCommand name="updateIdCumulabilita" actionListener="#{templateView.currentView.updateIdCumulabilita}"
+                             update="@(.btnAddCumulabilita),@(.btnAddBuono)" />
+
+            <p:remoteCommand name="cancelCumulabilita" action="#{templateView.currentView.cancelCumulabilita}"
+                             update="gridCodecancelCumulabilita_dialog @(.remove_idCumulabilita)" />
+
+            <p:remoteCommand name="publishCumulabilita" action="#{templateView.currentView.publishCumulabilita}"
+                             update="gridCodepublishCumulabilita_dialog @(.publish_idCumulabilita)" />
+
+            <p:remoteCommand name="resetCumulabilitaId" actionListener="#{templateView.currentView.resetCumulabilitaId}"
+                             update="@(.btnCumulabilita),@(.btnAddBuono)" />
+
+            <!-- Dialog conferma annullamento cumulabilita -->
+            <p:confirmDialog id="gridCodecancelCumulabilita_dialog" widgetVar="cancelCumulabilita_dialog"
+                             global="true" showEffect="fade" hideEffect="fade" icon="pi pi-exclamation-triangle"
+                             closable="false" styleClass="muiDialog" header="Avviso"
+                             message="#{templateView.currentView.confirmCancelMessage}">
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                 onclick="PF('cancelCumulabilita_dialog').hide()"/>
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                 onclick="onCancelCumulabilita()" />
+            </p:confirmDialog>
+
+            <!-- Dialog conferma pubblicazione cumulabilita -->
+            <p:confirmDialog id="gridCodepublishCumulabilita_dialog" widgetVar="publishCumulabilita_dialog"
+                             global="true" showEffect="fade" hideEffect="fade" icon="pi pi-exclamation-triangle"
+                             closable="false" styleClass="muiDialog" header="Avviso"
+                             message="#{templateView.currentView.confirmPublishMessage}">
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                 onclick="PF('publishCumulabilita_dialog').hide()"/>
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                 onclick="onPublishCumulabilita()" />
+            </p:confirmDialog>
+
+            <p:outputLabel value="#{ templateView.currentView.removeIdCumulabilita }"
+                           class="remove_idCumulabilita" style="visibility: hidden;"/>
+            <p:outputLabel value="#{ templateView.currentView.publishIdCumulabilita }"
+                           class="publish_idCumulabilita" style="visibility: hidden;"/>
+
+        </p:panel>
+    </div>
+</ui:composition>
+
+</html>

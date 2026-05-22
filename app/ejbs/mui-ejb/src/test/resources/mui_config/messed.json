@@ -1,0 +1,181 @@
+[
+	[{
+		"test": ""
+	}], {
+		"connection": "pippo",
+		"configurations": [{
+			"some property that's being skipped": true,
+			"name": "local_vm_dinamic",
+			"logMemory": true,
+			"logTime": true,
+			"skip": true,
+			"rowSuppressionEnabled": false,
+			"colSuppressionEnabled": false,
+			"suppressRowClickSelection": false,
+			"alertNoDataFound": false,
+			"pagination": false,
+			"maxCells": 0,
+			"maxCellsMessage": "test message",
+			"MDX": {
+				"ROWS": {
+					"NON_EMPTY": true,
+					"DIMENSIONS": {
+						"Store Sales Plan": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Store Sales Plan] )}, 0)}, ASC)}}"
+					}
+				},
+				"COLS": {
+					"NON_EMPTY": false,
+					"DIMENSIONS": {
+						"Countries_Currency": "{[Countries_Currency].[China] ,[Countries_Currency].[Singapore] }",
+						"Month": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Month] )}, 0)}, ASC)}} "
+					}
+				},
+				"FROM": "[Store Sales Plan]",
+				"WHERE": {
+					"Budget version": "[Budget version 1]",
+					"Retailers": "[Department Store]",
+					"Products": "[Cooking Gear]"
+				}
+			},
+			"ExecuteMDX": {
+				"Members": [
+					"Name",
+					"Attributes"
+				],
+				"Cells": [
+					"Ordinal",
+					"Value",
+					"Updateable",
+					"Consolidated",
+					"HasPicklist",
+					"PicklistValues"
+				]
+			},
+			"autoGroupColumnDef": {
+
+			},
+			"DynamicColumns": true,
+			"DynamicColumnsSettings": {
+				"headerconf": [
+					"Caption_Default",
+					"Monate_DE"
+				],
+				"headerdefaults": {
+					"marryChildren": true
+				},
+				"childrendefaults": {
+					"width": 100,
+					"editable": true,
+					"columnGroupShow": "always",
+					"type": [
+						"TM1DataColumnNumber",
+						"numericColumn"
+					]
+				},
+				"childrenCustomTypes": {
+					"Mrz": {
+						"type": [
+							"TM1DataColumnText",
+							"numericColumn"
+						]
+					},
+					"Dez": {
+						"type": [
+							"TM1DataColumnText",
+							"numericColumn"
+						]
+					}
+				}
+			},
+			"columnDefs": [{
+				"headerName": "Account",
+				"field": "StoreSalesPlan.Name",
+				"width": 200,
+				"hide": false,
+				"rowGroup": false,
+				"type": [
+					"TM1Element"
+				]
+			}],
+			"rowClassRules": {
+				"row_style_hidden": "(data.Compratore.Name == 'TOT_COMP' && data.Categoria.MUI_Level == 0) || (data.Compratore.Name != 'TOT_COMP' && data.Categoria.MUI_Level > 0)",
+				"row_style_1": "data.Compratore.Name=='S000' && ['_REP_01','_REP_02','_REP_03','_REP_04','_REP_05','_REP_06','_REP_09','_REP_11','_REP_12','_REP_14','_REP_50'].includes(data.Categoria.Name)",
+				"row_style_2": "data.Compratore.Name=='S000' && ['_REP_01_01','_REP_01_02','_REP_01_03','_REP_01_04','_REP_12_01','_REP_12_02','_REP_12_04'].includes(data.Categoria.Name)",
+				"row_style_3": "data.Compratore.Name=='TOT_COMP' && data.Categoria.MUI_Level == 1",
+				"row_style_4": "data.Compratore.Name=='TOT_COMP' && data.Categoria.MUI_Level == 2"
+			},
+			"groupRowAggNodes": {
+				"nodeGroupTrue": "leafChild.data.Compratore.Name != 'TOT_COMP' && leafChild.data.Compratore.Name != 'S000'",
+				"nodeGroupFalse": "((data.Compratore.Name=='S000' && ['_REP_01','_REP_02','_REP_03','_REP_04','_REP_05','_REP_06','_REP_09','_REP_11','_REP_12','_REP_14','_REP_50'].includes(data.Categoria.Name)) || (data.Compratore.Name == 'TOT_COMP' && data.Categoria.Name.indexOf('DIR_') > -1 ) || (data.Compratore.Name != 'TOT_COMP' && data.Compratore.Name != 'S000' ))"
+			},
+			"selections": [{
+					"source": {
+						"table": "gc_AssociazionePromo_Promozioni",
+						"dimension": "Promozione",
+						"attribute": "Descrizione"
+					},
+					"destination": [{
+							"table": "gc_AssociazionePromo_Associazioni",
+							"dimension": "Promozione",
+							"attribute": "Descrizione"
+						},
+						{
+							"table": "gc_AssociazionePromo_SezioniTematiche",
+							"dimension": "Promozione",
+							"attribute": "Descrizione"
+						}
+					]
+				},
+				{
+					"source": {
+						"table": "gc_AssociazionePromo_Promozioni",
+						"dimension": "Promozione",
+						"attribute": "Anno"
+					},
+					"destination": [{
+						"table": "gc_AssociazionePromo_Promozioni",
+						"dimension": "Promozione",
+						"attribute": "Anno"
+					}]
+				}
+			],
+			"actions": [{
+				"componentId": "btnAssociaId",
+				"componentLabel": "Associa",
+				"process": "MUI_DUMMY_CUB.Associa Promozione",
+				"timeout": -1,
+				"refresh": [
+					"gc_AssociazionePromo_Associazioni"
+				],
+				"params": [{
+						"dimension": "Promozione",
+						"attribute": "Descrizione",
+						"paramName": "inPromo",
+						"label": "Promozione",
+						"hasPicklist": false,
+						"disabled": true,
+						"visible": true
+					},
+					{
+						"dimension": "Promozione",
+						"attribute": "Anno",
+						"paramName": "inAnno",
+						"label": "Anno",
+						"hasPicklist": false,
+						"disabled": true,
+						"visible": false
+					},
+					{
+						"dimension": "PromozioneRiferimento",
+						"attribute": "Descrizione",
+						"paramName": "inRiferimento",
+						"label": "Riferimento",
+						"hasPicklist": false,
+						"disabled": true,
+						"visible": true
+					}
+				]
+			}]
+		}]
+	}
+]

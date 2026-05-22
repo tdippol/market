@@ -1,0 +1,172 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<ui:composition>
+    <ui:include src="dialogs/savePianoMediaDialog.xhtml" />
+    <ui:include src="dialogs/saveAllPianoMediaDialog.xhtml" />
+    <ui:include src="dialogs/dlgPromoRiferimento.xhtml" />
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <p:commandButton value="CREA" styleClass="pf-btn-confirm" id="saveAllPianoMedia"
+                                 onclick="PF('saveAllPianoMediaConfirmDialog').show();" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_grid_creaPianoMedia" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent">
+                        <f:facet name="header">
+                            <p:outputLabel value="Crea Piano Media" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham db_grid_creaPianoMedia"
+                                      pt:gridid="db_grid_creaPianoMedia" />
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_grid_creaPianoMedia_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_creaPianoMedia', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_creaPianoMedia')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_creaPianoMedia', 'Crea Piano Media', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_creaPianoMedia',' Crea Piano Media')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var gridParams_creaPianoMedia = {
+                                gridCode: 'db_grid_creaPianoMedia',
+                                gridTitle: 'Crea Piano Media',
+                                url_columnDefs: contextPath + '/resources/pianomedia/creaPianoMedia/columnDef'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/pianomedia/creaPianoMedia/rowData'
+                                    + addUrlParamContesto(#{muiContext})
+                            }
+                            // noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
+                            var gridOptions_creaPianoMedia = {
+                                suppressClipboardApi: true,
+                                enableCellChangeFlash: false,
+                                onCellValueChanged: function (event) {
+                                    var rowIndex = getRowNodeId(event);
+                                    var rowData = getRowData('db_grid_creaPianoMedia');
+                                    $.ajax({
+                                        type: "POST",
+                                        url: contextPath + '/resources/pianomedia/creaPianoMedia/update'
+                                            + addUrlParamContesto(#{muiContext}),
+                                        contentType: "application/json",
+                                        data: JSON.stringify(rowData[rowIndex]),
+                                        async: true,
+                                        success: function (data) {
+                                            showAgGridLoadingOverlay('db_grid_creaPianoMedia');
+                                            rowData[rowIndex] = data;
+                                            getGridOptionFromGridMap('db_grid_creaPianoMedia').api.setRowData(rowData);
+                                        },
+                                        error: function (jqXHR, exception, thrownError) {
+                                            ajaxErrorHandler(jqXHR, exception, thrownError, event);
+                                        }
+                                    })
+                                },
+                                processCellFromClipboard: function (params) {
+                                    return params.column.colId === 'descrizione'
+                                        ? params.value.toUpperCase()
+                                        : params.value;
+                                },
+                                onPasteStart: function (params) {
+                                    showAgGridLoadingOverlay('db_grid_creaPianoMedia');
+                                },
+                                onPasteEnd: function (params) {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: contextPath + "/resources/pianomedia/creaPianoMedia/rowData"
+                                            + addUrlParamContesto(#{muiContext}),
+                                        contentType: "application/json",
+                                        async: true,
+                                        success: function (data) {
+                                            getGridOptionFromGridMap('db_grid_creaPianoMedia').api.setRowData(data.rowData);
+                                        },
+                                        error: ajaxErrorHandler
+                                    });
+                                }
+                            }
+                            gridParams_creaPianoMedia.customizeColumnDefs = [
+                                {
+                                    columnDefId: "descrizione",
+                                    property: "cellEditorParams",
+                                    value: {transform_getValue: 'uppercase'}
+                                },
+                                {
+                                    columnDefId: "dataInizio",
+                                    property: "cellEditorParams",
+                                    value: {optionDate_startDate: '+1d'}
+                                },
+                                {
+                                    columnDefId: "dataFine",
+                                    property: "cellEditorParams",
+                                    value: {optionDate_startDate: '+1d'}
+                                },
+                                {
+                                    columnDefId: "promoRif",
+                                    property: "cellRendererParams",
+                                    value: {callback: promoRifCallback, btnTitle: "Seleziona promo riferimento"}
+                                },
+                                {
+                                    columnDefId: "promoSecA",
+                                    property: "cellRendererParams",
+                                    value: {callback: promoRifCallback, btnTitle: "Seleziona promo secondaria A"}
+                                },
+                                {
+                                    columnDefId: "promoSecB",
+                                    property: "cellRendererParams",
+                                    value: {callback: promoRifCallback, btnTitle: "Seleziona promo secondaria B"}
+                                },
+                                {
+                                    columnDefId: "promoSecC",
+                                    property: "cellRendererParams",
+                                    value: {callback: promoRifCallback, btnTitle: "Seleziona promo secondaria C"}
+                                }
+                            ];
+                            gridParams_creaPianoMedia.additionColumnDefs = [{
+                                headerName: '',
+                                width: 50,
+                                cellRenderer: 'CreaPianoMedia_BtnRenderer',
+                                position: 'prepend',
+                                suppressMovable: true
+                            }];
+                            gridParams_creaPianoMedia.gridOptions = gridOptions_creaPianoMedia;
+
+                            $(document).ready(function () {
+                                creaGriglia(gridParams_creaPianoMedia);
+                            });
+
+                            function promoRifCallback(params) {
+                                // Passo alla dialog la promo di riferimento in modo da selezionarla
+                                // Passo anche colId e rowIndex per avere le coordinate della cella "chiamante"
+                                let dlg = PF('PromoRifDialog');
+                                let value = (params.value &amp;&amp; params.value.value) ? params.value.value : "";
+                                dlg.jq.data('promoRifCode', value);
+                                dlg.jq.data('colId', params.column.colId);
+                                dlg.jq.data('rowIndex', params.rowIndex);
+                                dlg.show();
+                            }
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

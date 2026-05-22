@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+<ui:composition>
+    <ui:include src="dlgAddDefault.xhtml"/>
+    <ui:include src="dlgMissingDefaults.xhtml"/>
+
+    <p:confirmDialog id="deleteRifatturazioneInitialLoadConfirmDialog"
+                     widgetVar="deleteRifatturazioneInitialLoadConfirmDialog"
+                     showEffect="fade" hideEffect="fade" closable="false" closeOnEscape="false"
+                     styleClass="deleteRifatturazioneInitialLoadConfirmDialogClass"
+                     header="Attenzione"
+                     message="#{templateView.currentView.deleteRifatturazioneInitialLoadMessage}">
+        <p:commandButton value="Si" styleClass="pf-btn-confirm" style="float: right;"
+                         action="#{templateView.currentView.deleteRifatturazioneConfirmClicked}"
+                         update="@(.updateableInitialLoad) addFatturazioneDefault missingDefaultsBlock @(.updateableMissingDefaults)"
+                         oncomplete="PF('deleteRifatturazioneInitialLoadConfirmDialog').hide()"/>
+        <p:commandButton value="No" styleClass="pf-btn-cancel"
+                         action="#{templateView.currentView.deleteRifatturazioneCancelClicked}"
+                         update="@(.deleteRifatturazioneInitialLoadConfirmDialogClass)"
+                         oncomplete="PF('deleteRifatturazioneInitialLoadConfirmDialog').hide()"/>
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Aggiungi" class="pf-btn-confirm" id="addFatturazioneDefault"
+                                 action="#{templateView.currentView.prepareDialogAddDefault}"
+                                 disabled="#{templateView.currentView.addFatturazioneDefaultBtnDisabled}"
+                                 update="@(.formAddDefault) @(.dlgAddDefaultClass)"
+                                 oncomplete="PF('dlgAddDefault').show()"/>
+                <h:panelGroup id="missingDefaultsBlock">
+                    <p:commandButton value="Defaults Mancanti" class="pf-btn-danger" id="missingDefaults"
+                                     style="margin-left: 25px;"
+                                     rendered="#{not templateView.currentView.addFatturazioneDefaultBtnDisabled}"
+                                     oncomplete="PF('dlgMissingDefaults').show()"/>
+                </h:panelGroup>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <p:panel id="expandable_db_grid_rifatturazione_initial_load"
+                             toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableInitialLoad">
+                        <f:facet name="header">
+                            <p:outputLabel value="Riepilogo Defaults"/>
+                        </f:facet>
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham grid_rifatturazione_initialload"
+                                      pt:gridid="db_grid_rifatturazione_initialload">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_grid_rifatturazione_initialload_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_rifatturazione_initialload', this.value)"/>
+                            <!--suppress JSUnresolvedReference -->
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_rifatturazione_initialload')"
+                                           onerror="redirectToExpiredPage()"/>
+                            <!--suppress JSUnresolvedReference -->
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_rifatturazione_initialload', 'Riepilogo Rifatturazioni Initial Load', true)"
+                                           onerror="redirectToExpiredPage()"/>
+                            <!--suppress JSUnresolvedReference -->
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_rifatturazione_initialload', 'Riepilogo Rifatturazioni Initial Load')"
+                                           onerror="redirectToExpiredPage()"/>
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            function openRifatturazioneInitialLoadEditDialog(row) {
+                                // noinspection JSUnresolvedReference
+                                editRifatturazione([{name: 'id', value: row.id.value}]);
+                            }
+
+                            function openRifatturazioneInitialLoadDeleteDialog(row) {
+                                // noinspection JSUnresolvedReference
+                                deleteRifatturazione([{name: 'id', value: row.id.value}]);
+                            }
+
+                            // noinspection JSUnresolvedReference
+                            var gridParamsRifatturazioneInitialLoad = {
+                                gridCode: 'db_grid_rifatturazione_initialload',
+                                gridTitle: 'Riepilogo Rifatturazione Initial Load',
+                                url_columnDefs: contextPath + '/resources/rifatturazione/initialload/columnDef',
+                                url_rowData: contextPath + '/resources/rifatturazione/initialload/rowData',
+                                url_customSort: contextPath + '/resources/grid/sorting/db_grid_rifatturazione_initialload'
+                            };
+                            var gridOptionsRifatturazioneInitialLoad = {
+                                onSortChanged: function (event) {
+                                    // noinspection JSUnresolvedReference
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_rifatturazione_initialload');
+                                }
+                            };
+                            gridParamsRifatturazioneInitialLoad.gridOptions = gridOptionsRifatturazioneInitialLoad;
+
+                            $(document).ready(function () {
+                                creaGriglia(gridParamsRifatturazioneInitialLoad);
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p:remoteCommand name="deleteRifatturazione"
+                     action="#{templateView.currentView.deleteRifatturazioneClicked}"
+                     update="@(.deleteRifatturazioneInitialLoadConfirmDialogClass)"
+                     oncomplete="PF('deleteRifatturazioneInitialLoadConfirmDialog').show()"/>
+    <p:remoteCommand name="editRifatturazione"
+                     action="#{templateView.currentView.editRifatturazioneClicked}"
+                     update="@(.formAddDefault) @(.dlgAddDefaultClass)"
+                     oncomplete="PF('dlgAddDefault').show()"/>
+    <style>
+        .deleteRifatturazioneInitialLoadConfirmDialogClass {
+            white-space: pre-line;
+        }
+    </style>
+</ui:composition>
+</html>

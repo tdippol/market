@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="muipromoPU" transaction-type="JTA">
+        <jta-data-source>jdbc/muipromo/muipromo/Ora</jta-data-source>
+
+        <class>com.axiante.mui.persistence.entity.AclEntity</class>
+        <class>com.axiante.mui.persistence.entity.RolesEntity</class>
+        <class>com.axiante.mui.persistence.entity.UsersEntity</class>
+        <class>com.axiante.mui.persistence.entity.MenuEntity</class>
+        <class>com.axiante.mui.persistence.entity.ApplicationPropertiesEntity</class>
+        <class>com.axiante.mui.persistence.entity.ConnectionSetupEntity</class>
+        <class>com.axiante.mui.persistence.entity.ConfigurationEntity</class>
+        <class>com.axiante.mui.persistence.entity.AuditLogEntity</class>
+        <class>com.axiante.mui.persistence.entity.CanaleEntity</class>
+        <class>com.axiante.mui.persistence.entity.GroupEntity</class>
+        <class>com.axiante.mui.persistence.entity.MenuRoleEntity</class>
+        <class>com.axiante.mui.persistence.entity.MenuRoleId</class>
+        <class>com.axiante.mui.persistence.entity.UploadDocumentEntity</class>
+        <class>com.axiante.mui.persistence.entity.MuiContext</class>
+        <class>com.axiante.mui.persistence.entity.GruppoCanaleEntity</class>
+        <class>com.axiante.mui.persistence.entity.RepartoEntity</class>
+        <class>com.axiante.mui.persistence.entity.GruppoRepartoEntity</class>
+		<class>com.axiante.mui.persistence.entity.CompratoreEntity</class>
+        <class>com.axiante.mui.persistence.entity.GruppoCompratoreEntity</class>
+        <class>com.axiante.mui.persistence.entity.GrmEntity</class>
+        <class>com.axiante.mui.persistence.entity.GruppoGrmEntity</class>
+        <class>com.axiante.mui.persistence.entity.ArticoloEntity</class>
+        <class>com.axiante.mui.persistence.entity.PianoMediaSecurityEntity</class>
+
+
+        <class>com.axiante.mui.business.BooleanConverter</class>
+        <class>com.axiante.mui.business.SecurityEnumConverter</class>
+
+
+        <class>com.axiante.mui.persistence.entity.SlowRolesEntity</class>
+        <shared-cache-mode>NONE</shared-cache-mode>
+<!--
+        <properties>
+	        <property name="eclipselink.logging.level" value="SEVERE"/>
+	        <property name="eclipselink.logging.level.sql" value="FINE"/>
+			<property name="eclipselink.logging.parameters" value="true"/>
+        </properties>
+-->
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+	<persistence-unit name="aclTestPU" transaction-type="RESOURCE_LOCAL">
+        
+        <class>com.axiante.mui.persistence.entity.AclEntity</class>
+        <class>com.axiante.mui.persistence.entity.RolesEntity</class>
+        <class>com.axiante.mui.persistence.entity.UsersEntity</class>
+        <class>com.axiante.mui.persistence.entity.MenuEntity</class>
+        <class>com.axiante.mui.persistence.entity.ApplicationPropertiesEntity</class>
+        <class>com.axiante.mui.persistence.entity.ConnectionSetupEntity</class>
+        <class>com.axiante.mui.persistence.entity.ConfigurationEntity</class>
+        <class>com.axiante.mui.persistence.entity.AuditLogEntity</class> 
+        <class>com.axiante.mui.business.BooleanConverter</class>
+        <class>com.axiante.mui.business.SecurityEnumConverter</class>
+        <class>com.axiante.mui.persistence.entity.CanaleEntity</class>
+        <class>com.axiante.mui.persistence.entity.GroupEntity</class>
+        <class>com.axiante.mui.persistence.entity.MenuRoleEntity</class>
+        <class>com.axiante.mui.persistence.entity.MenuRoleId</class>
+        <class>com.axiante.mui.persistence.entity.UploadDocumentEntity</class>
+        <class>com.axiante.mui.persistence.entity.MuiContext</class>
+        <class>com.axiante.mui.persistence.entity.GruppoCanaleEntity</class>
+        <class>com.axiante.mui.persistence.entity.RepartoEntity</class>
+        <class>com.axiante.mui.persistence.entity.GruppoRepartoEntity</class>
+        
+        <class>com.axiante.mui.persistence.entity.CompratoreEntity</class>
+        <class>com.axiante.mui.persistence.entity.GruppoCompratoreEntity</class>
+        <class>com.axiante.mui.persistence.entity.GrmEntity</class>
+        <class>com.axiante.mui.persistence.entity.GruppoGrmEntity</class>
+        <class>com.axiante.mui.persistence.entity.ArticoloEntity</class>
+        <class>com.axiante.mui.persistence.entity.SlowRolesEntity</class>
+        <class>com.axiante.mui.persistence.entity.PianoMediaSecurityEntity</class>
+
+
+        <properties>
+        
+            <!-- h2 -->
+			<!-- posso ricreare lo schema senza reinizializzare il db, 50% + veloce -->
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS MUIPROMO;MODE=ORACLE" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="sa" />
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!--
+            <property name="eclipselink.deploy-on-startup" value="true" />
+            <property name="javax.persistence.sql-load-script-source" value="muipromo_db/fill_database.sql"/>
+-->
+
+            <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
+            <property name="javax.persistence.schema-generation.drop-source" value="metadata"/>
+            <property name="javax.persistence.sql-load-script-source" value="muipromo_db/fill_database.sql"/>
+
+            <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+            <property name="eclipselink.logging.logger" value="DefaultLogger"/>
+            <property name="eclipselink.logging.level" value="SEVERE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+<!--
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+-->
+
+        </properties>
+    </persistence-unit>
+</persistence>

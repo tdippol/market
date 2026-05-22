@@ -1,0 +1,373 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <!-- Dialog conferma disassociazione meccanica / canale -->
+                    <h:form id="parametriCanaleForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-1 ui-md-1 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="rangeMin" value="Range Min" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText value="#{templateView.currentView.codeRangeMin}" id="rangeMin"
+                                                 styleClass="updateableCanale" style="width: 100% !important">
+                                        <p:ajax />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-1 ui-md-1 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="rangeMax" value="Range Max" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText value="#{templateView.currentView.codeRangeMax}" id="rangeMax"
+                                                 styleClass="updateableCanale" style="width: 100% !important">
+                                        <p:ajax />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-1 ui-md-1 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="maxProgressivo" value="Max Contributi"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText value="#{templateView.currentView.maxProgressivo}" id="maxProgressivo"
+                                                 styleClass="updateableCanale" style="width: 100% !important">
+                                        <p:ajax />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-1 ui-md-1 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="maxUpload" value="Max Upload" class="input-field-label " />
+                                </div>
+                                <div>
+                                    <p:inputText value="#{templateView.currentView.abilitaUpload}" id="maxUpload"
+                                                 styleClass="updateableCanale" style="width: 100% !important">
+                                        <p:ajax />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-2 ui-md-2 ui-lg-2">
+                                <p:panel header="Modalità upload estesa" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox value="#{templateView.currentView.modalitaUploadEstesa}"
+                                                             itemLabel="Attiva">
+                                        <p:ajax />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-2 ui-md-1 ui-lg-2">
+                                <p:panel header="Blocco testate" styleClass="updateableCanale">
+                                    <div class="row" style="max-height: 21.5px !important;">
+                                        <div class="col-5">
+                                            <p:selectBooleanCheckbox id="flTotaleAttivo"
+                                                                     value="#{templateView.currentView.limiteTestateAttivo}"
+                                                                     itemLabel="Attivo">
+                                                <p:ajax event="valueChange" update="@(.maxTestate)" />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-7">
+                                            <h:outputLabel for="maxTestate" value="MAX" />
+                                            <p:inputNumber
+                                                    id="maxTestate" minValue="0"
+                                                    decimalPlaces="0"
+                                                    value="#{templateView.currentView.canaleSelezionato.maxPromo}"
+                                                    styleClass="maxTestate"
+                                                    disabled="#{templateView.currentView.limiteTestateAttivo == false}"
+                                                    inputStyle="width: 50% !important; max-height: 30px !important; padding-top: 0; margin-left: 10px">
+                                                <p:ajax listener="#{templateView.currentView.limiteTestateChanged}" />
+                                            </p:inputNumber>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-2 ui-md-1 ui-lg-2">
+                                <p:panel header="Differenziazione negozi" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox id="flDifferenziazioneNegozi" itemLabel="Attiva"
+                                                             value="#{templateView.currentView.flDifferenziazioneNegozi}">
+                                        <p:ajax event="valueChange" />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-2 ui-md-1 ui-lg-2">
+                                <p:panel header="Usa lista condizionale" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox id="flListaCondizionale" itemLabel="Attiva"
+                                                             value="#{templateView.currentView.flListaCondizionale}">
+                                        <p:ajax event="valueChange" />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-2 ui-md-2 ui-lg-2">
+                                <p:panel header="Associazione Valore Punto Fragola" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox value="#{templateView.currentView.flValorePuntoFragola}"
+                                                             itemLabel="Attiva">
+                                        <p:ajax />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-2 ui-md-2 ui-lg-2">
+                                <p:panel header="Override pianificazione" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox
+                                            value="#{templateView.currentView.flOverridePianificazione}"
+                                            itemLabel="Data inizio">
+                                        <p:ajax />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-8 ui-md-8 ui-lg-8">
+                                <p:panel header="Tolleranza Blocco Pianificazione" styleClass="updateableCanale">
+                                    <div class="row" style="max-height: 21.5px !important;">
+                                        <div class="col-2">
+                                            <p:selectBooleanCheckbox id="flAttivaCheckDate"
+                                                                     value="#{templateView.currentView.flCheckDate}"
+                                                                     itemLabel="Attiva">
+                                                <p:ajax />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-2">
+                                            <p:outputLabel for="tolleranzaDataInizio" value="Ore inizio " />
+                                            <p:inputNumber id="tolleranzaDataInizio"
+                                                           value="#{templateView.currentView.tolleranzaDataInizio}"
+                                                           thousandSeparator=""
+                                                           decimalSeparator="."
+                                                           decimalPlaces="0"
+                                                           emptyValue="0"
+                                                           minValue="-999"
+                                                           maxValue="999"
+                                                           inputStyle="width: 50% !important; max-height: 30px !important; padding-top: 0; margin-left: 10px">
+                                                <p:ajax />
+                                            </p:inputNumber>
+                                        </div>
+                                        <div class="col-2">
+                                            <p:outputLabel for="tolleranzaDataFine" value="Ore fine " />
+                                            <p:inputNumber id="tolleranzaDataFine"
+                                                           value="#{templateView.currentView.tolleranzaDataFine}"
+                                                           thousandSeparator=""
+                                                           decimalSeparator="."
+                                                           decimalPlaces="0"
+                                                           emptyValue="0"
+                                                           inputStyle="width: 50% !important; max-height: 30px !important; padding-top: 0; margin-left: 10px">
+                                                <p:ajax />
+                                            </p:inputNumber>
+                                        </div>
+                                        <div class="col-3">
+                                            <p:selectBooleanCheckbox id="flAttivaDeleteAfter"
+                                                                     value="#{templateView.currentView.flDeleteEnabled}"
+                                                                     itemLabel="Abilita Cancellazione">
+                                                <p:ajax />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-3">
+                                            <p:outputLabel for="giorniDopoDataFine" value="Giorni da data fine " />
+                                            <p:inputNumber id="giorniDopoDataFine"
+                                                           value="#{templateView.currentView.giorniDopoDataFine}"
+                                                           thousandSeparator=""
+                                                           decimalSeparator="."
+                                                           decimalPlaces="0"
+                                                           emptyValue="0"
+                                                           inputStyle="width: 50% !important; max-height: 30px !important; padding-top: 0; margin-left: 10px">
+                                                <p:ajax />
+                                            </p:inputNumber>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-4 ui-md-4 ui-lg-4">
+                                <p:panel header="Consenti duplicazione" styleClass="updateableCanale">
+                                    <div class="row" style="max-height: 21.5px !important;">
+                                        <div class="col-3">
+                                            <p:selectBooleanCheckbox value="#{templateView.currentView.duplicaArticolo}"
+                                                                     itemLabel="Articolo">
+                                                <p:ajax />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-3">
+                                            <p:selectBooleanCheckbox value="#{templateView.currentView.duplicaReparto}"
+                                                                     itemLabel="Reparto">
+                                                <p:ajax />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-3">
+                                            <p:selectBooleanCheckbox value="#{templateView.currentView.duplicaGrm}"
+                                                                     itemLabel="Grm">
+                                                <p:ajax />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-3">
+                                            <p:selectBooleanCheckbox value="#{templateView.currentView.duplicaTotale}"
+                                                                     itemLabel="Totale">
+                                                <p:ajax />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-4 ui-md-4 ui-lg-4">
+                                <p:panel header="Meccanica Singola in Promozione" styleClass="updateableCanale">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p:selectBooleanCheckbox
+                                                    value="#{templateView.currentView.flMeccanicaSingola}"
+                                                    itemLabel="Attiva Meccanica Singola">
+                                                <p:ajax event="valueChange" update="@(.flBidoneApertoClass)" />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-6">
+                                            <p:selectBooleanCheckbox value="#{templateView.currentView.flBidoneAperto}"
+                                                                     disabled="#{templateView.currentView.flBidoneApertoDisabled}"
+                                                                     styleClass="flBidoneApertoClass"
+                                                                     itemLabel="Attiva Bidone Aperto">
+                                                <p:ajax />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-1 ui-md-1 ui-lg-2">
+                                <p:panel header="Marchio Privato" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox id="flMarchioPrivato" value="#{templateView.currentView.flMarchioPrivato}"
+                                                             itemLabel="Attivo">
+                                        <p:ajax event="valueChange" />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-1 ui-md-1 ui-lg-2">
+                                <p:panel header="Logo e Messaggi" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox id="flLogoMessaggio" value="#{templateView.currentView.flLogoMessaggio}"
+                                                             itemLabel="Attivo">
+                                        <p:ajax event="valueChange" />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-1 ui-md-1 ui-lg-2">
+                                <p:panel header="Calcola Reparto" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox id="flCalcolaReparto" value="#{templateView.currentView.flCalcolaReparto}"
+                                                             itemLabel="Attivo">
+                                        <p:ajax event="valueChange" />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-1 ui-md-1 ui-lg-2">
+                                <p:panel header="Sicurezza Set" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox id="flSicurezzaSet" value="#{templateView.currentView.flSicurezzaSet}"
+                                                             itemLabel="Attivo">
+                                        <p:ajax event="valueChange" />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-1 ui-md-1 ui-lg-2">
+                                <p:panel header="Abilita CB multitransazione" styleClass="updateableCanale">
+                                    <p:selectBooleanCheckbox id="flCbMultitransazione" value="#{templateView.currentView.flCbMultitransazione}"
+                                                             itemLabel="Attivo">
+                                        <p:ajax event="valueChange" />
+                                    </p:selectBooleanCheckbox>
+                                </p:panel>
+                            </div>
+                            <div class="ui-g-6 ui-md-6 ui-lg-6">
+                                <p:panel header="Offset Overlap" styleClass="updateableCanale">
+                                    <div class="row" style="max-height: 21.5px !important;">
+                                        <div class="col-2">
+                                            <p:selectBooleanCheckbox id="flOverlapOffet"
+                                                                     value="#{templateView.currentView.flOverlapOffet}"
+                                                                     itemLabel="Attiva">
+                                                <p:ajax />
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-5">
+                                            <p:outputLabel for="overlapOffsetStart" value="Offset Data inizio " />
+                                            <p:inputNumber id="overlapOffsetStart"
+                                                           value="#{templateView.currentView.overlapOffsetStart}"
+                                                           thousandSeparator=""
+                                                           decimalSeparator="."
+                                                           decimalPlaces="0"
+                                                           emptyValue="0"
+                                                           minValue="-999"
+                                                           maxValue="999"
+                                                           inputStyle="width: 50% !important; max-height: 30px !important; padding-top: 0; margin-left: 10px">
+                                                <p:ajax />
+                                            </p:inputNumber>
+                                        </div>
+                                        <div class="col-5">
+                                            <p:outputLabel for="overlapOffsetEnd" value="Offset Data fine " />
+                                            <p:inputNumber id="overlapOffsetEnd"
+                                                           value="#{templateView.currentView.overlapOffsetEnd}"
+                                                           thousandSeparator=""
+                                                           decimalSeparator="."
+                                                           decimalPlaces="0"
+                                                           emptyValue="0"
+                                                           inputStyle="width: 50% !important; max-height: 30px !important; padding-top: 0; margin-left: 10px">
+                                                <p:ajax />
+                                            </p:inputNumber>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-6 ui-md-4 ui-lg-6">
+                                <p:panel header="Rifatorizzazione a fornitore" styleClass="updateableCanale">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <p:selectBooleanCheckbox id="flRateCifraFissa"
+                                                                     value="#{templateView.currentView.flRateCifraFissa}"
+                                                                     itemLabel="Rate Cifra Fissa">
+                                                <p:ajax event="valueChange"/>
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-3">
+                                            <p:selectBooleanCheckbox id="flRateCostoContatto"
+                                                                     value="#{templateView.currentView.flRateCostoContatto}"
+                                                                     itemLabel="Rate Costo Contatto">
+                                                <p:ajax event="valueChange"/>
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-3">
+                                            <p:selectBooleanCheckbox id="flRateSingolaAttivita"
+                                                                     value="#{templateView.currentView.flRateSingolaAttivita}"
+                                                                     itemLabel="Rate Singola Attivita">
+                                                <p:ajax event="valueChange"/>
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="col-3">
+                                            <div>
+                                                <p:outputLabel for="valoreCostoContatto" value="Valore Costo Contatto"
+                                                               class="input-field-label"/>
+                                            </div>
+                                            <div>
+                                                <p:inputText value="#{templateView.currentView.valoreCostoContatto}"
+                                                             id="valoreCostoContatto"
+                                                             styleClass="updateableCanale"
+                                                             style="width: 100% !important">
+                                                    <p:ajax/>
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

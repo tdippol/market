@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<ui:composition>
+    <div class="filtriSelezione">
+        <div class="row">
+            <div class="col-4">
+                <p:selectOneMenu id="cercaArticoloDialogCompratori"
+                                 onchange="showLoading_gridData()"
+                                 value="#{templateView.currentView.cercaDialogBackingBean.idCompratoreCorrente}"
+                                 class="input-field" style="width: 250px; font-size: 14px;"
+                                 filter="true" filterMatchMode="contains">
+                    <p:ajax update="@(.selezioneTab) @(.buyerChosen)"
+                            listener="#{templateView.currentView.cercaDialogBackingBean.updateSelezioneGrid}" />
+                    <f:selectItem itemLabel="Seleziona compratore"
+                                  noSelectionOption="true" />
+                    <f:selectItems
+                            value="#{templateView.currentView.cercaDialogBackingBean.compratori.entrySet()}"
+                            var="entry" itemLabel="#{entry.value}"
+                            itemValue="#{entry.key}" />
+                </p:selectOneMenu>
+            </div>
+            <div class="col-4">
+                <p:selectOneMenu id="cercaArticoloDialogFornitori"
+                                 onchange="showLoading_gridData()"
+                                 value="#{templateView.currentView.cercaDialogBackingBean.idFornitoreCorrente}"
+                                 class="input-field" style="width: 250px; font-size: 14px;"
+                                 filter="true" filterMatchMode="contains">
+                    <p:ajax update="@(.selezioneTab) @(.supplierChosen)"
+                            listener="#{templateView.currentView.cercaDialogBackingBean.updateSelezioneGrid}" />
+                    <f:selectItem itemLabel="Seleziona fornitore"
+                                  noSelectionOption="true" />
+                    <f:selectItems
+                            value="#{templateView.currentView.cercaDialogBackingBean.fornitori.entrySet()}"
+                            var="entry" itemLabel="#{entry.value}"
+                            itemValue="#{entry.key}" />
+                </p:selectOneMenu>
+            </div>
+            <div class="col-4">
+                <p:selectOneMenu id="cercaArticoloDialogReparti"
+                                 onchange="showLoading_gridData()"
+                                 value="#{templateView.currentView.cercaDialogBackingBean.idRepartoCorrente}"
+                                 class="input-field" style="width: 250px; font-size: 14px;"
+                                 filter="true" filterMatchMode="contains">
+                    <p:ajax update="@(.selezioneTab) @(.departmentChosen)"
+                            listener="#{templateView.currentView.cercaDialogBackingBean.updateSelezioneGrid}" />
+                    <f:selectItem itemLabel="Seleziona reparto" noSelectionOption="true" />
+                    <f:selectItems
+                            value="#{templateView.currentView.cercaDialogBackingBean.reparti.entrySet()}"
+                            var="entry" itemLabel="#{entry.value}"
+                            itemValue="#{entry.key}" />
+                </p:selectOneMenu>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="col-4">
+                <p:selectOneMenu id="cercaArticoloDialogCategorie"
+                                 onchange="showLoading_gridData()"
+                                 value="#{templateView.currentView.cercaDialogBackingBean.idCategoriaCorrente}"
+                                 class="input-field" style="width: 250px; font-size: 14px;"
+                                 filter="true" filterMatchMode="contains">
+                    <p:ajax update="@(.selezioneTab) @(.categoryChosen)"
+                            listener="#{templateView.currentView.cercaDialogBackingBean.updateSelezioneGrid}" />
+                    <f:selectItem itemLabel="Seleziona categoria"
+                                  noSelectionOption="true" />
+                    <f:selectItems
+                            value="#{templateView.currentView.cercaDialogBackingBean.categorie.entrySet()}"
+                            var="entry" itemLabel="#{entry.value}"
+                            itemValue="#{entry.key}" />
+                </p:selectOneMenu>
+            </div>
+            <div class="col-4">
+                <p:selectOneMenu id="cercaArticoloDialogGrm"
+                                 onchange="showLoading_gridData()"
+                                 value="#{templateView.currentView.cercaDialogBackingBean.idGrmCorrente}"
+                                 class="input-field" style="width: 250px; font-size: 14px;"
+                                 filter="true" filterMatchMode="contains">
+                    <p:ajax update="@(.selezioneTab) @(.grmChosen)"
+                            listener="#{templateView.currentView.cercaDialogBackingBean.updateSelezioneGrid}" />
+                    <f:selectItem itemLabel="Seleziona GRM" noSelectionOption="true" />
+                    <f:selectItems
+                            value="#{templateView.currentView.cercaDialogBackingBean.grm.entrySet()}"
+                            var="entry" itemLabel="#{entry.value}"
+                            itemValue="#{entry.key}" />
+                </p:selectOneMenu>
+            </div>
+            <div class="col-4">
+                <p:selectOneMenu id="cercaArticoloDialogMarchioPriv"
+                                 onchange="showLoading_gridData()"
+                                 value="#{templateView.currentView.cercaDialogBackingBean.idMarchioPrivCorrente}"
+                                 class="input-field" style="width: 250px; font-size: 14px;"
+                                 filter="true" filterMatchMode="contains">
+                    <p:ajax update="@(.selezioneTab) @(.marchioPrivChosen)"
+                            listener="#{templateView.currentView.cercaDialogBackingBean.updateSelezioneGrid}" />
+                    <f:selectItem itemLabel="Seleziona Marchio Privato"
+                                  noSelectionOption="true" />
+                    <f:selectItems
+                            value="#{templateView.currentView.cercaDialogBackingBean.marchioPrivato.entrySet()}"
+                            var="entry" itemLabel="#{entry.value}"
+                            itemValue="#{entry.key}" />
+                </p:selectOneMenu>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

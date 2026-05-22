@@ -1,0 +1,219 @@
+image: maven:3.8.1-adoptopenjdk-8
+
+variables:
+  CACHE_REPO: /var/cache/build
+  MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=${CACHE_REPO}/repository -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=240"
+  EAR: ""
+
+stages:
+  - version
+  - build
+  - test
+  # - delivery
+  # - deploy
+
+version-job:
+  stage: version
+  tags:
+    - mui-docker
+  script:
+    - "mvn -version"
+
+build-job:
+  stage: build
+  tags:
+  - mui-docker
+  dependencies:
+    - version-job
+  script:
+    - rm -f ${CACHE_REPO}/*.ear
+    - "mvn -s ./build/support/settings.xml clean compile -f app "
+  artifacts:
+    paths:
+      - target/  
+
+integration-test-job:
+  stage: test
+  tags:
+  - mui-docker
+  only: 
+  - develop
+  - main
+  dependencies:
+    - build-job
+  script:
+    # - |
+    #   if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+    #     sha="-$CI_COMMIT_REF_SLUG"
+    #     echo "Running on branch $CI_COMMIT_BRANCH"
+    #     changelist=""
+    #   elif [[ "$CI_COMMIT_TAG" != "" ]]; then
+    #     echo "Running on tag $CI_COMMIT_TAG"
+    #     sha="-$CI_COMMIT_REF_SLUG"
+    #     changelist=""
+    #   else
+    #     echo "Running on develop: it's a SNAPSHOT"
+    #     changelist="-SNAPSHOT"
+    #   fi
+    #   echo "SHA: $sha, CHANGELIST: $changelist"
+    # - "mvn -s ./build/support/settings.xml -f app -Dsha1=$sha -Dchangelist=$changelist verify"
+    - "mvn -s ./build/support/settings.xml -f app verify"
+    - EAR=( app/ear/target/*.ear )
+    - export FILE=$(basename $EAR)
+    - export VERSION=$(cat app/pom.xml | grep "<revision>" | cut -d '>' -f 2 | cut -d '<' -f 1)    
+    # - echo "file=$FILE" >> build/support/deliverable.txt
+    # - echo "version=$VERSION" >> build/support/deliverable.txt
+    - cp ${EAR} ${CACHE_REPO}
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, "instructions covered"; print 100*covered/instructions, "% covered" }' app/coverage/target/site/jacoco-aggregate/jacoco.csv
+  coverage: '/\d+.\d+ \% covered/'
+  # artifacts:
+  #   untracked: false
+  #   expire_in: "1 days"
+  #   paths:
+  #     - build/support/deliverable.txt
+
+# ear-delivery-job:
+#   stage: delivery
+#   tags:
+#     - mui-docker
+#   only: 
+#     - develop
+#     - main    
+#   dependencies:
+#     - integration-test-job
+#   script:
+#     - FILE=$(cat build/support/deliverable.txt | grep file | cut -d = -f2)
+#     - VERSION=$(cat build/support/deliverable.txt | grep version | cut -d = -f2)
+#     - UPLOAD_FILE=${CACHE_REPO}/${FILE}
+#     - |
+#       if [[ -f ${UPLOAD_FILE} ]]; then 
+#         echo "found file ${FILE} from previous job"
+#       else
+#         echo "file ${FILE} not found: building"
+#         mvn -s ./build/support/settings.xml -f app -Dsha1=$sha -Dchangelist=$changelist -DskipTests -q package
+#         UPLOAD_FILE=( app/ear/target/*.ear )
+#         export FILE=$(basename $EAR)
+#       fi
+#     - echo "file = $UPLOAD_FILE, version = $VERSION, url = $CI_SERVER_URL"
+#     - 'curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ${UPLOAD_FILE} ${CI_SERVER_URL}/api/v4/projects/${CI_PROJECT_ID}/packages/generic/muipromo/$VERSION/$FILE'  
+#     - 'echo "remote=${CI_SERVER_URL}/api/v4/projects/${CI_PROJECT_ID}/packages/generic/muipromo/$VERSION/$FILE" > build/support/deliverable.txt'
+#     - echo "file=$FILE" >> build/support/deliverable.txt
+#     - echo "version=$VERSION" >> build/support/deliverable.txt
+#   artifacts:
+#     untracked: false
+#     expire_in: "1 days"
+#     paths:
+#       - build/support/deliverable.txt
+
+# image-delivery-job:
+#   stage: delivery
+#   tags:
+#   - mui-kubernetes
+#   image: docker:20.10.16
+#   only: 
+#     - develop
+#     - main    
+#   needs:
+#     - job: ear-delivery-job
+#       artifacts: true
+#   allow_failure: true
+#   variables:
+#     DOCKER_HOST: tcp://docker:2376
+#     DOCKER_TLS_CERTDIR: "/certs"
+#     DOCKER_TLS_VERIFY: 1
+#     DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+#   services:
+#     - docker:20.10.20-dind
+#   before_script:
+#     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY 
+#   script:
+#     - REMOTE=$(cat build/support/deliverable.txt | grep remote | cut -d = -f2)
+#     - FILE=$(cat build/support/deliverable.txt | grep file | cut -d = -f2)
+#     - VERSION=$(cat build/support/deliverable.txt | grep version | cut -d = -f2)
+#     - apk add curl
+#     - 'curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" $REMOTE --output $FILE'      
+#     - |
+#       export IMAGE_TAGS="-t $CI_REGISTRY_IMAGE:latest"
+#       export IMAGE_TAG="$CI_REGISTRY_IMAGE:latest"
+#       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+#         echo "Running on branch $CI_DEFAULT_BRANCH"
+#         export IMAGE_TAGS="${IMAGE_TAGS} -t $CI_REGISTRY_IMAGE:$VERSION"
+#         export IMAGE_TAG="$CI_REGISTRY_IMAGE:$VERSION"
+#       elif [[ "$CI_COMMIT_TAG" != "" ]]; then
+#         echo "Running on tag $CI_COMMIT_TAG"
+#         export IMAGE_TAGS="${IMAGE_TAGS} -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG"
+#         export IMAGE_TAG="$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG"
+#       else
+#         echo "Running on develop: it's a SNAPSHOT"
+#         export IMAGE_TAGS="${IMAGE_TAGS} -t $CI_REGISTRY_IMAGE:SNAPSHOT -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+#         export IMAGE_TAG="$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+#       fi
+#     - echo "creating Docker image versions $IMAGE_TAGS "
+#     - docker build -f build/support/image/Dockerfile --build-arg UID=1000 --build-arg EARFILE=$FILE --pull ${IMAGE_TAGS} .
+#     - echo "pushing to repository "$CI_REGISTRY_IMAGE" "
+#     - docker push "$CI_REGISTRY_IMAGE" --all-tags
+#     - 'echo "image=$IMAGE_TAG" >> build/support/deliverable.txt'
+#   artifacts:
+#     untracked: false
+#     expire_in: "1 days"
+#     paths:
+#       - build/support/deliverable.txt
+
+# automatic-image-deploy-job:
+#   stage: deploy
+#   variables:
+#     GOOGLE_APPLICATION_CREDENTIALS: /tmp/credential.json
+#     HELM_APP_NS: mui-app
+#   tags:
+#     - gke-deploy
+#   needs:
+#     - job: image-delivery-job
+#       artifacts: true
+#   allow_failure: true
+#   only:
+#     - develop
+#   before_script:
+#     - echo ${BASE64_GOOGLE_CREDENTIALS} | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
+#     - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+#     - gcloud config set project laboratorio-devops
+#     - gcloud container clusters get-credentials ax-mui --region europe-north1-a
+#     - IMAGE=$(cat build/support/deliverable.txt | grep image | cut -d = -f2)
+#   script:
+#     - echo "installing image tag = $IMAGE"
+#     - helm upgrade mui ./build/support/helm --install -n "$HELM_APP_NS" --create-namespace 
+#       --set imageCredentials.username=$CI_DEPLOY_USER
+#       --set imageCredentials.password=$CI_DEPLOY_PASSWORD
+#       --set-string images.app.image_full_name=$IMAGE
+      
+#   after_script:
+#     - rm ${GOOGLE_APPLICATION_CREDENTIALS}
+
+# manual-image-deploy-job:
+#   stage: deploy
+#   variables:
+#     GOOGLE_APPLICATION_CREDENTIALS: /tmp/credential.json
+#     HELM_APP_NS: mui-app
+#   tags:
+#     - gke-deploy
+#   needs:
+#     - job: image-delivery-job
+#       artifacts: true
+#   only:
+#     - main
+#   when: manual
+#   allow_failure: true
+#   before_script:
+#     - echo ${BASE64_GOOGLE_CREDENTIALS} | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
+#     - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+#     - gcloud config set project laboratorio-devops
+#     - gcloud container clusters get-credentials ax-mui --region europe-north1-a
+#     - IMAGE=$(cat build/support/deliverable.txt | grep image | cut -d = -f2)
+#   script:
+#     - echo "installing image tag = $IMAGE"
+#     - helm upgrade mui ./build/support/helm --install -n "$HELM_APP_NS" --create-namespace --force
+#       --set imageCredentials.username=$CI_DEPLOY_USER
+#       --set imageCredentials.password=$CI_DEPLOY_PASSWORD
+#       --set-string images.app.image_full_name=$IMAGE
+      
+#   after_script:
+#     - rm ${GOOGLE_APPLICATION_CREDENTIALS}

@@ -1,0 +1,55 @@
+[
+    {
+        "DIM_code": "legalentity",
+        "DIM_columnName": "Legal Entity",
+        "DIM_description": "Legal Entity",
+        "ENDPOINT_serverName": "pippo",
+        "MDX_jsonSource": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Legal Entity] )}, 0)}, ASC)}}",
+        "list_ATTR": [
+            {
+                "ATTR_code": "name",
+                "ATTR_columnName": "Name",
+                "ATTR_desc": "Entity Code"
+            },
+            {
+                "ATTR_code": "alias",
+                "ATTR_columnName": "Alias",
+                "ATTR_desc": "Entity Descr."
+            },
+            {
+                "ATTR_code": "country",
+                "ATTR_columnName": "Country",
+                "ATTR_desc": "Country"
+            },
+            {
+                "ATTR_code": "location",
+                "ATTR_columnName": "Location",
+                "ATTR_desc": "Location"
+            },
+            {
+                "ATTR_code": "currency",
+                "ATTR_columnName": "Currency",
+                "ATTR_desc": "Valuta"
+            }
+        ]
+    },
+    {
+        "DIM_code": "Account",
+        "DIM_columnName": "Account",
+        "DIM_description": "Account",
+        "ENDPOINT_serverName": "pluto",
+        "MDX_jsonSource": "{ {[Account].[PL]} , {TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Account] )}, 0)}, ASC)} }",
+        "list_ATTR": [
+            {
+                "ATTR_code": "name",
+                "ATTR_columnName": "Name",
+                "ATTR_desc": "Account Code"
+            },
+            {
+                "ATTR_code": "alias",
+                "ATTR_columnName": "Alias",
+                "ATTR_desc": "Account Descr."
+            }
+        ]
+    }
+]

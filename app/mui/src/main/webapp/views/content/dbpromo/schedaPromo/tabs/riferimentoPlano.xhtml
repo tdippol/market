@@ -1,0 +1,173 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <p:remoteCommand name="planoSelectedSelected" update="@(.ui-confirmdialog-yes)"
+                     actionListener="#{templateView.currentView.planoRifBean.selezionaPlano}" />
+
+    <p:remoteCommand name="removePlanogram" actionListener="#{templateView.currentView.removePlanoRif}" />
+
+    <!-- Dialog conferma carica da plano -->
+    <p:confirmDialog widgetVar="confirmCaricaDaPlano" header="Avviso" styleClass="dlgBulkUpdate"
+                     message="#{templateView.currentView.planoRifBean.dlgConfirmMessage}" severity="alert" >
+        <p:commandButton value="SI" update="@(.growlClass), @(.updateableContent)"
+                         actionListener="#{templateView.currentView.scegliPlano}"
+                         oncomplete="PF('dlgCaricaDaPlano').hide();PF('confirmCaricaDaPlano').hide()"
+                         disabled="#{empty templateView.currentView.planoRifBean.sourcePlanoSelected}" />
+        <p:commandButton value="NO" onclick="PF('confirmCaricaDaPlano').hide()"
+                         style="float: right;" type="button" />
+    </p:confirmDialog>
+
+	<!-- Dialog conferma eliminazione associazione -->
+    <p:confirmDialog widgetVar="confirmRemovePlano" header="Avviso" styleClass="dlgEliminaRiferimentoPlano" 
+                     message="Confermi l'eliminazione del planogram?" severity="alert" >
+        <p:commandButton value="SI" update="@(.growlClass), @(.updateableContent)"
+                         onclick="deletePlanoFromPromo()"
+                         oncomplete="PF('confirmRemovePlano').hide();" />
+        <p:commandButton value="NO" onclick="PF('confirmRemovePlano').hide()"
+                         style="float: right;" type="button" />
+    </p:confirmDialog>
+
+    <!-- Dialog scelta promozione riferimento -->
+    <p:dialog widgetVar="dlgCaricaDaPlano" modal="true" showEffect="fade" hideEffect="fade" closable="false"
+              styleClass="muiDialog" width="95%">
+        <p:panel id="expandable_db_grid_selezionaPlano" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                 styleClass="pnlGrid_Header updateableContent">
+            <f:facet name="header">
+                <p:outputLabel value="Seleziona Planogramma"/>
+            </f:facet>
+            <h:panelGroup layout="block"
+                          style="height: 60vh; width: 100%;"
+                          styleClass="ag-theme-balham grid_selezionaPlano"
+                          pt:gridid="db_grid_selezionaPlano">
+            </h:panelGroup>
+            <f:facet name="actions">
+                <p:inputText autocomplete="off" id="selezionaPlano_quickfilter" placeholder="Filtra..."
+                             styleClass="pnlGrid_Header filterInputText"
+                             onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_selezionaPlano', this.value)"/>
+            </f:facet>
+
+            <script>
+                var gridParamsSelezionaPlanogram = {
+                    gridCode: 'db_grid_selezionaPlano',
+                    gridTitle: 'Seleziona Planogram',
+                    url_columnDefs: contextPath + '/resources/grid/columnDef/selezionaPlanogrammi' + addUrlParamContesto(#{muiContext}),
+                    url_rowData: contextPath + '/resources/grid/rowData/selezionaPlanogrammi/' + #{templateView.currentView.idPromozioneCorrente}
+                        + addUrlParamContesto(#{muiContext}),
+                    url_customSort: contextPath + '/resources/grid/sorting/db_grid_selezionaPlano',
+                    gridOptions: {
+                        rowSelection: 'single',
+                        onSelectionChanged: onPlanoItemRowSelected,
+                        onSortChanged: function (event) {
+                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_selezionaPlano');
+                        }
+                    }
+                };
+
+                $(document).ready(function() {
+                    creaGriglia(gridParamsSelezionaPlanogram);
+                });
+
+                function onPlanoItemRowSelected(event) {
+                	planoSelectedSelected([{name:'sourcePlanoSelected', value:event.api.getSelectedRows()[0].idPlano.value}]);
+                }
+            </script>
+        </p:panel>
+
+        <f:facet name="footer">
+            <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                             onclick="PF('dlgCaricaDaPlano').hide()" />
+            <p:commandButton value="Conferma" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                             oncomplete="PF('confirmCaricaDaPlano').show()"
+                             actionListener="#{templateView.currentView.planoRifBean.confirmCaricaDaPlano}"
+                             disabled="#{empty templateView.currentView.planoRifBean.sourcePlanoSelected}"
+                             update="@(.dlgBulkUpdate)" />
+        </f:facet>
+    </p:dialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_schedapromo_planogrammi" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_planogrammi">
+                        <f:facet name="header">
+                            <p:outputLabel value="Planogrammi" />
+                        </f:facet>
+
+                        <div class="col-12" style="margin-bottom: 20px;">
+                            <h:form id="formPromoRiferimento" styleClass="updateableContent">
+                                <p:commandButton value="Scegli Planogramma" id="caricaDaPlano"
+                                                 styleClass="pf-btn-confirm" style="margin:0; border-radius: 5px"
+                                                 disabled="#{not templateView.currentView.btnScegliPlanoActive}"
+                                                 actionListener="#{templateView.currentView.planoRifBean.preparePlanoDialog}"
+                                                 oncomplete="PF('dlgCaricaDaPlano').show()"
+                                                 update="@(.muiDialog)" />
+                            </h:form>
+                        </div>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      styleClass="ag-theme-balham planogrammi"
+                                      pt:gridid="db_schedapromo_planogrammi" />
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="planogrammi_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapromo_planogrammi', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedapromo_planogrammi')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedapromo_planogrammi', 'Planogrammi', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedapromo_planogrammi', 'Planogrammi')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script>
+                            var idPlano;
+                            var gridParams_schedaPromoPlanogrammi = {
+                                gridId: 'planogrammi',
+                                gridTabGroup: 'schedaPromo_tabs',
+                                gridTabPosition: #{templateView.currentView.indexOf('TAB_PLANO_RIFERIMENTO')},
+                                gridCode: 'db_schedapromo_planogrammi',
+                                gridTitle: 'SchedaPromo - Planogrammi',
+                                url_columnDefs: contextPath + '/resources/grid/columnDef/planogrammi' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/grid/rowData/planogrammi/' + #{templateView.currentView.idPromozioneCorrente}
+                                    + addUrlParamContesto(#{muiContext})
+                            };
+                            gridParams_schedaPromoPlanogrammi.additionColumnDefs = [{
+                                headerName: '',
+                                width: 50,
+                                cellRenderer: 'SchedaPromoPlanogram_DeletePlanogramRenderer',
+                                position: 'prepend'
+                            }];
+                            gridParams_schedaPromoPlanogrammi.gridOptions = { };
+
+                            function deletePlanoFromPromo() {
+                                removePlanogram([{ name: 'idPlano', value: idPlano }]);
+                            }
+
+                            $(document).ready(function() {
+                                if (currentActiveTab == gridParams_schedaPromoPlanogrammi.gridTabPosition) {
+                                    creaGriglia(gridParams_schedaPromoPlanogrammi);
+                                }
+                            });
+                        </script>
+                        <style>
+                            .pnlGrid_Header .ui-state-disabled {
+                                opacity: 0.5!important;
+                            }
+                        </style>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

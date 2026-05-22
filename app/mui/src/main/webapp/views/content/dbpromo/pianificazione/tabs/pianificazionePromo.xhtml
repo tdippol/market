@@ -1,0 +1,620 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <ui:include src="../dialogTabs/uploadComplementariPromoDialog.xhtml" />
+                    <ui:include src="../dialogTabs/uploadComplementariPromoDisabledDialog.xhtml" />
+
+                    <h:panelGroup layout="block" styleClass="col-12" id="panelButtonsPianificazione">
+                        <p:commandButton value="Inserisci nuova pianificazione"
+                                         style="margin-right: 20px; border-radius: 5px;" id="managePianificazionePromo"
+                                         class="pf-btn-confirm newPlanningBtn"
+                                         action="#{templateView.currentView.pianificazionePromoDialogBackingBean.prepareDialog}"
+                                         disabled="#{templateView.currentView.addPlanningBtnDisabled or templateView.currentView.pianificazionePromoDialogBackingBean.addPlanningBtnDisabled}"
+                                         rendered="#{templateView.currentView.btnNuovaPianificazioneRendered}"
+                                         oncomplete="PF('pianificazionePromoDialog').show()"
+                                         update="@(.updateableContentPianificazioneDialog)"/>
+
+                        <p:commandButton value="Pianifica da riferimento" id="pianificaDaRiferimentoBtn"
+                                         styleClass="pf-btn-confirm" style="margin-right: 20px; border-radius: 5px;"
+                                         update="@(.updateableContentPromoRif)"
+                                         rendered="#{templateView.currentView.btnPianificaDaRiferimentoRendered}"
+                                         action="#{templateView.currentView.preparePromoRifDialog}" />
+
+                        <p:commandButton value="Pianifica da Plano" id="pianificaDaPlanoBtn"
+                                         styleClass="pf-btn-confirm" style="margin-right: 20px; border-radius: 5px;"
+                                         update="@(.updateableContentPlanoRif)"
+                                         rendered="#{templateView.currentView.btnPianificaDaPlanoRendered}"
+                                         action="#{templateView.currentView.preparePlanoRifDialog}" />
+
+                        <p:commandButton value="Elimina Selezionati" id="eliminaSelezionatiBtn"
+                                         widgetVar="eliminaSelezionatiBtn"
+                                         styleClass="pf-btn-danger eliminaSelezionatiBtn"
+                                         icon="far fa-fw fa-trash-alt"
+                                         style="margin-right: 20px; border-radius: 5px;"
+                                         rendered="#{templateView.currentView.btnDeleteSelectedRendered}"
+                                         onclick="PF('deleteSelectedItemsConfirmDialog').show()" />
+
+                        <p:spacer />
+                        <p:remoteCommand name="addPlanningButton" update="managePianificazionePromo" class="updateAddPlanningBtn" />
+
+                        <p:confirmDialog widgetVar="confirmPlanningSingleBuyer" header="Avviso" closable="false"
+                                         styleClass="confirmPlanningSingleBuyer" severity="alert"
+                                         message="Confermi la pianificazione per il compratore #{templateView.currentView.confirmForBuyerMsg}?">
+                            <p:commandButton value="SI" widgetVar="btnConfirmSingleBuyerDialog"
+                                             onclick="PF('btnConfirmSingleBuyerDialog').disable(); PF('btnCancelSingleBuyerDialog').disable();"
+                                             action="#{templateView.currentView.confirmPianificazione}"
+                                             onsuccess="reloadGrid()"
+                                             oncomplete="refreshAfterConfirmSingleBuyer()" />
+                            <p:commandButton value="NO" widgetVar="btnCancelSingleBuyerDialog"
+                                             type="button" style="float: right;"
+                                             onclick="PF('confirmPlanningSingleBuyer').hide()" />
+                        </p:confirmDialog>
+
+                        <ui:include src="dialog/confirmPianificazione.xhtml" />
+
+                        <p:commandButton value="Conferma Pianificazione" id="confermaPianificazione"
+                                         style="margin-right: 10px; border-radius: 5px; float: right"
+                                         styleClass="pf-btn-confirm confirmPianificazioneDialogBtn"
+                                         update="@(.confirmPlanningSingleBuyer), @(.confirmPianificazioneDialog)"
+                                         action="#{templateView.currentView.openConfirmPianificazioneDialog}"
+                                         disabled="#{templateView.currentView.btnConfirmPromoDisabled}"
+                                         rendered="#{templateView.currentView.btnConfermaPianificazioneRendered}" />
+
+                        <p:commandButton value="Anteprima Castelletto" 
+                            style="margin-right: 20px; border-radius: 5px; float:right" 
+                            id="anteprimaCastelletto" class="pf-btn-confirm" 
+                            rendered="#{templateView.currentView.promotionSelected.muiCanalePromozione.codiceCanale eq 14}" update="@(.mui_overlay)"/>
+                        <p:overlayPanel for="anteprimaCastelletto" showEffect="fade" hideEffect="fade" style="width:350px" dynamic="true" styleClass="mui_overlay">
+				       		<p:repeat var="castelletto" value="#{templateView.currentView.castelletti}" >
+				            	<div class="col-12" style="text-align: center !important;">
+				            		<p:outputLabel value="SCONTI PERSONALI RESIDUI" />
+				            	</div>
+				            	<div class="col-12">
+				            		<p:outputLabel value="#{castelletto.descrizioneSconto}" style="float: left; padding:0 !important"/> <p:outputLabel value="Pz. #{castelletto.utilizzi}" style="float: right"/>
+				            	</div>
+				            	<div class="col-12">
+				            		<p:outputLabel value="scadenza:"/>
+				            		<p:outputLabel value="#{castelletto.scadenza}" style="float: right">
+				            			<f:convertDateTime pattern="yyyy-MM-dd" />
+				            		</p:outputLabel>
+                                </div>
+                                <hr style="border-top: 1px dotted #000;margin: 0;"/>
+				            </p:repeat>
+				        </p:overlayPanel>
+                    </h:panelGroup>
+
+                    <p:panel id="expandable_db_pianificazione" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_pianificazione">
+                        <f:facet name="header">
+                            <p:outputLabel value="Pianificazione - " />
+                            <p:outputLabel value="Numero articoli: #{templateView.currentView.numeroArticoliPianificati}"
+                                           styleClass="numeroArticoliClass" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham pianificazione" pt:gridid="db_pianificazione">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="pianificazione_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText planningFilter"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_pianificazione',this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_pianificazione')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_pianificazione','Pianificazione',true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_pianificazione','Pianificazione',false)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Ricarica Griglia" styleClass="pnlGrid_Header reloadButton"
+                                           onclick="reloadGrid()" onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+
+                        var currentPromoId = $('.currentPromo').text();
+                       
+                        var pianificazioneTabGridOptions;
+                        var columnDefPianificazione;
+                        var rowDataPianificazione;
+                        var idRowToBeDeleted;
+                        
+                        var radioChecked = 'ALL';
+                            
+						var gridParams_pianificazione = {
+						    gridTabGroup: 'pianificazione_tabs',
+                            gridTabPosition: 0,
+                            gridCode: 'db_pianificazione',
+                            gridTitle: 'Pianificazione - Tab Pianificazione',
+                            url_columnDefs: contextPath + '/resources/pianificazionepromo/planning/columnDef/pianificazione/'
+                                + #{ templateView.currentView.idPromozioneCorrente != null ? templateView.currentView.idPromozioneCorrente : 'null'}
+                                + addUrlParamContesto(#{muiContext}),
+                            url_rowData: contextPath + '/resources/pianificazionepromo/planning/rowData/pianificazione/'
+                                + #{ templateView.currentView.idPromozioneCorrente != null ? templateView.currentView.idPromozioneCorrente : 'null'}
+                                + '/' + radioChecked + addUrlParamContesto(#{muiContext}),
+                            url_customSort: contextPath + '/resources/grid/sorting/db_pianificazione'
+                		};
+
+                        var collapsedGroupMap = new Map();
+
+						var gridOptions = {
+                            rowSelection: 'multiple',
+                            suppressRowClickSelection: true,
+                            onSelectionChanged: onPlanoDeleteItemRowSelected,
+                            isRowSelectable: function(rowNode) {
+                                return rowNode.data ? rowNode.data.TIPO_RIGA.value === 'ELEMENTO'
+                                    &amp;&amp; rowNode.data.deleteEnabled.value === 'true' : false;
+                            },
+                            treeData: true,
+                            excludeChildrenWhenTreeDataFiltering: true,
+                            onColumnVisible:function (event) {
+                                onColumnVisible(event);
+                                // Reset posizione pinned columns
+                                getGridOptionFromGridMap('db_pianificazione').columnApi.moveColumn('ID_MECCANICA', 0);
+                                getGridOptionFromGridMap('db_pianificazione').columnApi.moveColumn('actionButtons', 0);
+                            },
+                            getDataPath: function (data) {
+                                return data.hierarchyTree.hierarchy;
+                            },
+                            autoGroupColumnDef: {
+                                headerName: 'MECCANICA',
+                                field: 'ID_MECCANICA',
+                                editable: true,
+                                type: 'string',
+                                cellClass: axCellClass,
+                                valueGetter: params => {
+                                    let rowIndex = params.node.rowIndex
+                                    if (params.data.VISUALIZZA_MECCANICA !== undefined) {
+                                        if (params.data.VISUALIZZA_MECCANICA.value !== '' &amp;&amp; params.data.VISUALIZZA_MECCANICA.value != undefined) {
+                                            LT("[" + rowIndex + "] - Colonna VISUALIZZA_MECCANICA presente in RIGA");
+                                            return params.data.VISUALIZZA_MECCANICA.value;
+                                        } else {
+                                            LT("[" + rowIndex + "] - Colonna VISUALIZZA_MECCANICA presente ma non valorizzata");
+                                            return params.data.ID_MECCANICA.value;
+                                        }
+                                    } else {
+                                        if (params.node.parent.data!=undefined
+                                                &amp;&amp; params.node.parent.data.VISUALIZZA_MECCANICA!=null
+                                                &amp;&amp; params.node.parent.data.VISUALIZZA_MECCANICA.value!=''
+                                                &amp;&amp; params.node.parent.data.VISUALIZZA_MECCANICA.value!=undefined) {
+                                            LT("[" + rowIndex + "] - Colonna VISUALIZZA_MECCANICA presente nel PARENT:", "'" + params.node.parent.data.VISUALIZZA_MECCANICA.value + "'");
+                                            return params.node.parent.data.VISUALIZZA_MECCANICA.value;
+                                        }
+                                    }
+                                    LT("[" + rowIndex + "] - Colonna VISUALIZZA_MECCANICA NON presente");
+                                    return params.data.ID_MECCANICA.value;
+                                },
+                                cellRendererParams: {
+                                    suppressCount: true,
+                                },
+                                width: 250,
+                                pinned: 'left'
+                            },
+                            onCellValueChanged: function(event) {
+                                saveCellValue(event);
+                                if (event.newValue === "") {
+                                    setTimeout(function() {
+                                        refreshRow_pianificazione('db_pianificazione')
+                                    }, 200);
+                                }
+                            },
+                            rowClassRules: {
+                                'tipoRiga-set': function(params) { return params.data.tipoRiga.value === 'SET'; },
+                                'tipoRiga-raggruppamento': function(params) { return params.data.tipoRiga.value === 'RAGGRUPPAMENTO'; },
+                                'tipoRiga-articolo': function(params) { return params.data.tipoRiga.value === 'ARTICOLO'; },
+                            },
+                            onRowGroupOpened: function(event) {
+                                let currentPromoId = $('.currentPromo').text();
+                                let key = 'db_pianificazione_' + currentPromoId + '_' + event.node.key;
+                                addCollapsedRowGroup(key, event.expanded);
+                            },
+                            processCellFromClipboard: function processCellFromClipboard(params) {
+                                let columnId = params.column.colId;
+                                let cell = params.node.data[columnId];
+
+                                if (cell.type === 'numeric' &amp;&amp; cell.dataTypeParams != undefined
+                                    &amp;&amp; cell.dataTypeParams.precision != undefined
+                                    &amp;&amp; cell.dataTypeParams.precision > 0) {
+                                    return unformatNumber(params.value);
+                                } else {
+                                    return params.value;
+                                }
+                            },
+                            onPasteEnd: function onPasteEnd(params) {
+                                //gridParams_pianificazione.url_rowData
+                                setTimeout(function() {
+                                    refreshRow_pianificazione('db_pianificazione')
+                                }, 200);
+                            },
+                            onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_pianificazione.gridCode);
+                            }
+                        };
+
+                        function refreshAfterConfirmSingleBuyer() {
+                            PF('confirmPlanningSingleBuyer').hide();
+                            refreshHeaderData();
+                        }
+
+						// Reload grid on-demand
+						function reloadGrid() {
+                            var opts = getGridOptionFromGridMap('db_pianificazione');
+                            // If custom sorting not defined, use current sorting
+                            if (gridParams_pianificazione.url_customSort == undefined) {
+                                // Save current sort state
+                                var sortState = opts.columnApi.getColumnState().filter(function(s) {
+                                    return s.sort != null;
+                                }).map(function(s) {
+                                    return { colId: s.colId, sort: s.sort, sortIndex: s.sortIndex };
+                                });
+                            }
+                            // Save quick filter
+                            var filter = $('.planningFilter').length > 0 ? $('.planningFilter')[0].value : '';
+                            // Destroy grid
+                            opts.api.destroy();
+                            // Apply saved sort state adding options to gridParams customization
+                            // only if custom sorting not defined
+                            if (gridParams_pianificazione.url_customSort == undefined) {
+                                sortState.forEach(s => {
+                                    gridParams_pianificazione.customizeColumnDefs.push(
+                                        {columnDefId: s.colId, property: 'sort', value: s.sort}
+                                    );
+                                    gridParams_pianificazione.customizeColumnDefs.push(
+                                        {columnDefId: s.colId, property: 'sortIndex', value: s.sortIndex}
+                                    );
+                                });
+                            }
+                            // Recreate grid
+                            creaGriglia(gridParams_pianificazione);
+                            // Apply quick filter if setted
+                            if (filter) {
+                                $('.planningFilter')[0].value = filter;
+                                getGridOptionFromGridMap('db_pianificazione').api.setQuickFilter(filter);
+                            }
+                        }
+
+                        function onPlanoDeleteItemRowSelected(event) {
+                            var ids = [];
+                            $.each(event.api.getSelectedNodes(), function (key, value) {
+                                ids.push(Number(value.data.idPromoPianificazione.value));
+                            });
+                            selezionaPlanoDeleteItem([{ name: 'itemSelected', value: JSON.stringify(ids) }]);
+                        }
+
+			            function refreshRow_pianificazione(gridCode){
+			                    //showAgGridLoadingOverlay(gridCode)
+			                    $.ajax({
+			                        type: "GET",
+			                        url: gridParams_pianificazione.url_rowData,
+			                        contentType: "application/json",
+			                        success: function (data) {
+			                                getGridOptionFromGridMap(gridCode).api.setRowData(data.rowData);
+			                                LT('Refreshed row data "'+gridParams_pianificazione.gridTitle+'" => ',data.rowData)
+			                                getGridOptionFromGridMap(gridCode).api.refreshCells()
+			                        },
+			                        error: ajaxErrorHandler,
+			                        complete: function(){
+			                           // hideAgGridLoadingOverlay(gridCode)
+			                        }
+			                    });
+			            }
+
+                        gridParams_pianificazione.additionColumnDefs = [
+                               { headerName: '', width: 155, cellRenderer: 'Pianificazione_BtnCellRenderer', position:'prepend', pinned: 'left' }
+                        ];
+                        gridParams_pianificazione.moveColumnsByIndex = [
+                              { columnDefToMove: "ID_MECCANICA.value", indexDestination: 2 }
+                        ];
+
+                        gridParams_pianificazione.customizeColumnDefs = [
+                            { columnDefId: 'ID_MECCANICA', property: 'hide', value: true },
+                            { columnDefId: 'ID_MECCANICA', property: 'lockVisible', value: true }
+                        ];
+                        gridParams_pianificazione.sortColumnDefs = [
+                           // { columnDefId: "selected", newPosition: 1 }
+                        ];
+
+                        gridParams_pianificazione.gridOptions=gridOptions;
+                        
+                        
+                        $( document ).ready(function() {
+                            if(getCurrentTab(gridParams_pianificazione.gridTabGroup)==gridParams_pianificazione.gridTabPosition &amp;&amp;
+                               #{templateView.currentView.idPromozioneCorrente != null ? templateView.currentView.idPromozioneCorrente : 'null'} !== null){
+                                creaGriglia(gridParams_pianificazione);     
+                            }
+                            addPlanningBtnEnabled();
+                            //Aggiorna Header dopo cambio di filtri
+                            updatePianificazioneHeader();
+                        });
+
+                        //Funzione richiamata al salvataggio di ogni cella
+                        function saveCellValue(event) {
+							
+                            let currentPromoId = $('.currentPromo').text();
+
+                        	var rowIndex	= getRowNodeId(event);
+							var rowData 	= getLeafRowData('db_pianificazione');
+                            event.data.columnToBeUpdated.value = event.column.colDef.field;
+							
+                            event.data.valueToBeUpdated.value = event.data[event.column.colDef.field].value;
+                            
+							event.data.columnHeaderToBeUpdated.value = event.colDef.headerName;
+							
+							$.ajax({
+                                type: "POST",
+                                url: contextPath+"/resources/pianificazionepromo/updatePlanning"+ addUrlParamContesto(#{muiContext}),
+                                contentType: "application/json",
+                                data: JSON.stringify(event.data),
+                                success: function (data, textStatus, jqXHR) {
+                                    if (jqXHR.status === 205) {
+                                        // Arrivo da un cambio meccanica, distruggo e ricreo la griglia
+                                        reloadGrid();
+                                        addInfoGrowl([
+                                            { name: 'title', value: 'Pianificazione' },
+                                            { name: 'message', value: 'Meccanica cambiata correttamente' }
+                                        ]);
+                                    } else {
+                                        let responseRowData=data.rowData;
+                                        responseRowData.forEach(function (row) {
+                                            let idPromoPianificazione = row.idPromoPianificazione.value;
+                                            let position=rowData.findIndex(currentRow => {
+                                                return currentRow.idPromoPianificazione.value === idPromoPianificazione
+                                            });
+                                            if(position>=0) {
+                                                rowData[position]=row
+                                            }
+                                        });
+                                        getGridOptionFromGridMap('db_pianificazione').api.setRowData(rowData);
+                                        var updateMessage = data.updateMessage;
+                                        var errorMessage = data.errorMessage;
+                                        if (updateMessage !== undefined &amp;&amp; updateMessage !== null) {
+                                            addInfoGrowl([
+                                                {name: 'title', value: 'Pianificazione'},
+                                                {name: 'message',value: updateMessage}
+                                            ]);
+                                        } else if (errorMessage !== undefined &amp;&amp; errorMessage !== null) {
+                                            addErrorGrowl([
+                                                {name: "title", value: 'Pianificazione'},
+                                                {name: "message",value: errorMessage}
+                                            ]);
+                                        }
+                                        //reset row group expanded status
+                                        getGridOptionFromGridMap('db_pianificazione').api.forEachNode(node => {
+                                            let searchKey='db_pianificazione_'+currentPromoId+'_'+node.key;
+                                            let valueCollapsed=getCollapsedRowGroup(searchKey);
+                                            if (valueCollapsed===false) {
+                                                node.setExpanded(valueCollapsed);
+                                            }
+                                        });
+                                    }
+                                },
+                                error: function(jqXHR, exception, thrownError) {
+                                    ajaxErrorHandler(jqXHR, exception, thrownError,event)
+                                },
+                                complete: function() {
+                                    idRowToBeDeleted = "";
+                                    // clear selected checkbox
+                                    clearDeleteableIds();
+                                }
+                            });
+                        }
+
+                        function addCollapsedRowGroup(key,expanded){
+                            collapsedGroupMap.set(key, expanded );
+                        }
+
+                        function getCollapsedRowGroup(key){
+                            return collapsedGroupMap.get(key);
+                        }
+                        
+                        function emptyPlanningRowFunc() {
+
+                            PF('emptyPlanningRowGlobalConfirmDialog').hide();
+                                currentPromoId = $('.currentPromo').text();
+
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: contextPath+'/resources/pianificazionepromo/planning/'+ currentPromoId +'/empty/' + idRowToBeEmpty + addUrlParamContesto(#{muiContext}),
+                                    contentType: "text/plain",
+                                    success: function (data) {
+                                        if(getGridOptionFromGridMap('db_pianificazione') === undefined) {
+                                            creaGriglia(gridParams_pianificazione);
+                                        }
+                                        getGridOptionFromGridMap('db_pianificazione').api.setRowData(data.rowData);
+                                        addInfoGrowl([{ name: 'title', value: 'Svuota raggruppamento' }, {name: 'message',value: data.operationMessage}]);
+                                        idRowToBeDeleted = "";
+                                        addPlanningBtnEnabled();
+                                        contaArticoli();
+                                        CL()
+                                        LT('Refreshed row data => ',data.rowData)
+                                    },
+                                    error: ajaxErrorHandler,
+                                    complete:function(){
+                                        idRowToBeDeleted = "";
+                                    }
+                                });
+                        }
+
+                        function deletePlanningRow() {
+
+                                PF('deletePlanningRowGlobalConfirmDialog').hide();
+
+                                currentPromoId = $('.currentPromo').text();
+
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: contextPath+'/resources/pianificazionepromo/planning/'+ currentPromoId +'/delete/' + idRowToBeDeleted + addUrlParamContesto(#{muiContext}),
+                                    contentType: "text/plain",
+                                    success: function (data) {
+                                        if(getGridOptionFromGridMap('db_pianificazione') === undefined) {
+                                            creaGriglia(gridParams_pianificazione);
+                                        }
+                                    	getGridOptionFromGridMap('db_pianificazione').api.setRowData(data.rowData);
+                                        addInfoGrowl([{ name: 'title', value: 'Elimina pianificazione promozione' }, {name: 'message',value: data.operationMessage}]);
+                                        idRowToBeEmpty = "";
+                                        addPlanningBtnEnabled();
+                                        contaArticoli()
+                                        CL()
+                                        LT('Refreshed row data => ',data.rowData)
+                                    },
+                                    error: ajaxErrorHandler,
+                                    complete:function(){
+                                    	idRowToBeEmpty = "";
+                                    }
+                                });
+                            }
+
+                            function refreshGridFilterByRadioCheck() {
+
+                            var promoIdSelected = $('.currentPromo').text();
+
+                             var radioChecked = $('input[type=radio]:checked', '[id$=pianificazionesRadioButton]').val();
+
+                             if(promoIdSelected === undefined || promoIdSelected === '') {
+                                promoIdSelected = "null";
+                             }
+
+                             $.ajax({
+                                   type: "GET",
+                                   url: contextPath+"/resources/pianificazionepromo/planning/rowData/pianificazione/" + promoIdSelected + "/" + radioChecked + addUrlParamContesto(#{muiContext}),
+                                   contentType: "application/json",
+                                   success: function (data) {
+                                      if(getGridOptionFromGridMap('db_pianificazione') === undefined) {
+                                            creaGriglia(gridParams_pianificazione);
+                                      }
+                                	  getGridOptionFromGridMap('db_pianificazione').api.setRowData(data.rowData);
+                                	  CL()
+                                	  LT('Refreshed row data => ',data.rowData)
+                                   },
+                                    error: ajaxErrorHandler
+                               });
+                            }
+
+                            function openDialogBarcode(id){
+                                //SET ID corrente
+                                $('.idPromoPianificazione').val(id)
+
+                                $.ajax({
+                                    type: 'GET',
+                                    url: contextPath+"/resources/barcode/ean13/" + id,
+                                    contentType: 'image/png',
+                                    success: function (data) {
+                                         //OPEN DIALOG
+                                        PF('showBarcodeDialog').show();
+                                    },
+                                    error: ajaxErrorHandler
+                                });
+                               
+                            }
+                        </script>
+                        <style>
+                            .ag-header-cell {
+                                background-color: inherit !important;
+                            }
+
+                            .ui-dialog-title {
+                                font-size: 18px;
+                            }
+                            .tipoRiga-set{
+                                background-color: #87888a !important;
+                            }
+                            .tipoRiga-raggruppamento{
+                                background-color: #b7b8b9 !important;
+                            }
+                            .tipoRiga-articolo{
+                                background-color: #d8dadf !important;
+                            }
+                            
+
+                            [id$=pianificazionesRadioButton] tbody tr td div span{
+                                border-radius: 15px;
+                                background-color: #ffffff;
+                        }
+
+                        </style>
+                    </p:panel>
+
+                    <p:remoteCommand name="emptyPlanningRow" update="emptyPlanningRowDialog"
+                    				 action="#{templateView.currentView.pianificazionePromoDialogBackingBean.defineSvuotamentoDialogMessage}" />
+                    <p:remoteCommand name="removePlanningRow" update="deletePlanningRowDialog"
+                                     action="#{templateView.currentView.pianificazionePromoDialogBackingBean.defineDialogMessage}" />
+                    <p:remoteCommand name="setCurrentPlanningRow" update="@(.updateableContent)"
+                                     action="#{templateView.currentView.uploadComplementari.setCurrentPlanningId}" />
+                    <p:remoteCommand name="addPlanningRow" update="pianificazionePromoDialog"
+                                     action="#{templateView.currentView.pianificazionePromoDialogBackingBean.addPlanningRow}" />
+                    <p:remoteCommand name="selezionaPlanoDeleteItem" update="panelButtonsPianificazione"
+                                     action="#{templateView.currentView.selezionaItems}" />
+                    <p:remoteCommand name="clearDeleteableIds" update="panelButtonsPianificazione"
+                                     action="#{templateView.currentView.clearSelectedItems}" />
+
+                    <p:confirmDialog id="deleteSelectedItemsConfirmDialog" widgetVar="deleteSelectedItemsConfirmDialog"
+                                     global="true" showEffect="fade" hideEffect="fade"
+                                     icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog"
+                                     header="Avviso" message="Sei sicuro di voler cancellare gli elementi selezionati?">
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                         widgetVar="cancelDeleteSelectedItemsBtn"
+                                         onclick="PF('deleteSelectedItemsConfirmDialog').hide()"/>
+                        <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                         widgetVar="confirmDeleteSelectedItemsBtn"
+                                         oncomplete="PF('cancelDeleteSelectedItemsBtn').enable();PF('confirmDeleteSelectedItemsBtn').enable();PF('deleteSelectedItemsConfirmDialog').hide()"
+                                         update="@(.updateableGridPianificazione) panelButtonsPianificazione @(.numeroArticoliClass)"
+                                         onclick="PF('cancelDeleteSelectedItemsBtn').disable();PF('confirmDeleteSelectedItemsBtn').disable();"
+                                         onsuccess="refreshRow_pianificazione('db_pianificazione')"
+                                         action="#{templateView.currentView.deleteSelectedItems}" />
+                    </p:confirmDialog>
+
+                    <p:confirmDialog id="deletePlanningRowDialog" widgetVar="deletePlanningRowGlobalConfirmDialog"
+                                     global="true" showEffect="fade" hideEffect="fade" header="Avviso"
+                                     icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog"
+                                     message="#{templateView.currentView.pianificazionePromoDialogBackingBean.confirmDialogMessage}">
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                         onclick="PF('deletePlanningRowDialog').hide()"/>
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                         onclick="deletePlanningRow()" />
+                    </p:confirmDialog>
+
+                    <p:confirmDialog id="emptyPlanningRowDialog" widgetVar="emptyPlanningRowGlobalConfirmDialog"
+                                     global="true" showEffect="fade" hideEffect="fade" header="Avviso"
+                                     icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog"
+                                     message="#{templateView.currentView.pianificazionePromoDialogBackingBean.confirmSvuotamentoDialogMessage}">
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                         onclick="PF('emptyPlanningRowDialog').hide()"/>
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                         onclick="emptyPlanningRowFunc()" />
+                    </p:confirmDialog>
+
+                    <p:remoteCommand name="setPlanningRow"
+                                     action="#{templateView.currentView.uploadComplementari.setCurrentPlanningId}" />
+
+                    <p:remoteCommand name="addPlanningBtnEnabled"
+                                     action="#{templateView.currentView.enabledAddPlanningBtn}"
+                                     update="@(.newPlanningBtn), @(.confirmPianificazioneDialogBtn)" />
+
+                    <p:remoteCommand name="contaArticoli" update="@(.numeroArticoliClass)"
+                                     action="#{templateView.currentView.updateContaArticoli}" />
+
+                    <p:outputLabel value="#{ templateView.currentView.idPromozioneCorrente }"
+                                   class="currentPromo" style="visibility: hidden;"/>
+
+                    <p:outputLabel value="" class="idPromoPianificazione" style="visibility: hidden;"/>
+
+                    <ui:include src="dialog/showBarcode.xhtml" />
+                    <ui:include src="../logoMessaggioDialog.xhtml" />
+
+                    <p:remoteCommand name="handleUploadLogoMessaggio" update="@(.logoMessaggioDialogClass)"
+                                     action="#{templateView.currentView.messaggiCastellettiBean.refreshHeaderMessaggiHeader}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

@@ -1,0 +1,1 @@
+create sequence MUIPROMO.APPLICATION_PROPERTIES_ID_SEQ start with 100;

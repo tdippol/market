@@ -1,0 +1,169 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID",
+      "field": "id",
+      "width": 100,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "ID_CFG_SET_PIANIFICAZIONE",
+      "field": "idCfgSetPianificazione",
+      "width": 100,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Meccanica",
+      "field": "meccanica",
+      "width": 400,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Livello pianificazione",
+      "field": "livello_pianificazione",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Min set",
+      "field": "min_set",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Max set",
+      "field": "max_set",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Min raggr",
+      "field": "min_raggr",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Max raggr",
+      "field": "max_raggr",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Unica in promo",
+      "field": "unica_in_promo",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Duplica articolo",
+      "field": "duplica_articolo",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Duplica grm",
+      "field": "duplica_grm",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Duplica reparto",
+      "field": "duplica_reparto",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Duplica totale",
+      "field": "duplica_totale",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Logo Messaggi",
+      "field": "logo_messaggi",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Castelletti",
+      "field": "castelletti",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

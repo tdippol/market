@@ -1,0 +1,28 @@
+[
+  {
+    "grid": "grid1",
+    "colId": [
+      {
+        "name": "CAMPO_1",
+        "visible": true
+      },
+      {
+        "name": "CAMPO_2",
+        "visible": false
+      }
+    ]
+  },
+  {
+    "grid": "grid2",
+    "colId": [
+      {
+        "name": "descrizione",
+        "visible": true
+      },
+      {
+        "name": "sicurezza",
+        "visible": false
+      }
+    ]
+  }
+]

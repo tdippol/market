@@ -1,0 +1,613 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <p:tabView value="#{templateView.currentView.messaggiCastellettiBean.dispositivi}"
+               var="title" widgetVar="dispositiviTab"
+               styleClass="logoMessaggioDialogClass dispositivi-tabs"
+               rendered="#{templateView.currentView.messaggiCastellettiBean.renderTabs}"
+               onTabShow="updateIndex([{name: 'index', value: index}]);onTabShow(index)"
+               onTabChange="return handleTabChange('dispositiviTab', index);"
+               activeIndex="#{templateView.currentView.messaggiCastellettiBean.selectedTab}">
+        <p:tab title="#{title}">
+            <h:panelGroup layout="block" class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content"
+                          styleClass="logoMessaggioDialogClass" style="margin-bottom: 0 !important; padding-bottom: 0 !important;">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="k_grid_portletpromoGrid" class="k-portlet" style="box-shadow: none;">
+                            <h:form styleClass="updatableMessageContent">
+                                <div class="row">
+                                    <h:panelGroup layout="block" class="col-3"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.idMessaggioVisible}">
+                                        <div>
+                                            <p:outputLabel for="idMessaggio" value="Id Messaggio"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:inputText id="idMessaggio" styleClass="input-field messaggiHeader"
+                                                         value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.idMessaggio}"
+                                                         disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.idMessaggioDisabled}">
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:inputText>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-2"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.seqStampaVisible}">
+                                        <div>
+                                            <p:outputLabel for="seqStampa" value="Sequenza Stampa"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:inputNumber id="seqStampa" styleClass="input-field messaggiHeader"
+                                                           decimalPlaces="0"
+                                                           inputStyle="width: 100%;"
+                                                           value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.seqStampa}"
+                                                           disabled="true">
+                                                <p:ajax event="change" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:inputNumber>
+                                        </div>
+                                    </h:panelGroup>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <h:panelGroup layout="block" class="col-1"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.barcodeVisible}">
+                                        <div>
+                                            <p:outputLabel for="barcode" value="Barcode"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectBooleanCheckbox id="barcode" styleClass="messaggiHeader"
+                                                                     value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.barcode}"
+                                                                     disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.barcodeDisabled}">
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-1"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.codiceVisible}">
+                                        <div>
+                                            <p:outputLabel for="codice" value="Codice"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <p:selectBooleanCheckbox id="codice" styleClass="messaggiHeader"
+                                                                 value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.codice}"
+                                                                 disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.codiceDisabled}">
+                                            <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                    listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                        </p:selectBooleanCheckbox>
+                                        <div>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-2"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.fontStileVisible}">
+                                        <div>
+                                            <p:outputLabel for="fontStile" value="Colore" styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectOneMenu id="fontStile" styleClass="input-field messaggiHeader"
+                                                             style="width: 100%;"
+                                                             value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.fontStile}"
+                                                             disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.fontStileDisabled}">
+                                                <f:converter binding="#{fontStileConverter}" />
+                                                <f:selectItem itemLabel="Seleziona" noSelectionOption="true"/>
+                                                <f:selectItems value="#{templateView.currentView.messaggiCastellettiBean.fontStileList}"
+                                                               var="f" itemLabel="#{f.colore}" itemValue="#{f}"/>
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-2"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.fontVisible}">
+                                        <div>
+                                            <p:outputLabel for="font" value="Font"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectOneMenu id="font" styleClass="input-field messaggiHeader" style="width: 100%;"
+                                                             value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.font}"
+                                                             disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.fontDisabled}">
+                                                <f:selectItems value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.fonts}"
+                                                               var="f" itemLabel="#{f.value}" itemValue="#{f}"/>
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-2"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.allineamentoVisible}">
+                                        <div>
+                                            <p:outputLabel for="allineamento" value="Allineamento"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectOneMenu id="allineamento" styleClass="input-field messaggiHeader"
+                                                             style="width: 100%;"
+                                                             value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.allineamento}"
+                                                             disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.allineamentoDisabled}">
+                                                <f:selectItems value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.allineamenti}"
+                                                               var="a" itemLabel="#{a.value}" itemValue="#{a}"/>
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-1"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.boldVisible}">
+                                        <div>
+                                            <p:outputLabel for="bold" value="Bold"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectBooleanCheckbox id="bold"
+                                                                     styleClass="messaggiHeader"
+                                                                     value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.bold}"
+                                                                     disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.boldDisabled}">
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-2"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.fontEntityVisible}">
+                                        <div>
+                                            <p:outputLabel for="fontEntity" value="Font Entity"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectOneMenu id="fontEntity" styleClass="input-field messaggiHeader"
+                                                             style="width: 100%;"
+                                                             value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.fontEntity}"
+                                                             disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.fontEntityDisabled}">
+
+                                                <f:selectItem itemLabel="Seleziona" itemValue=""/>
+                                                <f:selectItems value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.fontEntities}"
+                                                               var="a" itemLabel="#{a.descrizione}" itemValue="#{a.id}"/>
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </h:panelGroup>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <h:panelGroup layout="block" class="col-3"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.bottoneVisible}">
+                                        <div>
+                                            <p:outputLabel for="bottone" value="Bottone" styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectOneMenu id="bottone" styleClass="input-field messaggiHeader"
+                                                             style="width: 100%;"
+                                                             value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.bottone}"
+                                                             disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.bottoneDisabled}">
+                                                <f:converter binding="#{muiBottoneConverter}" />
+                                                <f:selectItem itemLabel="Seleziona" noSelectionOption="true"/>
+                                                <f:selectItems value="#{templateView.currentView.messaggiCastellettiBean.muiBottoneList}"
+                                                               var="b" itemLabel="#{b.descrizione}" itemValue="#{b}" />
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-3"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.regolamentoVisible}">
+                                        <div>
+                                            <p:outputLabel for="regolamento" value="Regolamento"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:inputText id="regolamento" styleClass="input-field messaggiHeader"
+                                                         value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.regolamento}"
+                                                         disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.regolamentoDisabled}">
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:inputText>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-1"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.taglioCartaVisible}">
+                                        <div>
+                                            <p:outputLabel for="taglioCarta" value="Taglio Carta"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectBooleanCheckbox id="taglioCarta"
+                                                                     value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.taglioCarta}"
+                                                                     styleClass="messaggiHeader"
+                                                                     disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.taglioCartaDisabled}">
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-1"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.barraVisible}">
+                                        <div>
+                                            <p:outputLabel for="barra" value="Barra"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:selectBooleanCheckbox id="barra"
+                                                                     styleClass="messaggiHeader"
+                                                                     value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.barra}"
+                                                                     disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.barraDisabled}">
+                                                <p:ajax event="change" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-3"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.variabileVisible}">
+                                        <div>
+                                            <p:outputLabel for="variabile" value="Variabile"
+                                                           styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:inputText id="variabile" styleClass="input-field messaggiHeader"
+                                                         value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.variabile}"
+                                                         disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.variabileDisabled}">
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:inputText>
+                                        </div>
+                                    </h:panelGroup>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <h:panelGroup layout="block" class="col-5"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.testoVisible}">
+                                        <div>
+                                            <p:outputLabel for="testo" value="Testo" styleClass="input-field-label"/>
+                                        </div>
+                                        <div>
+                                            <p:inputTextarea id="testo" style="width: 100%;" styleClass="messaggiHeader"
+                                                             value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.testo}"
+                                                             maxlength="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.testoMaxLength}"
+                                                             disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.testoDisabled}">
+                                                <p:ajax event="change" update="@(.messaggiHeader)" process="@this"
+                                                        listener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.onFieldChange}"/>
+                                            </p:inputTextarea>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="col-3"
+                                                  rendered="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.logoVisible}">
+                                        <div>
+                                            <p:outputLabel for="logo" value="Logo" styleClass="input-field-label"/>
+                                        </div>
+                                        <div id="ui-inputgroup">
+                                            <p:inputText id="logo" readonly="true" style="width: 100%;"
+                                                         styleClass="logoName"
+                                                         value="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.logoFilename}"
+                                                         disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.logoDisabled}" />
+                                            <p:commandButton id="selectLogo" icon="fa fa-fw fa-upload" value="Seleziona"
+                                                             onclick="PF('logoUploadWidget').chooseButton.click()"
+                                                             styleClass="messaggiHeader"
+                                                             disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.visibilityState.logoDisabled}" />
+                                            <p:commandButton id="removeLogo" icon="fas fa-fw fa-trash" value="Rimuovi"
+                                                             disabled="#{empty templateView.currentView.messaggiCastellettiBean.messaggiBean.formBean.logoFilename}"
+                                                             action="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.removeLogo}"
+                                                             update="@form" />
+                                            <p:panel visible="false" id="logoUploadPanel" widgetVar="logoUploadPanel">
+                                                <p:fileUpload widgetVar="logoUploadWidget" label="Seleziona file"
+                                                              fileUploadListener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.handleLogoUpload}"
+                                                              dragDropSupport="false" auto="true" mode="advanced"
+                                                              update="@form, @(.logoName)"
+                                                              immediate="true" fileLimit="1" />
+                                            </p:panel>
+                                        </div>
+                                    </h:panelGroup>
+                                    <div class="col-4">
+                                        <p:commandButton id="resetDefaults" value="Applica Defaults" styleClass="pf-btn-danger"
+                                                         style="float: right; margin-top: 60px;"
+                                                         update="@(.updatableMessageContent)"
+                                                         actionListener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.resetDefaultMessaggi}"
+                                                         oncomplete="refreshGrid(); refreshForm()"
+                                                         disabled="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.resetDisabled}">
+                                            <p:confirm message="Sei sicuro di voler ripristinare i default per il dispositivo #{templateView.currentView.messaggiCastellettiBean.messaggiBean.nomeDispositivo} ?"
+                                                       header="Conferma Ripristino" />
+                                        </p:commandButton>
+                                        <p:commandButton id="resetMessaggio" value="Reset ultima modifica" styleClass="pf-btn-danger"
+                                                         style="float: right; margin-top: 60px; margin-right: 10px;"
+                                                         update="@(.updatableMessageContent)"
+                                                         oncomplete="refreshForm()"
+                                                         actionListener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.clearForm}" />
+                                        <p:commandButton id="updateMessaggio" value="Aggiorna"
+                                                         styleClass="pf-btn-confirm btnAggiorna"
+                                                         style="float: right; margin-top: 60px; margin-right: 10px;"
+                                                         update="@(.updatableMessageContent)"
+                                                         actionListener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.updateMessaggio}"
+                                                         oncomplete="refreshGrid(); refreshForm()" />
+                                        <p:remoteCommand name="refreshForm" update="@(.updatableMessageContent)" />
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </p:tab>
+    </p:tabView>
+    <!-- Griglia messaggi -->
+    <h:panelGroup layout="block"
+                  class="row" style="margin-top: 10px;"
+                  rendered="#{templateView.currentView.messaggiCastellettiBean.renderTabs}">
+        <div class="col-12">
+            <p:panel id="pianificazioneMessaggi" toggleable="true" toggleSpeed="500"
+                     closeSpeed="500"
+                     styleClass="pnlGrid_Header expandable_pianificazione_messaggi_grid">
+                <f:facet name="header">
+                    <p:outputLabel value=""/>
+                </f:facet>
+                <h:panelGroup layout="block" styleClass="ag-theme-balham"
+                              style="width: 100%; height: 30vh;"
+                              pt:gridid="pianificazione_messaggi_grid">
+                </h:panelGroup>
+                <f:facet name="actions">
+                    <p:inputText autocomplete="off" id="pianificazione_messaggi_quickfilter"
+                                 placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                 onkeyup="onFilterTextBoxChangedpromoGrid('pianificazione_messaggi_grid', this.value)" />
+                    <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                   onclick="expandGrid('pianificazione_messaggi_grid')"
+                                   onerror="redirectToExpiredPage()" />
+                    <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                   onclick="onBtExport('pianificazione_messaggi_grid', 'Pianificazione - Messaggi')"
+                                   onerror="redirectToExpiredPage()" />
+                    <p:commandButton id="preview" title="Preview" styleClass="pnlGrid_Header previewButton"
+                                     actionListener="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.fetchHtml}"
+                                     oncomplete="inject(xhr, status, args)">
+                        <p:overlayPanel for="preview" appendTo="@(body)" styleClass="previewPanel centered-overlay"
+                                        widgetVar="previewMessaggiPanelWidget">
+                            <div class="remoteContent" />
+                        </p:overlayPanel>
+                    </p:commandButton>
+                </f:facet>
+
+                <script type="text/javascript">
+                    var idPianificazione = $('.idPianificazioneClass').text();
+                    var dispositivi = $('.devicesClass').text();
+                    var dispositivo = dispositivi;
+                    var nodeToGo = undefined;
+                    if ( dispositivi.indexOf(',') != -1) {
+                        dispositivo = dispositivi.split(',')[0];
+                    }
+
+                    var gridParamsPianificazioneMessaggi = {
+                        gridId: 'db_pianificazione_messaggi_grid',
+                        gridTabGroup: 'pianificazione_messaggi_grid_tabs',
+                        gridTabPosition: 0,
+                        gridCode: 'pianificazione_messaggi_grid',
+                        url_columnDefs: contextPath + '/resources/pianificazionepromo/messaggi/columnDef'
+                            + addUrlParamContesto(#{muiContext}),
+                    url_rowData: contextPath + '/resources/pianificazionepromo/messaggi/rowData/' + dispositivo + '/'
+                    + idPianificazione + addUrlParamContesto(#{muiContext}),
+                    url_customSort: contextPath + '/resources/grid/sorting/pianificazione_messaggi_grid',
+                        gridOptions: {
+                        onSortChanged: function (event) {
+                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/pianificazione_messaggi_grid');
+                        },
+                        onSelectionChanged: onRowSelected
+                    },
+                    additionColumnDefs: [
+                        {
+                            headerName: '',
+                            width: 75,
+                            cellRenderer: 'MessaggiPianificazione_ButtonsRenderer',
+                            position: 'prepend',
+                            pinned: 'left'
+                        }
+                    ]
+                    };
+
+                    function inject(xhr, status, args) {
+                        // debugger;
+                        PF('previewMessaggiPanelWidget').show();
+                        $('.remoteContent').html(args.html);
+                    }
+
+                    function onTabShow(event) {
+                        // 2. carica i dati della griglia corrispondente al tab
+                        var dispositivi = $('.devicesClass').text();
+                        dispositivo = dispositivi;
+                        if (dispositivi.indexOf(',') != -1) {
+                            dispositivo = dispositivi.split(',')[event];
+                        }
+                        refreshGrid();
+                        updateTabContent();
+                    }
+
+                    function refreshGrid() {
+                        var grid = getGridOptionFromGridMap('pianificazione_messaggi_grid');
+                        $.ajax({
+                            url: contextPath + '/resources/pianificazionepromo/messaggi/rowData/' + dispositivo + '/'
+                                + idPianificazione + addUrlParamContesto(#{muiContext}),
+                        method: 'GET',
+                            success: function(response) {
+                            if ( response.hasOwnProperty("rowData") ) {
+                                LT('Set rowData', response.rowData);
+                                grid.api.setRowData(response.rowData);
+                            } else {
+                                LT('Errore nel recupero dei dati', response);
+                                grid.api.setGridOption("rowData",  []);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            addInfoGrowl([
+                                {name: 'title', value: 'Errore'},
+                                {
+                                    name: 'message',
+                                    value: 'Errore nel recupero dei dati'
+                                }
+                            ]);
+                            console.error('Error fetching data:', error);
+                            if ( xhr.status == 404 ) {
+                                console.log('Endpoint not found:', xhr);
+                            }
+                            if ( grid.hasAttribute("api") ) {
+                                grid.api.setRowData([]);
+                            }
+                            return null;
+                        }
+                    });
+                    }
+
+                    function onRowSelected(event) {
+                        var nodes = event.api.getSelectedNodes();
+                        if (nodes &amp;&amp; nodes.length > 0) {
+                            nodeToGo = nodes[0];
+                            selezionaMessaggio([
+                                {name: 'messaggioSelected', value: Number(nodes[0].data.id.value)},
+
+                            ]);
+                            prepareDispositiviRowIndex([
+                                {name: 'rowIndex', value: Number(nodes[0].rowIndex)}
+                            ]);
+                        }
+                    }
+
+                    function changeRow() {
+                        if (nodeToGo) {
+                            nodeToGo.setSelected(true, true);
+                        } else {
+                            console.warn("Errore selezionando riga destinazione");
+                        }
+                    }
+
+                    function clearSelection() {
+                        var grid = getGridOptionFromGridMap('pianificazione_messaggi_grid');
+                        if (grid) {
+                            grid.api.deselectAll();
+                        }
+                    }
+
+                    function callDeleteMessageWs() {
+                        var idMessaggio = $('.idMessageToBeDeletedClass').text();
+                        if (idMessaggio &amp;&amp; idMessaggio != '') {
+                            $.ajax({
+                                type: "DELETE",
+                                url: contextPath + '/resources/pianificazionepromo/messaggi/' + idMessaggio,
+                                contentType: "text/plain",
+                                success: function (data) {
+                                    getGridOptionFromGridMap('pianificazione_messaggi_grid').api.setRowData(data.rowData);
+                                    addInfoGrowl([
+                                        {name: 'title', value: 'Messaggio eliminato'},
+                                        {
+                                            name: 'message',
+                                            value: 'Il messaggio è stato eliminato correttamente'
+                                        }
+                                    ]);
+                                    resetForm();
+                                },
+                                error: ajaxErrorHandler
+                            })
+                        }
+                        PF('deleteMessaggeConfirmDialog').hide();
+                    }
+
+                    $(document).ready(function () {
+                        if (getCurrentTab(gridParamsPianificazioneMessaggi.gridTabGroup) == gridParamsPianificazioneMessaggi.gridTabPosition) {
+                            creaGriglia(gridParamsPianificazioneMessaggi);
+                        }
+                    });
+                </script>
+
+            </p:panel>
+        </div>
+    </h:panelGroup>
+    <p:remoteCommand name="selezionaMessaggio" update="@(.updatableMessageContent) @(.btnAggiorna)"
+                     action="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.selezionaMessaggio}" />
+    <p:remoteCommand name="deleteMessaggioPianificazione" update="deleteMessaggeConfirmDialog"
+                     action="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.prepareDeleteMessageDialog}" />
+    <p:remoteCommand name="insertMessageAbove" update="@(.updatableMessageContent)"
+                     action="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.addMessageAbove}"
+                     oncomplete="refreshGrid();" />
+    <p:remoteCommand name="resetForm" update="@(.updatableMessageContent) @(.idMessageToBeDeletedClass)"
+                     action="#{templateView.currentView.messaggiCastellettiBean.messaggiBean.resetMessage}" />
+    <p:remoteCommand name="updateTabContent" action="#{templateView.currentView.messaggiCastellettiBean.fetchMessaggi}"
+                     update="@(.previewPanel)" />
+    <p:remoteCommand name="updateIndex" action="#{templateView.currentView.messaggiCastellettiBean.updateActiveIndex}"
+                     update="@(.updatableMessageContent)" />
+    <p:remoteCommand name="prepareDispositiviRowIndex"
+                     actionListener="#{templateView.currentView.messaggiCastellettiBean.prepareDispositiviRowIndex}"
+                     update="@(.updatableMessageContent)"/>
+
+    <!-- messaggio di errore se non ci sono dispositivi -->
+    <h:panelGroup layout="block" style="text-align: center; font-weight: bold; color: firebrick;"
+                  rendered="#{not templateView.currentView.messaggiCastellettiBean.renderTabs}">
+        <h:outputText value="Nessun dispositivo selezionato in pianificazione; messaggi non disponibili" />
+    </h:panelGroup>
+
+    <!-- dialog conferma eliminazione riga messaggio -->
+    <p:confirmDialog id="deleteMessaggeConfirmDialog" widgetVar="deleteMessaggeConfirmDialog"
+                     global="true" showEffect="fade" hideEffect="fade" closable="false"
+                     icon="pi pi-exclamation-triangle" styleClass="muiDialog" header="Avviso"
+                     message="Sei sicuro di voler cancellare il messaggio corrente?">
+        <p:commandButton value="No" type="button"
+                         styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                         onclick="PF('deleteMessaggeConfirmDialog').hide()" />
+        <p:commandButton value="Si" type="button"
+                         styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                         update="@(.updatableMessageContent)"
+                         onclick="callDeleteMessageWs()" />
+        <p:outputLabel value="#{ templateView.currentView.messaggiCastellettiBean.messaggiBean.idMessageToBeDeleted }"
+                       class="idMessageToBeDeletedClass" style="visibility: hidden;" />
+    </p:confirmDialog>
+
+    <style>
+        .input-field {
+            border-radius: 3px;
+            border-color: gray;
+        }
+
+        .input-field-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: black;
+        }
+
+        .ui-state-active,
+        .ui-widget-content .ui-state-active,
+        .ui-widget-header .ui-state-active,
+        a.ui-button:active,
+        .ui-button:active,
+        .ui-button.ui-state-active:hover {
+            background: none !important;
+        }
+
+        .dispositivi-tabs .ui-tabs-nav li.ui-tabs-selected.ui-state-active {
+            background-image: none !important;
+            background-color: #10654C !important;
+            border-color: #10654C !important;
+        }
+
+        .dispositivi-tabs .ui-tabs-nav li.ui-tabs-selected.ui-state-active a {
+            color: #FFFFFF !important;
+            text-shadow: none !important;
+        }
+
+        .centered-overlay.ui-overlaypanel {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
+            margin: 0 !important;
+            width: 800px;
+            height: 800px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: scroll !important;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+        }
+
+        .centered-overlay.ui-overlaypanel:after,
+        .centered-overlay.ui-overlaypanel:before {
+            display: none !important;
+        }
+    </style>
+</ui:composition>
+</html>

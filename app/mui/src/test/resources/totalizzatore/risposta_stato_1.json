@@ -1,0 +1,73 @@
+{
+  "idIniziativa": 903,
+  "figli": [
+    {
+      "idTotalizzatore": 9503,
+      "descrizione": "ACCUMULO OGGETTI SULLA SPESA",
+      "segno": 1,
+      "actionType": 60,
+      "idParent": 9502,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": 9504,
+      "descrizione": "ACCUMULO OGGETTI SUI PF",
+      "segno": 1,
+      "actionType": 61,
+      "idParent": 9502,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": 9505,
+      "descrizione": "ACCUMULO OGGETTI SUI PRODOTTI",
+      "segno": 1,
+      "actionType": 62,
+      "idParent": 9502,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": 9506,
+      "descrizione": "REDENZIONE OGGETTI",
+      "segno": -1,
+      "actionType": 64,
+      "idParent": 9502,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": 9507,
+      "descrizione": "REDENZIONE OGGETTI",
+      "segno": -1,
+      "actionType": 66,
+      "idParent": 9502,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": 9508,
+      "descrizione": "ACCREDITI MANUALI OGGETTI",
+      "segno": 1,
+      "actionType": 0,
+      "idParent": 9502,
+      "exportVs": 0
+    },
+    {
+      "idTotalizzatore": 9509,
+      "descrizione": "STORNI MANUALI OGGETTI",
+      "segno": -1,
+      "actionType": 0,
+      "idParent": 9502,
+      "exportVs": 0
+    }
+  ],
+  "parent": {
+    "idTotalizzatore": 9502,
+    "descrizione": "DESCRIZIONE INIZIATIVA DI TEST",
+    "segno": 1,
+    "actionType": null,
+    "idParent": null,
+    "exportVs": null
+  },
+  "dataInizio": "01/01/2023",
+  "dataFine": "31/12/2023",
+  "stato": 1,
+  "decimali": 2
+}

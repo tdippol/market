@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<p:dialog id="dlgAddSupporto" widgetVar="dlgAddSupporto" modal="true" closable="false"
+          header="Aggiunta Supporto Media" width="30%" height="20vh" resizable="false"
+          styleClass="disable-horizontal-scroll dlgAddSupportoClass">
+    <h:form id="formAddSupporto" styleClass="formAddSupporto" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-8">
+                <div>
+                    <div><p:outputLabel for="codiceSupporto" value="Codice" styleClass="label-txt" /></div>
+                </div>
+                <div>
+                    <p:inputText id="codiceSupporto" styleClass="input-field codiceSupporto"
+                                 style="width: 100%;"
+                                 value="#{templateView.currentView.codiceSupporto}">
+                        <p:ajax update="@this" />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-8">
+                <div>
+                    <div><p:outputLabel for="descrizioneSupporto" value="Descrizione" styleClass="label-txt" /></div>
+                </div>
+                <div>
+                    <p:inputText id="descrizioneSupporto" styleClass="input-field descrizioneSupporto"
+                                 style="width: 100%;"
+                                 value="#{templateView.currentView.descrizioneSupporto}">
+                        <p:ajax update="@this" />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton id="btnCancelAddSupporto" value="Annulla" styleClass="ui-confirmdialog-no"
+                                 style="float: left;"
+                                 oncomplete="PF('dlgAddSupporto').hide()"
+                                 update="@(.formAddSupporto)"
+                                 action="#{templateView.currentView.resetDialogAddSupporto}" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="btnConfirmAddSupporto" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 update="@(.updateableSupporti) @(.formAddSupporto)"
+                                 action="#{templateView.currentView.confirmDialogAddSupporto}" />
+            </div>
+        </div>
+    </f:facet>
+
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+    </style>
+</p:dialog>
+</html>

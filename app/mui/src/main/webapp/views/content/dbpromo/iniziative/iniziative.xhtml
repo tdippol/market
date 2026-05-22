@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <ui:include src="dlgCreaIniziativa.xhtml" />
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <p:commandButton value="Crea" class="pf-btn-confirm" id="addIniziativa"
+                                 action="#{templateView.currentView.prepareDialogAddIniziativa}"
+                                 oncomplete="PF('dlgAddIniziativa').show()" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_grid_iniziative" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableIniziative">
+                        <f:facet name="header">
+                            <p:outputLabel value="Iniziative"/>
+                        </f:facet>
+
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham grid_iniziative"
+                                      pt:gridid="db_grid_iniziative">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_grid_iniziative_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_iniziative',this.value)"/>
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_iniziative')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_iniziative','Iniziative',true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_iniziative','Iniziative')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <p:remoteCommand name="goToSchedaIniziativa"
+                                         action="#{templateView.simulateMenuClick()}" />
+
+                        <script type="text/javascript">
+                            var gridParamsIniziative = {
+                                gridCode: 'db_grid_iniziative',
+                                gridTitle: 'Riepilogo Iniziative',
+                                url_columnDefs: contextPath + '/resources/iniziative/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/iniziative/rowData' + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_grid_iniziative',
+                                gridOptions: {
+                                    onCellDoubleClicked: openSchedaIniziativa,
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_iniziative');
+                                    }
+                                }
+                            };
+
+                            function openSchedaIniziativa(param) {
+                                if (param.data !== undefined) {
+                                    goToSchedaIniziativa([
+                                        { name: 'menuId', value: #{templateView.currentView.landingPage} },
+                                        { name: 'currentIniziativaId', value: param.data.id.value },
+                                    ]);
+                                }
+                            }
+
+                            $(document).ready(function () {
+                                creaGriglia(gridParamsIniziative);
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

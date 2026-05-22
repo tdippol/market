@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+	<h:panelGrid columns="2" cellpadding="5">
+		<h:outputText
+			value="Confermi la cancellazione del nodo #{gestioneMenuRole.selectedMenuNode.label} ?"
+			label="label" />
+		<f:facet name="footer">
+			<p:commandButton value="Si" update="treeMenu"
+				action="#{gestioneMenuRole.deleteSelectedNode}"
+				oncomplete="PF('confirmDelete').hide()" styleClass="pf-btn-confirm" />
+			<p:commandButton value="No" oncomplete="PF('confirmDelete').hide()"
+				styleClass="pf-btn-cancel" />
+		</f:facet>
+	</h:panelGrid>
+</ui:composition>
+</html>

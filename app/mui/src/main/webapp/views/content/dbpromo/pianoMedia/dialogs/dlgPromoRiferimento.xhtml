@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<p:dialog id="PromoRifDialog" widgetVar="PromoRifDialog" modal="true" closable="false" dynamic="true"
+          header="Seleziona Promozione riferimento"
+          onShow="loadPromoRifGrid()"
+          width="75%" height="60vh" resizable="false" styleClass="promoRifDialogClass disable-horizontal-scroll">
+    <p:remoteCommand name="promoRifSelected" update="@(.ui-confirmdialog-yes)"
+                     actionListener="#{templateView.currentView.promoRifSelected}" />
+    <p:remoteCommand name="resetDialog" update="@(.ui-confirmdialog-yes)"
+                     actionListener="#{templateView.currentView.resetDialog}" />
+
+    <div class="row">
+        <div class="col-12">
+            <p:panel id="expandable_db_add_promoRif" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                     closable="false"
+                     styleClass="pnlGrid_Header expandable_db_add_promoRif">
+                <f:facet name="header">
+                    <p:outputLabel value="Promozioni disponibili" />
+                </f:facet>
+
+                <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                              styleClass="ag-theme-balham promoRifTable"
+                              pt:gridid="db_grid_pianoMediaPromoRif">
+                </h:panelGroup>
+
+                <f:facet name="actions">
+                    <p:inputText autocomplete="off" id="db_add_promoRif_quickfilter" placeholder="Filtra..."
+                                 styleClass="pnlGrid_Header filterInputText"
+                                 onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_pianoMediaPromoRif', this.value)" />
+                    <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                   onclick="expandGrid('db_grid_pianoMediaPromoRif')"
+                                   onerror="redirectToExpiredPage()" />
+                    <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                   onclick="onBtExport('db_grid_pianoMediaPromoRif', 'Promozioni di riferimento')"
+                                   onerror="redirectToExpiredPage()" />
+                </f:facet>
+
+                <script type="text/javascript">
+                    const url_rowData = contextPath + '/resources/pianomedia/creaPianoMedia/promoRif/rowData';
+                    var gridParamsPianoMediaPromoRif = {
+                        gridCode: 'db_grid_pianoMediaPromoRif',
+                        gridTitle: 'Seleziona Promozione Riferimento',
+                        url_columnDefs: contextPath + '/resources/pianomedia/creaPianoMedia/promoRif/columnDef'
+                            + addUrlParamContesto(#{muiContext}),
+                        url_customSort: contextPath + '/resources/grid/sorting/db_grid_pianoMediaPromoRif',
+                        gridOptions: {
+                            rowSelection: 'single',
+                            onSelectionChanged: onPromoRifSelected,
+                            onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_pianoMediaPromoRif');
+                            }
+                        }
+                    }
+
+                    // noinspection JSUnusedGlobalSymbols
+                    function loadPromoRifGrid() {
+                        resetDialog();
+                        creaGriglia(gridParamsPianoMediaPromoRif);
+                        loadData();
+                    }
+
+                    function loadData() {
+                        showAgGridLoadingOverlay('db_grid_pianoMediaPromoRif');
+                        let cellCoords = getCellCoords();
+                        let rowNode = getGridOptionFromGridMap("db_grid_creaPianoMedia").api.getRowNode(cellCoords.rowIndex);
+                        let slotId = rowNode.data.slotId.value;
+                        $.ajax({
+                            type: "GET",
+                            url: url_rowData + '/' + slotId + '/' + cellCoords.colId + addUrlParamContesto(#{muiContext}),
+                            contentType: "application/json",
+                            success: function (data) {
+                                if (data) {
+                                    getGridOptionFromGridMap('db_grid_pianoMediaPromoRif').api.setRowData(data.rowData);
+                                    highlightPromoRif()
+                                }
+                            },
+                            error: ajaxErrorHandler,
+                            complete: function () {
+                                hideAgGridLoadingOverlay('db_grid_pianoMediaPromoRif');
+                            }
+                        });
+                    }
+
+                    function highlightPromoRif() {
+                        let dlg = PF('PromoRifDialog');
+                        let promoRifCode = dlg.jq.data('promoRifCode');
+                        if (promoRifCode) {
+                            getGridOptionFromGridMap("db_grid_pianoMediaPromoRif").api.forEachNode(function (node) {
+                                if (node.data.codice.value == promoRifCode) {
+                                    node.setSelected(true);
+                                }
+                            });
+                        }
+                    }
+
+                    function onPromoRifSelected(event) {
+                        promoRifSelected([{
+                            name: 'codePromoRifSelected',
+                            value: event.api.getSelectedRows()[0]?.codice?.value
+                        }]);
+                    }
+
+                    // noinspection JSUnusedGlobalSymbols
+                    function updatePromoRif() {
+                        let selectedRows = getGridOptionFromGridMap("db_grid_pianoMediaPromoRif").api.getSelectedRows();
+                        if (selectedRows &amp;&amp; selectedRows[0]?.codice?.value) {
+                            let promoRifCode = selectedRows[0].codice.value;
+                            let cellCoords = getCellCoords();
+                            let rowIndex = cellCoords.rowIndex;
+                            let colId = cellCoords.colId;
+                            let api = getGridOptionFromGridMap("db_grid_creaPianoMedia").api;
+                            let cell = api.getRowNode(rowIndex).data[colId];
+                            cell.value = promoRifCode;
+                            api.getRowNode(rowIndex).setDataValue(colId, cell);
+                        }
+                    }
+
+                    function getCellCoords() {
+                        let dlg = PF('PromoRifDialog');
+                        return {
+                            rowIndex: dlg.jq.data('rowIndex'),
+                            colId: dlg.jq.data('colId')
+                        }
+                    }
+                </script>
+            </p:panel>
+        </div>
+    </div>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('PromoRifDialog').hide()" update="@(.promoRifDialogClass)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="promoRifDialogClassConfrimBtn" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 onclick="updatePromoRif()"
+                                 disabled="#{templateView.currentView.confirmPromoRifBtnDisabled}"
+                                 oncomplete="PF('PromoRifDialog').hide()" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+</html>

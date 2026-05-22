@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <h:form>
+                    <div class="ui-g-12">
+                        <div class="ui-g-1">
+                            <p:outputLabel value="Admin Status: " for="admin_status"/>
+                        </div>
+                        <div class="ui-g-1">
+                            <p:inputSwitch id="admin_status" value="#{templateView.currentView.adminBean.adminModeActive}">
+                                <p:ajax partialSubmit="true" update="@form"/>
+                            </p:inputSwitch>
+                        </div>
+                        <div class="ui-g-1">
+                            <p:outputLabel for="textMessage" value="Messaggio utente: " />
+                        </div>
+                        <div class="ui-g-9">
+                            <p:inputText id="textMessage" value="#{templateView.currentView.adminBean.userMessage}" style="width: 100%">
+                                <p:ajax partialSubmit="true" update="@form"/>
+                            </p:inputText>
+                        </div>
+                    </div>
+                    <div class="ui-g-12" style="border: 1px solid #808080;border-radius: 5px; margin-bottom: 40px">
+                        <div class="ui-g-12">
+                            <div class="ui-g-1">
+                                <p:outputLabel value="Scheduler Status" for="scheduler_status"/>
+                            </div>
+                            <div class="ui-g-1">
+                                <p:inputSwitch value="#{templateView.currentView.adminBean.schedulerActive}" id="scheduler_status">
+                                    <p:ajax partialSubmit="true" update="@form"/>
+                                </p:inputSwitch>
+                            </div>
+                            <div class="ui-g-10"><p:spacer width="100" height="0"/></div>
+                        </div>
+                        <div class="ui-g-12">
+                            <div class="ui-g-3">
+                                <p:outputLabel value="Dalle ore: " for="timeDalle"/>
+                                <pe:timePicker mode="popup" id="timeDalle" widgetVar="popupTimeDalle" label="Seleziona orario" style="width: 100%" value="#{templateView.currentView.adminBean.fromTime}" disabled="#{templateView.currentView.adminBean.schedulerActive eq false}">
+                                    <p:ajax partialSubmit="true" update="@form"/>
+                                </pe:timePicker>
+                            </div>
+                            <div class="ui-g-3">
+                                <p:outputLabel value="Alle ore: " for="timeAlle"/>
+                                <pe:timePicker mode="popup" id="timeAlle" widgetVar="popupTimeAlle" label="Seleziona orario" style="width: 100%" value="#{templateView.currentView.adminBean.toTime}" disabled="#{templateView.currentView.adminBean.schedulerActive eq false}">
+                                    <p:ajax partialSubmit="true" update="@form"/>
+                                </pe:timePicker>
+                            </div>
+                            <div class="ui-g-6" ><p:spacer width="100" height="0"/></div>
+                        </div>
+                        <div class="ui-g-12">
+                            <div class="ui-g-2">
+                                <p:selectOneRadio styleClass="dinamic" id="periodo" unselectable="false" value="#{templateView.currentView.adminBean.allDays}" disabled="#{templateView.currentView.adminBean.schedulerActive eq false}">
+                                    <f:selectItem itemLabel="Tutti i giorni" itemValue="true" />
+                                    <f:selectItem itemLabel="Solo i giorni" itemValue="false" />
+                                    <p:ajax partialSubmit="true" update="@form"/>
+                                </p:selectOneRadio>
+                            </div>
+                            <div class="ui-g-10" ><p:spacer width="100" height="0"/></div>
+                        </div>
+                        <div class="ui-g-12">
+                            <div class="ui-g-3">
+                                <p:outputPanel styleClass="dinamic" style="border: 1px solid;">
+                                    <p:selectManyCheckbox id="settimana" layout="grid" columns="1" style="margin: 5px" value="#{templateView.currentView.adminBean.selectedDays}"
+                                                          disabled="#{templateView.currentView.adminBean.allDays or (not templateView.currentView.adminBean.schedulerActive)}"
+                                    >
+                                        <f:selectItem itemLabel="Lunedì" itemValue="1" />
+                                        <f:selectItem itemLabel="Marteì" itemValue="2" />
+                                        <f:selectItem itemLabel="Mercoledì" itemValue="3" />
+                                        <f:selectItem itemLabel="Giovedì" itemValue="4" />
+                                        <f:selectItem itemLabel="Venerdì" itemValue="5" />
+                                        <f:selectItem itemLabel="Sabato" itemValue="6" />
+                                        <f:selectItem itemLabel="Domenica" itemValue="7" />
+                                        <f:ajax update="@form"/>
+                                    </p:selectManyCheckbox>
+                                </p:outputPanel>
+                            </div>
+                            <div class="ui-g-8" ><p:spacer width="100" height="0"/></div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12" style="border: 1px solid #808080;border-radius: 5px; margin-bottom: 40px">
+                        <div class="ui-g-2">
+                            <p:commandButton value="refresh data" action="#{templateView.currentView.adminBean.refresh}" update="@form"/>
+                        </div>
+                        <div class="ui-g-7">
+                            <p:spacer width="100" height="0"/>
+                        </div>
+                        <div class="ui-g-2">
+                            <h:outputText value="Accesso utente non admin: " style="float: right"></h:outputText>
+                        </div>
+                        <div class="ui-g-1">
+                            <h:panelGroup style="height: 25px;  width: 25px;  background-color: red;  border-radius: 50%;  display: inline-block;" rendered="#{!templateView.currentView.adminBean.accessGranted}"></h:panelGroup>
+                            <h:panelGroup style="height: 25px;  width: 25px;  background-color: green;  border-radius: 50%;  display: inline-block;" rendered="#{templateView.currentView.adminBean.accessGranted}"></h:panelGroup>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

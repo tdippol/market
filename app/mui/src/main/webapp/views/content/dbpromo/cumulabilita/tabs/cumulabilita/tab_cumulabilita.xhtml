@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <div class="row">
+                        <ui:include src="grid_cumulabilita.xhtml" />
+                        <ui:include src="grid_buoni.xhtml" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .pnlGrid_Header .ui-state-disabled {
+            opacity: 0.5!important;
+        }
+    </style>
+</ui:composition>
+</html>

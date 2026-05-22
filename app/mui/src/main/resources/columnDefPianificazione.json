@@ -1,0 +1,5 @@
+{
+  "columnDef": [
+    { "headerName": "Elemento", "field": "elemento", "width": 150 }
+  ]
+}

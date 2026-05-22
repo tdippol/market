@@ -1,0 +1,211 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+<ui:composition>
+    <p:confirmDialog widgetVar="cancellaMeccanicaConfirmDialog" global="true" showEffect="fade" hideEffect="fade"
+                     header="Avviso" message="Confermi la cancellazione della meccanica ?" closable="false" styleClass="muiDialog">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" onclick="PF('cancellaMeccanicaConfirmDialog').hide()"/>
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                         onclick="deleteMeccanica(); aggiornaPromozione()" />
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:remoteCommand action="#{templateView.currentView.deleteMeccanica()}" name="aggiornaPromozione"> </p:remoteCommand>
+                    <p:panel id="expandable_db_schedapromo_meccaniche" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_meccaniche">
+                        <f:facet name="header">
+                            <p:outputLabel value="Meccaniche" />
+                        </f:facet>
+                        <!-- DIALOG -->
+                        <p:dialog id="meccanicheDialog" widgetVar="meccanicheDialog" header="Gestione Meccaniche"
+                                  styleClass="meccanicheDialog disable-horizontal-scroll" modal="true"
+                                  width="500" height="auto" resizable="false" closable="false">
+                            <h:form id="meccanicheDialogDialogForm">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div>
+                                            <p:outputLabel for="dialogPromozione" value="Promozione" style="font-size: 14px;" />
+                                        </div>
+                                        <div>
+                                            <p:inputText id="dialogPromozione" readonly="true" styleClass="updateableContent"
+                                                         style="width: 100%;"
+                                                         value="#{templateView.currentView.promotionSelected.descrizioneEstesa}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="margin-top: 20px;">
+                                        <div>
+                                            <p:outputLabel for="dialogCurrentStatePT" value="Stato Corrente"
+                                                           style="font-size: 14px;" />
+                                        </div>
+                                        <div>
+                                            <p:inputText id="dialogCurrentStatePT" readonly="true"
+                                                         styleClass="updateableContent" style="width: 100%;"
+                                                         value="#{templateView.currentView.statoCorrente.statoPromozioneEntity.codiceStato} - #{templateView.currentView.statoCorrente.statoPromozioneEntity.label}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="margin-top: 20px;">
+                                        <div>
+                                            <p:outputLabel for="meccanichePossibili" value="Meccaniche Disponibili"
+                                                           style="font-size: 14px;" />
+                                        </div>
+                                        <div>
+                                            <p:selectOneMenu id="meccanichePossibili"
+                                                             filter="true" filterMatchMode="contains"
+                                                             value="#{templateView.currentView.meccaniche.nuovaMeccanica}"
+                                                             class="input-field" style="width: 100%;" immediate="true">
+                                                <p:ajax update="@(.ui-confirmdialog-yes)"/>
+                                                <f:selectItem itemLabel="" noSelectionOption="true" />
+                                                <f:selectItems value="#{templateView.currentView.meccaniche.meccanichePossibili}"
+                                                               var="st"
+                                                               itemLabel="#{st.codiceMeccanica} - #{st.descrizione}"
+                                                               itemValue="#{st.id}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                         style="float: left;"
+                                                         oncomplete="PF('meccanicheDialog').hide()" />
+                                    </div>
+                                    <div class="col-6">
+                                        <p:commandButton id="meccanicheConfirmBtn" value="Conferma"
+                                                         styleClass="ui-confirmdialog-yes"
+                                                         disabled="#{empty templateView.currentView.meccaniche.nuovaMeccanica}"
+                                                         action="#{templateView.currentView.meccaniche.aggiungiMeccanica}"
+                                                         oncomplete="PF('meccanicheDialog').hide()"/>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </p:dialog>
+                        <!--END DIALOG -->
+                        <div class="col-12">
+                            <h:form>
+
+                                <p:remoteCommand name="updateAggiungiMeccaniche" update="aggiungiMeccaniche"/>
+                                <p:remoteCommand name="updateCurrentPromo"
+                                                 action="#{templateView.currentView.reloadPromoCorrente}" />
+
+                                <p:commandButton
+                                        value="Aggiungi"
+                                        style="margin-right: 20px; border-radius: 5px;"
+                                        id="aggiungiMeccaniche" class="pf-btn-confirm"
+                                        oncomplete="PF('meccanicheDialog').show()" action="#{templateView.currentView.meccaniche.prepareDialog}"
+                                        disabled="#{templateView.currentView.meccaniche.btnAggiungiDisabled or not templateView.currentView.btnAggiungiMeccanicheActive}"
+                                        update="#{p:component('meccanicheDialog')}"/>
+                            </h:form>
+                        </div>
+                        <h:panelGroup
+                                layout="block"
+                                style="height: 60vh; width: 100%;"
+                                class="ag-theme-balham mecchaniche"
+                                pt:gridid="db_schedapromo_meccaniche" />
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="mecchaniche_quickfilter" placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText" onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapromo_meccaniche',this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton" onclick="expandGrid('db_schedapromo_meccaniche')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped" onclick="onBtExport('db_schedapromo_meccaniche','Meccaniche',true)" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton" onclick="onBtExport('db_schedapromo_meccaniche','some title from backend')" onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+
+
+              		var promoID = #{templateView.currentView.idPromozioneCorrente};
+                    var idMeccanica;
+
+
+             		var gridParams_schedaPromoMeccaniche={
+                        gridId:'meccaniche',
+                        gridTabGroup:'schedaPromo_tabs',
+                        gridTabPosition: #{templateView.currentView.indexOf('TAB_MECCANICHE')},
+                        gridCode:'db_schedapromo_meccaniche',
+                        gridTitle:'SchedaPromo - Meccaniche',
+                        url_columnDefs:contextPath+'/resources/grid/schedapromo/meccaniche/columnDef' + addUrlParamContesto(#{muiContext}),
+                        url_rowData:contextPath+'/resources/grid/schedapromo/meccaniche/rowData/' + promoID,
+                        url_customSort: contextPath + '/resources/grid/sorting/db_schedapromo_meccaniche'
+                    };
+
+
+             		var gridOptions={
+                        onSortChanged: function (event) {
+                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_schedaPromoMeccaniche.gridCode);
+                        }
+                    };
+
+             		gridParams_schedaPromoMeccaniche.additionColumnDefs=[{ headerName: '', width: 50, cellRenderer: 'SchedaPromoMeccaniche_DeleteMeccanicheRenderer', position:'prepend' }];
+             		gridParams_schedaPromoMeccaniche.gridOptions=gridOptions;
+
+            		$( document ).ready(function() {
+            			if(currentActiveTab==gridParams_schedaPromoMeccaniche.gridTabPosition)
+            			{
+							creaGriglia(gridParams_schedaPromoMeccaniche);
+        	        	}
+                    });
+
+            		
+            		
+            		
+            		
+            		
+            		
+                        function updateRowData(promozione){
+                            $.ajax({
+                                    type: "GET",
+                                    url: contextPath+'/resources/grid/schedapromo/meccaniche/rowData/' + promozione,
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                    	getGridOptionFromGridMap('db_schedapromo_meccaniche').api.setRowData(data.rowData);
+                                    },
+									error: ajaxErrorHandler
+                                });
+
+                        }
+
+                        function deleteMeccanica(){
+                               PF('cancellaMeccanicaConfirmDialog').hide();
+                               $.ajax({
+                                   type: "DELETE",
+                                   url: contextPath+'/resources/grid/promoMeccanica/delete/' + #{ templateView.currentView.idPromozioneCorrente },
+                                   contentType: "text/plain",
+                                   data: {"idPromoMeccanica" : idMeccanica},
+                                   success: function (data) {
+                                       addInfoGrowl([{ name: 'title', value: 'Elimina Meccanica' }, {name: 'message',value: 'Meccanica eliminata con successo'}]);
+                                       idMeccanica = "";
+                                       getGridOptionFromGridMap('db_schedapromo_meccaniche').api.setRowData(data.rowData);
+                                       updateCurrentPromo();
+                                       updateAggiungiMeccaniche();
+                                   },
+                                   error: ajaxErrorHandler,
+                                   complete: function (jqXHR, exception) {
+                                        idMeccanica = "";
+                                       PF('cancellaMeccanicaConfirmDialog').hide();
+                                   }
+
+                               });
+                           }
+
+                          function updateAddButton() {
+                              updateAggiungiMeccaniche();
+                          }
+                     </script>
+                     <style>
+					     .pnlGrid_Header .ui-state-disabled {
+                             opacity: 0.5!important
+                         }
+					 </style>
+                    </p:panel>
+                </div>
+            </div>
+            <!--col -->
+        </div>
+        <!--row-->
+    </div>
+</ui:composition>
+</html>

@@ -1,0 +1,37 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID",
+      "field": "id",
+      "width": 100,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Media",
+      "field": "media",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Controllo",
+      "field": "controllo",
+      "width": 400,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Tipo Controllo",
+      "field": "tipoControllo",
+      "width": 300,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "width": 400,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Compratore",
+      "field": "compratore",
+      "width": 400,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Severità",
+      "field": "severita",
+      "width": 200,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

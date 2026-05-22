@@ -1,0 +1,76 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID",
+      "field": "slotId",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Promozione Riferimento",
+      "field": "promoRif",
+      "editable": true,
+      "width": 300,
+      "hide": false,
+      "type": "popupdialog"
+    },
+    {
+      "headerName": "Anno",
+      "field": "anno",
+      "editable": true,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "editable": true,
+      "width": 300,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "editable": true,
+      "width": 150,
+      "hide": false,
+      "type": "date"
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "editable": true,
+      "width": 150,
+      "hide": false,
+      "type": "date"
+    },
+    {
+      "headerName": "Promozione Secondaria A",
+      "field": "promoSecA",
+      "editable": true,
+      "width": 300,
+      "hide": false,
+      "type": "popupdialog"
+    },
+    {
+      "headerName": "Promozione Secondaria B",
+      "field": "promoSecB",
+      "editable": true,
+      "width": 300,
+      "hide": false,
+      "type": "popupdialog"
+    },
+    {
+      "headerName": "Promozione Secondaria C",
+      "field": "promoSecC",
+      "editable": true,
+      "width": 300,
+      "hide": false,
+      "type": "popupdialog"
+    }
+  ]
+}

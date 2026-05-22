@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="addSottoclasseDialog" widgetVar="addSottoclasseDialog" modal="true" closable="false" resizable="false"
+          header="Crea nuova sottoclasse" width="500" height="auto"
+          styleClass="disable-horizontal-scroll">
+    <h:form id="addSottoclasseDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="addSottoclasseDialogForm">
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <p:outputLabel for="codice" value="Codice" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputText id="codice" style="width: 100%; text-transform: uppercase;" maxlength="10"
+                                 value="#{templateView.currentView.codice}">
+                        <p:ajax event="keyup" update="confirmBtn @this" />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-12">
+                <div>
+                    <p:outputLabel for="descrizione" value="Descrizione" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputText id="descrizione" style="width: 100%; text-transform: uppercase;" maxlength="100"
+                                 value="#{templateView.currentView.descrizione}">
+                        <p:ajax event="keyup" update="confirmBtn @this" />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="priorita" value="Priorita" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:spinner id="priorita" inputStyle="width: 100%;" min="1" max="999" decimalPlaces="0"
+                               value="#{templateView.currentView.priorita}">
+                        <p:ajax event="change" update="confirmBtn @this" />
+                        <p:ajax event="keyup" update="confirmBtn @this" />
+                    </p:spinner>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="delay" value="Delay" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:spinner id="delay" inputStyle="width: 100%;" min="0" max="999" decimalPlaces="0"
+                               value="#{templateView.currentView.delay}">
+                        <p:ajax event="change" update="confirmBtn @this" />
+                        <p:ajax event="keyup" update="confirmBtn @this" />
+                    </p:spinner>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-12">
+                <div>
+                    <p:outputLabel for="attiva" value="Attiva" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="attiva" value="#{templateView.currentView.attiva}" />
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-6">
+                <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 oncomplete="PF('addSottoclasseDialog').hide()"
+                                 update="@(.addSottoclasseDialogForm)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="confirmBtn" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 actionListener="#{templateView.currentView.confermaCreazione}"
+                                 disabled="#{templateView.currentView.btnConfermaCreazioneDisabled()}"
+                                 update="@(.growlClass) @(.addSottoclasseDialogForm) @(.updateableContent) @(.pubblicaSottoclassiDialogBtn)" />
+            </div>
+        </div>
+    </h:form>
+    <style>
+        .ui-spinner-up {
+            background-color: #CDCFD1;
+        }
+
+        .ui-spinner-down {
+            background-color: #CDCFD1;
+        }
+    </style>
+</p:dialog>
+</html>

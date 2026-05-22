@@ -1,0 +1,199 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<ui:composition>
+    <p:confirmDialog widgetVar="deleteShedaPromoSottoscrizioneConfirmDialog" global="true"
+                     showEffect="fade" hideEffect="fade" closable="false" styleClass="muiDialog"
+                     header="Avviso" message="Confermi la cancellazione della sottoscrizione ?">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                         onclick="PF('deleteShedaPromoSottoscrizioneConfirmDialog').hide()" />
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                         onclick="deleteSottoscrizione(); aggiornaPromozione()" />
+    </p:confirmDialog>
+
+    <p:dialog id="addSottoscrizioniDialog" widgetVar="addSottoscrizioniDialog" header="Gestione Sottoscrizioni"
+              styleClass="addSottoscrizioniDialog disable-horizontal-scroll" modal="true"
+              width="500" height="auto" resizable="false" closable="false">
+        <h:form id="addSottoscrizioniDialogForm">
+            <div class="row">
+                <div class="col-12">
+                    <div>
+                        <p:outputLabel for="dialogPromozione" value="Promozione" style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:inputText id="dialogPromozione" readonly="true" styleClass="updateableContent"
+                                     style="width: 100%;"
+                                     value="#{templateView.currentView.promotionSelected.descrizioneEstesa}" />
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: 20px;">
+                    <div>
+                        <p:outputLabel for="dialogCurrentStatePT" value="Stato Corrente"
+                                       style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:inputText id="dialogCurrentStatePT" readonly="true"
+                                     styleClass="updateableContent" style="width: 100%;"
+                                     value="#{templateView.currentView.statoCorrente.statoPromozioneEntity.codiceStato} - #{templateView.currentView.statoCorrente.statoPromozioneEntity.label}" />
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: 20px;">
+                    <div>
+                        <p:outputLabel for="sottoscrizioniDisponibili" value="Sottoscrizioni Disponibili"
+                                       style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:selectOneMenu id="sottoscrizioniDisponibili" filter="true" filterMatchMode="contains"
+                                          value="#{templateView.currentView.sottoscrizioniBean.selectedSottoscrizione}"
+                                          class="input-field" style="width: 100%;" immediate="true">
+                            <f:converter binding="#{sottoscrizioneConverter}" />
+                            <p:ajax update="@(.ui-confirmdialog-yes)"/>
+                            <f:selectItem itemLabel="" noSelectionOption="true" />
+                            <f:selectItems value="#{templateView.currentView.sottoscrizioniBean.sottoscrizioniDisponibili}"
+                                           var="s" itemLabel="#{s.codice} - #{s.descrizione}" itemValue="#{s}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                     style="float: left;"
+                                     oncomplete="PF('addSottoscrizioniDialog').hide()" />
+                </div>
+                <div class="col-6">
+                    <p:commandButton id="sottoscrizioniConfirmBtn" value="Conferma"
+                                     styleClass="ui-confirmdialog-yes"
+                                     disabled="#{empty templateView.currentView.sottoscrizioniBean.selectedSottoscrizione}"
+                                     action="#{templateView.currentView.sottoscrizioniBean.aggiungiSottoscrizione}"
+                                     oncomplete="PF('addSottoscrizioniDialog').hide()"/>
+                </div>
+            </div>
+        </h:form>
+    </p:dialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:remoteCommand action="#{templateView.currentView.deleteSottoscrizione()}"
+                                     name="aggiornaPromozione" />
+                    <p:panel id="expandable_db_schedapromo_sottoscrizioni" toggleable="true" toggleSpeed="500"
+                             closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_sottoscrizioni">
+                        <f:facet name="header">
+                            <p:outputLabel value="Sottoscrizioni" />
+                        </f:facet>
+                        <div class="col-12">
+                            <h:form>
+                                <p:remoteCommand name="updateCurrentPromoSottoscrizioni"
+                                                 action="#{templateView.currentView.reloadPromoCorrente}" />
+                                <p:commandButton value="Aggiungi" style="margin-right: 20px; border-radius: 5px;"
+                                                 id="aggiungiSottoscrizioni" class="pf-btn-confirm"
+                                                 oncomplete="PF('addSottoscrizioniDialog').show()"
+                                                 action="#{templateView.currentView.sottoscrizioniBean.prepareDialog}"
+                                                 update="#{p:component('addSottoscrizioniDialog')}" />
+                            </h:form>
+                        </div>
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham sottoscrizioni"
+                                      pt:gridid="db_schedapromo_sottoscrizioni" />
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="sottoscrizioni_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapromo_sottoscrizioni', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedapromo_sottoscrizioni')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedapromo_sottoscrizioni', 'Sottoscrizioni', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedapromo_sottoscrizioni', 'Sottoscrizioni')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+                            var promoID = '#{templateView.currentView.idPromozioneCorrente}';
+                            var idSottoscrizione = "";
+                            var gridParamsSchedaPromoSottoscrizioni = {
+                                gridId: 'db_schedapromo_sottoscrizioni',
+                                gridTabGroup: 'schedaPromo_tabs',
+                                gridTabPosition: '#{templateView.currentView.indexOf("TAB_SOTTOSCRIZIONI")}',
+                                gridCode: 'db_schedapromo_sottoscrizioni',
+                                gridTitle: 'SchedaPromo - Sottoscrizioni',
+                                url_columnDefs: contextPath + '/resources/grid/schedapromo/sottoscrizioni/columnDef'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/grid/schedapromo/sottoscrizioni/rowData/' + promoID,
+                                url_customSort: contextPath + '/resources/grid/sorting/db_schedapromo_sottoscrizioni',
+                                gridOptions: {
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_schedapromo_sottoscrizioni');
+                                    }
+                                }
+                            };
+
+                            $(document).ready(function () {
+                                if (currentActiveTab == gridParamsSchedaPromoSottoscrizioni.gridTabPosition) {
+                                    creaGriglia(gridParamsSchedaPromoSottoscrizioni);
+                                }
+                            });
+
+                            function updateSottoscrizioniRowData(idPromozione){
+                                $.ajax({
+                                    type: "GET",
+                                    url: contextPath + '/resources/grid/schedapromo/sottoscrizioni/rowData/' + idPromozione,
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        getGridOptionFromGridMap('db_schedapromo_sottoscrizioni').api.setRowData(data.rowData);
+                                    },
+                                    error: ajaxErrorHandler
+                                });
+                            }
+
+                            function deleteSottoscrizione() {
+                                if (idSottoscrizione == "" || promoID == "") {
+                                    addErrorGrowl([
+                                        { name: 'title', value: 'Eliminazione Sottoscrizione' },
+                                        { name: 'message', value: 'Impossibile eliminare Sottoscrizione' }
+                                    ]);
+                                } else {
+                                    $.ajax({
+                                        type: "DELETE",
+                                        url: contextPath + '/resources/grid/schedapromo/' + promoID + '/sottoscrizioni/' + idSottoscrizione,
+                                        contentType: "application/json",
+                                        success: function (data) {
+                                            addInfoGrowl([
+                                                { name: 'title', value: 'Eliminazione Sottoscrizione' },
+                                                { name: 'message', value: 'Sottoscrizione eliminata con successo' }
+                                            ]);
+                                            idSottoscrizione = "";
+                                            getGridOptionFromGridMap('db_schedapromo_sottoscrizioni').api.setRowData(data.rowData);
+                                            updateCurrentPromoSottoscrizioni();
+                                        },
+                                        error: ajaxErrorHandler,
+                                        complete: function (jqXHR, exception) {
+                                            idSottoscrizione = "";
+                                            PF('deleteShedaPromoSottoscrizioneConfirmDialog').hide();
+                                        }
+                                    });
+                                }
+                            }
+                        </script>
+                        <style>
+                            .pnlGrid_Header .ui-state-disabled {
+                                opacity: 0.5 !important
+                            }
+                        </style>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

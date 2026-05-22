@@ -1,0 +1,4 @@
+{
+    "legalentity":["alias","currency","country","location"],
+    "Account":["alias"]
+}

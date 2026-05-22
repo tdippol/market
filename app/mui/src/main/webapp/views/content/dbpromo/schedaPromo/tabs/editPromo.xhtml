@@ -1,0 +1,172 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <!-- Dialog conferma per annullare le modifiche -->
+                    <p:confirmDialog widgetVar="dlgDiscardEditTestata" header="Conferma necessaria"
+                                     message="Scartare le modifiche?" severity="alert">
+                        <p:commandButton value="SI" action="#{templateView.currentView.discardEditTestata}"
+                                         update="@(.updateableContent) @(.tabScheda)"
+                                         oncomplete="PF('dlgDiscardEditTestata').hide()" />
+                        <p:commandButton value="NO" onclick="PF('dlgDiscardEditTestata').hide()"
+                                         style="float: right;" type="button" />
+                    </p:confirmDialog>
+
+                    <!-- Dialog conferma per salvare le modifiche -->
+                    <p:confirmDialog widgetVar="dlgSaveEditTestata" header="Conferma necessaria"
+                                     message="Salvare le modifiche?" severity="alert">
+                        <p:commandButton value="SI" action="#{templateView.currentView.saveEditTestata}"
+                                         update="@(.updateableContent) @(.tabScheda)"
+                                         oncomplete="PF('dlgSaveEditTestata').hide()" />
+                        <p:commandButton value="NO" onclick="PF('dlgSaveEditTestata').hide()"
+                                         style="float: right;" type="button" />
+                    </p:confirmDialog>
+
+                    <!-- Dialog conferma per eliminare la testata -->
+                    <p:confirmDialog widgetVar="dlgDeleteTestata" header="Conferma eliminazione"
+                                     styleClass="dlgDeleteTestataClass"
+                                     message="Sei sicuro di voler cancellare la promozione #{templateView.currentView.promotionSelected.descrizioneEstesa}?"
+                                     severity="alert">
+                        <p:commandButton value="SI" action="#{templateView.currentView.deleteTestata}"
+                                         update="@(.updateableContent) @(.tabScheda)"
+                                         oncomplete="PF('dlgDeleteTestata').hide()" />
+                        <p:commandButton value="NO" onclick="PF('dlgDeleteTestata').hide()"
+                                         style="float: right;" type="button" />
+                    </p:confirmDialog>
+
+                    <h:form styleClass="updateableContent">
+                        <div class="row">
+                            <div class="col-12">
+                                <p:commandButton value="UNLOCK" id="lockUnlockBtn" style="float: right;"
+                                                 styleClass="#{templateView.currentView.editTestata.locked
+                                                             ? 'pf-btn-danger' : 'pf-btn-confirm'}"
+                                                 update="@(.updateableContent) @(.tabScheda)"
+                                                 icon="#{templateView.currentView.editTestata.locked
+                                                       ? 'fa fa-fw fa-lock' : 'fa fa-fw fa-lock-open'}"
+                                                 disabled="#{templateView.currentView.editTestata.btnLockedDisabled or not templateView.currentView.btnUnlockActive}"
+                                                 action="#{templateView.currentView.unlockEditTestata}" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <p:outputLabel for="description" value="Descrizione" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:inputText id="description" style="width: 100%;"
+                                                 disabled="#{templateView.currentView.editTestata.descriptionDisabled}"
+                                                 value="#{templateView.currentView.editTestata.description}" />
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div>
+                                    <p:outputLabel for="startDate" value="Data Inizio" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:datePicker id="startDate" inputStyle="width: 100%;"
+                                                  disabled="#{templateView.currentView.editTestata.startDateDisabled}"
+                                                  value="#{templateView.currentView.editTestata.startDate}"
+                                                  showOn="button" pattern="dd-MM-yyyy" locale="it">
+                                    </p:datePicker>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div>
+                                    <p:outputLabel for="endDate" value="Date Fine" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:datePicker id="endDate" inputStyle="width: 100%;"
+                                                  disabled="#{templateView.currentView.editTestata.endDateDisabled}"
+                                                  value="#{templateView.currentView.editTestata.endDate}"
+                                                  showOn="button" pattern="dd-MM-yyyy" locale="it">
+                                    </p:datePicker>
+                                </div>
+                            </div>
+                            <h:panelGroup layout="block" rendered="#{templateView.currentView.fieldOraInizioRendered}">
+                                <div class="col-2">
+                                    <div>
+                                        <p:outputLabel for="startHour" value="Ora Inizio" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:datePicker id="startHour" inputStyle="width: 100%;" timeOnly="true"
+                                                      disabled="#{templateView.currentView.editTestata.startHourDisabled}"
+                                                      value="#{templateView.currentView.editTestata.startHour}" locale="it">
+                                            <f:convertDateTime pattern="HH:mm" locale="it_IT" />
+                                        </p:datePicker>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" rendered="#{templateView.currentView.fieldOraFineRendered}">
+                                <div class="col-2">
+                                    <div>
+                                        <p:outputLabel for="endHour" value="Ora Fine" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:datePicker id="endHour" inputStyle="width: 100%;" timeOnly="true"
+                                                      disabled="#{templateView.currentView.editTestata.endHourDisabled}"
+                                                      value="#{templateView.currentView.editTestata.endHour}" locale="it">
+                                            <f:convertDateTime pattern="HH:mm" locale="it_IT" />
+                                        </p:datePicker>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-4">
+                                <div>
+                                    <p:outputLabel for="notes" value="Note" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:inputText id="notes" style="width: 100%;"
+                                                 disabled="#{templateView.currentView.editTestata.notesDisabled}"
+                                                 value="#{templateView.currentView.editTestata.notes}" />
+                                </div>
+                            </div>
+                            <h:panelGroup layout="block"
+                                          rendered="#{templateView.currentView.fieldValorePuntoRendered}">
+                                <div class="col-2">
+                                    <div>
+                                        <p:outputLabel for="valorePunto" value="Valore Punto Fragola"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputNumber id="valorePunto" style="width: 100%;" decimalPlaces="3" size="5"
+                                                       maxValue="#{templateView.currentView.editTestata.valorePuntoMaxValue}"
+                                                       value="#{templateView.currentView.editTestata.valorePunto}"
+                                                       disabled="#{templateView.currentView.editTestata.valorePuntoDisabled}" />
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                        </div>
+                        <div class="row" style="margin-top: 30px;">
+                            <div class="col-12">
+                                <p:commandButton value="Elimina" styleClass="pf-btn-danger" style="float: left"
+                                                 icon="far fa-fw fa-trash-alt"
+                                                 disabled="#{templateView.currentView.editTestata.btnDeleteDisabled}"
+                                                 update="@(.dlgDeleteTestataClass)"
+                                                 oncomplete="PF('dlgDeleteTestata').show()" />
+                                <p:commandButton value="Salva" styleClass="pf-btn-confirm" style="float: right;"
+                                                 disabled="#{templateView.currentView.editTestata.locked}"
+                                                 oncomplete="PF('dlgSaveEditTestata').show()" />
+                                <p:commandButton value="Annulla" styleClass="pf-btn-cancel"
+                                                 style="float: right; margin-right: 20px;"
+                                                 disabled="#{templateView.currentView.editTestata.locked}"
+                                                 oncomplete="PF('dlgDiscardEditTestata').show()" />
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

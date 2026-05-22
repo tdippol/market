@@ -1,0 +1,275 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <!-- Dialog conferma eliminazione -->
+                    <p:confirmDialog id="deletePianificazionePianoMediaConfirmDialog"
+                                     widgetVar="deletePianificazionePianoMediaConfirmDialog"
+                                     global="true" showEffect="fade" hideEffect="fade"
+                                     icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog"
+                                     header="Avviso"
+                                     message="Sei sicuro di voler cancellare la pianificazione selezionata?">
+                        <p:commandButton value="No" type="button"
+                                         styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                         widgetVar="cancelDeletePianificazionePianoMediaBtn"
+                                         onclick="onDeleteConfirmDlgCancelBtn()" />
+                        <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                         widgetVar="confirmDeletePianificazionePianoMediaBtn"
+                                         update="@(.updateableContent)"
+                                         onclick="onDeleteConfirmDlgOkBtn()" />
+                    </p:confirmDialog>
+
+                    <!-- Dialog conferma reset pianificazione -->
+                    <p:confirmDialog id="resetPianificazioneConfirmDialog" widgetVar="resetPianificazioneConfirmDialog"
+                                     global="true" showEffect="fade" hideEffect="fade"
+                                     icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog"
+                                     header="Avviso"
+                                     message="Sei sicuro di voler ripristinare la configurazione di default?">
+                        <p:commandButton value="No" type="button"
+                                         styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                         widgetVar="cancelResetPianificazioneBtn"
+                                         onclick="PF('resetPianificazioneConfirmDialog').hide()" />
+                        <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                         widgetVar="confirmResetPianificazioneBtn"
+                                         update="@(.updateableContent)"
+                                         actionListener="#{templateView.currentView.resetPianificazioneMediaBtn}"
+                                         oncomplete="PF('resetPianificazioneConfirmDialog').hide()" />
+                    </p:confirmDialog>
+
+                    <div class="col-12">
+                        <p:commandButton id="resetPianificazioneMediaBtn" styleClass="pf-btn-confirm"
+                                         style="margin-right: 20px; border-radius: 5px;"
+                                         value="Reset Pianificazione"
+                                         onclick="PF('resetPianificazioneConfirmDialog').show()"
+                                         disabled="#{templateView.currentView.resetDisabled or not templateView.currentView.writeSchedaFlag}" />
+                    </div>
+
+                    <p:panel id="expandable_db_schedapiano_pianificazione" toggleable="false"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapiano_pianificazione">
+                        <div id="ppm"></div>
+
+                        <script type="text/javascript">
+                            // Initialize and configure DayPilot Scheduler
+                            var dps = new DayPilot.Scheduler("ppm", {
+                                locale: "it-it",
+                                timeHeaders: [{groupBy: "Month"}, {groupBy: "Day", format: "d"}],
+                                scale: "Day",
+                                eventMovingStartEndEnabled: true,
+                                eventResizingStartEndEnabled: true,
+                                timeRangeSelectingStartEndEnabled: true,
+                                allowEventOverlap: false,
+                                eventDeleteHandling: "Update",
+                                eventEndSpec: "Date",
+                                onEventDelete: onEventDelete,
+                                eventMoveHandling: "Update",
+                                onEventMove: onEventMove,
+                                eventResizeHandling: "Update",
+                                onEventResize: onEventResize,
+                                onTimeRangeSelected: onTimeRangeSelected
+                            });
+
+                            var source = undefined;
+                            var idPianoMediaCurrent = undefined;
+
+                            $(document).ready(function () {
+                                let idPianoMedia = $('.statiIdPianoMedia').text();
+                                if (idPianoMedia !== '') {
+                                    loadScheduler(idPianoMedia);
+                                }
+                            });
+
+                            function loadScheduler(idPianoMedia) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: contextPath + "/resources/pianomedia/" + idPianoMedia + "/pianificazioni",
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        // Load data into scheduler
+                                        dps.startDate = data.startDate;
+                                        dps.days = data.days;
+                                        dps.timeRangeSelectedHandling = data.timeRangeSelectedHandling;
+                                        dps.resources = data.supportiMedia;
+                                        dps.events.list = data.pianificazioniPiano;
+                                        // Show scheduler
+                                        dps.init();
+                                    },
+                                    error: ajaxErrorHandler
+                                });
+                            }
+
+                            function onDeleteConfirmDlgOkBtn() {
+                                removePianificazione(idPianoMediaCurrent, dps, source);
+                                PF('deletePianificazionePianoMediaConfirmDialog').hide();
+                            }
+
+                            function onDeleteConfirmDlgCancelBtn() {
+                                PF('deletePianificazionePianoMediaConfirmDialog').hide();
+                            }
+
+                            // Called when event is deleted via built-in action
+                            function onEventDelete(args) {
+                                let idPianoMedia = $('.statiIdPianoMedia').text();
+                                if (idPianoMedia !== '') {
+                                    args.preventDefault();
+                                    source = args.e;
+                                    idPianoMediaCurrent = idPianoMedia;
+                                    PF('deletePianificazionePianoMediaConfirmDialog').show();
+                                } else {
+                                    showErrorGrowlNoPianoMedia();
+                                }
+                            }
+
+                            // Called when event is moved by drag and drop
+                            function onEventMove(args) {
+                                let idPianoMedia = $('.statiIdPianoMedia').text();
+                                if (idPianoMedia !== '') {
+                                    updatePianificazione(idPianoMedia, args.e.data.id, args.control, {
+                                        start: args.newStart.toString("yyyy-MM-dd"),
+                                        end: args.newEnd.toString("yyyy-MM-dd"),
+                                        resource: args.newResource
+                                    });
+                                } else {
+                                    showErrorGrowlNoPianoMedia();
+                                }
+                            }
+
+                            // Called when event is resized by drag and drop on start or end
+                            function onEventResize(args) {
+                                let idPianoMedia = $('.statiIdPianoMedia').text();
+                                if (idPianoMedia !== '') {
+                                    updatePianificazione(idPianoMedia, args.e.data.id, args.control, {
+                                        start: args.newStart.toString("yyyy-MM-dd"),
+                                        end: args.newEnd.toString("yyyy-MM-dd"),
+                                        resource: args.e.data.resource
+                                    })
+                                } else {
+                                    showErrorGrowlNoPianoMedia();
+                                }
+                            }
+
+                            // Called when event is created by drag and drop on time range
+                            function onTimeRangeSelected(args) {
+                                let idPianoMedia = $('.statiIdPianoMedia').text();
+                                if (idPianoMedia !== '') {
+                                    let startDate = args.start.toString("yyyy-MM-dd");
+                                    let endDate = args.end.toString("yyyy-MM-dd");
+                                    createPianificazione(idPianoMedia, args.control, startDate, endDate, args.resource);
+                                } else {
+                                    showErrorGrowlNoPianoMedia();
+                                }
+                            }
+
+                            function createPianificazione(idPianoMedia, dps, start, end, resource) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: contextPath + "/resources/pianomedia/" + idPianoMedia + "/pianificazioni",
+                                    data: JSON.stringify({start: start, end: end, resource: resource}),
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        dps.clearSelection();
+                                        dps.startDate = data.startDate;
+                                        dps.days = data.days;
+                                        dps.resources = data.supportiMedia;
+                                        dps.events.list = data.pianificazioniPiano;
+                                        dps.update();
+                                        let msg = "Pianificazione per piano media creata";
+                                        if (data.message) {
+                                            msg += "\n" + data.message;
+                                        }
+                                        addInfoGrowl([
+                                            {name: "title", value: "Success"},
+                                            {name: "message", value: msg}
+                                        ]);
+                                    },
+                                    error: ajaxErrorHandler
+                                })
+                            }
+
+                            function removePianificazione(idPianoMedia, dps, source) {
+                                const id = source.data.id;
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: contextPath + "/resources/pianomedia/" + idPianoMedia + "/pianificazioni/" + id,
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        dps.startDate = data.startDate;
+                                        dps.days = data.days;
+                                        dps.resources = data.supportiMedia;
+                                        dps.events.list = data.pianificazioniPiano;
+                                        dps.update();
+                                        addInfoGrowl([
+                                            {name: "title", value: "Success"},
+                                            {name: "message", value: "Pianificazione per piano media eliminata"}
+                                        ]);
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        addErrorGrowl([
+                                            {name: "title", value: "Errore"},
+                                            {
+                                                name: "message",
+                                                value: "Errore eliminazione pianificazione per piano media"
+                                            }
+                                        ]);
+                                        // Reload entry to UI
+                                        dps.events.add(source);
+                                    }
+                                })
+                            }
+
+                            function updatePianificazione(idPianoMedia, id, dps, payload) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: contextPath + "/resources/pianomedia/" + idPianoMedia + "/pianificazioni/" + id,
+                                    data: JSON.stringify(payload),
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        dps.startDate = data.startDate;
+                                        dps.days = data.days;
+                                        dps.resources = data.supportiMedia;
+                                        dps.events.list = data.pianificazioniPiano;
+                                        dps.update();
+                                        addInfoGrowl([
+                                            {name: "title", value: "Success"},
+                                            {name: "message", value: "Pianificazione per piano media aggiornata"}
+                                        ]);
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        addErrorGrowl([
+                                            {name: "title", value: "Errore"},
+                                            {
+                                                name: "message",
+                                                value: "Errore aggiornamento pianificazione per piano media"
+                                            }
+                                        ]);
+                                        // Restore original position with data returned by WS
+                                        let responseData = jqXHR.responseJSON;
+                                        let e = dps.events.find(responseData.id);
+                                        e.data.start = responseData.start;
+                                        e.data.end = responseData.end;
+                                        e.data.text = responseData.text;
+                                        e.data.resource = responseData.resource;
+                                        dps.events.update(e);
+                                    }
+                                })
+                            }
+
+                            function showErrorGrowlNoPianoMedia() {
+                                addErrorGrowl([
+                                    {name: "title", value: "Attenzione"},
+                                    {name: "message", value: "Nessun piano media selezionato; impossibile procedere"}
+                                ]);
+                            }
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

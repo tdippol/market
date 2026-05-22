@@ -1,0 +1,62 @@
+{
+  "columnDef":[
+    {
+      "headerName":"Compratori",
+      "field":"descrizione",
+      "width":300,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Category Manager",
+      "field":"responsabile",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Inizio Stato",
+      "field": "dataInizioStato",
+      "width": 200,
+      "type": "date",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Stato",
+      "field":"statoCorrente",
+      "width":300,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Seleziona tutti",
+      "field":"selected",
+      "width":140,
+      "type": "checkbox",
+      "editable":true,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":true,
+      "headerCheckboxSelection":true,
+      "headerCheckboxSelectionFilteredOnly":true
+    }
+  ]
+}

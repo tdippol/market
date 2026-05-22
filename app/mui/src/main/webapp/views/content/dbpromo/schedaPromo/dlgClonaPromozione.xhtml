@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="dlgClonaPromo" widgetVar="dlgClonaPromo" modal="true" closable="false" dynamic="true"
+          header="Clona promozione corrente" width="50%" height="40vh" resizable="false"
+          styleClass="disable-horizontal-scroll dlgClonaPromoClass">
+    <h:form styleClass="dlgClonaPromoForm">
+        <p:inputText tabindex="0" style="visibility: hidden; width:0; height:0;"/>
+        <div class="row">
+            <div class="col-6">
+                <div><p:outputLabel for="dataInizioClonata" value="Data Inizio" styleClass="label-txt"/></div>
+                <div>
+                    <p:datePicker id="dataInizioClonata" inputStyle="width: 100%;" styleClass="dataInizioClonata"
+                                  pattern="dd-MM-yyyy" locale="it" readonlyInput="true"
+                                  value="#{templateView.currentView.clonaPromoBean.dataInizio}">
+                        <p:ajax event="dateSelect" update="@(.btn-confirm-clona) @(.dataFineClonata)"
+                                listener="#{templateView.currentView.clonaPromoBean.onDataInizioSelect}"/>
+                    </p:datePicker>
+                </div>
+            </div>
+            <div class="col-6">
+                <div><p:outputLabel for="dataFineClonata" value="Data Fine" styleClass="label-txt"/></div>
+                <div>
+                    <p:datePicker id="dataFineClonata" inputStyle="width: 100%;" styleClass="dataFineClonata"
+                                  pattern="dd-MM-yyyy" locale="it" readonlyInput="true"
+                                  value="#{templateView.currentView.clonaPromoBean.dataFine}">
+                        <p:ajax event="dateSelect" update="@(.btn-confirm-clona)"
+                                listener="#{templateView.currentView.clonaPromoBean.onDataFineSelect}"/>
+                    </p:datePicker>
+                </div>
+            </div>
+        </div>
+    </h:form>
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('dlgClonaPromo').hide()"
+                                 update="@(.dlgClonaPromoClass)"/>
+            </div>
+            <div class="col-6">
+                <p:commandButton id="dlgClonaPromoConfirmBtn" value="Conferma"
+                                 styleClass="ui-confirmdialog-yes btn-confirm-clona"
+                                 oncomplete="PF('dlgClonaPromo').hide()"
+                                 disabled="#{templateView.currentView.clonaPromoBean.confirmBtnDisabled}"
+                                 actionListener="#{templateView.currentView.clonaPromoBean.confirm}"
+                                 update="@(.updateableContent) @(.dlgClonaPromoClass)"/>
+            </div>
+        </div>
+    </f:facet>
+
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+    </style>
+</p:dialog>
+</html>

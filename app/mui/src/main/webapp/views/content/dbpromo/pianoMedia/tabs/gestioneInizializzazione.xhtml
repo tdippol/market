@@ -1,0 +1,121 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<ui:composition>
+    <ui:include src="../dialogs/dlgAddInizializzazione.xhtml" />
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <p:commandButton value="Aggiungi" class="pf-btn-confirm" id="addInizializzazione"
+                                 action="#{templateView.currentView.prepareDialogAddInizializzazione}"
+                                 oncomplete="PF('dlgAddInizializzazione').show()" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_pianoMediaInizializzazione" toggleable="true"
+                             toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableMediaInizializzazione expandable_db_pianoMediaInizializzazione">
+                        <f:facet name="header">
+                            <p:outputLabel value="Gestione Inizializzazione" />
+                        </f:facet>
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham pianoMediaInizializzazione"
+                                      pt:gridid="db_pianoMediaInizializzazione">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="pianoMediaInizializzazione_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText pianoMediaInizializzazioneFilter"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_pianoMediaInizializzazione', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_pianoMediaInizializzazione')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_pianoMediaInizializzazione', 'Anagrafiche Piano Media', false)"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+                            var gridParams_pianoMediaInizializzazione = {
+                                gridTabGroup: 'pianoMediaAmministrazione_tabs',
+                                gridTabPosition: 0,
+                                gridCode: 'db_pianoMediaInizializzazione',
+                                gridTitle: 'Piano Media - Tab Gestione Anagrafiche',
+                                url_columnDefs: contextPath + '/resources/pianomedia/inizializzazione/columnDef'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/pianomedia/inizializzazione/rowData'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_pianoMediaInizializzazione'
+                            };
+                            var gridOptions_pianoMediaInizializzazione = {
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_pianoMediaInizializzazione.gridCode);
+                                },
+                                onCellValueChanged: function (event) {
+                                    var rowIndex = getRowNodeId(event);
+                                    var rowData = getRowData('db_pianoMediaInizializzazione');
+                                    var payload = {
+                                        id: rowData[rowIndex].id.value,
+                                        supporto: rowData[rowIndex].supporto.value,
+                                        tipoDataInizio: rowData[rowIndex].tipoDataInizio.value,
+                                        scostamento: rowData[rowIndex].scostamento.value,
+                                        tipoDataFine: rowData[rowIndex].tipoDataFine.value,
+                                        durata: rowData[rowIndex].durata.value
+                                    }
+                                    var id = rowData[rowIndex].id.value;
+                                    $.ajax({
+                                        type: "POST",
+                                        url: contextPath + "/resources/pianomedia/inizializzazione/" + id + addUrlParamContesto(#{muiContext}),
+                                        contentType: "application/json",
+                                        data: JSON.stringify(payload),
+                                        success: function (data) {
+                                            rowData[rowIndex] = data.rowData[0];
+                                            getGridOptionFromGridMap('db_pianoMediaInizializzazione').api.setRowData(rowData);
+                                            var updateMessage = data.updateMessage;
+                                            if (updateMessage) {
+                                                addInfoGrowl([
+                                                    {name: 'title', value: ''},
+                                                    {name: 'message', value: updateMessage}
+                                                ]);
+                                            }
+                                        },
+                                        error: function (jqXHR, exception, thrownError) {
+                                            reloadGrid();
+                                            ajaxErrorHandler(jqXHR, exception, thrownError, event);
+                                        }
+                                    })
+                                }
+                            };
+                            gridParams_pianoMediaInizializzazione.gridOptions = gridOptions_pianoMediaInizializzazione;
+
+                            function reloadGrid() {
+                                $.ajax({
+                                    type: "GET",
+                                    url: gridParams_pianoMediaInizializzazione.url_rowData,
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        getGridOptionFromGridMap("db_pianoMediaInizializzazione").api.setRowData(data.rowData);
+                                        getGridOptionFromGridMap("db_pianoMediaInizializzazione").api.refreshCells();
+                                    },
+                                    error: ajaxErrorHandler
+                                })
+                            }
+
+                            $(document).ready(function () {
+                                creaGriglia(gridParams_pianoMediaInizializzazione);
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

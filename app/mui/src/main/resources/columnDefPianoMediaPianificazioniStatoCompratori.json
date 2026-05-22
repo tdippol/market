@@ -1,0 +1,32 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Compratore",
+      "field": "compratore",
+      "width": 200,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Stato",
+      "field": "stato",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Seleziona tutti",
+      "field": "selected",
+      "width": 140,
+      "type": "checkbox",
+      "editable": true,
+      "hide": false,
+      "checkboxSelection": true,
+      "headerCheckboxSelection": true,
+      "headerCheckboxSelectionFilteredOnly": true
+
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+	<div class="row">
+		<div class="col-12">
+			<p:outputPanel
+				style="width: 100%;max-height: 640px;overflow: auto;display: block"
+				styleClass="welcomeFilters">
+				<pe:codeMirror rendered="#{gestioneMenuRole.welcomeFilters ne null}"
+					mode="javascript" theme="solarized"
+					value="#{gestioneMenuRole.welcomeFilters.json}" keyMap="default"
+					lineNumbers="true" matchBrackets="true" />
+			</p:outputPanel>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-1">
+			<p:commandButton value="Salva" update="@(.welcomeFilters)"
+				action="#{gestioneMenuRole.saveWelcomeFilters}"
+				styleClass="pf-btn-confirm" />
+		</div>
+		<div class="col-1">
+			<p:commandButton value="Annulla" update="@(.welcomeFilters)"
+				action="#{gestioneMenuRole.resetWelcomeFilters}"
+				styleClass="pf-btn-cancel" />
+		</div>
+		<div class="col-10">
+			<p:spacer height="1" />
+		</div>
+	</div>
+</ui:composition>
+</html>

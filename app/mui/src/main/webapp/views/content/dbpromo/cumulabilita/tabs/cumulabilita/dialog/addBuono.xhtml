@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<p:dialog id="addBuonoDialog" widgetVar="addBuonoDialog" modal="true" closable="false" dynamic="true"
+          header="Crea nuovo buono per la #{templateView.currentView.currentTab.title} #{templateView.currentView.cumulabilitaSelected.descrizione}"
+          onShow="loadBuoniDisponibili()"
+          width="75%" height="60vh" resizable="false" styleClass="addBuonoDialogClass disable-horizontal-scroll">
+
+    <h:form id="addBuonoDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            class="addBuonoDialogClass addBuonoDialogForm">
+        <div class="row">
+            <div class="col-12">
+                <p:panel id="expandable_db_add_buoni" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                         styleClass="pnlGrid_Header expandable_db_add_buoni">
+                    <f:facet name="header">
+                        <p:outputLabel value="Buoni Disponibili" />
+                    </f:facet>
+
+                    <h:panelGroup layout="block" style="height: 50vh; width: 100%;" class="ag-theme-balham"
+                                  pt:gridid="db_add_buoni">
+                    </h:panelGroup>
+
+                    <f:facet name="actions">
+                        <p:inputText autocomplete="off" id="db_add_buoni_quickfilter" placeholder="Filtra..."
+                                     styleClass="pnlGrid_Header filterInputText"
+                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_add_buoni', this.value)" />
+                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                       onclick="expandGrid('db_add_buoni')" onerror="redirectToExpiredPage()" />
+                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                       onclick="onBtExport('db_add_buoni', 'Cumulabilità Aggiungi Buoni')"
+                                       onerror="redirectToExpiredPage()" />
+                    </f:facet>
+                </p:panel>
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('addBuonoDialog').hide()" update="@(.addBuonoDialogClass)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="addBuonoDialogConfirmBtn" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('addBuonoDialog').hide()"
+                                 disabled="#{templateView.currentView.buonoConfirmBtnDisabled}"
+                                 action="#{templateView.currentView.confirmBuonoDialog}" onclick="setLoadingStatus(this)"
+                                 update="@(.updateableContent) @(.addBuonoDialogClass) @(.idCumulabilitaSelected)" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

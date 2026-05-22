@@ -1,0 +1,257 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<ui:composition>
+    <ui:include src="addHeaderDialog.xhtml" />
+    <div class="col-8" style="padding:0px">
+        <p:panel id="expandable_db_planning_header" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                 styleClass="pnlGrid_Header updateableContent expandable_db_planning_header">
+            <f:facet name="header">
+                <p:commandButton title="Aggiungi Header Configurazione" value="+"
+                                 disabled="#{templateView.currentView.btnAddHeaderDisabled}"
+                                 style="margin:0px; margin-right: 10px; border-radius: 5px;"
+                                 action="#{templateView.currentView.initHeaderDialog}"
+                                 oncomplete="PF('addHeaderDialog').show()"
+                                 update="@(.addHeaderDialogClass)"
+                                 id="planningAddHeader"
+                                 class="pf-btn-confirm btnAddHeader">
+                    <p:resetInput target="addHeaderDialog" />
+                </p:commandButton>
+                <p:outputLabel value="Header Configurazione" />
+            </f:facet>
+
+            <h:panelGroup layout="block" style="height: 30vh; width: 100%;" class="ag-theme-balham"
+                          pt:gridid="db_planning_header">
+            </h:panelGroup>
+
+            <f:facet name="actions">
+                <p:inputText autocomplete="off" id="db_planning_header_quickfilter" placeholder="Filtra..."
+                             styleClass="pnlGrid_Header filterInputText"
+                             onkeyup="onFilterTextBoxChangedpromoGrid('db_planning_header',this.value)" />
+                <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                               onclick="expandGrid('db_planning_header')"
+                               onerror="redirectToExpiredPage()" />
+                <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                               onclick="onBtExport('db_planning_header','Configurazione Header')"
+                               onerror="redirectToExpiredPage()" />
+            </f:facet>
+
+                <script type="text/javascript">
+                    var idCurrentSet = '#{templateView.currentView.idSetPianificazioneCorrente}';
+                    var idHeader    = '#{templateView.currentView.idHeaderSelected}'
+
+                    
+                    function resetIdCurrentSet(){
+                      idHeader = ''
+                    }
+
+
+
+                    var gridParams_PlanningHeader = {
+                        gridCode: 'db_planning_header',
+                        gridTitle: 'Pianificazione - Header',
+                        url_columnDefs: contextPath + '/resources/configuration/columnDef/planningHeader' + addUrlParamContesto(#{muiContext}),
+                        url_rowData: contextPath + '/resources/configuration/rowData/planningHeader/'+ idCurrentSet,
+                        url_customSort: contextPath + '/resources/grid/sorting/db_planning_header'
+
+                    };
+                    var gridOptions = {
+                        rowSelection: 'single',
+                        onSelectionChanged: onSelectionHeader,
+                        onCellValueChanged: function(event) {updateCell_Header(event)},
+                        onRowDataChanged: function (event){
+
+                            //check is single row
+                            if(getRowData('db_planning_header').length==1){
+                                let row=getRowData('db_planning_header')
+                                idHeader=row[0].id.value
+                            }
+                            
+                            if(idHeader!=''){
+                                setCurrentHeaderSelection(event,idHeader )
+                            }
+                            
+                        },
+                        onSortChanged: function (event) {
+                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_PlanningHeader.gridCode);
+                        }
+                    };
+                    gridParams_PlanningHeader.customizeColumnDefs=[
+								{columnDefId:"meccanica",property:"pinned",value:'left'}
+							];
+                    gridParams_PlanningHeader.additionColumnDefs=[
+                               { headerName: '', width: 45, cellRenderer: 'PianConfig_Header_BtnCellRenderer',position:'prepend' ,pinned: 'left' }
+                        ];
+
+                    gridParams_PlanningHeader.gridOptions = gridOptions;
+
+                    $(document).ready(function() {
+                        if(idCurrentSet!=''){
+                            creaGriglia(gridParams_PlanningHeader);
+                        }
+
+                    });
+
+
+
+
+                    function onSelectionHeader(){
+
+                        var selectedRows = getGridOptionFromGridMap('db_planning_header').api.getSelectedRows()
+                        if(selectedRows.length>0){
+                            CL()
+                            //Aggiorno le griglie con i dati relative alla testata selezionata
+                            idHeader=selectedRows[0].id.value
+
+                            refreshRowData_tipoElemento(idHeader)
+                            refreshRowData_regole(idHeader)
+                            updateIdHeader([{name: "idHeader", value: idHeader}])
+                        }else{
+                            updateIdHeader([{name: "idHeader", value: ""}])
+                            //Svuota le griglie subordinate alla testata
+                            refreshRowData_tipoElemento()
+                            refreshRowData_regole()
+                        }
+
+
+                        refreshStatusBtnAdd(selectedRows.length > 0);
+                        
+                    }
+
+
+
+                    function refreshStatusBtnAdd(rowSelected){
+                        //Chiamata al remote command
+                        updateGridButtons([{name: "rowSelected", value: rowSelected}]);
+                    }
+
+
+                    function updateCell_Header(event){
+
+                        let gridCode='db_planning_header'
+                        var rowIndex = getRowNodeId(event);
+                        var rowData = getRowData(gridCode);
+                        var rowToUpdate = rowData[rowIndex]
+                        var idToUpdate = rowToUpdate.id.value
+                        let url=contextPath+'/resources/configuration/planningHeader/'+idToUpdate
+                        
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            contentType: "application/json",
+                            data: JSON.stringify(rowData[rowIndex]),
+                            success: function (data) {
+                                rowData[rowIndex] = data;
+                                getGridOptionFromGridMap(gridCode).api.setRowData(rowData);
+                                addInfoGrowl([{ name: 'title', value: 'Modifica Header' }, {name: 'message',value: data.callbackMessage}]);
+                            },
+                            error: function(jqXHR, exception, thrownError){
+                                ajaxErrorHandler(jqXHR, exception, thrownError,event)
+                            }
+                        });
+
+                    }
+
+                    function deletePlanningHeader(){
+                        var removePlanning_idHeader = $('.removePlanning_idHeader').text();
+                        if(removePlanning_idHeader!=''){
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: contextPath+'/resources/configuration/planningHeader/'+ removePlanning_idHeader,
+                                    contentType: "text/plain",
+                                    success: function (data) {
+                                    	getGridOptionFromGridMap('db_planning_header').api.setRowData(data.rowData);
+                                        addInfoGrowl([{ name: 'title', value: 'Elimina Header' }, {name: 'message',value: data.callbackMessage}]);
+                                        idHeader = '';
+                                        resetHeaderId();
+                                    },
+                                    error: ajaxErrorHandler,
+                                    complete:function(){
+                                    }
+                                });
+                        }
+                        refreshRowData_tipoElemento()
+                        refreshRowData_regole()
+                        PF('removePlanningHeader_dialog').hide()
+                    }
+
+
+                    function refreshRowData_header(){
+                        showAgGridLoadingOverlay('db_planning_header')
+                        $.ajax({
+                            type: "GET",
+                            url: contextPath + '/resources/configuration/rowData/planningHeader/'+ idCurrentSet,
+                            contentType: "application/json",
+                            success: function (data) {
+                                if(data!=undefined){
+                                    getGridOptionFromGridMap('db_planning_header').api.setRowData(data.rowData);
+                                    LT('Refreshed row data "'+gridParams_PlanningConfigurazione.gridTitle+'" => ',data.rowData)
+                                }
+                            },
+                            error: ajaxErrorHandler,
+                            complete: function(){
+                                hideAgGridLoadingOverlay('db_planning_header')
+                            }
+                        });
+                    }
+
+                    function setCurrentHeaderSelection(event,idHeaderSelected ){
+
+                        
+                        //alert(idHeaderSelected)
+
+                        //SET SELECTED NODE IN GRID HEADER
+                        var selectedNode=null
+                            getGridOptionFromGridMap('db_planning_header').api.forEachNode(function (node) {
+                                if(node.data.id.value === idHeaderSelected){
+                                    selectedNode=node
+                                    node.setSelected(true);
+                                }
+                                
+                            });
+                        //AUTO SCROLL TO SELECTED NODE
+                            getGridOptionFromGridMap('db_planning_header').api.ensureNodeVisible(selectedNode, 'middle')
+
+                        //REFRESH TABLES
+                        refreshRowData_tipoElemento(idHeaderSelected)
+                        refreshRowData_regole(idHeaderSelected)
+
+                    }
+
+
+                </script>
+
+            <p:remoteCommand name="updateGridButtons" actionListener="#{templateView.currentView.updateGridButtons}"
+                             update="@(.btnAddHeader),@(.btnAddTipoElemento),@(.btnAddRegola)" />
+
+            <p:remoteCommand name="updateIdHeader" actionListener="#{templateView.currentView.updateIdHeader}"
+                             update="@(.btnAddHeader),@(.btnAddTipoElemento),@(.btnAddRegola)" />
+
+            <p:remoteCommand name="removePlanningHeader" action="#{templateView.currentView.removePlanningHeader}"
+                             update="removePlanningHeader_dialog @(.removePlanning_idHeader)" />
+
+            <p:remoteCommand name="resetHeaderId" actionListener="#{templateView.currentView.resetHeaderId}"
+                             update="@(.btnAddHeader),@(.btnAddTipoElemento),@(.btnAddRegola)" />
+
+            <p:confirmDialog id="removePlanningHeader_dialog" widgetVar="removePlanningHeader_dialog"
+                             global="true" showEffect="fade" hideEffect="fade" icon="pi pi-exclamation-triangle"
+                             closable="false" styleClass="muiDialog" header="Avviso"
+                             message="#{templateView.currentView.confirmDeleteMessage}">
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                 onclick="PF('removePlanningHeader_dialog').hide()"/>
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                 onclick="deletePlanningHeader()" />
+            </p:confirmDialog>
+            
+            <p:outputLabel value="#{ templateView.currentView.removePlanningIdHeader }" class="removePlanning_idHeader" style="visibility: hidden;"/>
+
+        </p:panel>
+    </div>
+</ui:composition>
+
+</html>

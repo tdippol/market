@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+>
+<p:dialog id="creaSottoscrizioneDialog" widgetVar="creaSottoscrizioneDialog" modal="true" closable="false"
+          resizable="true"
+          header="Crea nuova sottoscrizione" width="600" height="auto"
+          styleClass="disable-horizontal-scroll">
+    <h:form id="creaSottoscrizioneDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="creaSottoscrizioneDialogForm">
+        <div class="row">
+            <div class="col-8">
+                <div>
+                    <p:outputLabel for="codiceSottoscrizione" value="Codice" styleClass="input-field-label" />
+                </div>
+                <div>
+                    <p:inputText id="codiceSottoscrizione" styleClass="updateableSottoscrizione input-field"
+                                 style="width: 100%;" maxlength="10"
+                                 value="#{templateView.currentView.codice}">
+                        <p:ajax />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2rem;">
+            <div class="col-8">
+                <div>
+                    <p:outputLabel for="descrizioneSottoscrizione" value="Descrizione" styleClass="input-field-label" />
+                </div>
+                <div>
+                    <p:inputText id="descrizioneSottoscrizione" styleClass="updateableSottoscrizione input-field"
+                                 style="width: 100%;" maxlength="100"
+                                 value="#{templateView.currentView.descrizione}">
+                        <p:ajax />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+    </h:form>
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('creaSottoscrizioneDialog').hide()" update="@(.updateableSottoscrizione)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="creaSottoscrizioneDialogConfirmButton" value="Crea" styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('creaSottoscrizioneDialog').hide()"
+                                 action="#{templateView.currentView.confirmSottoscrizione}"
+                                 update="@(.updateableSottoscrizione)">
+                    <p:ajax />
+                </p:commandButton>
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+</html>

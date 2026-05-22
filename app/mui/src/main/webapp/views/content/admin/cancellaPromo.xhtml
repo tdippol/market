@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+<ui:composition>
+    <p:confirmDialog widgetVar="deletePromoConfirmDialog" severity="alert"
+                     styleClass="delete-promo-confirm-dialog"
+                     header="Conferma necessaria"
+                     message="Confermi l'eliminazione della promozione con codice '#{templateView.currentView.codicePromozioneSelected}' ?">
+        <p:commandButton value="SI" update="@(.selezionaPromozioneFormClass)"
+                         action="#{templateView.currentView.deletePromo}"
+                         oncomplete="PF('deletePromoConfirmDialog').hide()"/>
+        <p:commandButton value="NO" style="float: right;" type="button"
+                         onclick="PF('deletePromoConfirmDialog').hide()"/>
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <h:form id="selezionaPromozioneForm" styleClass="selezionaPromozioneFormClass">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="promozioneSelezionata" value="Seleziona Promozione"
+                                                   class="input-field-label"/>
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promozioneSelezionata"
+                                                     styleClass="promozione-selezionata"
+                                                     value="#{templateView.currentView.codicePromozioneSelected}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains">
+                                        <f:selectItem itemLabel="Seleziona" noSelectionOption="true"/>
+                                        <f:selectItems value="#{templateView.currentView.promozioniAttive}" var="p"
+                                                       itemLabel="#{p.descrizioneEstesa}"
+                                                       itemValue="#{p.codice}"/>
+                                        <p:ajax update="@(.delete-promo-btn) @(.delete-promo-confirm-dialog)"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <p:commandButton styleClass="pf-btn-danger delete-promo-btn" style="float: right;"
+                                                 value="Elimina" update="@(.promozione-selezionata)"
+                                                 disabled="#{empty templateView.currentView.promoAttivaSelected}"
+                                                 onclick="PF('deletePromoConfirmDialog').show()"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .input-field {
+            border-radius: 3px;
+            border-color: gray;
+        }
+
+        .input-field-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: black;
+        }
+    </style>
+</ui:composition>
+</html>

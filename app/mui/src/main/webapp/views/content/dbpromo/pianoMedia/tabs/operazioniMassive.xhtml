@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <h:form>
+                    <!--toggle-->
+                    <div class="ui-g-12">
+                        <div class="ui-g-1">
+                            <p:outputLabel for="toggleAllPiani" value="Tipo di selezione" />
+                        </div>
+                        <div class="ui-g-12">
+                            <div class="ui-g-1">
+                                <p:inputSwitch
+                                        id="toggleAllPiani"
+                                        value="#{templateView.currentView.operazioniMassiveBean.toggleAll}"
+                                        onLabel="Tutti" offLabel="Range"
+                                >
+                                    <p:ajax
+                                            partialSubmit="true"
+                                            update="@form @(.toggleAware)"
+                                            oncomplete="document.getElementsByClassName('massiveOpsDateContainer').display='#{templateView.currentView.operazioniMassiveBean.displayDates}';"
+                                    />
+                                </p:inputSwitch>
+                            </div>
+                        </div>
+                    </div>
+                    <!--date-->
+                    <div class="ui-g-4" style="border: 1px solid #808080;border-radius: 5px; margin-bottom: 40px" styleClass="massiveOpsDateContainer">
+                        <div class="ui-g-12">
+                            <h5>Selezione Date</h5>
+                        </div>
+                        <div class="ui-g-12">
+                            <div class="ui-g-6">
+                                <p:outputLabel for="dataInizioMassivo" value="Da" />
+                            </div>
+                            <div class="ui-g-6">
+                                <p:outputLabel for="dataFineMassivo" value="A" />
+                            </div>
+                        </div>
+                        <div class="ui-g-12">
+                            <div class="ui-g-6">
+                                <p:datePicker id="dataInizioMassivo" class="toggleAware"
+                                              pattern="dd/MM/yyyy"
+                                              disabled="#{templateView.currentView.operazioniMassiveBean.toggleAll}"
+                                              value="#{templateView.currentView.operazioniMassiveBean.dataInizio}">
+                                    <p:ajax event="dateSelect" update="@(.confirmDlgResetPianiMedia)" />
+                                    <p:ajax event="change" update="@(.confirmDlgResetPianiMedia)" />
+                                </p:datePicker>
+
+                            </div>
+                            <div class="ui-g-6">
+                                <p:datePicker id="dataFineMassivo" class="toggleAware"
+                                              pattern="dd/MM/yyyy"
+                                              disabled="#{templateView.currentView.operazioniMassiveBean.toggleAll}"
+                                              value="#{templateView.currentView.operazioniMassiveBean.dataFine}">
+                                    <p:ajax event="dateSelect" update="@(.confirmDlgResetPianiMedia)" />
+                                    <p:ajax event="change" update="@(.confirmDlgResetPianiMedia)" />
+                                </p:datePicker>
+                            </div>
+                        </div>
+                    </div>
+                    <!--button-->
+                    <div class="ui-g-12">
+                        <p:commandButton value="Re Inizializza Piani"
+                                         action="#{templateView.currentView.operazioniMassiveBean.confirmReinizializza}"
+                                         update="@(.confirmDlgResetPianiMedia)"
+                                         immediate="true"
+                        />
+
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+    <p:confirmDialog id="confirmDlgResetPianiMedia" widgetVar="confirmDlgResetPianiMedia" global="true"
+                     styleClass="muiDialog confirmDlgResetPianiMedia"
+                     showEffect="fade" hideEffect="fade" closable="false" icon="pi pi-exclamation-triangle"
+                     header="Attenzione" message="#{templateView.currentView.operazioniMassiveBean.confirmMessage}">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                         onclick="PF('confirmDlgResetPianiMedia').hide()" />
+        <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                         oncomplete="PF('confirmDlgResetPianiMedia').hide()"
+                         actionListener="#{templateView.currentView.operazioniMassiveBean.reinizializza}" />
+    </p:confirmDialog>
+</ui:composition>
+</html>

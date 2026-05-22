@@ -1,0 +1,49 @@
+{
+  "columnDef": [
+    {
+      "field": "anno",
+      "rowGroupIndex": 0,
+      "width": 80,
+      "hide": true
+    },
+    {
+      "field": "canale",
+      "rowGroupIndex": 1,
+      "width": 500,
+      "hide": true
+    },
+    {
+      "headerName": "Promozione",
+      "field": "descrizioneEstesa",
+      "width": 300,
+      "hide": true
+    },
+
+    {
+      "headerName": "DataInizio",
+      "field": "dataInizio",
+      "width": 200,
+      "hide": false,
+      "cellRenderer": "datePickerRenderer"
+    },
+    {
+      "headerName": "DataFine",
+      "field": "dataFine",
+      "width": 200,
+      "hide": false,
+      "cellRenderer": "datePickerRenderer"
+    },
+    {
+      "headerName": "Stato Promozione",
+      "field": "stato.fulltext",
+      "width": 200,
+      "hide": false
+    },
+    {
+      "headerName": "Note Marketing",
+      "field": "noteMarketing",
+      "width": 400,
+      "hide": false
+    }
+  ]
+}

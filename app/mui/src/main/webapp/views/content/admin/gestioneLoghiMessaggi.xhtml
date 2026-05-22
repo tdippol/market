@@ -1,0 +1,595 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <p:dialog widgetVar="dlgAddConfiguration" resizable="false" closable="false"
+                              styleClass="pf-dialog disable-horizontal-scroll"
+                              width="860" height="65vh" header="Aggiungi configurazione">
+                        <h:form id="dlgAddConfigurationForm" styleClass="dlgAddConfiguration">
+                            <div class="row pb-2">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="idMessaggio" value="ID MESSAGGIO" style="font-size: 14px;"/>
+                                    </div>
+                                    <div>
+                                        <p:inputNumber id="idMessaggio" inputStyle="width: 100%;"
+                                                       value="#{templateView.currentView.confBean.idMessaggio}"
+                                                       minValue="0" decimalPlaces="0">
+                                            <p:ajax event="change"/>
+                                        </p:inputNumber>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="sezione" value="SEZIONE" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu value="#{templateView.currentView.confBean.sezione}"
+                                                         id="sezione"
+                                                         style="width: 100%;">
+                                            <f:selectItem itemLabel="Seleziona Sezione" itemValue="" />
+                                            <f:selectItems value="#{templateView.currentView.availableSezione}" var="s"
+                                                           itemLabel="#{s}" itemValue="#{s}" />
+                                            <p:ajax event="change" />
+                                        </p:selectOneMenu>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="seqStampa" value="SEQ STAMPA" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:spinner id="seqStampa" style="width: 100%;" min="1"
+                                                   validator="#{templateView.currentView.seqStampaValidator}"
+                                                   value="#{templateView.currentView.confBean.seqStampa}">
+                                            <p:ajax event="change"
+                                                    update="@this @(.btnConfirmAddConfiguration) @(.seqStampaMessage)" />
+                                        </p:spinner>
+                                        <p:message for="seqStampa" styleClass="seqStampaMessage" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="allineamento" value="ALLINEAMENTO"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="allineamento"
+                                                         value="#{templateView.currentView.confBean.allineamento}"
+                                                         style="width: 100%;">
+                                            <f:selectItem itemLabel="Seleziona Allineamento" itemValue="" />
+                                            <f:selectItems value="#{templateView.currentView.availableAllineamento}"
+                                                           var="a"
+                                                           itemLabel="#{a}" itemValue="#{a}" />
+                                            <p:ajax event="change"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-12">
+                                    <div>
+                                        <p:outputLabel for="testo" value="TESTO" style="font-size: 14px;"/>
+                                    </div>
+                                    <div>
+                                        <p:inputTextarea id="testo" value="#{templateView.currentView.confBean.testo}"
+                                                     style="width: 100%;">
+                                            <p:ajax event="change"/>
+                                        </p:inputTextarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-3">
+                                    <div>
+                                        <p:outputLabel for="taglioCarta" value="TAGLIO CARTA"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectBooleanCheckbox id="taglioCarta"
+                                                                 value="#{templateView.currentView.confBean.taglioCarta}">
+                                            <p:ajax event="change" />
+                                        </p:selectBooleanCheckbox>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div>
+                                        <p:outputLabel for="barcode" value="BARCODE" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectBooleanCheckbox id="barcode"
+                                                                 value="#{templateView.currentView.confBean.barcode}">
+                                            <p:ajax event="change" />
+                                        </p:selectBooleanCheckbox>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div>
+                                        <p:outputLabel for="bold" value="BOLD" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectBooleanCheckbox id="bold"
+                                                                 value="#{templateView.currentView.confBean.bold}">
+                                            <p:ajax event="change" />
+                                        </p:selectBooleanCheckbox>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div>
+                                        <p:outputLabel for="barra" value="BARRA" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectBooleanCheckbox id="barra"
+                                                                 value="#{templateView.currentView.confBean.barra}">
+                                            <p:ajax event="change" />
+                                        </p:selectBooleanCheckbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="font" value="FONT" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="font" value="#{templateView.currentView.confBean.font}"
+                                                         style="width: 100%;">
+                                            <f:selectItem itemLabel="Seleziona Font" itemValue="" />
+                                            <f:selectItems value="#{templateView.currentView.availableFonts}" var="f"
+                                                           itemLabel="#{f}" itemValue="#{f}" />
+                                            <p:ajax event="change"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="fontStile" value="FONT STILE" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="fontStile"
+                                                         value="#{templateView.currentView.fontStile}"
+                                                         style="width: 100%;">
+                                            <f:selectItem itemLabel="Seleziona Font Stile" itemValue="" />
+                                            <f:selectItems value="#{templateView.currentView.stili}" var="st"
+                                                           itemLabel="#{st.label}" itemValue="#{st.id}" />
+                                            <p:ajax event="change"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="logo" value="LOGO" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="logo" style="width: 100%;"
+                                                     value="#{templateView.currentView.confBean.logo}">
+                                            <p:ajax event="change"/>
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="bottone" value="BOTTONE" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="bottone" value="#{templateView.currentView.bottone}"
+                                                         style="width: 100%;">
+                                            <f:selectItem itemLabel="Seleziona Bottone" itemValue="" />
+                                            <f:selectItems value="#{templateView.currentView.availableButtons}" var="b"
+                                                           itemLabel="#{b.descrizione}" itemValue="#{b.id}" />
+                                            <p:ajax event="change" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="regolamento" value="REGOLAMENTO" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="regolamento" style="width: 100%;"
+                                                     value="#{templateView.currentView.confBean.regolamento}">
+                                            <p:ajax event="change"/>
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="codice" value="CODICE" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectBooleanCheckbox id="codice"
+                                                                 value="#{templateView.currentView.confBean.codice}">
+                                            <p:ajax event="change" />
+                                        </p:selectBooleanCheckbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="variabile" value="VARIABILE" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="variabile" style="width: 100%;"
+                                                     value="#{templateView.currentView.confBean.variabile}">
+                                            <p:ajax event="change"/>
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="font-entity" value="FONT ENTITY" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="font-entity"
+                                                         value="#{templateView.currentView.fontEntity}"
+                                                         style="width: 100%;">
+                                            <f:selectItem itemLabel="Seleziona Font Entity" itemValue="" />
+                                            <f:selectItems value="#{templateView.currentView.availableFontEntities}"
+                                                           var="f"
+                                                           itemLabel="#{f.descrizione}" itemValue="#{f.id}" />
+                                            <p:ajax event="change"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                        <f:facet name="footer">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;"
+                                                     action="#{templateView.currentView.resetAddConfiguration}"
+                                                     onclick="PF('dlgAddConfiguration').hide()"/>
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton id="addTransitionDlgConfirmBtn" value="Conferma"
+                                                     styleClass="ui-confirmdialog-yes btnConfirmAddConfiguration"
+                                                     disabled="#{templateView.currentView.btnConfirmAddConfigurationDisabled}"
+                                                     action="#{templateView.currentView.confirmAddConfiguration}"
+                                                     oncomplete="PF('dlgAddConfiguration').hide()"
+                                                     update="@(.updateableConfGrid}"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                    </p:dialog>
+
+                    <p:dialog widgetVar="dlgAddDescription" resizable="false" closable="false"
+                              styleClass="pf-dialog disable-horizontal-scroll"
+                              width="800" height="30vh" header="Aggiungi Descrizione" >
+                        <h:form id="dlgAddDescriptionForm" styleClass="dlgAddDescription">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="idMessaggio" value="ID MESSAGGIO" style="font-size: 14px;"/>
+                                    </div>
+                                    <div>
+                                        <p:inputNumber id="idMessaggio"
+                                                       value="#{templateView.currentView.descrizioneMessaggiBean.idMessaggio}"
+                                                       minValue="0"
+                                                       decimalPlaces="0"
+                                                       disabled="#{templateView.currentView.descrizioneMessaggiBean.edit}">
+                                            <p:ajax event="change"/>
+
+                                        </p:inputNumber>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="descrizione" value="DESCRIZIONE" style="font-size: 14px;"/>
+                                    </div>
+                                    <div>
+                                        <p:inputText id="descrizione" value="#{templateView.currentView.descrizioneMessaggiBean.descrizione}">
+                                            <p:ajax event="change"/>
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                        <f:facet name="footer">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;"
+                                                     action="#{templateView.currentView.resetAddConfiguration}"
+                                                     onclick="PF('dlgAddDescription').hide()"/>
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton id="addDescrizioneDlgConfirmBtn" value="Conferma"
+                                                     styleClass="ui-confirmdialog-yes planningConfirmBtn"
+                                                     action="#{templateView.currentView.confirmAddDescription}"
+                                                     oncomplete="PF('dlgAddDescription').hide()"
+                                                     update="@(.updateableDescGrid}"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                    </p:dialog>
+
+                    <h:form id="selezionaCanaleForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-6 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="canale" value="Seleziona Canale" class="input-field-label"/>
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="canale" value="#{templateView.currentView.idCanaleSelezionato}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains" partialSubmit="true">
+                                        <p:ajax update="@(.tabGestioneWorkflow), @(.meccanicaDropDown)"/>
+                                        <f:selectItems value="#{templateView.currentView.canali}" var="c"
+                                                       itemLabel="#{c.gruppoPromozioneEntity.descrizione}: #{c.descrizione}"
+                                                       itemValue="#{c.id}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="ui-g-6 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="meccanica" value="Seleziona Meccanica"
+                                                   class="input-field-label"/>
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="meccanica"
+                                                     value="#{templateView.currentView.idMeccanicaSelezionata}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains" partialSubmit="true" styleClass="meccanicaDropDown">
+                                        <p:ajax update="@(.tabGestioneWorkflow)"/>
+                                        <f:selectItems value="#{templateView.currentView.meccaniche}" var="c"
+                                                       itemLabel="#{c.codiceMeccanica}: #{c.descrizione}"
+                                                       itemValue="#{c.id}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="ui-g-6 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="dispositivo" value="Seleziona Dispositivo"
+                                                   class="input-field-label"/>
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="dispositivo" value="#{templateView.currentView.dispositivo}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains" partialSubmit="true">
+                                        <p:ajax update="@(.tabGestioneWorkflow)"/>
+                                        <f:selectItems value="#{templateView.currentView.dispositivi}" var="item"
+                                                       itemLabel="#{item.descrizione}" itemValue="#{item.codice}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:tabView widgetVar="gestioneWorkflow_tabs" class="tabGestioneWorkflow">
+                        <p:tab title="Configurazioni di default" class="tabGestioneWorkflow">
+                            <div class="row">
+                                <p:commandButton value="Aggiungi" id="addConfiguration" styleClass="pf-btn-confirm"
+                                                 action="#{templateView.currentView.addConfAction}"
+                                                 oncomplete="PF('dlgAddConfiguration').show()"
+                                                 update="@(.dlgAddConfiguration) @(.btnConfirmAddConfiguration)" />
+                            </div>
+                            <div class="row">
+                                <p:dataTable var="conf" value="#{templateView.currentView.configurazioneDiDefault}"
+                                             styleClass="updateableConfGrid pb-2" editable="false">
+                                    <p:column headerText="ID MESSAGGIO" width="90">
+                                        <h:outputText value="#{conf.idMessaggio}"/>
+                                    </p:column>
+                                    <p:column headerText="SEQ STAMPA" width="75">
+                                        <h:outputText value="#{conf.seqStampa}"/>
+                                    </p:column>
+                                    <p:column headerText="SEZIONE">
+                                        <h:outputText value="#{conf.sezione}"/>
+                                    </p:column>
+                                    <p:column headerText="TESTO" width="220">
+                                        <h:outputText value="#{conf.testo}"/>
+                                    </p:column>
+                                    <p:column headerText="TAGLIO CARTA" width="80">
+                                        <p:selectBooleanCheckbox value="#{conf.taglioCarta}" disabled="true"/>
+                                    </p:column>
+                                    <p:column headerText="BARCODE" width="80">
+                                        <p:selectBooleanCheckbox value="#{conf.barcode}" disabled="true"/>
+                                    </p:column>
+                                    <p:column headerText="FONT">
+                                        <h:outputText value="#{conf.font}"/>
+                                    </p:column>
+                                    <p:column headerText="ALLINEAMENTO">
+                                        <h:outputText value="#{conf.allineamento}"/>
+                                    </p:column>
+                                    <p:column headerText="BOLD" width="80">
+                                        <p:selectBooleanCheckbox value="#{conf.bold}" disabled="true"/>
+                                    </p:column>
+                                    <p:column headerText="LOGO">
+                                        <h:outputText value="#{conf.logo}"/>
+                                    </p:column>
+                                    <p:column headerText="BOTTONE">
+                                        <h:outputText value="#{conf.bottone.descrizione}" />
+                                    </p:column>
+                                    <p:column headerText="CODICE" width="80">
+                                        <p:selectBooleanCheckbox value="#{conf.codice}" disabled="true"/>
+                                    </p:column>
+                                    <p:column headerText="REGOLAMENTO">
+                                        <h:outputText value="#{conf.regolamento}" disabled="true"/>
+                                    </p:column>
+                                    <p:column headerText="BARRA" width="80">
+                                        <p:selectBooleanCheckbox value="#{conf.barra}" disabled="true"/>
+                                    </p:column>
+                                    <p:column headerText="FONT STILE">
+                                        <h:outputText value="#{conf.fontStile.label}"/>
+                                    </p:column>
+                                    <p:column headerText="VARIABILE">
+                                        <h:outputText value="#{conf.variabile}"/>
+                                    </p:column>
+                                    <p:column headerText="FONT ENTITY">
+                                        <h:outputText value="#{conf.fontEntity.descrizione}"/>
+                                    </p:column>
+                                    <p:column style="width: 40px; padding: 3px !important;">
+                                        <p:commandButton icon="fa fa-fw fa-arrow-circle-up" title="Aggiungi sopra"
+                                                         oncomplete="PF('dlgAddConfiguration').show()"
+                                                         update="@(.dlgAddConfiguration)"
+                                                         action="#{templateView.currentView.addConfActionBefore(conf)}" />
+                                    </p:column>
+                                    <p:column style="width: 40px; padding: 3px !important;">
+                                        <p:commandButton icon="fa fa-fw fa-edit" title="Modifica"
+                                                         oncomplete="PF('dlgAddConfiguration').show()"
+                                                         update="@(.dlgAddConfiguration) @(.btnConfirmAddConfiguration)"
+                                                         action="#{templateView.currentView.editConfAction(conf)}" />
+                                    </p:column>
+                                    <p:column style="width: 40px; padding: 3px !important;">
+                                        <p:commandButton icon="fa fa-fw fa-trash" title="Elimina"
+                                                         action="#{templateView.currentView.deleteConfAction(conf)}"
+                                                         update="@(.updateableConfGrid)">
+                                            <p:confirm header="Conferma Necessaria" message="Confermi eliminazione ?"
+                                                       icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                                <p:confirmDialog global="true">
+                                    <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes"
+                                                     icon="ui-icon-check"/>
+                                    <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no"
+                                                     icon="ui-icon-close"/>
+                                </p:confirmDialog>
+                            </div>
+
+                        </p:tab>
+                        <p:tab title="Elementi Visibili" class="tabGestioneWorkflow">
+                            <div class="row">
+                                <p:spacer heigh="10" width="20"/>
+                            </div>
+                            <div class="row">
+                                <p:dataTable var="elemento" value="#{templateView.currentView.componentiAttivi}"
+                                             style="width: 70%;">
+                                    <p:column headerText="Elemento">
+                                        <h:outputText value="#{elemento.name}"/>
+                                    </p:column>
+                                    <p:column headerText="Attivo">
+                                        <p:selectBooleanCheckbox value="#{elemento.attivo}">
+                                            <p:ajax event="valueChange"
+                                                    listener="#{templateView.currentView.updateStatus(elemento)}"/>
+                                        </p:selectBooleanCheckbox>
+                                    </p:column>
+                                    <p:column headerText="Unica In riga">
+                                        <p:selectBooleanCheckbox value="#{elemento.unicaInRiga}">
+                                            <p:ajax event="valueChange"
+                                                    listener="#{templateView.currentView.updateUnica(elemento)}"/>
+                                        </p:selectBooleanCheckbox>
+                                    </p:column>
+                                    <p:column headerText="Testo">
+                                        <h:form>
+                                        <p:inputText value="#{elemento.testo}" valueChangeListener="#{templateView.currentView.updateTesto}">
+                                            <f:attribute name="elemento" value="#{elemento}" />
+                                            <p:ajax />
+                                        </p:inputText>
+                                        </h:form>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </p:tab>
+                        <p:tab title="Descrizioni Id" class="tabGestioneWorkflow">
+                            <div class="row">
+                                <p:commandButton value="Aggiungi" id="addDescription" styleClass="pf-btn-confirm"
+                                                 action="#{templateView.currentView.addDescrizioneAction}"
+                                                 oncomplete="PF('dlgAddDescription').show()"
+                                                 update="@(.dlgAddDescription)" />
+                            </div>
+                            <div class="row">
+                                <p:dataTable var="descrizione" value="#{templateView.currentView.descrizioniMessaggi}"
+                                             style="width: 70%;" styleClass="updateableDescGrid" editable="false">
+                                    <p:column headerText="ID Messaggio">
+                                        <h:outputText value="#{descrizione.idMessaggio}"/>
+                                    </p:column>
+                                    <p:column headerText="Descrizione">
+                                        <h:outputText value="#{descrizione.descrizione}"/>
+                                    </p:column>
+                                    <p:column style="width:40px;padding:3px!important;">
+                                        <p:commandButton icon="fa fa-fw fa-edit" title="Modifica"
+                                                         oncomplete="PF('dlgAddDescription').show()"
+                                                         update="@(.dlgAddDescription)"
+                                                         action="#{templateView.currentView.editDescriptionAction(descrizione)}">
+                                        </p:commandButton>
+                                    </p:column>
+                                    <p:column style="width:40px;padding:3px!important;">
+                                        <p:commandButton icon="fa fa-fw fa-trash" title="Elimina"
+                                                         action="#{templateView.currentView.deleteDescriptionAction(descrizione)}"
+                                                         update="@(.updateableDescGrid)">
+                                            <p:confirm header="Conferma Necessaria" message="Confermi eliminazione ?"
+                                                       icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .input-field {
+            border-radius: 3px;
+            border-color: gray;
+        }
+
+        .input-field-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: black;
+        }
+
+        .ui-tabs {
+            padding: 0;
+        }
+
+        .ui-tabs-nav {
+            background: #ececec !important;
+        }
+
+        .ui-tabs-panels {
+            border: 1px solid gray;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .ui-tabs .ui-tabs-panel {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .ui-state-active,
+        .ui-widget-content .ui-state-active,
+        .ui-widget-header .ui-state-active,
+        a.ui-button:active,
+        .ui-button:active,
+        .ui-button.ui-state-active:hover {
+            background: none !important;
+        }
+
+        .ui-chkbox-box {
+            border: 1px solid #343a40 !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.ui-chkbox div').removeClass('ui-state-disabled');
+        });
+    </script>
+</ui:composition>
+</html>

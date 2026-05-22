@@ -1,0 +1,186 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+
+                <!-- Dialog conferma ricalcolo sovrapposizioni -->
+                <p:confirmDialog widgetVar="dlgCheckOverlap" header="Attenzione" styleClass="dlgCheckOverlap"
+                                 message="Sei sicuro di voler ricalcolare le sovrapposizioni?"
+                                 severity="alert">
+                    <p:commandButton value="SI" update="@(.updateableContent)"
+                                     action="#{templateView.currentView.confirmCheckOverlap}"
+                                     oncomplete="PF('dlgCheckOverlap').hide()" />
+                    <p:commandButton value="NO" onclick="PF('dlgCheckOverlap').hide()"
+                                     style="float: right;" type="button" />
+                </p:confirmDialog>
+
+                <div id="k_grid_portlet_checkOverlapHeader" class="k-portlet" style="background: #ececec;">
+                    <h:form id="reportOverlapForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="promozioni" value="Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promozioni" class="input-field"
+                                                     style="width: 100%; background-color: white;"
+                                                     value="#{templateView.currentView.idPromozioneCorrente}"
+                                                     filter="true" filterMatchMode="contains">
+                                        <p:ajax update="@(.updateableContent) @(.checkOverlapBtn)" />
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.promozioni}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3" style="padding-top: 15px !important;">
+                                <p:commandButton id="checkOverlapBtn" value="Calcola Sovrapposizioni"
+                                                 styleClass="pf-btn-confirm checkOverlapBtn"
+                                                 onclick="PF('dlgCheckOverlap').show()"
+                                                 disabled="#{empty templateView.currentView.idPromozioneCorrente}" />
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="k-portlet" id="k_grid_portlet_checkOverlapGrid">
+                    <p:panel id="expandable_db_grid_checkOverlap" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent">
+                        <f:facet name="header">
+                            <p:outputLabel value="Report Sovrapposizioni" />
+                        </f:facet>
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham db_grid_checkOverlap"
+                                      pt:gridid="db_grid_checkOverlap" />
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="some_grid_id_from_backend_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_checkOverlap', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_checkOverlap')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_checkOverlap', 'Report Sovrapposizioni', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_checkOverlap', 'Report Sovrapposizioni')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var currentPromoId = #{ templateView.currentView.idPromozioneCorrente };
+                            var gridParamsCheckOverlap = {
+                                gridCode: 'db_grid_checkOverlap',
+                                gridTitle: 'Report Sovrapposizioni',
+                                url_columnDefs: contextPath + '/resources/pianificazionepromo/planning/sovrapposizioni/master/columnDef'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/pianificazionepromo/planning/sovrapposizioni/master/rowData/'
+                                    + currentPromoId + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_grid_checkOverlap'
+                            };
+
+                            var gridOptions = {
+                                groupDefaultExpanded: 0,
+                                masterDetail: true,
+                                detailCellRendererParams: {
+                                    detailGridOptions: {
+                                        columnDefs: [
+                                            {
+                                                "headerName":"Codice Negozio",
+                                                "field":"codiceNegozio.value",
+                                                "width":80,
+                                                "editable":false,
+                                                "hide":false
+                                            },
+                                            {
+                                                "headerName":"Negozio",
+                                                "field":"descrizione.value",
+                                                "width":500,
+                                                "editable":false,
+                                                "hide":false
+                                            },
+                                            {
+                                                "headerName":"Codice Società",
+                                                "field":"societa.value",
+                                                "width":100,
+                                                "type": "string",
+                                                "editable":false,
+                                                "hide":false
+                                            },
+                                            {
+                                                "headerName":"Società",
+                                                "field":"descrizioneSocieta.value",
+                                                "width":200,
+                                                "type": "string",
+                                                "editable":false,
+                                                "hide":false
+                                            },
+                                            {
+                                                "headerName":"Codice Zona",
+                                                "field":"codiceZona.value",
+                                                "width":200,
+                                                "type": "string",
+                                                "editable":false,
+                                                "hide":false
+                                            },
+                                            {
+                                                "headerName":"Zona",
+                                                "field":"descrizioneZona.value",
+                                                "width":200,
+                                                "type": "string",
+                                                "editable":false,
+                                                "hide":false
+                                            }
+                                        ],
+                                        defaultColDef: {
+                                            flex: 1,
+                                            filter: true,
+                                            sortable: true
+                                        }
+                                    },
+                                    getDetailRowData: function (params) {
+                                        let idReport = params.data.idReport.value;
+                                        $.ajax({
+                                            type: "GET",
+                                            url: contextPath + '/resources/pianificazionepromo/planning/sovrapposizioni/detail/rowData/'
+                                                + idReport + addUrlParamContesto(#{muiContext}),
+                                            contentType: "application/json",
+                                            success: function (data) {
+                                                params.successCallback(data.rowData);
+                                            },
+                                            error: ajaxErrorHandler
+                                        });
+                                    }
+                                },
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParamsCheckOverlap.gridCode);
+                                }
+                            };
+
+                            gridParamsCheckOverlap.customizeColumnDefs=[
+                                { columnDefId: "codiceArticolo", property: "cellRenderer", value: "agGroupCellRenderer" },
+                            ];
+
+                            gridParamsCheckOverlap.gridOptions = gridOptions;
+
+                            $(document).ready(function() {
+                                creaGriglia(gridParamsCheckOverlap);
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

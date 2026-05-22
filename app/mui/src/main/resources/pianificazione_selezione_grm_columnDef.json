@@ -1,0 +1,52 @@
+{
+  "columnDef":[
+    {
+      "headerName":"Grm",
+      "field":"grm",
+      "width":300,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Categoria",
+      "field":"categoria",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Reparto",
+      "field":"reparto",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Seleziona tutti",
+      "field":"selected",
+      "width":140,
+      "type": "checkbox",
+      "editable":true,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":true,
+      "headerCheckboxSelection":true,
+      "headerCheckboxSelectionFilteredOnly":true
+    }
+  ]
+}

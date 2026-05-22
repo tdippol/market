@@ -1,0 +1,109 @@
+{
+  "canale": {
+    "type": "comboBox",
+    "editable": true,
+    "comboBoxValues": [
+      {
+        "key": "4",
+        "label": "Buoni Categoria"
+      },
+      {
+        "key": "3",
+        "label": "Buoni Potenziamento"
+      },
+      {
+        "key": "1",
+        "label": "Precaricati su Carta"
+      },
+      {
+        "key": "2",
+        "label": "Sconti per Classe Carta"
+      },
+      {
+        "key": "",
+        "label": ""
+      }
+    ],
+    "dataTypeParams": {},
+    "value": "1",
+    "nullable": true
+  },
+  "dataInizio": {
+    "type": "date",
+    "editable": true,
+    "dataTypeParams": {
+      "dateFormat": "DDD dd/mm/yyyy"
+    },
+    "value": 44378,
+    "nullable": true
+  },
+  "dataFine": {
+    "type": "date",
+    "editable": true,
+    "dataTypeParams": {
+      "dateFormat": "DDD dd/mm/yyyy"
+    },
+    "value": 44561,
+    "nullable": true
+  },
+  "messaggio": {
+    "type": "string",
+    "editable": false,
+    "dataTypeParams": {
+      "length": 255
+    },
+    "value": "",
+    "nullable": true
+  },
+  "slotId": {
+    "value": "001",
+    "type": "string",
+    "editable": false,
+    "dataTypeParams": {
+      "length": 255
+    },
+    "nullable": true
+  },
+  "userId": {
+    "value": "mauro.giaco",
+    "type": "string"
+  },
+  "descrizione": {
+    "type": "string",
+    "editable": true,
+    "dataTypeParams": {
+      "length": 100
+    },
+    "value": "PROMO 42",
+    "nullable": true
+  },
+  "gruppo": {
+    "type": "comboBox",
+    "editable": true,
+    "comboBoxValues": [
+      {
+        "key": "2",
+        "label": "Attività sui clienti"
+      },
+      {
+        "key": "",
+        "label": "&nbsp;"
+      }
+    ],
+    "dataTypeParams": {},
+    "value": "2",
+    "nullable": true
+  },
+  "anno": {
+    "type": "picklist",
+    "picklistValues": [
+      "2021",
+      "2022",
+      ""
+    ],
+    "editable": true,
+    "dataTypeParams": {},
+    "value": "2021",
+    "nullable": true
+  }
+}

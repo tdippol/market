@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+	<div class="row">
+		<div class="col-12">
+		<p:tabView>
+			<p:tab title="Grid">
+			<p:panel id="pnlGestioneConfigurazioneEditor"
+				styleClass="pnlGestioneConfigurazioneGridEditor" style="border:0 !important;">
+				<pe:codeMirror
+					rendered="#{gestioneMenuRole.selectedMenuNode ne null}"
+					mode="javascript" theme="solarized"
+					value="#{gestioneMenuRole.editingGridJson}" keyMap="default"
+					lineNumbers="true" matchBrackets="true" />
+			</p:panel>
+			</p:tab>
+			<p:tab title="Filter">
+			<p:panel id="pnlGestioneConfigurazioneFilerEditor" style="border:0 !important;"
+				styleClass="pnlGestioneConfigurazioneEditor">
+				<pe:codeMirror
+					rendered="#{gestioneMenuRole.selectedMenuNode ne null}"
+					mode="javascript" theme="solarized"
+					value="#{gestioneMenuRole.editingFilterJson}" keyMap="default"
+					lineNumbers="true" matchBrackets="true" />
+			</p:panel>
+			</p:tab>
+		</p:tabView>
+		</div>
+	</div>
+
+	<f:facet name="footer">
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:commandButton value="Salva" update="treeMenu"
+				action="#{gestioneMenuRole.updateConfiguration}"
+				onsuccess="PF('editConfig').hide()" styleClass="pf-btn-confirm" />
+			<p:commandButton value="Annulla" oncomplete="PF('editConfig').hide()"
+				styleClass="pf-btn-cancel" />
+		</h:panelGrid>
+	</f:facet>
+</ui:composition>
+</html>

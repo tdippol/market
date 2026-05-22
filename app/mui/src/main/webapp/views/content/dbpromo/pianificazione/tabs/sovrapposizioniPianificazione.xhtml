@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_pianificazione_sovrapposizioni" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_pianificazione_sovrapposizioni">
+                        <f:facet name="header">
+                            <p:outputLabel value="Sovrapposizioni" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham pianificazione_sovrapposizioni"
+                                      pt:gridid="db_pianificazione_sovrapposizioni">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="pianificazione_sovrapposizioni_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_pianificazione_sovrapposizioni', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_pianificazione_sovrapposizioni')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_pianificazione_sovrapposizioni','some title from backend')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+						var currentPromoId = #{ templateView.currentView.idPromozioneCorrente };
+                        var gridParams_pianificazioneSovrapposizioni = {
+                            gridTabGroup: 'schedaPianificazione_tabs',
+                            gridTabPosition: #{templateView.currentView.indexOf('TAB_SOVRAPPOSIZIONI_PIANIFICAZIONE')},
+                            gridCode: 'db_pianificazione_sovrapposizioni',
+                            gridTitle: 'Pianificazione - Sovrapposizioni',
+                            url_columnDefs: contextPath + '/resources/pianificazionepromo/planning/sovrapposizioni/master/columnDef'
+                                + addUrlParamContesto(#{muiContext}),
+                            url_rowData: contextPath + '/resources/pianificazionepromo/planning/sovrapposizioni/master/rowData/'
+                                + currentPromoId + addUrlParamContesto(#{muiContext}),
+                            url_customSort: contextPath + '/resources/grid/sorting/db_pianificazione_sovrapposizioni'
+                        };
+                        var gridOptions = {
+                            groupDefaultExpanded: 0,
+                            masterDetail: true,
+                            detailCellRendererParams: {
+                                detailGridOptions: {
+                                    columnDefs: [
+                                        {
+                                            "headerName":"Codice Negozio",
+                                            "field":"codiceNegozio.value",
+                                            "width":80,
+                                            "editable":false,
+                                            "hide":false
+                                        },
+                                        {
+                                            "headerName":"Negozio",
+                                            "field":"descrizione.value",
+                                            "width":500,
+                                            "editable":false,
+                                            "hide":false
+                                        },
+                                        {
+                                            "headerName":"Codice Società",
+                                            "field":"societa.value",
+                                            "width":100,
+                                            "type": "string",
+                                            "editable":false,
+                                            "hide":false
+                                        },
+                                        {
+                                            "headerName":"Società",
+                                            "field":"descrizioneSocieta.value",
+                                            "width":200,
+                                            "type": "string",
+                                            "editable":false,
+                                            "hide":false
+                                        },
+                                        {
+                                            "headerName":"Codice Zona",
+                                            "field":"codiceZona.value",
+                                            "width":200,
+                                            "type": "string",
+                                            "editable":false,
+                                            "hide":false
+                                        },
+                                        {
+                                            "headerName":"Zona",
+                                            "field":"descrizioneZona.value",
+                                            "width":200,
+                                            "type": "string",
+                                            "editable":false,
+                                            "hide":false
+                                        }
+                                    ],
+                                    defaultColDef: {
+                                        flex: 1,
+                                        filter: true,
+                                        sortable: true
+                                    }
+                                },
+                                getDetailRowData: function (params) {
+                                    let idReport = params.data.idReport.value;
+                                    $.ajax({
+                                        type: "GET",
+                                        url: contextPath + '/resources/pianificazionepromo/planning/sovrapposizioni/detail/rowData/'+idReport+ addUrlParamContesto(#{muiContext}),
+                                        contentType: "application/json",
+                                        success: function (data) {
+                                            params.successCallback(data.rowData);
+                                        },
+									    error: ajaxErrorHandler
+                                    });
+
+                                }
+                            },
+                            onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_pianificazioneSovrapposizioni.gridCode);
+                            }
+                        };
+
+                        gridParams_pianificazioneSovrapposizioni.customizeColumnDefs=[
+                                {columnDefId:"codiceArticolo",property:"cellRenderer",value:'agGroupCellRenderer'},
+                            ];
+
+                        gridParams_pianificazioneSovrapposizioni.gridOptions = gridOptions;
+                		
+                        $(document).ready(function() {
+                        	if(getCurrentTab(gridParams_pianificazioneSovrapposizioni.gridTabGroup) === gridParams_pianificazioneSovrapposizioni.gridTabPosition) {
+    							creaGriglia(gridParams_pianificazioneSovrapposizioni);
+            	        	}
+                        });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

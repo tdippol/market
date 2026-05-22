@@ -1,0 +1,114 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <h:form id="selezionaCanaleForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-6 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="canale" value="Seleziona Canale" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="canale" value="#{templateView.currentView.idCanaleSelezionato}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains">
+                                        <p:ajax update="@(.flBidoneApertoClass) @(.updateableCanale) @(.updateableStatiBlocco) @(.configurationTable) @(.meccanicheAssociate) @(.meccanicheTable) @(.sovrapposizioniTable)" />
+                                        <f:selectItems value="#{templateView.currentView.canali}" var="c"
+                                                       itemLabel="#{c.gruppoPromozioneEntity.descrizione}: #{c.descrizione}"
+                                                       itemValue="#{c.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:tabView dynamic="true" cache="false"
+                               widgetVar="gestioneWorkflow_tabs"
+                               class="tabGestioneWorkflow"
+                               activeIndex="#{templateView.currentView.activeTab}"
+                    >
+                        <p:ajax event="tabChange" listener="#{templateView.currentView.tabChanged}"></p:ajax>
+                        <p:tab title="Parametri" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneCanali/parametri.xhtml" />
+                        </p:tab>
+                        <p:tab title="Meccaniche" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneCanali/meccaniche.xhtml" />
+                        </p:tab>
+                        <p:tab title="Codici" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneCanali/progressivi.xhtml" />
+                        </p:tab>
+                        <p:tab title="Sicurezza" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneCanali/sicurezza.xhtml" />
+                        </p:tab>
+                        <p:tab title="Stati di blocco" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneCanali/statiBlocco.xhtml" />
+                        </p:tab>
+                        <p:tab title="Controlli" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneCanali/controlli.xhtml" />
+                        </p:tab>
+<!--
+                        <p:tab title="Sovrapposizioni" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneCanali/sovrapposizioni.xhtml" />
+                        </p:tab>
+-->
+
+                        <p:tab title="Reparti" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneCanali/reparti.xhtml" />
+                        </p:tab>
+                    </p:tabView>
+
+                    <style>
+                        .input-field {
+                            border-radius: 3px;
+                            border-color: gray;
+                        }
+                        .input-field-label {
+                            font-size: 14px;
+                            font-weight: 500;
+                            color: black;
+                        }
+                        .ui-tabs {
+                            padding: 0;
+                        }
+                        .ui-tabs-nav {
+                            background: #ececec !important;
+                        }
+
+                        .ui-tabs-panels {
+                            border: 1px solid gray;
+                            background: white;
+                            border-radius: 3px;
+                        }
+
+                        .ui-tabs .ui-tabs-panel {
+                            padding-top: 0px;
+                            padding-bottom: 0px;
+                        }
+
+                        .ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+                            border-top-left-radius: 5px;
+                            border-top-right-radius: 5px;
+                        }
+
+                        .ui-state-active,
+                        .ui-widget-content .ui-state-active,
+                        .ui-widget-header .ui-state-active,
+                        a.ui-button:active,
+                        .ui-button:active,
+                        .ui-button.ui-state-active:hover {
+                            background: none !important;
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

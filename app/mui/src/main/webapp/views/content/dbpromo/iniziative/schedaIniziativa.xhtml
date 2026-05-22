@@ -1,0 +1,202 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <!-- Dialog conferma pubblicazione iniziativa -->
+    <p:confirmDialog widgetVar="dlgPubblicaIniziativa" header="Avviso" styleClass="dlgPubblicaIniziativa" severity="alert"
+                     message="#{templateView.currentView.msgConfirmPubblicaIniziativa}">
+        <p:commandButton value="SI" update="@(.growlClass) @(.formSchedaIniziativa) @(.tabSchedaIniziativa)"
+                         action="#{templateView.currentView.confirmPubblicaIniziativa}"
+                         oncomplete="PF('dlgPubblicaIniziativa').hide()" />
+        <p:commandButton value="NO" onclick="PF('dlgPubblicaIniziativa').hide()"
+                         style="float: right;" type="button" />
+    </p:confirmDialog>
+
+    <!-- Dialog conferma aggiorna totalizzatore -->
+    <p:confirmDialog widgetVar="dlgAggiornaTotalizzatore" header="Avviso" styleClass="dlgAggiornaTotalizzatore" severity="alert"
+                     message="#{templateView.currentView.msgConfirmAggiornaTotalizzatore}">
+        <p:commandButton value="SI" update="@(.growlClass) @(.formSchedaIniziativa) @(.tabSchedaIniziativa)"
+                         action="#{templateView.currentView.confirmAggiornaTotalizzatore}"
+                         oncomplete="PF('dlgAggiornaTotalizzatore').hide()" />
+        <p:commandButton value="NO" onclick="PF('dlgAggiornaTotalizzatore').hide()"
+                         style="float: right;" type="button" />
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <h:form id="formSchedaIniziativa" styleClass="formSchedaIniziativa"
+                style="margin-top: 10px; margin-bottom: 30px;">
+            <div class="row">
+                <div class="col-3">
+                    <div><p:outputLabel for="selectIniziativa" value="Iniziativa" styleClass="label-txt" /></div>
+                    <div>
+                        <p:selectOneMenu id="selectIniziativa" styleClass="input-field"
+                                         filter="true" filterMatchMode="contains"
+                                         disabled="#{templateView.currentView.iniziativaSelectedLocked}"
+                                         value="#{templateView.currentView.idIniziativaSelected}">
+                            <p:ajax update="@(.formSchedaIniziativa) @(.tabSchedaIniziativa) @(.idIniziativaSelected) @(.btnGestioneStatoClass)" />
+                            <f:selectItem itemLabel="Seleziona iniziativa" noSelectionOption="true" />
+                            <f:selectItems value="#{templateView.currentView.iniziative}" var="i"
+                                           itemLabel="#{i.id} - #{i.descrizione}" itemValue="#{i.id}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div><p:outputLabel for="oggetto" value="Nome Oggetto" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputText id="oggetto" styleClass="input-field" readonly="true"
+                                     style="text-transform: capitalize"
+                                     value="#{empty templateView.currentView.iniziativaSelected
+                                        ? '' : templateView.currentView.iniziativaSelected.oggetto}">
+                        </p:inputText>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div><p:outputLabel for="flDecimale" value="Decimali" styleClass="label-txt" /></div>
+                    <div>
+                        <p:selectBooleanCheckbox id="flDecimale" styleClass="input-field" disabled="true"
+                                                 style="text-transform: capitalize"
+                                                 value="#{empty templateView.currentView.iniziativaSelected
+                                        ? false : templateView.currentView.iniziativaSelected.flagDecimale}">
+                        </p:selectBooleanCheckbox>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+
+                <div class="col-3">
+                    <div><p:outputLabel for="dataInizioIniziativa" value="Data Inizio" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputText id="dataInizioIniziativa" styleClass="input-field" readonly="true"
+                                     style="text-transform: capitalize"
+                                     value="#{empty templateView.currentView.iniziativaSelected
+                                        ? '' : templateView.currentView.iniziativaSelected.dataInizio}">
+                            <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                        </p:inputText>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div><p:outputLabel for="dataFineIniziativa" value="Data Fine" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputText id="dataFineIniziativa" styleClass="input-field" readonly="true"
+                                     style="text-transform: capitalize"
+                                     value="#{empty templateView.currentView.iniziativaSelected
+                                        ? '' : templateView.currentView.iniziativaSelected.dataFine}">
+                            <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                        </p:inputText>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div><p:outputLabel for="statoIniziativa" value="Stato" styleClass="label-txt updateCambioStato" /></div>
+                    <div>
+                        <p:inputText id="statoIniziativa" styleClass="input-field" readonly="true"
+                                     value="#{empty templateView.currentView.iniziativaSelected
+                                        ? '' : templateView.currentView.statoIniziativaSelected}" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-6">
+                    <div><p:outputLabel for="noteIniziativa" value="Note" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputText id="noteIniziativa" styleClass="input-field" readonly="true"
+                                     value="#{empty templateView.currentView.iniziativaSelected
+                                        ? '' : templateView.currentView.iniziativaSelected.note}" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-6">
+                    <div>
+                        <p:commandButton id="pubblicaIniziativa" styleClass="pf-btn-confirm btnPubblicaIniziativa"
+                                         value="Pubblica" style="margin-top: 20px;"
+                                         update="@(.formSchedaIniziativa) @(.tabSchedaIniziativa) @(.dlgPubblicaIniziativa) @(.btnGestioneStatoClass)"
+                                         actionListener="#{templateView.currentView.prepareMsgConfirmPubblicaIniziativa}"
+                                         disabled="#{templateView.currentView.btnPubblicaIniziativaDisabled or templateView.currentView.iniziativaSelectedLocked}"
+                                         oncomplete="PF('dlgPubblicaIniziativa').show()" />
+
+                        <p:commandButton id="aggiornaTotalizzatore" styleClass="pf-btn-confirm btnAggiornaTotalizzatore"
+                                         value="Aggiorna Totalizzatore" style="margin-top: 20px; margin-left: 20px;"
+                                         update="@(.formSchedaIniziativa) @(.tabSchedaIniziativa) @(.dlgAggiornaTotalizzatore)"
+                                         actionListener="#{templateView.currentView.prepareMsgConfirmAggiornaTotalizzatore}"
+                                         rendered="#{templateView.currentView.btnAggiornaTotalizzatoreRendered}"
+                                         oncomplete="PF('dlgAggiornaTotalizzatore').show()" />
+                    </div>
+                </div>
+            </div>
+
+            <h:outputLabel styleClass="idIniziativaSelected" style="visibility: hidden;"
+                           value="#{templateView.currentView.idIniziativaSelected}" />
+        </h:form>
+
+        <script type="application/javascript">
+            var currentActiveTab = #{templateView.currentView.activeTab};
+        </script>
+
+        <p:tabView dynamic="true" cache="false" widgetVar="tabViewSchedaIniziativa" styleClass="tabSchedaIniziativa"
+                   activeIndex="#{templateView.currentView.activeTab}">
+            <p:ajax event="tabChange" listener="#{templateView.currentView.onTabChange}" />
+
+            <p:tab title="Stati"
+                   disabled="#{empty templateView.currentView.iniziativaSelected or templateView.currentView.iniziativaSelectedLocked}">
+                <ui:include src="tabs/statiIniziativa.xhtml" />
+            </p:tab>
+
+            <p:tab title="Modifica"
+                   disabled="#{empty templateView.currentView.iniziativaSelected or templateView.currentView.iniziativaSelectedLocked}">
+                <ui:include src="tabs/modificaIniziativa.xhtml" />
+            </p:tab>
+
+            <p:tab title="Totalizzatori"
+                   disabled="#{empty templateView.currentView.iniziativaSelected or templateView.currentView.iniziativaSelectedLocked}">
+                <ui:include src="tabs/totalizzatoriIniziativa.xhtml" />
+            </p:tab>
+        </p:tabView>
+    </div>
+
+    <style>
+        .input-field {
+            border-radius: 3px;
+            border-color: gray;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+
+        .ui-tabs {
+            padding: 0;
+        }
+
+        .ui-tabs-nav {
+            background: #ececec !important;
+        }
+
+        .ui-tabs-panels {
+            border: 1px solid gray;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .ui-tabs .ui-tabs-panel {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .ui-icon-carat-1-s {
+            transform: rotate(180deg) !important;
+        }
+    </style>
+</ui:composition>
+</html>

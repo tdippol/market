@@ -1,0 +1,169 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+
+	<div class="k-content k-grid__item k-grid__item--fluid col-12"
+		 id="k_content">
+	<div class="row">
+	<div class="col-12">
+	<div id="k_grid_portletpromoGrid" class="k-portlet">
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="true">
+			<p:commandButton value="annulla" type="button" styleClass="ui-confirmdialog-no" />
+			<p:commandButton value="conferma" type="button" styleClass="ui-confirmdialog-yes" />
+		</p:confirmDialog>
+		<p:dialog widgetVar="dlgAddACLWV"
+				  minimizable="true" maximizable="true"
+				  width="800"
+
+				  resizable="false"
+				  draggable="true"
+				  closable="true"
+				  header="Aggiungi Regola ACL" styleClass="pf-dialog">
+			<h:form styleClass="formAddDialog">
+				<p:panelGrid style="width: 100%;">
+					<p:row>
+						<p:column style="text-align: left;">
+							<p:outputLabel for="componentClass" value="Classe Componente * " />
+							<p:selectOneRadio id="componentClass" value="#{gestioneACL.selectedACL.componentClass}" unselectable="false">
+								<f:selectItems value="#{gestioneACL.componentGroupList}"/>
+							</p:selectOneRadio>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="text-align: left;">
+							<p:outputLabel value="ID Componente * " />
+							<br/>
+							<p:inputText id="component" value="#{gestioneACL.selectedACL.component}" style="width: 100%;" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="text-align: left;">
+							<p:outputLabel value="Ruolo * " />
+							<br/>
+							<p:selectOneMenu value="#{gestioneACL.selectedACL.rolesByRoleId}" var="r"
+											 effect="fade" style="width:100%">
+								<f:converter binding="#{rolesConverter}" />
+								<f:selectItems value="#{gestioneACL.rolesList}" var="role"
+											   itemLabel="#{role.name}" itemValue="#{role}" />
+									<p:column style="width: 20%">
+										<h:outputText value="#{r.name}" />
+									</p:column>
+									<p:column style="width: 80%">
+										<h:outputText value="#{r.description}" />
+									</p:column>
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+					<p:column style="text-align: left;">
+						<p:selectBooleanCheckbox value="#{gestioneACL.selectedACL.visible}" itemLabel="Visible"/>
+						<p:selectBooleanCheckbox value="#{gestioneACL.selectedACL.editable}" itemLabel="Editable"/>
+						<p:selectBooleanCheckbox value="#{gestioneACL.selectedACL.enabled}" itemLabel="Enabled"/>
+					</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="text-align: right !important;">
+							<p:commandButton styleClass="pf-btn-confirm" value="conferma" actionListener="#{gestioneACL.addACL}"  update="@(.formAddDialog),@(.updateableContent)"/>
+							<p:commandButton styleClass="pf-btn-cancel" value="annulla" process="@this" oncomplete="PF('dlgAddACLWV').hide();" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+		<script>
+			function completeClick(){
+				document.body.click();
+			}
+		</script>
+		<h:form>
+			<p:remoteCommand name="updateFormList" update="@(.updateableContent)"/>
+		</h:form>
+
+
+		<h:form>
+		    <p:remoteCommand name="initializePageDataCommand" autoRun="true" action="#{gestioneACL.refresh()}" />
+			<p:panel header="Lista Regole ACL" toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+				<p:dataTable var="aclRule" styleClass="pf-datatable tableAcl" value="#{gestioneACL.aclList}"
+							 editable="true"
+							 editMode="cell"
+							 rows="15"
+							 paginator="true"
+							 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							 resizableColumns="true"
+							 rowsPerPageTemplate="20,50,100">
+					<p:ajax event="cellEdit" listener="#{gestioneACL.editACL(aclRule)}" oncomplete="updateFormList()"/>
+					<p:column headerText="Tipo" width="150" sortBy="#{aclRule.componentClass}" filterBy="#{aclRule.componentClass}" filterMatchMode="contains">
+						<h:outputText value="#{aclRule.componentClass}"/>
+					</p:column>
+					<p:column headerText="Componente" sortBy="#{aclRule.component}" filterBy="#{aclRule.component}" filterMatchMode="contains">
+						<h:outputText value="#{aclRule.component}"/>
+					</p:column>
+					<p:column headerText="Ruolo" width="200" sortBy="#{aclRule.rolesByRoleId.name}" filterBy="#{aclRule.rolesByRoleId.name}" filterMatchMode="contains">
+						<h:outputText value="#{aclRule.rolesByRoleId.name}" />
+					</p:column>
+					<p:column headerText="Visible" width="100" style="text-align: center;">
+						<p:cellEditor>
+							<f:facet name="output"><p:selectBooleanCheckbox disabled="true" value="#{aclRule.visible}"/></f:facet>
+							<f:facet name="input"><p:selectBooleanCheckbox value="#{aclRule.visible}" onchange="completeClick()"/></f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Editable" width="100" style="text-align: center;">
+						<p:cellEditor>
+							<f:facet name="output"><p:selectBooleanCheckbox disabled="true" value="#{aclRule.editable}"/></f:facet>
+							<f:facet name="input"><p:selectBooleanCheckbox value="#{aclRule.editable}" onchange="completeClick()"/></f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Enabled" width="100" style="text-align: center;">
+						<p:cellEditor>
+							<f:facet name="output"><p:selectBooleanCheckbox disabled="true" value="#{aclRule.enabled}"/></f:facet>
+							<f:facet name="input"><p:selectBooleanCheckbox value="#{aclRule.enabled}" onchange="completeClick()"/></f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column width="40" style="padding:3px!important;">
+						<p:commandButton icon="ui-icon-trash" title="Elimina Regola ACL" action="#{gestioneACL.deleteACL}" update="@(.updateableContent)">
+							<p:confirm header="Conferma Necessaria" message="Confermi eliminazione Regola ACL?" icon="ui-icon-alert" />
+							<f:setPropertyActionListener value="#{aclRule}" target="#{gestioneACL.selectedACL}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<p:dataTable var="aclRule" id="aclExp" style="display: none;" styleClass="pf-datatable" value="#{gestioneACL.aclList}">
+					<p:column headerText="ID">
+						<h:outputText value="#{aclRule.id}"/>
+					</p:column>
+					<p:column headerText="Tipo">
+						<h:outputText value="#{aclRule.componentClass}"/>
+					</p:column>
+					<p:column headerText="Componente">
+						<h:outputText value="#{aclRule.component}"/>
+					</p:column>
+					<p:column headerText="Ruolo">
+						<h:outputText value="#{aclRule.rolesByRoleId.name}"/>
+					</p:column>
+					<p:column headerText="Visible">
+						<h:outputText value="#{aclRule.visible}"/>
+					</p:column>
+					<p:column headerText="Editable">
+						<h:outputText value="#{aclRule.editable}"/>
+					</p:column>
+					<p:column headerText="Enabled">
+						<h:outputText value="#{aclRule.enabled}"/>
+					</p:column>
+				</p:dataTable>
+
+				<f:facet name="actions">
+					<p:commandLink  action="#{gestioneACL.openAddACLDialog}" styleClass="pnlGrid_Header plusButton" update="@(.formAddDialog)"/>
+					<p:commandLink ajax="false" styleClass="pnlGrid_Header exportButton">
+						<p:dataExporter type="xls" target="aclExp" fileName="listaACL" />
+					</p:commandLink>
+				</f:facet>
+			</p:panel>
+		</h:form>
+	</div>
+	</div>
+	</div>
+	</div>
+</ui:composition>
+</html>

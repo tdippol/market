@@ -1,0 +1,275 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+	<p:confirmDialog widgetVar="saveAllPromosConfirmDialog" global="true"
+					 showEffect="fade" hideEffect="fade" header="Avviso"
+					 message="Confermi la creazione delle promozioni?" closable="true"
+					 styleClass="muiDialog">
+		<p:commandButton value="No" type="button"
+						 styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+						 onclick="PF('saveAllPromosConfirmDialog').hide()" />
+		<p:commandButton value="Si" type="button"
+						 styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+						 oncomplete="saveAllPromosConfirmDialog.hide()"
+						 onclick="saveAllPromos();" />
+	</p:confirmDialog>
+	<p:confirmDialog widgetVar="savePromoConfirmDialog" global="true"
+					 showEffect="fade" hideEffect="fade" header="Avviso"
+					 message="Confermi la creazione della promozione?"
+					 icon="pi pi-exclamation-triangle" closable="false"
+					 styleClass="muiDialog">
+		<p:commandButton value="No" type="button"
+						 styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+						 onclick="PF('savePromoConfirmDialog').hide()" />
+		<p:commandButton value="Si" type="button"
+						 styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+						 oncomplete="savePromoConfirmDialog.hide()"
+						 onclick="savePromoSelected()" />
+	</p:confirmDialog>
+	<div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+		<div class="row">
+			<div class="col-12">
+				<p:commandButton value="Crea Promozione" style="margin-right:20px;" id="saveAllPromo" class="pf-btn-confirm" />
+			</div>
+			<div class="col-12">
+				<div id="k_grid_portletpromoGrid" class="k-portlet">
+					<p:panel id="expandable_db_grid_creaPromo" toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+						<f:facet name="header">
+							<p:outputLabel value="Crea Promozione" />
+						</f:facet>
+						<h:panelGroup layout="block" style="height: 60vh; width: 100%;" class="ag-theme-balham db_grid_creaPromo" pt:gridid="db_grid_creaPromo"> </h:panelGroup>
+						<f:facet name="actions">
+							<p:inputText autocomplete="off" id="some_grid_id_from_backend_quickfilter" placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText" onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_creaPromo',this.value)" />
+							<p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton" onclick="expandGrid('db_grid_creaPromo')" onerror="redirectToExpiredPage()" />
+							<p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped" onclick="onBtExport('db_grid_creaPromo','Crea Promozione',true)" onerror="redirectToExpiredPage()" />
+							<p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton" onclick="onBtExport('db_grid_creaPromo','Crea Promozione')" onerror="redirectToExpiredPage()" />
+						</f:facet>
+
+						<script type="text/javascript">
+
+
+
+							var gridParams={
+								gridCode:'db_grid_creaPromo',
+								gridTitle:'Crea Promo',
+								url_columnDefs: contextPath + '/resources/grid/columnDef/creaPromo' + addUrlParamContesto(#{muiContext}),
+								url_rowData:	contextPath + '/resources/grid/rowData/creaPromo'+addUrlParamContesto(#{muiContext}),
+							}
+							function checkBlankOpt(value_list){
+								if(value_list!=[]){
+									var blank_value_list = value_list.filter(function(option){return option.name==''});
+
+									if(blank_value_list.length>=1){
+										return true;
+									}
+								}
+								return false;
+							}
+							function getOneOptionFromComboBox(comboBoxValues){
+								if(comboBoxValues!== undefined &amp;&amp; comboBoxValues!=[]){
+									var notBlank_value_list = comboBoxValues.filter(function(option){return option.key!=''});
+									//conto i valori rimasti, se presente un solo valore lo assegno di default
+									if(notBlank_value_list.length==1){
+										return notBlank_value_list[0].key;
+									}
+								}
+								return false;
+							}
+							var cursor_obj={
+								rowIndex:null,
+								colId:null
+							}
+							function checkGruppoAutocomplete(event){
+								let rowIndex = getRowNodeId(event);
+								let rowNode = getGridOptionFromGridMap('db_grid_creaPromo').api.getRowNode(rowIndex);
+								if(rowIndex!=cursor_obj.rowIndex || event.column.colId!=cursor_obj.colId){
+									if(rowNode.data['gruppo'].value==''){
+										return true
+									}
+								}
+								return false
+							}
+							var groupMap=new Map()
+							var gridOptions={
+								suppressClipboardApi: true,
+								enableCellChangeFlash: false,
+								onCellFocused: function(event){},
+								onCellValueChanged: function(event) {
+									if(event.column.colId=='gruppo'){
+										groupMap.set(rowIndex,event.newValue)
+									}
+									if(event.column.colId=='dataInizio'){
+										//auto-complete della data fine basata sull'evento change della cella data inizio
+										var rowIndex = getRowNodeId(event);
+										var rowNode = getGridOptionFromGridMap('db_grid_creaPromo').api.getRowNode(rowIndex);
+										if(event.newValue!='' &amp;&amp; rowNode.data['dataFine'].value===''){
+											rowNode.data['dataFine'].value=event.newValue
+										}
+									}
+									var rowIndex = getRowNodeId(event);
+									var rowData=getRowData('db_grid_creaPromo');
+									$.ajax({
+										type: "POST",
+										url: contextPath+"/resources/grid/updateCreaPromo"+addUrlParamContesto(#{muiContext}),
+										contentType: "application/json",
+										data: JSON.stringify(rowData[rowIndex]),
+										async:true,
+										success: function (data) {
+											showAgGridLoadingOverlay('db_grid_creaPromo');
+											rowData[rowIndex] = data;
+											getGridOptionFromGridMap('db_grid_creaPromo').api.setRowData(rowData);
+										},
+										error:function(jqXHR, exception, thrownError){
+											ajaxErrorHandler(jqXHR, exception, thrownError,event)
+										}
+									});
+
+								},
+								processCellFromClipboard: function processCellFromClipboard(params) {
+									let field=params.column.colId
+									if(field==='descrizione'){
+										return params.value.toUpperCase();
+									} else{
+										return params.value
+									}
+								},
+								onPasteStart: function(params){
+									showAgGridLoadingOverlay('db_grid_creaPromo');
+								},
+								onPasteEnd: function(params){
+									$.ajax({
+										type: "GET",
+										url: contextPath + "/resources/grid/rowData/creaPromo"+addUrlParamContesto(#{muiContext}),
+										contentType: "application/json",
+										async:true,
+										success: function (data) {
+											getGridOptionFromGridMap('db_grid_creaPromo').api.setRowData(data.rowData);
+										},
+										error:ajaxErrorHandler
+									});
+								}
+							};
+							gridParams.customizeColumnDefs=[
+								{columnDefId:"descrizione",property:"cellEditorParams",value:{transform_getValue: 'uppercase'}},
+								{columnDefId:"dataInizio",property:"cellEditorParams",value:{optionDate_startDate: '+1d'}},
+								{columnDefId:"dataFine",property:"cellEditorParams",value:{optionDate_startDate: '+1d'}}
+							];
+							gridParams.additionColumnDefs=[{ headerName: '', width: 50, cellRenderer: 'CreaPromo_AddPromoRenderer',position:'prepend',suppressMovable:true }];
+							gridParams.gridOptions=gridOptions;
+							$( document ).ready(function() {
+								creaGriglia(gridParams);
+							});
+							$("#saveAllPromo").click(function() {
+								PF('saveAllPromosConfirmDialog').show();
+							});
+							//Action per btn crea tutte le promozioni
+							function saveAllPromos() {
+								PF('saveAllPromosConfirmDialog').hide();
+								showAgGridLoadingOverlay('db_grid_creaPromo')
+								var rowData=getRowData('db_grid_creaPromo');
+								$.ajax({
+									type: "POST",
+									url: contextPath+"/resources/grid/savePromoHeaders",
+									contentType: "application/json",
+									data: JSON.stringify(rowData),
+									success: function (data) {
+										if(data.isPromoSaved === true) {
+											addInfoGrowl([{name: 'title', value: 'Crea Promozioni'}, {
+												name: 'message',
+												value: 'Promozioni create'
+											}]);
+										} else {
+											addInfoGrowl([{name: 'title', value: 'Attenzione'}, {
+												name: 'message',
+												value: 'Non ci sono promozioni da salvare'
+											}]);
+										}
+										let promoSaved = [];
+										if (data?.promoSaved){
+											promoSaved = JSON.parse(data.promoSaved);
+										}
+										let promoError = [];
+										if ( data?.promoError){
+											promoError = JSON.parse(data.promoError);
+										}
+										rowData = promoSaved.concat(promoError);
+
+										getGridOptionFromGridMap('db_grid_creaPromo').api.setRowData(rowData);
+									},
+									error:function (jqXHR, exception, thrownError,event,callback_obj) {
+										ajaxErrorHandler(jqXHR, exception, thrownError, event, callback_obj);
+										let response = jqXHR.responseJSON;
+										if (response.promoSaved == undefined || response.promoSaved == '') {
+
+										} else {
+											// devo comunque ricaricare perche' ho almeno una promo salvata
+											$.ajax({
+												type: "GET",
+												url: contextPath + '/resources/grid/rowData/creaPromo' + addUrlParamContesto(#{muiContext}),
+												contentType: "application/json",
+												success: function (data) {
+													getGridOptionFromGridMap('db_grid_creaPromo').api.setRowData(data.rowData);
+												}
+											});
+										}
+									},
+									complete:function(){
+										hideAgGridLoadingOverlay('db_grid_creaPromo')
+									}
+								});
+							}
+							//Action per btn creazione promozione in riga
+							function savePromoSelected() {
+								PF('savePromoConfirmDialog').hide();
+								showAgGridLoadingOverlay('db_grid_creaPromo')
+								var rowData=getRowData('db_grid_creaPromo');
+								if(rowData[rowIndex].messaggio.value === "") {
+									$(this).removeAttr("disabled", "disabled");
+									$.ajax({
+										type: "POST",
+										url: contextPath+"/resources/grid/savePromoHeader",
+										contentType: "application/json",
+										data: JSON.stringify(rowData[rowIndex]),
+										success: function (data) {
+											rowData[rowIndex] = data;
+											getGridOptionFromGridMap('db_grid_creaPromo').api.setRowData(rowData);
+											addInfoGrowl([{name: 'title', value: 'Crea Promozione'}, {
+												name: 'message',
+												value: 'Promozione creata'
+											}]);
+											if ( #{templateView.currentView.landingPage} === 0 ){
+												console.log('no navigation set for crea promo');
+											} else {
+												linkButton_scheda([
+													{ name:'menuId', value: #{templateView.currentView.landingPage} },
+													{ name:'currentPromoId', value: data.idPromozione }
+												]);
+											}
+										},
+										error: function(jqXHR, exception, thrownError){
+											ajaxErrorHandler(jqXHR, exception, thrownError,event)
+											rowData[rowIndex].messaggio.value=jqXHR.responseJSON.messaggio.value;
+											getGridOptionFromGridMap('db_grid_creaPromo').api.setRowData(rowData);
+										},
+										complete:function(){
+											hideAgGridLoadingOverlay('db_grid_creaPromo')
+										}
+									});
+								} else {
+									$(this).attr("disabled", "disabled");
+								}
+							}
+						</script>
+						<p:remoteCommand name="linkButton_scheda" action="#{templateView.simulateMenuClick()}" />
+					</p:panel>
+				</div>
+			</div>
+		</div>
+	</div>
+</ui:composition>
+</html>

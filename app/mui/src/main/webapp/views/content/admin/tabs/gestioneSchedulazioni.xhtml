@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:tabView>
+        <p:ajax event="tabChange" update="@(.rolePanel) @(.menuPanel)"
+                listener="#{templateView.currentView.adminModeOverrideBean.onTabChange}"/>
+        <p:tab id="tab-sched_configurazione" title="Configurazione">
+            <ui:include src="./schedulazioni/configurazioneTab.xhtml" />
+        </p:tab>
+        <p:tab id="tab-sched_eccezioni" title="Eccezioni">
+            <ui:include src="./schedulazioni/eccezioniTab.xhtml" />
+        </p:tab>
+    </p:tabView>
+</ui:composition>
+</html>

@@ -1,0 +1,18 @@
+{
+	"@odata.context": "$metadata#Cellsets(Axes)/$entity",
+	"ID": "stVqWl4-AYA4AAAg",
+	"Axes": [
+		{
+			"Ordinal": 0,
+			"Cardinality": 385
+		},
+		{
+			"Ordinal": 1,
+			"Cardinality": 16
+		},
+		{
+			"Ordinal": 2,
+			"Cardinality": 1
+		}
+	]
+}

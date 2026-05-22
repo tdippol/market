@@ -1,0 +1,192 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <!-- Localizzazione datepicker -->
+
+    <!-- Dialog duplicazione / creazione set -->
+    <p:dialog id="manageSetDuplicationDialog" styleClass="manageSetDuplicationDialogClass"
+              closable="false" dynamic="true"
+              widgetVar="manageSetDuplicationDialog" modal="true" header="Creazione / Duplicazione Set Pianificazione"
+              width="600" height="auto" resizable="false">
+        <h:form id="manageSetDuplicationDialogForm">
+            <div class="row">
+                <div class="col-12">
+                    <div>
+                        <p:outputLabel for="dialogPianificazioneDescrizione" value="Descrizione"
+                                       style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:inputText id="dialogPianificazioneDescrizione"
+                                     required="true"
+                                     style="width: 100%;"
+                                     value="#{templateView.currentView.duplicaSetBackingBean.descrizione}" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="margin-top: 20px;">
+                    <div>
+                        <p:outputLabel for="dialogPianificazioneDataInizio" value="Data Inizio"
+                                       style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:datePicker id="dialogPianificazioneDataInizio"
+                                      locale="it"
+                                      pattern="dd-MM-yyyy"
+                                      mindate="#{templateView.currentView.duplicaSetBackingBean.minDate}"
+                                      value="#{templateView.currentView.duplicaSetBackingBean.data}" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 250px;">
+                <div class="col-6">
+                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                     oncomplete="PF('manageSetDuplicationDialog').hide()" />
+                </div>
+                <div class="col-6">
+                    <p:commandButton id="confirmBtn" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                     action="#{templateView.currentView.confirmBtnClickedDuplicaSet}"
+                                     oncomplete="PF('manageSetDuplicationDialog').hide()"
+                                     update="@(.updateableContent)"
+                                     widgetVar="btn_insertNewStatus" />
+                </div>
+            </div>
+        </h:form>
+    </p:dialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <h:form id="setConfigurazioneForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="setPianificazione" value="Set Pianificazione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="setPianificazione"
+                                                     value="#{templateView.currentView.idSetPianificazioneCorrente}" class="input-field"
+                                                     filter="true" filterMatchMode="contains"
+                                                     style="width: 100%;">
+                                        <p:ajax update="@(.updateableContent) @(.tabScheda) @(.linkPianificazione)" oncomplete="resetIdCurrentSet()"/>
+                                        <f:selectItem itemLabel="Seleziona set pianificazione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.setPianificazioni}" var="pi"
+                                                       itemLabel="#{pi.descrizione}" itemValue="#{pi.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataInizio" value="Data inizio" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizio" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%;" readonly="true"
+                                                 value="#{templateView.currentView.pianificazioneSelected != null ? templateView.currentView.pianificazioneSelected.dataInizio : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataFine" value="Data fine" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataFine" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%;" readonly="true"
+                                                 value="#{templateView.currentView.pianificazioneSelected != null ? templateView.currentView.pianificazioneSelected.dataFine : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel value="Stato" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <h:panelGroup class="dot"
+                                          style="height: 25px;
+                                                 width: 25px;
+                                                 background-color: #{templateView.currentView.pianificazioneSelectedStatoColor};
+                                                 border-radius: 50%;
+                                                 display: inline-block;">
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+
+                            <div class="col_12">
+                                <p:commandButton value="Crea Nuovo Set"
+                                                 styleClass="pf-btn-confirm" style="float: right;"
+                                                 action="#{templateView.currentView.initDialog(false)}"
+                                                 update="@(.manageSetDuplicationDialogClass)"
+                                                 oncomplete="PF('manageSetDuplicationDialog').show()">
+                                    <p:resetInput target="manageSetDuplicationDialog" />
+                                </p:commandButton>
+                            </div>
+
+                        </div>
+                        <script type="text/javascript">
+                            function updateConfigurationSetHeader() {
+                                refreshHeaderData();
+                            }
+                        </script>
+                        <style>
+                            .input-field {
+                                border-radius: 3px;
+                                border-color: gray;
+                            }
+
+                            .input-field-label {
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: black;
+                            }
+
+                            .ui-tabs {
+                                padding: 0;
+                            }
+
+                            .ui-tabs-nav {
+                                background: #ececec !important;
+                            }
+
+                            .ui-tabs-panels {
+                                border: 1px solid gray;
+                                background: white;
+                                border-radius: 3px;
+                            }
+
+                            .ui-tabs .ui-tabs-panel {
+                                padding-top: 0px;
+                                padding-bottom: 0px;
+                            }
+
+                            .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+                                border-top-left-radius: 5px;
+                                border-top-right-radius: 5px;
+                            }
+                        </style>
+                    </h:form>
+                    <p:tabView widgetVar="configurationSet_tabs" styleClass="tabScheda">
+                        <p:tab title="Configurazione Set Pianificazione" styleClass="tabScheda">
+                            <ui:include src="tabs/pianificazione.xhtml"></ui:include>
+                        </p:tab>
+                        <p:tab title="Operazioni" class="tabScheda">
+                            <ui:include src="tabs/configurazioneSetOperazioni.xhtml"></ui:include>
+                        </p:tab>
+                        <p:tab title="Gestione Campi" class="tabScheda">
+                            <ui:include src="tabs/gestioneColonne.xhtml"></ui:include>
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

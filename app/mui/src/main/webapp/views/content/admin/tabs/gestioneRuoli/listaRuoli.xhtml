@@ -1,0 +1,185 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+
+	<div class="k-content k-grid__item k-grid__item--fluid col-12"
+		 id="k_content">
+    <div class="row">
+    <div class="col-12">
+    <div id="k_grid_portletpromoGrid" class="k-portlet">
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="true">
+    <p:commandButton value="annulla" type="button" styleClass="ui-confirmdialog-no" />
+    <p:commandButton value="conferma" type="button" styleClass="ui-confirmdialog-yes" />
+</p:confirmDialog>
+    <p:dialog widgetVar="dlgAddRoleWV"
+              minimizable="true" maximizable="true"
+              width="800"
+              resizable="false"
+              draggable="true"
+              closable="true"
+              header="Aggiungi Ruolo" styleClass="pf-dialog">
+        <h:form styleClass="formAddDialog">
+        <p:panelGrid>
+        <p:row>
+            <p:column style="text-align: left;">
+                <p:outputLabel for="name" value="Nome * " />
+                <br/>
+                <p:inputText id="name" value="#{gestioneRuoli.selectedRole.name}" style="width: 100%;"  maxlength="50" />
+            </p:column>
+        </p:row>
+            <p:row>
+                <p:column style="text-align: left;">
+                    <p:outputLabel for="description" value="Descrizione" />
+                    <br/>
+                    <p:inputText id="description" value="#{gestioneRuoli.selectedRole.description}" style="width: 100%;"  maxlength="250"/>
+                </p:column>
+            </p:row>
+        <p:row>
+            <p:column style="text-align: right !important;">
+                <p:commandButton styleClass="pf-btn-confirm" value="conferma" actionListener="#{gestioneRuoli.addRole}"  update="@(.formAddDialog),@(.updateableContent)"/>
+                <p:commandButton styleClass="pf-btn-cancel" value="annulla" process="@this" oncomplete="PF('dlgAddRoleWV').hide();" />
+            </p:column>
+        </p:row>
+        </p:panelGrid>
+        </h:form>
+    </p:dialog>
+    
+    <p:dialog widgetVar="dlgLoadManualWV"
+              minimizable="true" maximizable="true"
+              width="800"
+              resizable="false"
+              draggable="true"
+              closable="true"
+              header="Carica Manuale" styleClass="pf-dialog">
+        <h:form styleClass="formAddDialog">
+            <p:fileUpload fileUploadListener="#{gestioneRuoli.handleFileUpload}"
+                          auto="true" mode="advanced" allowTypes="/(\.|\/)(pdf)$/"
+                          update="@(.updateableContent)"
+                          fileLimit="1"/>
+        </h:form>
+
+    </p:dialog>
+        
+    <p:dialog widgetVar="dlgDuplicaRuoloWV"
+              minimizable="true" maximizable="true"
+              width="800"
+              resizable="false"
+              draggable="true"
+              closable="true"
+              header="Duplica Ruolo" styleClass="pf-dialog">
+        <h:form styleClass="formDuplicaRuoloDialog">
+	        <p:panelGrid>
+	        <p:row>
+	            <p:column style="text-align: left;">
+	                <p:outputLabel for="name" value="Nome * " />
+	                <br/>
+	                <p:inputText id="name" value="#{gestioneRuoli.duplicateRole.name}" style="width: 100%;"  maxlength="50"/>
+	            </p:column>
+	        </p:row>
+	            <p:row>
+	                <p:column style="text-align: left;">
+	                    <p:outputLabel for="description" value="Descrizione * " />
+	                    <br/>
+	                    <p:inputText id="description" value="#{gestioneRuoli.duplicateRole.description}" style="width: 100%;"  maxlength="250" />
+	                </p:column>
+	            </p:row>
+	        <p:row>
+	            <p:column style="text-align: right !important;">
+	                <p:commandButton styleClass="pf-btn-confirm" value="conferma" actionListener="#{gestioneRuoli.copyRole}"  update="@(.formDuplicaRuoloDialog),@(.updateableContent)"/>
+	                <p:commandButton styleClass="pf-btn-cancel" value="annulla" process="@this" oncomplete="PF('dlgDuplicaRuoloWV').hide();" />
+	            </p:column>
+	        </p:row>
+	        </p:panelGrid>
+        </h:form>
+    </p:dialog>
+
+        <script>
+            function completeClick() {
+                document.body.click();
+            }
+        </script>
+        
+        <h:form>
+            <p:panel header="Lista Ruoli" toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+                <p:dataTable var="role" styleClass="pf-datatable" value="#{gestioneRuoli.rolesList}"
+                             editable="true"
+                             rows="20"
+                             paginator="true"
+                             resizableColumns="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="20,50,100">
+                    <p:ajax event="rowEdit" listener="#{gestioneRuoli.editRole}" />
+                    <p:column headerText="Nome" sortBy="#{role.name}" filterBy="#{role.name}" filterMatchMode="contains">
+                        <h:outputText value="#{role.name}"/>
+                    </p:column>
+                    <p:column headerText="Descrizione" sortBy="#{role.description}" filterBy="#{role.description}" filterMatchMode="contains">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{role.description}"/></f:facet>
+                            <f:facet name="input"> <p:inputText  value="#{role.description}" style="width: 100%;" maxlength="250"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Manuale" sortBy="#{role.helpFilename}" filterBy="#{role.helpFilename}" filterMatchMode="contains">
+                        <h:outputText value="#{role.helpFilename}"/>
+                    </p:column>
+                    <p:column headerText="Override Admin" width="100" style="text-align: center;">
+                        <p:cellEditor>
+                            <f:facet name="output"><p:selectBooleanCheckbox disabled="true" value="#{role.overrideAdmin}" /></f:facet>
+                            <f:facet name="input"><p:selectBooleanCheckbox value="#{role.overrideAdmin}" onchange="completeClick()" /></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:40px;padding:3px!important;">
+                        <p:rowEditor styleClass="rowEditorButton" />
+                    </p:column>
+                    <p:column style="width:40px;padding:3px!important;">
+                        <p:commandButton icon="fa fa-fw fa-clone" title="Duplica Ruolo" update="@(.formDuplicaRuoloDialog)" action="#{gestioneRuoli.openDuplicaRoleDialog}">
+                            <f:setPropertyActionListener value="#{role}" target="#{gestioneRuoli.selectedRole}" />
+                        </p:commandButton>
+                    </p:column>                                        
+                    <p:column style="width:40px;padding:3px!important;">
+                    	<p:commandButton icon="fa fa-fw fa-file-pdf-o" title="#{role.manualCaption}" update="@(.formAddDialog)" oncomplete="PF('dlgLoadManualWV').show();">
+                            <f:setPropertyActionListener value="#{role}" target="#{gestioneRuoli.selectedRole}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column style="width:40px;padding:3px!important;">
+                        <p:commandButton icon="ui-icon-trash" title="Elimina Ruolo" action="#{gestioneRuoli.deleteRole}" update="@(.updateableContent)">
+                            <p:confirm header="Conferma Necessaria" message="Confermi eliminazione Ruolo?" icon="ui-icon-alert" />
+                            <f:setPropertyActionListener value="#{role}" target="#{gestioneRuoli.selectedRole}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable var="role" id="rolesExp" style="display: none;" styleClass="pf-datatable" value="#{gestioneRuoli.rolesList}">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{role.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{role.name}"/>
+                    </p:column>
+                    <p:column headerText="Descrizione">
+                        <h:outputText value="#{role.description}"/>
+                    </p:column>
+                    <p:column headerText="Manuale">
+                        <h:outputText value="#{role.helpFilename}"/>
+                    </p:column>
+                    <p:column headerText="Override Admin">
+                        <h:outputText value="#{role.overrideAdmin}" />
+                    </p:column>
+                </p:dataTable>
+
+                <f:facet name="actions">
+                    <p:commandLink  action="#{gestioneRuoli.openAddRoleDialog}" styleClass="pnlGrid_Header plusButton" update="@(.formAddDialog)"/>
+                    <p:commandLink ajax="false" styleClass="pnlGrid_Header exportButton">
+                        <p:dataExporter type="xls" target="rolesExp" fileName="listaRuoli" />
+                    </p:commandLink>
+                </f:facet>
+            </p:panel>
+        </h:form>
+    </div>
+    </div>
+    </div>
+	</div>
+</ui:composition>
+</html>

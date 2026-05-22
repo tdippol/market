@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+	<div class="k-content k-grid__item k-grid__item--fluid col-12"
+		id="k_content">
+		<div class="row">
+			<div class="col-12">
+				<div id="k_grid_portletpromoGrid" class="k-portlet">
+					<h:panelGroup layout="block" styleClass="col_12 updateableContent">
+						<div class="ui-g-1">
+							<p:outputLabel value="Sblocco Configurazione:" for="block_set" />
+						</div>
+						<div class="ui-g-1">
+							<p:inputSwitch id="block_set" 
+								value="#{templateView.currentView.blockModeActive}" 
+								disabled="#{templateView.currentView.pianificazioneSelected == null}"
+								styleClass="updateableContent"
+								>
+								<p:ajax listener="#{templateView.currentView.lockButton}" partialSubmit="true"
+									update="@(.updateableContent)" />
+							</p:inputSwitch>
+						</div>
+						<div class="ui-g-10">
+							<p:spacer width="100" height="0" />
+						</div>
+					</h:panelGroup>
+					<div class="col_12">
+						<p:commandButton value="Duplica Set Corrente"
+							styleClass="pf-btn-confirm"
+							style="margin-right: 20px; border-radius: 5px;"
+							action="#{templateView.currentView.initDialog(true)}"
+							update="@(.manageSetDuplicationDialogClass)"
+							oncomplete="PF('manageSetDuplicationDialog').show()"
+							disabled="#{templateView.currentView.pianificazioneSelected == null}">
+							<p:resetInput target="manageSetDuplicationDialog" />
+						</p:commandButton>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ui:composition>
+</html>

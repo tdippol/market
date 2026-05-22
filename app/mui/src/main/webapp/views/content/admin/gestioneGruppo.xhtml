@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+		<div class="row">
+			<div class="col-12">
+				<div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+
+					<div class="row">
+						<div class="col-12">
+							<h:form id="exportGroups">
+                                <p:dialog widgetVar="statusDialog" modal="true" showHeader="false"
+                                          styleClass="globalSpinner" draggable="false" closable="false" resizable="false"
+                                          position="center" onShow="PF('statusDialog').initPosition()">
+                                    <div class="spinnerContainer">
+                                        <i class="loading-spin" style="width: 300px; height: 200px; line-height: 200px;" />
+                                        <br/>
+                                        <i >Esportazione in corso ...</i>
+                                    </div>
+                                </p:dialog>
+
+                                <p:commandButton icon="fa fa-fw fa-file-excel" value="Esporta" ajax="false"
+												 styleClass="pf-btn-confirm"
+												 style="float: right; margin-right: 20px; border-radius: 5px;"
+												 onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)"
+												 onerror="redirectToExpiredPage()">
+									<p:fileDownload value="#{gestioneGruppi.exportGroups}" />
+								</p:commandButton>
+							</h:form>
+						</div>
+					</div>
+
+					<p:remoteCommand name="reloadActiveTab" update="@(.tabsGestioneGruppi)"
+									 actionListener="#{gestioneGruppi.updateView}" />
+
+					<p:tabView dynamic="true" cache="false" widgetVar="gestioneGruppiTabs"
+							   styleClass="tabsGestioneGruppi"
+							   activeIndex="#{gestioneGruppi.activeTab}">
+						<p:ajax event="tabChange" listener="#{gestioneGruppi.tabChanged}" />
+						<p:tab title="Gruppi">
+							<ui:include src="tabs/gestioneGruppo/gruppi.xhtml" />
+						</p:tab>
+						<p:tab title="Utenti">
+							<ui:include src="tabs/gestioneGruppo/gruppiUtenti.xhtml" />
+						</p:tab>
+						<p:tab title="Canale">
+							<ui:include src="tabs/gestioneGruppo/gruppiCanale.xhtml" />
+						</p:tab>
+						<p:tab title="Compratore">
+							<ui:include src="tabs/gestioneGruppo/gruppiCompratore.xhtml" />
+						</p:tab>
+						<p:tab title="Reparto">
+							<ui:include src="tabs/gestioneGruppo/gruppiReparto.xhtml" />
+						</p:tab>
+						<p:tab title="GRM">
+							<ui:include src="tabs/gestioneGruppo/gruppiGrm.xhtml" />
+						</p:tab>
+						<p:tab title="TOTALI">
+							<ui:include src="tabs/gestioneGruppo/gruppiTotali.xhtml" />
+						</p:tab>
+						<p:tab title="ATTRIBUTI">
+							<ui:include src="tabs/gestioneGruppo/gruppiAttributi.xhtml" />
+						</p:tab>
+					</p:tabView>
+
+					<style>
+						.input-field {
+							border-radius: 3px;
+							border-color: gray;
+						}
+						.input-field-label {
+							font-size: 14px;
+							font-weight: 500;
+							color: black;
+						}
+						.ui-tabs {
+							padding: 0;
+						}
+						.ui-tabs-nav {
+							background: #ececec !important;
+						}
+						.ui-tabs-panels {
+							border: 1px solid gray;
+							background: white;
+							border-radius: 3px;
+						}
+						.ui-tabs .ui-tabs-panel {
+							padding-top: 0px;
+							padding-bottom: 0px;
+						}
+						.ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+							border-top-left-radius: 5px;
+							border-top-right-radius: 5px;
+						}
+					</style>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			reloadActiveTab();
+		});
+
+		function selectCurrentRow(index) {
+			var table = PF('gruppiTable');
+			table.unselectAllRows();
+			table.selectRow(index, false);
+		}
+
+		function showStatus() {
+			PF('statusDialog').show();
+		}
+
+		function hideStatus() {
+			PF('statusDialog').hide();
+		}
+	</script>
+</ui:composition>
+</html>

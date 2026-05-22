@@ -1,0 +1,354 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <style>
+        .footer-row {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            padding: 15px !important;
+            margin: 0 !important;
+        }
+    </style>
+    <p:confirmDialog id="deleteMacrospazioConfirmDialog" widgetVar="deleteMacrospazioConfirmDialog"
+                     modal="true" showEffect="fade"
+                     header="Attenzione !"
+                     message="#{templateView.currentView.deleteMessage}"
+                     hideEffect="fade" resizable="false" closable="false"
+                     styleClass="macrospazioDeleteConfirm">
+        <p:commandButton value="Si" styleClass="pf-btn-confirm"
+                         action="#{templateView.currentView.confirmDeleteMacrospazio}"
+                         oncomplete="reloadMacrospaziGrid(); updateMacrospaziDropdown(); PF('deleteMacrospazioConfirmDialog').hide(); "
+                         update="@(.eventiContent)" />
+        <p:commandButton value="No" styleClass="pf-btn-cancel"
+                         action="#{templateView.currentView.abortDeleteMacrospazio}"
+                         onclick="PF('deleteMacrospazioConfirmDialog').hide();" type="button" />
+    </p:confirmDialog>
+
+    <p:confirmDialog id="deleteEventoConfirmDialog" widgetVar="deleteEventoConfirmDialog"
+                     modal="true" showEffect="fade"
+                     header="Attenzione !"
+                     message="#{templateView.currentView.deleteEventoMessage}"
+                     hideEffect="fade" resizable="false" closable="false" styleClass="macrospazioEventoDeleteConfirm">
+        <p:commandButton value="Si" styleClass="pf-btn-confirm"
+                         action="#{templateView.currentView.confirmDeleteEvento}"
+                         oncomplete=" reloadEventiGrid(); PF('deleteEventoConfirmDialog').hide(); "
+                         update="@(.db_grid_eventi) @(.db_grid_macrospazi)" />
+        <p:commandButton value="No" styleClass="pf-btn-cancel"
+                         action="#{templateView.currentView.abortDeleteEvento}"
+                         onclick="PF('deleteEventoConfirmDialog').hide();" type="button" />
+    </p:confirmDialog>
+
+    <p:confirmDialog id="confirmEventiRetail" widgetVar="confirmEventiRetail"
+                     modal="true" showEffect="fade"
+                     header="Conferma necessaria"
+                     message="Sei sicuro di voler confermare le operazioni?"
+                     hideEffect="fade" resizable="false" closable="false" styleClass="macrospazioEventoDeleteConfirm">
+        <p:commandButton value="Si" styleClass="pf-btn-confirm"
+                         action="#{templateView.currentView.confirmMacrospaziClicked}"
+                         oncomplete="PF('confirmEventiRetail').hide();"
+                         update="@(.confirmRetailMediaEvents)"/>
+        <p:commandButton value="No" styleClass="pf-btn-cancel"
+                         onclick="PF('confirmEventiRetail').hide();" type="button" />
+    </p:confirmDialog>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;" >
+                    <div class="row">
+                        <div class="col-12">
+                            <p:commandButton title="Conferma"
+                                             style="padding: 5px; margin-right: 10px; border-radius: 5px; float: right;"
+                                             styleClass="pf-btn-confirm confirmRetailMediaEvents"
+                                             update="@this"
+                                             onclick="PF('confirmEventiRetail').show()" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p:tabView
+                                    widgetVar="macrospazi_tabs"
+                                    styleClass="tabScheda"
+                                    activeIndex="#{templateView.currentView.activeTab}">
+                                <p:ajax event="tabChange" listener="#{templateView.currentView.onTabChange}"
+                                        update="@(.selectedMacrospazioEventi) @(.addEventiButton) @(.eventiContent)"/>
+                                <p:tab title="#{templateView.currentView.getTabTile(0)}">
+                                    <ui:include src="macrospazioDialog.xhtml"/>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p:commandButton title="Aggiungi macrospazio"
+                                                             style="padding: 5px;" class="pf-btn-confirm"
+                                                             oncomplete="PF('macrospaziDialog').show()"
+                                                             update="@(.macrospazioDialogClass) @(.addMacrospazioBtn)"
+                                                             action="#{templateView.currentView.addMacrospazioClicked}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="k-portlet" id="k_grid_portlet_macrospazi">
+                                                <p:panel id="expandable_db_grid_macrospazi" toggleable="true" toggleSpeed="500"
+                                                         closeSpeed="500"
+                                                         styleClass="pnlGrid_Header updateableContent db_grid_macrospazi">
+                                                    <f:facet name="header">
+                                                        <p:outputLabel value="Anagrafica Macrospazi Retail"/>
+                                                    </f:facet>
+                                                    <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                                                  class="ag-theme-balham db_grid_macrospazi"
+                                                                  pt:gridid="db_grid_macrospazi"/>
+                                                    <f:facet name="actions">
+                                                        <p:inputText autocomplete="off" id="grid_macrospazi_quickfilter"
+                                                                     placeholder="Filtra..."
+                                                                     styleClass="pnlGrid_Header filterInputText"
+                                                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_macrospazi', this.value)"/>
+                                                        <p:commandLink title="Espandi Griglia"
+                                                                       styleClass="pnlGrid_Header expandButton"
+                                                                       onclick="expandGrid('db_grid_macrospazi')"
+                                                                       onerror="redirectToExpiredPage()"/>
+                                                        <p:commandLink title="Esporta con raggruppamenti"
+                                                                       styleClass="pnlGrid_Header exportButtonGrouped"
+                                                                       onclick="onBtExport('db_grid_macrospazi', 'Anagrafica Macrospazi', true)"
+                                                                       onerror="redirectToExpiredPage()"/>
+                                                        <p:commandLink title="Esporta Excel"
+                                                                       styleClass="pnlGrid_Header exportButton"
+                                                                       onclick="onBtExport('db_grid_macrospazi', 'Anagrafica Macrospazi')"
+                                                                       onerror="redirectToExpiredPage()"/>
+                                                    </f:facet>
+
+                                                    <script type="text/javascript">
+                                                        var gridOptionsMacrospazi = {
+                                                            gridCode: 'db_grid_macrospazi',
+                                                            gridTitle: 'Anagrafica Macrospazi',
+                                                            url_columnDefs: contextPath + '/resources/macrospazimedia/columnDef' + addUrlParamContesto(#{muiContext}),
+                                                        url_rowData: contextPath + '/resources/macrospazimedia/rowData'+ addUrlParamContesto(#{muiContext}),
+                                                        url_customSort: contextPath + '/resources/grid/sorting/db_grid_macrospazi',
+                                                            gridOptions:{},
+                                                        additionColumnDefs: [
+                                                            {
+                                                                headerName: '',
+                                                                width: 75,
+                                                                cellRenderer: 'MacrospaziRetail_BtnRenderer',
+                                                                position: 'prepend',
+                                                                pinned: 'left'
+                                                            }
+                                                        ]
+                                                        };
+
+                                                        function openMacrospaziEditDialog(row) {
+                                                            var macrospazioId = row.id.value;
+                                                            editMacrospazio([{name: 'macrospazioId', value: macrospazioId}]);
+                                                        }
+
+                                                        function openMacrospaziDeleteDialog(row) {
+                                                            var macrospazioId = row.id.value;
+                                                            deleteMacrospazio([{name: 'macrospazioId', value: macrospazioId}]);
+                                                        }
+
+                                                        // Reload grid on-demand
+                                                        function reloadMacrospaziGrid() {
+                                                            var opts = getGridOptionFromGridMap('db_grid_macrospazi');
+                                                            // If custom sorting not defined, use current sorting
+                                                            // Destroy grid
+                                                            opts.api.destroy();
+                                                            // Apply saved sort state adding options to gridParams customization
+                                                            // only if custom sorting not defined
+                                                            if (gridOptionsMacrospazi.url_customSort == undefined) {
+                                                                sortState.forEach(s => {
+                                                                    gridOptionsMacrospazi.customizeColumnDefs.push(
+                                                                        {columnDefId: s.colId, property: 'sort', value: s.sort}
+                                                                    );
+                                                                    gridOptionsMacrospazi.customizeColumnDefs.push(
+                                                                        {columnDefId: s.colId, property: 'sortIndex', value: s.sortIndex}
+                                                                    );
+                                                                });
+                                                            }
+                                                            // Recreate grid
+                                                            creaGriglia(gridOptionsMacrospazi);
+                                                        }
+
+                                                        $(document).ready(function () {
+                                                            creaGriglia(gridOptionsMacrospazi);
+                                                        });
+                                                    </script>
+                                                </p:panel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:tab>
+                                <p:tab title="#{templateView.currentView.getTabTile(1)}">
+                                    <ui:include src="eventoDialog.xhtml"/>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p:commandButton title="Aggiungi evento"
+                                                             class="pf-btn-confirm addEventiButton"
+                                                             style="padding: 5px;"
+                                                             actionListener="#{templateView.currentView.addEventoClicked}"
+                                                             oncomplete="PF('macrospazioEventoDialog').show()"
+                                                             update="@(.updateableEventoContent) @(.fornitore-deleted)"
+                                                             disabled="#{templateView.currentView.selectedMacrospazio == null}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="k-portlet" id="k_grid_portlet_eventi">
+                                                <p:panel id="expandable_db_grid_eventi" toggleable="true" toggleSpeed="500"
+                                                         closeSpeed="500"
+                                                         styleClass="pnlGrid_Header updateableContent eventiContent">
+                                                    <f:facet name="header" styleClass="eventiHeader">
+                                                        <p:outputLabel value="Eventi Retail"/>
+                                                        <p:spacer width="50" height="20"/>
+                                                        <p:outputLabel value="Selezione Macrospazio"
+                                                                       for="select_macrospazio_eventi"
+                                                                       style="margin-top: 5px;margin-bottom: 0; vertical-align: middle; font-size: 13px;"/>
+                                                        <p:selectOneMenu
+                                                                id="select_macrospazio_eventi"
+                                                                value="#{templateView.currentView.dummyLong}"
+                                                                filter="true" filterMatchMode="contains"
+                                                                style="width: 300px; margin-left: 10px; font-size: 13px;"
+                                                                styleClass="selectedMacrospazioEventi"
+                                                                onchange="macrospazioSelected = this.value; macrospazioChanged([{name: 'macrospazio', value: this.value}]);"
+                                                                update="@(.addEventiButton)">
+                                                            <f:selectItem itemLabel="Mostra tutti" itemValue="-1"/>
+                                                            <f:selectItems value="#{templateView.currentView.macrospazi}"
+                                                                           var="macrospazio"
+                                                                           itemValue="#{macrospazio.id}"
+                                                                           itemLabel="#{macrospazio.codice} - #{macrospazio.descrizione}"/>
+                                                        </p:selectOneMenu>
+                                                    </f:facet>
+                                                    <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                                                  class="ag-theme-balham db_grid_eventi"
+                                                                  pt:gridid="db_grid_eventi"/>
+                                                    <f:facet name="actions">
+                                                        <p:inputText autocomplete="off" id="grid_eventi_quickfilter"
+                                                                     placeholder="Filtra..."
+                                                                     styleClass="pnlGrid_Header filterInputText"
+                                                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_eventi', this.value)"/>
+                                                        <p:commandLink title="Espandi Griglia"
+                                                                       styleClass="pnlGrid_Header expandButton"
+                                                                       onclick="expandGrid('db_grid_eventi')"
+                                                                       onerror="redirectToExpiredPage()"/>
+                                                        <p:commandLink title="Esporta con raggruppamenti"
+                                                                       styleClass="pnlGrid_Header exportButtonGrouped"
+                                                                       onclick="onBtExport('db_grid_eventi', 'Eventi Retail', true)"
+                                                                       onerror="redirectToExpiredPage()"/>
+                                                        <p:commandLink title="Esporta Excel"
+                                                                       styleClass="pnlGrid_Header exportButton"
+                                                                       onclick="onBtExport('db_grid_eventi', 'Eventi Retail')"
+                                                                       onerror="redirectToExpiredPage()"/>
+                                                    </f:facet>
+
+                                                    <script type="text/javascript">
+                                                        var macrospazioSelected = '#{templateView.currentView.selectedMacrospazio.id}';
+                                                        if ( macrospazioSelected == null || macrospazioSelected == '' ) {
+                                                            macrospazioSelected = -1;
+                                                        }
+                                                        var gridOptionsEventi = {
+                                                            gridCode: 'db_grid_eventi',
+                                                            gridTitle: 'Eventi Retail',
+                                                            url_columnDefs: contextPath + '/resources/eventimedia/columnDef' + addUrlParamContesto(#{muiContext}),
+                                                            url_rowData: contextPath + '/resources/eventimedia/' + macrospazioSelected + '/rowData'+ addUrlParamContesto(#{muiContext}),
+                                                            url_customSort: contextPath + '/resources/grid/sorting/db_grid_eventi',
+                                                            gridOptions: {},
+                                                            additionColumnDefs: [
+                                                                {
+                                                                    headerName: '',
+                                                                    width: 75,
+                                                                    cellRenderer: 'EventiRetail_BtnRenderer',
+                                                                    position: 'prepend',
+                                                                    pinned: 'left'
+                                                                }
+                                                            ]
+                                                        };
+
+                                                        $(document).ready(function () {
+                                                            creaGriglia(gridOptionsEventi);
+                                                        });
+
+                                                        function openEventiDeleteDialog(row){
+                                                            var macrospazioId = row.id.value;
+                                                            deleteEvento([{name: 'eventoId', value: macrospazioId}]);
+                                                        }
+
+                                                        function openEventiEditDialog(row){
+                                                            editEvento([{name: 'eventoId', value: row.id.value}]);
+                                                        }
+
+                                                        // Reload grid on-demand
+                                                        function reloadEventiGrid() {
+                                                            if (macrospazioSelected) {
+                                                                var opts = getGridOptionFromGridMap('db_grid_eventi');
+                                                                // If custom sorting not defined, use current sorting
+                                                                // Destroy grid
+                                                                if (opts) {
+                                                                    opts.api.destroy();
+                                                                }
+                                                                // Apply saved sort state adding options to gridParams customization
+                                                                // only if custom sorting not defined
+                                                                gridOptionsEventi.url_rowData = contextPath + '/resources/eventimedia/' + macrospazioSelected + '/rowData' + addUrlParamContesto(#{muiContext});
+                                                                if (gridOptionsEventi.url_customSort == undefined) {
+                                                                    sortState.forEach(s => {
+                                                                        gridOptionsEventi.customizeColumnDefs.push(
+                                                                            {columnDefId: s.colId, property: 'sort', value: s.sort}
+                                                                        );
+                                                                        gridOptionsEventi.customizeColumnDefs.push(
+                                                                            {columnDefId: s.colId, property: 'sortIndex', value: s.sortIndex}
+                                                                        );
+                                                                    });
+                                                                }
+                                                                // Recreate grid
+                                                                creaGriglia(gridOptionsEventi);
+                                                            }
+                                                        }
+                                                    </script>
+                                                </p:panel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:tab>
+                            </p:tabView>
+                            <p:outputLabel value="#{templateView.currentView.selectedMacrospazioId}"
+                                           styleClass="selectedMacrospazioId" style="visibility: hidden;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p:remoteCommand name="editMacrospazio"
+                     action="#{templateView.currentView.editMacrospazioClicked}"
+                     update="@(.addMacrospazioBtn) @(.macrospazioDialogClass)"
+                     process="@this"
+                     oncomplete="PF('macrospaziDialog').show()"/>
+
+    <p:remoteCommand name="deleteMacrospazio"
+                     action="#{templateView.currentView.deleteMacrospazioClicked}"
+                     update="@(.macrospazioDeleteConfirm)"
+                     process="@this"
+                     oncomplete="PF('deleteMacrospazioConfirmDialog').show()"/>
+
+    <p:remoteCommand name="macrospazioChanged"
+                     actionListener="#{templateView.currentView.setSelectedMacrospazio}"
+                     update="@(.addEventiButton)"
+                     process="@this"/>
+
+    <p:remoteCommand name="editEvento"
+                     action="#{templateView.currentView.editEventoClicked}"
+                     update="@(.updateableEventoContent) @(.fornitore-deleted) @(.eventoRetailDialogClass)"
+                     process="@this"
+                     oncomplete="PF('macrospazioEventoDialog').show()"/>
+
+    <p:remoteCommand name="deleteEvento"
+                     action="#{templateView.currentView.deleteEventoClicked}"
+                     update="@(.macrospazioEventoDeleteConfirm)"
+                     process="@this"
+                     oncomplete="PF('deleteEventoConfirmDialog').show()"/>
+    <p:remoteCommand name="updateMacrospaziDropdown" update="@(.selectedMacrospazioEventi)"/>
+</ui:composition>
+
+</html>

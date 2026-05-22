@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+<ui:composition>
+    <ui:include src="creaObiettivoDialog.xhtml" />
+
+    <p:confirmDialog widgetVar="deleteObiettivoConfirmDialog" global="true" showEffect="fade" hideEffect="fade"
+                     header="Avviso" message="Confermi la cancellazione dell'obiettivo ?" closable="false"
+                     styleClass="muiDialog">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                         onclick="PF('deleteObiettivoConfirmDialog').hide()"/>
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                         onclick="deleteObiettivo();" />
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_obiettivi" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_obiettivi updateableObiettivo">
+                        <f:facet name="header">
+                            <p:commandButton title="Crea Obiettivo" value="+"
+                                             style="margin: 0 10px 0 0; border-radius: 5px;"
+                                             action="#{templateView.currentView.initCreaObiettivoDialog}"
+                                             oncomplete="PF('creaObiettivoDialog').show()"
+                                             update="@(.creaObiettivoDialogForm)"
+                                             id="creaObiettivoBtn"
+                                             styleClass="pf-btn-confirm">
+                                <p:resetInput target="creaObiettivoDialog" />
+                            </p:commandButton>
+                            <p:outputLabel value="Obiettivi Premio" />
+                        </f:facet>
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      styleClass="ag-theme-balham obiettiviPremio"
+                                      pt:gridid="db_promozione_obiettivi">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_promozione_obiettivi_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText planningFilter"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_promozione_obiettivi', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_promozione_obiettivi')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_promozione_obiettivi', 'Obiettivi Premio', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_promozione_obiettivi', 'Obiettivi Premio', false)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Ricarica Griglia" styleClass="pnlGrid_Header reloadButton"
+                                           onclick="reloadGrid()" onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+                            var idObiettivo = "";
+
+                            function deleteObiettivo() {
+                                if (idObiettivo === "") {
+                                    addErrorGrowl([
+                                        { name: 'title', value: 'Errore eliminazione Obiettivo' },
+                                        { name: 'message', value: 'Obiettivo non selezionato' }
+                                    ]);
+                                } else {
+                                    $.ajax({
+                                        type: "DELETE",
+                                        url: contextPath + '/resources/obiettivi/' + idObiettivo,
+                                        contentType: "application/json",
+                                        success: function (data) {
+                                            addInfoGrowl([
+                                                { name: 'title', value: 'Eliminazione Obiettivo' },
+                                                { name: 'message', value: 'Obiettivo eliminato con successo'}
+                                            ]);
+                                            getGridOptionFromGridMap('db_promozione_obiettivi').api.setRowData(data.rowData);
+                                        },
+                                        error: ajaxErrorHandler,
+                                        complete: function (jqXHR, exception) {
+                                            idObiettivo = "";
+                                            PF('deleteObiettivoConfirmDialog').hide();
+                                        }
+                                    });
+                                }
+                            }
+
+                            function saveCellValue(event) {
+                                let id = event.data.id.value;
+                                let fieldCode = event.column.colDef.field;
+                                let value = event.data[fieldCode].value;
+                                if (id &amp;&amp; fieldCode &amp;&amp; value !== null &amp;&amp; value !== undefined) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: contextPath + '/resources/obiettivi/' + id + addUrlParamContesto(#{muiContext}),
+                                        contentType: "application/json",
+                                        data: JSON.stringify({"field": fieldCode, "value": value}),
+                                        success: function(data, textStatus, jqXHR) {
+                                            let rowNode = event.api.getRowNode(event.node.id);
+                                            if (rowNode &amp;&amp; data.rowData &amp;&amp; data.rowData.length > 0) {
+                                                rowNode.setData(data.rowData[0]);
+                                            }
+                                            addInfoGrowl([
+                                                {name: 'title', value: "Obiettivo"},
+                                                {name: 'message', value: "Obiettivo modificato con successo!"}
+                                            ]);
+                                        },
+                                        error: function(jqXHR, exception, thrownError) {
+                                            ajaxErrorHandler(jqXHR, exception, thrownError, event);
+                                        }
+                                    });
+                                } else {
+                                    addErrorGrowl([
+                                        {name: "title", value: "Errore"},
+                                        {name: "message", value: "Modifica non riuscita!"}
+                                    ]);
+                                }
+                            }
+
+                            var gridParamsObiettivi = {
+                                gridTabPosition: 0,
+                                gridCode: 'db_promozione_obiettivi',
+                                gridTitle: 'Obiettivi Promo',
+                                url_columnDefs: contextPath + '/resources/obiettivi/columnDef/'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/obiettivi/rowData/'
+                                    + #{ templateView.currentView.idPromozioneCorrente != null ? templateView.currentView.idPromozioneCorrente : 'null'}
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_promozione_obiettivi',
+                                gridOptions: {
+                                    onSortChanged: function(event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_promozione_obiettivi');
+                                    },
+                                    onCellValueChanged: function(event) {
+                                        saveCellValue(event);
+                                    }
+                                }
+                            }
+                            $(document).ready(function() {
+                                if (currentActiveTab === gridParamsObiettivi.gridTabPosition) {
+                                    creaGriglia(gridParamsObiettivi);
+                                }
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

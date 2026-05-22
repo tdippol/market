@@ -1,0 +1,172 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="updateComplementariPromoDialog"
+		  widgetVar="updateComplementariPromoDialog"
+		  modal="true"
+		  closable="false"
+		  header="Upload dati complementari"
+		  width="850px"
+		  height="450px"
+		  resizable="false"
+		  styleClass="updateableContentPianificazioneDialog disable-scroll">
+	<h:form id="addComplementariForm" >
+		<p:panel id="expandable_pianificazioe_dialog_update_complementari"
+				 toggleable="true" toggleSpeed="500" closeSpeed="500"
+				 styleClass="pnlGrid_Header updateableContent expandable_pianificazioe_dialog_update_complementari">
+			<h:inputText value="noop" style="visibility: hidden;" />
+			<div class="row">
+				<div class="col-12">
+					<div>
+						<h:outputLabel for="uploadComplementariTitle" value="Promozione" />
+					</div>
+					<div>
+						<h:inputText id="uploadComplementariTitle" disabled="true" readonly="true" style="width: 100%;"
+									 value="#{templateView.currentView.uploadComplementari.title}" />
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-6">
+					<div>
+						<h:outputLabel for="uploadComplementariTipoElemento" value="Tipo Elemento" />
+					</div>
+					<div>
+						<h:inputText id="uploadComplementariTipoElemento" disabled="true" readonly="true" style="width: 100%;"
+									 value="#{templateView.currentView.uploadComplementari.tipoElemento}" />
+					</div>
+				</div>
+				<div class="col-6">
+					<div>
+						<h:outputLabel for="uploadComplementariMeccanica" value="Meccanica" />
+					</div>
+					<div>
+						<h:inputText id="uploadComplementariMeccanica" disabled="true" readonly="true" style="width: 100%;"
+									 value="#{templateView.currentView.uploadComplementari.codiceMeccanica}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-12">
+					<div>
+						<h:outputLabel for="dialogUploadFile" value="File da caricare" />
+					</div>
+					<div class="ui-inputgroup">
+						<p:inputText id="dialogUploadFile" disabled="true" readonly="true" style="width: 100%;"
+									 value="#{templateView.currentView.uploadComplementari.uploadedFileName}" />
+						<p:commandButton id="selectFile" icon="fa fa-fw fa-upload" value="Seleziona"
+										 onclick="PF('fileUploadWidget').chooseButton.click()" />
+						<p:commandButton id="removeFile" icon="fas fa-fw fa-trash" value="Rimuovi"
+										 disabled="#{templateView.currentView.uploadComplementari.uploadedFile == null}"
+										 action="#{templateView.currentView.uploadComplementari.removeFile}"
+										 update="@(.addComplementariForm) @(.ui-confirmdialog-yes) @form" />
+					</div>
+				</div>
+				<div class="col-12">
+					<p:panel visible="false" id="fileUploadPanel" widgetVar="fileUploadPanel">
+						<p:fileUpload widgetVar="fileUploadWidget" label="Seleziona file"
+									  invalidFileMessage="Formato del file non valido"
+									  dragDropSupport="false" auto="true" mode="advanced" allowTypes="/(\.|\/)(txt)$/"
+									  fileUploadListener="#{templateView.currentView.uploadComplementari.handleUpload}"
+									  update="@(.ui-confirmdialog-yes) @form" immediate="true" fileLimit="1"
+									  disabled="#{templateView.currentView.uploadComplementari.validDates eq false}" />
+					</p:panel>
+				</div>
+			</div>
+
+			<h:panelGroup layout="block" rendered="#{not templateView.currentView.uploadComplementari.legacyNamingConvention}">
+				<div class="row" style="margin-top: 20px;">
+					<div class="col-6">
+						<div>
+							<h:outputLabel for="dialogPromozioneDataInizio" value="Data Inizio Pubblicazione" />
+						</div>
+						<div>
+							<p:datePicker id="dialogPromozioneDataInizio" inputStyle="width: 100%;"
+										  value="#{templateView.currentView.uploadComplementari.dialogDataInizioPubblicazione}"
+										  showOn="button" locale="it" pattern="dd-MM-yyyy"
+										  mindate="#{templateView.currentView.uploadComplementari.minDateInizio}"
+										  maxdate="#{templateView.currentView.uploadComplementari.maxDateInizio}">
+								<p:ajax event="dateSelect"
+										listener="#{templateView.currentView.uploadComplementari.promozioneDataInizioChanged}"
+										update="@(.addComplementariForm) @(.ui-confirmdialog-yes) @form" />
+								<p:ajax event="change"
+										listener="#{templateView.currentView.uploadComplementari.promozioneDataInizioChanged}"
+										update="@(.addComplementariForm) @(.ui-confirmdialog-yes) @form" />
+							</p:datePicker>
+						</div>
+					</div>
+					<div class="col-6">
+						<div>
+							<h:outputLabel for="dialogPromozioneDataFine" value="Data Fine Pubblicazione" />
+						</div>
+						<div>
+							<p:datePicker id="dialogPromozioneDataFine" inputStyle="width: 100%;"
+										  value="#{templateView.currentView.uploadComplementari.dialogDataFinePubblicazione}"
+										  showOn="button" locale="it" pattern="dd-MM-yyyy"
+										  maxdate="#{templateView.currentView.uploadComplementari.maxDateFine}"
+										  mindate="#{templateView.currentView.uploadComplementari.minDateFine}">
+								<p:ajax event="dateSelect"
+										listener="#{templateView.currentView.uploadComplementari.promozioneDataFineChanged}"
+										update="@(.addComplementariForm) @(.ui-confirmdialog-yes) @form" />
+								<p:ajax event="change"
+										listener="#{templateView.currentView.uploadComplementari.promozioneDataFineChanged}"
+										update="@(.addComplementariForm) @(.ui-confirmdialog-yes) @form" />
+							</p:datePicker>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 20px;">
+					<div class="col-12">
+						<div>
+							<h:outputLabel for="descrizionePianificazione" value="Descrizione" />
+						</div>
+						<div>
+							<p:inputText id="descrizionePianificazione" maxlength="20" style="width: 100%;"
+										 value="#{templateView.currentView.uploadComplementari.descrizione}">
+								<p:ajax update="@(.addComplementariForm) @(.ui-confirmdialog-yes)" />
+							</p:inputText>
+						</div>
+					</div>
+				</div>
+			</h:panelGroup>
+
+			<div id="messagesDiv">
+				<p:growl id="messagesGrowl" widgetVar="messagesGrowl" showDetail="true" />
+			</div>
+
+			<p:focus for="descrizionePianificazione" />
+
+			<script type="text/javascript">
+				$(document).ready(function () {
+					PF('fileUploadWidget').messageContainer.appendTo($('#messagesDiv'));
+				});
+			</script>
+		</p:panel>
+	</h:form>
+
+	<f:facet name="footer">
+		<div class="row">
+			<div class="col-6">
+				<p:commandButton value="Annulla" style="float: left;"
+								 styleClass="ui-confirmdialog-no"
+								 actionListener="#{templateView.currentView.uploadComplementari.clear}"
+								 oncomplete="PF('updateComplementariPromoDialog').hide()"/>
+			</div>
+			<div class="col-6">
+				<p:commandButton id="updateComplementariPromoDialogConfirmBtn" value="Conferma"
+								 styleClass="ui-confirmdialog-yes"
+								 oncomplete="PF('updateComplementariPromoDialog').hide()"
+								 disabled="#{templateView.currentView.uploadComplementari.uploadedFile eq null
+								 	or templateView.currentView.uploadComplementari.dialogDataInizioPubblicazione eq null
+								 	or templateView.currentView.uploadComplementari.dialogDataFinePubblicazione eq null }"
+								 action="#{templateView.currentView.uploadComplementari.upload}"
+								 update="@(.updateableContent)"/>
+			</div>
+		</div>
+	</f:facet>
+</p:dialog>
+
+</html>

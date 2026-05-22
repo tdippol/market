@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+	<div id="k_header_mobile"
+		class="k-header-mobile  k-header-mobile--fixed ">
+		<p:outputPanel layout="block" styleClass="k-header-mobile__logo" style="background-color: #2f2e38;">
+			<p:commandLink style="border: none!important;"
+				actionListener="#{templateView.goToHomepage}"
+				update="@(.updateContent)">
+				<p:graphicImage styleClass="refreshImage" cache="false"
+					style="width:88px;" value="#{imageProducer.image}">
+						<f:param name="mui_image_name" value="logo-top.png" />
+				</p:graphicImage>
+			</p:commandLink>
+			
+		</p:outputPanel>
+		<p:outputPanel layout="block" styleClass="k-header-mobile__toolbar">
+			<h:form>
+				<p:commandLink
+					styleClass="mui-menu-open-button k-header-mobile__toolbar-toggler"
+					oncomplete="PF('mui-menu').show(); removeOverlay()">
+					<span></span>
+				</p:commandLink>
+				<p:sidebar widgetVar="mui-menu" position="right" baseZIndex="10000" id="mobile-sidebar">
+					<p:panelMenu style="width:275px; z-index:99999" model="#{templateView.mainMenu}"
+						styleClass="mui-menu"  />
+				</p:sidebar>
+			</h:form>
+			<p:commandLink style="margin-left: 10px;margin-bottom: 5px;"
+				styleClass="k-header__topbar-item k-header__topbar-item--user"
+				oncomplete="PF('mui-userTab').show()">
+				<div class="k-header__topbar-wrapper">
+					<h:graphicImage library="images" name="users/default.jpg" />
+				</div>
+			</p:commandLink>
+		</p:outputPanel>
+	</div>
+	
+	<script>
+		function removeOverlay(){
+			$( "div[id*='mobile-sidebar_modal']" )[0].style.zIndex = "-1";
+		}
+	</script>
+</ui:composition>
+</html>

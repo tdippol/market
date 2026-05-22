@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_overview_pianificazione" toggleable="false"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_overview_pianificazione">
+                        <f:facet name="header">
+                            <h:form>
+                                <p:outputLabel value="Overview anno" />
+                                <p:selectOneMenu id="year"
+                                                 value="#{templateView.currentView.selectedYear}"
+                                                 style="margin-top: -5px;margin-left: 5px;"
+                                >
+                                    <f:selectItems value="#{templateView.currentView.years}" />
+                                    <p:ajax event="change" update="@(.updateableContent)"  />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="con scala" />
+                                <p:selectOneMenu id="scala" value="#{templateView.currentView.scale}"
+                                                 style="margin-top: -5px;margin-left: 5px;" >
+                                    <f:selectItems value="#{templateView.currentView.validScales}"
+                                                   var="s" itemLabel="#{s.name}" itemValue="#{s.value}" />
+                                    <p:ajax event="change" update="@(.updateableContent)"  />
+                                </p:selectOneMenu>
+                            </h:form>
+                        </f:facet>
+                        <p:remoteCommand name="drill" action="#{templateView.simulateMenuClick}" />
+                        <div id="ppm" class="updateableContent"></div>
+
+                        <script type="text/javascript">
+                            var landingPage = #{templateView.currentView.landingPage};
+                            var selectedYear = #{templateView.currentView.selectedYear};
+                            var selectedScale = '#{templateView.currentView.scale}';
+
+                            var timeHeadersMap = new Map();
+                            timeHeadersMap.set('Week', [{groupBy: 'Month', format: 'MMMM'}, {groupBy: 'Week'}]);
+                            timeHeadersMap.set('Month', [{groupBy: 'Month', format: 'MMMM'}]);
+                            timeHeadersMap.set('Day', [{groupBy: 'Month'}, {groupBy: 'Day', format: 'ddd d'}]);
+
+                            var cellWidthSpecMap = new Map();
+                            cellWidthSpecMap.set('Week','Fixed');
+                            cellWidthSpecMap.set('Month','Auto');
+                            cellWidthSpecMap.set('Day','Fixed');
+                            // Initialize and configure DayPilot Scheduler
+                            dps = new DayPilot.Scheduler("ppm", {
+                                locale: "it-it",
+                                scale: selectedScale,
+                                timeHeaders: timeHeadersMap.get(selectedScale),
+                                cellWidthSpec: cellWidthSpecMap.get(selectedScale),
+                                eventEndSpec: "Date",
+                                allowEventOverlap: false,
+                                timeRangeSelectedHandling: "Disabled",
+                                eventDeleteHandling: "Disabled",
+                                eventMoveHandling: "Disabled",
+                                eventResizeHandling: "Disabled",
+                                eventDoubleClickHandling: "Enabled",
+                                onEventDoubleClick: onEventDoubleClick,
+                                onBeforeCellRender: onBeforeCellRender
+                            });
+                            dps.init();
+                            var source = undefined;
+
+                            $(document).ready(function () {
+                                loadScheduler() ;
+                            });
+
+                            function setSelectedYear(year) {
+                                selectedYear = year;
+                                loadScheduler();
+                            }
+
+                            function changeScale(scale) {
+                                // var dps = getScheduler();
+                                dps.scale = scale;
+                                dps.timeHeaders = timeHeadersMap.get(scale);
+                                dps.cellWidthSpec=cellWidthSpecMap.get(scale);
+                                selectedScale = dps.scale;
+                                try {
+                                    dps.update();
+                                    dps.scrollTo(DayPilot.Date.now(), 'fast', 'middle');
+                                } catch(error){
+                                    console.log("there's a banana in the dishwasher");
+                                }
+                            }
+
+                            function loadScheduler() {
+                                $.ajax({
+                                    type: "GET",
+                                    url: contextPath + "/resources/pianomedia/overview/" + selectedYear,
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        // Load data into scheduler
+                                        dps.startDate = data.startDate;
+                                        dps.days = data.days;
+                                        dps.resources = data.supportiMedia;
+                                        dps.events.list = data.pianificazioniPiano;
+                                        // Show scheduler
+                                        dps.update();
+                                        dps.scrollTo(DayPilot.Date.now(), 'fast', 'middle');
+                                    },
+                                    error: ajaxErrorHandler
+                                });
+                            }
+
+                            function onBeforeCellRender(args) {
+                                if (dps.scale === 'Day' &amp;&amp; args.cell.start.getDayOfWeek() === 0) {
+                                    args.cell.backColor = "#FF9999";
+                                }
+                            }
+
+                            function onEventDoubleClick(args) {
+                                // HACK: se il doppio click e' sulla riga tecnica, non navigo sulla landing page
+                                let id = args.e.data.id;
+                                if (id &gt; 0) {
+                                    // Ho cliccato su una pianificazione
+                                    drill([
+                                        { name: 'currentPianificazionePianoMedia', value: id },
+                                        { name: 'menuId', value: landingPage }
+                                    ]);
+                                }
+                            }
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

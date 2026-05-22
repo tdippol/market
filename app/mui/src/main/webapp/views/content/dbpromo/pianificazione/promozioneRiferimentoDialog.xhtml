@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="promozioneRiferimentoDialog" widgetVar="promozioneRiferimentoDialog" modal="true" closable="false"
+          header="#{templateView.currentView.promoRiferimentoBean.title}" width="95%"
+          height="80vh" resizable="false" styleClass="updateableContentPromoRif disable-horizontal-scroll">
+
+    <h:form id="promozioneRiferimentoForm" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="updateableContentPromoRifForm">
+        <div class="row">
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="meccanicaDefaultPromoRif" value="Meccanica di default" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="meccanicaDefaultPromoRif" widgetVar="meccanicaDefaultPromoRif"
+                                     styleClass="input-field" style="width: 100%;"
+                                     filter="true" filterMatchMode="contains"
+                                     value="#{templateView.currentView.promoRiferimentoBean.idMeccanicaDefault}">
+                        <p:ajax update="@(.updateableContentPromoRifForm) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="Seleziona meccanica" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.promoRiferimentoBean.meccaniche}" var="m"
+                                       itemLabel="#{m.codiceMeccanica} - #{m.descrizione}" itemValue="#{m.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <!-- selezione gruppo -->
+            <h:panelGroup layout="block" styleClass="col-4"
+                          rendered="#{templateView.currentView.promoRiferimentoBean.renderSelezionaGruppo}">
+                <div>
+                    <p:outputLabel for="pianificazionePromoDialogGruppo" value="Selezione Gruppo"
+                                   style="font-size: 14px;"/>
+                </div>
+                <div>
+                    <p:selectOneMenu id="pianificazionePromoDialogGruppo"
+                                     disabled="#{templateView.currentView.promoRiferimentoBean.disableSelezionaGruppo}"
+                                     value="#{templateView.currentView.promoRiferimentoBean.gruppoSelezionato}"
+                                     class="input-field" style="width: 100%;">
+                        <p:ajax update="@(.updateableContentPianificazioneDialogForm) @(.ui-confirmdialog-yes)"/>
+                        <f:selectItem itemLabel="Seleziona Gruppo" noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{templateView.currentView.pianificazionePromoDialogBackingBean.userDTO.gruppi}"
+                                var="te" itemLabel="#{te}" itemValue="#{te}"/>
+                    </p:selectOneMenu>
+                </div>
+
+            </h:panelGroup>
+
+        </div>
+    </h:form>
+
+    <p:tabView dynamic="true" cache="false" widgetVar="promozioneRiferimentoTab">
+        <p:tab id="promoRif-tab-articolo" title="Articolo">
+            <ui:include src="dialogTabs/promoRifArticoloTab.xhtml" />
+        </p:tab>
+    </p:tabView>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 action="#{templateView.currentView.promoRiferimentoBean.resetDialog}"
+                                 oncomplete="PF('promozioneRiferimentoDialog').hide()" />
+            </div>
+            <div class="col-6">
+                <p:commandButton value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 id="confirmPromoRiferimentoDialogBtn"
+                                 disabled="#{templateView.currentView.promoRiferimentoBean.confirmDialogBtnDisabled}"
+                                 action="#{templateView.currentView.confirmPromoRiferimento}"
+                                 update="@(.updateableContent) @(.numeroArticoliClass)"
+                                 oncomplete="PF('promozioneRiferimentoDialog').hide()" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

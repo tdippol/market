@@ -1,0 +1,50 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Id",
+      "field": "id",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": true
+    },
+    {
+      "headerName": "",
+      "field": "select",
+      "width": 100,
+      "type": "checkbox",
+      "editable": false,
+      "checkboxSelection": true,
+      "headerCheckboxSelection": true,
+      "headerCheckboxSelectionFilteredOnly": true
+    },
+    {
+      "headerName": "Meccanica",
+      "field": "meccanica",
+      "width": 250,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Articolo",
+      "field": "articolo",
+      "width": 400,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Compratore",
+      "field": "compratore",
+      "width": 400,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Esclusione Check Sovr",
+      "field": "escludiCheckSovr",
+      "width": 200,
+      "type": "string",
+      "editable": true
+    }
+  ]
+}

@@ -1,0 +1,411 @@
+/*
+******************************************************************************
+****************************************************************************** 
+****************************************************************************** 
+# 
+# 
+# 
+#   Customization => ag-grid.css
+#
+# 
+# 
+****************************************************************************** 
+****************************************************************************** 
+******************************************************************************
+*/
+
+
+.ag-pinned-left-cols-viewport-wrapper * {
+    overflow: hidden !important 
+}
+
+
+
+ .ag-full-width-viewport-wrapper {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    pointer-events: none;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box 
+}
+
+.ag-floating-bottom-full-width-container {
+    display: inline;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    top: 0 
+}
+
+
+.row_style_hidden {
+    visibility: hidden 
+}
+.row_style_1 {
+    background-color: #def !important 
+}
+.row_style_2 {
+    background-color: #ffe0c1 !important 
+}
+.row_style_3 {
+    background-color: #abd4fc !important 
+}
+.row_style_4 {
+    background-color: #85c2ff !important 
+}
+.row_style_100 {
+   background-color: #FAFFBD !important
+}
+.row_style_110 {
+   background-color: #ABFFB7 !important
+}
+.row_style_120 {
+   background-color: #BDD7EE !important
+}
+.row_style_130 {
+   background-color: #FFCC00 !important
+}
+.row_style_140 {
+   background-color: #ff6b6b !important
+}
+.ag-header-cell {
+    line-height: normal;
+    padding: .1rem 
+}
+.ag-header-cell:after, .ag-header-group-cell:after {
+    height: 50% 
+}
+.ag-header-cell-menu-button .ag-icon-menu, .ag-header-cell-label .ag-header-icon, .ag-header-group-cell-label .ag-icon-expanded, .ag-header-group-cell-label .ag-icon-contracted {
+    height: 16px !important 
+}
+.ag-header-cell-label .ag-header-cell-text, .ag-header-group-cell-label .ag-header-group-text {
+    line-height: 16px !important;
+    height: auto !important;
+    overflow: visible !important;
+    overflow-wrap: normal !important;
+    text-overflow: clip !important;
+    white-space: pre-wrap !important;
+    padding-top: .2rem !important 
+}
+.ag-header-group-cell, .ag-header-group-cell-label, .ag-header-cell-label {
+    font-weight: bold;
+    color: black;
+    justify-content: center !important 
+}
+.headerMkt {
+    background-color: #d2e7fd !important 
+}
+.headerRep {
+    background-color: #ffcfa0 !important 
+}
+.headerAcq {
+    background-color: #dfffdf !important 
+}
+.headerBdg {
+    background-color: #ffffb0 !important 
+}
+.headerCons {
+    background-color: #defefe !important 
+}
+.cellClass-center-text {
+    text-align: center 
+}
+.cellClass-left-text {
+    text-align: left 
+}
+.cellClass-right-text {
+    text-align: right 
+}
+
+
+
+/*
+******************************************************************************
+****************************************************************************** 
+****************************************************************************** 
+# 
+# 
+# 
+#   Customization => ag-theme-balham.css
+#
+# 
+# 
+****************************************************************************** 
+****************************************************************************** 
+******************************************************************************
+*/
+.ag-theme-balham {	
+	font: 400 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+.ag-theme-balham .ag-row-odd {
+    background-color: #eaeaea
+  }
+  
+.ag-theme-balham .ag-row-even {
+    background-color: #eaeaea
+}
+  
+  
+  /*
+    
+  .ag-theme-balham .ag-row-hover {
+    background-color: #ecf0f1
+  }*/
+  .ag-theme-balham .ag-row-hover .ag-cell {
+    background-color: #1cac8163 !important
+  }
+  
+  
+  .ag-theme-balham .ag-ltr .ag-cell{
+      /*border-right: solid transparent;*/
+      border-right: 1px solid #d9dcde;
+  }
+  .ag-theme-balham .ag-ltr .ag-cell-range-single-cell{
+    border-color: var(--ag-range-selection-border-color, var(--ag-balham-active-color, #0091ea)) !important;
+  }
+  
+  .ag-theme-balham .ag-header-cell, .ag-theme-balham .ag-header-group-cell {
+                                           
+    line-height: 32px
+    padding-left: 4px
+    padding-right: 2px
+  }
+  .ag-theme-balham .ag-cell {
+    line-height: 26px
+    padding-left: 12px
+    padding-right: 12px
+    border-right: 1px solid #d9dcde
+    padding-left: 11px
+    padding-right: 11px
+  }
+  
+  
+
+  .ag-theme-balham .ag-row-selected {
+    background-color: #b7e4ff !important;
+  }
+  
+  .ag-theme-balham .ag-cell-range-selected:not(.ag-cell-focus) {
+    background-color: rgba(0, 145, 234, 0.2) !important
+  }
+
+
+
+  .ag-theme-balham .ag-header-cell-menu-button .ag-icon-menu {
+    display: block
+    margin-top: .3rem
+  }
+  
+  .ag-theme-balham .ag-cell-range-selected:not(.ag-cell-focus) {
+    background-color: rgba(0, 145, 234, 0.2) !important
+  }
+  
+  .ag-theme-balham .ag-cell-range-selected-1:not(.ag-cell-focus) {
+    background-color: rgba(0, 145, 234, 0.3) !important
+  }
+  
+  
+  .ag-theme-balham .ag-cell-range-selected-2:not(.ag-cell-focus) {
+    background-color: rgba(0, 145, 234, 0.4) !important
+  }
+  
+  
+  .ag-theme-balham .ag-cell-range-selected-3:not(.ag-cell-focus) {
+    background-color: rgba(0, 145, 234, 0.5) !important
+  }
+  
+  
+  .ag-theme-balham .ag-cell-range-selected-4:not(.ag-cell-focus) {
+    background-color: rgba(0, 145, 234, 0.6) !important
+  }
+  
+  .searchablepicklist {
+    overflow: visible
+  }
+  
+  .searchablepicklist .bootstrap-select {
+    width: inherit !important
+    min-width: 84px
+  }
+  
+  .searchablepicklist .dropdown-toggle {
+    height: 100%
+    padding: .25em 0 .25em 0 !important
+    background-color: #fff !important
+    font: 400 12px -apple-system, blinkmacsystemfont, "segoe ui", roboto, oxygen-sans, ubuntu, cantarell, "helvetica neue", sans-serif
+    border-radius: 80%
+    border: 1px solid #29dca7 !important
+  }
+  
+  .gridpicklist, .gridpicklist .inner {
+    padding: 0 !important
+    min-height: 100px !important
+  }
+  
+  .gridpicklist .filter-option-inner {
+    padding-left: .25em !important
+  }
+  
+  .gridpicklist .bs-searchbox {
+    padding: .25em !important
+  }
+  
+  .gridpicklist span {
+    font: 400 12px -apple-system, blinkmacsystemfont, "segoe ui", roboto, oxygen-sans, ubuntu, cantarell, "helvetica neue", sans-serif
+  }
+  
+  .gridpicklist .dropdown-item {
+    padding: .25em !important
+    min-height: 22px
+  }
+  
+  .gridpicklist .dropdown-item.selected.active, .gridpicklist .dropdown-item:hover {
+    color: #000
+    background-color: #ebedf2
+  }
+  
+  .gridpicklist .check-mark {
+    display: none !important
+  }
+  
+  .gridpicklist .btn.dropdown-toggle:after {
+    margin-right: -5px !important
+  }
+  
+  .gridpicklist .form-control {
+    height: inherit !important
+    padding: .25em !important
+    font: 400 12px -apple-system, blinkmacsystemfont, "segoe ui", roboto, oxygen-sans, ubuntu, cantarell, "helvetica neue", sans-serif
+  }
+  
+  .datepicker-switch {
+    text-align: center
+  }
+  
+  .datepicker-months .month, .datepicker-years .year, .datepicker-decades .decade, .datepicker-centuries .century {
+    text-align: center
+    display: grid
+  }
+  
+  .ag-body-viewport.ag-layout-normal, .ag-pinned-left-cols-container, .ag-pinned-left-cols-viewport, .ag-pinned-left-cols-viewport-wrapper {
+    /*margin-bottom: 50px !important*/
+  }
+  
+  
+  
+  /*cell class rules
+  
+      0-black
+      1-dark blue
+      2-dark green
+      3-light green
+      4-light blue
+      5-red
+      6-orange
+      7-dark yellow
+      8-yellow
+      9-white	
+  
+      cs_bg_[0-9]    
+      cs_txt_[0-9]
+      cs_size_[1-3]
+      cs_dec_[und,bar,bold,ita]
+  */
+  .CS_BG_0{background-color:#000000 !important} 		/*	0-black				*/
+  .CS_BG_10{background-color:#0044cc !important} 		/*	1-dark blue			*/
+  .CS_BG_20{background-color:#2db300 !important} 		/*	2-dark green		*/
+  .CS_BG_30{background-color:#79ff4d !important} 		/*	3-light green		*/
+  .CS_BG_40{background-color:#80dfff !important} 		/*	4-light blue		*/
+  .CS_BG_50{background-color:#ff0000 !important} 		/*	5-red				*/
+  .CS_BG_60{background-color:#ffa500 !important} 		/*	6-orange			*/
+  .CS_BG_70{background-color:#ffcc00 !important} 		/*	7-dark yellow		*/
+  .CS_BG_80{background-color:#ffff00 !important} 		/*	8-yellow			*/
+  .CS_BG_90{background-color:#ffffff !important} 		/*	9-white				*/
+  .CS_BG_100{background-color:#faffbd !important}
+  .CS_BG_110{background-color:#abffb7 !important}
+  .CS_BG_120{background-color:#bdd7ee !important}
+  .CS_BG_130{background-color:#ffcc00 !important}
+  .CS_BG_140{background-color:#ff6b6b !important}
+  
+  .CS_FG_0{color:#000000 !important}
+  .CS_FG_10{color:#0044cc !important}
+  .CS_FG_20{color:#2db300 !important}
+  .CS_FG_30{color:#79ff4d !important}
+  .CS_FG_40{color:#80dfff !important}
+  .CS_FG_50{color:#ff0000 !important}
+  .CS_FG_60{color:#ffa500 !important}
+  .CS_FG_70{color:#ffcc00 !important}
+  .CS_FG_80{color:#ffff00 !important}
+  .CS_FG_90{color:#ffffff !important}
+  .CS_FG_100{color:#faffbd !important}
+  .CS_FG_110{color:#abffb7 !important}
+  .CS_FG_120{color:#bdd7ee !important}
+  .CS_FG_130{color:#ffcc00 !important}
+  .CS_FG_140{color:#ff6b6b !important}
+  
+  .CS_BC_10{
+      border-right:10px solid gray !important
+  }
+  
+  .CS_SIZE_10{font-size: 125%!important}
+  .CS_SIZE_20{font-size: 150%!important}
+  .CS_SIZE_30{font-size: 200%!important}
+  
+  .CS_DEC_UND{text-decoration: underline!important}
+  .CS_DEC_BAR{text-decoration: line-through !important}
+  .CS_DEC_BOLD{font-weight: bold !important}
+  .CS_DEC_LIGHT{font-weight: lighter !important}
+  .CS_DEC_ITA{font-style: italic !important}
+  
+  
+  .CS_BG_MULTI{
+      background: linear-gradient(150deg, #e74c3c 70%, #fff 30%) !important
+  }
+  
+  
+  
+  
+  .ag-rich-select-value{
+    border: 1px solid #0091ea !important
+  }
+  .ag-virtual-list-viewport{
+    background-color:white !important
+  }
+  
+           
+         
+  
+
+
+/*
+ DATEPICKER 1.9 CSS CUSTOMIZATION
+*/
+  .datepicker table tr td.active:active:hover, .datepicker table tr td.active.highlighted:active:hover, .datepicker table tr td.active.active:hover, .datepicker table tr td.active.highlighted.active:hover, .datepicker table tr td.active:active:focus, .datepicker table tr td.active.highlighted:active:focus, .datepicker table tr td.active.active:focus, .datepicker table tr td.active.highlighted.active:focus, .datepicker table tr td.active:active.focus, .datepicker table tr td.active.highlighted:active.focus, .datepicker table tr td.active.active.focus, .datepicker table tr td.active.highlighted.active.focus {
+  background: #1cac81 !important;
+    color: #fff !important;
+}
+
+.datepicker table tr td.active:active, .datepicker table tr td.active.highlighted:active, .datepicker table tr td.active.active, .datepicker table tr td.active.highlighted.active {
+  background: #23d8a2 !important;
+  color: #fff !important;
+}
+
+.datepicker tbody tr>td.day.today {
+  background: #1cac81 !important;
+  color: #fff !important;
+}
+.datepicker table tr td span.active:active:hover, .datepicker table tr td span.active:hover:active:hover, .datepicker table tr td span.active.disabled:active:hover, .datepicker table tr td span.active.disabled:hover:active:hover, .datepicker table tr td span.active.active:hover, .datepicker table tr td span.active:hover.active:hover, .datepicker table tr td span.active.disabled.active:hover, .datepicker table tr td span.active.disabled:hover.active:hover, .datepicker table tr td span.active:active:focus, .datepicker table tr td span.active:hover:active:focus, .datepicker table tr td span.active.disabled:active:focus, .datepicker table tr td span.active.disabled:hover:active:focus, .datepicker table tr td span.active.active:focus, .datepicker table tr td span.active:hover.active:focus, .datepicker table tr td span.active.disabled.active:focus, .datepicker table tr td span.active.disabled:hover.active:focus, .datepicker table tr td span.active:active.focus, .datepicker table tr td span.active:hover:active.focus, .datepicker table tr td span.active.disabled:active.focus, .datepicker table tr td span.active.disabled:hover:active.focus, .datepicker table tr td span.active.active.focus, .datepicker table tr td span.active:hover.active.focus, .datepicker table tr td span.active.disabled.active.focus, .datepicker table tr td span.active.disabled:hover.active.focus {
+  color: #fff !important;
+  background-color: #1cac81 !important;
+  border-color: #1cac81 !important;
+}
+.datepicker table tr td span.active:active, .datepicker table tr td span.active:hover:active, .datepicker table tr td span.active.disabled:active, .datepicker table tr td span.active.disabled:hover:active, .datepicker table tr td span.active.active, .datepicker table tr td span.active:hover.active, .datepicker table tr td span.active.disabled.active, .datepicker table tr td span.active.disabled:hover.active {
+  color: #fff !important;
+  background: #23d8a2 !important;
+  border-color: #1cac81 !important;
+}

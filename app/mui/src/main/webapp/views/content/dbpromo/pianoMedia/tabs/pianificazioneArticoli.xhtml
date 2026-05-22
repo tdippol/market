@@ -1,0 +1,254 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <ui:include src="../dialogs/zoneDifferenziateDialog.xhtml" />
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <!-- dialog conferma eliminazione articolo in pianificazione -->
+                <p:confirmDialog id="deleteArticoloPianoMediaConfirmDialog"
+                                 widgetVar="deleteArticoloPianoMediaConfirmDialog"
+                                 global="true" showEffect="fade" hideEffect="fade" closable="false"
+                                 icon="pi pi-exclamation-triangle" styleClass="muiDialog" header="Avviso"
+                                 message="#{templateView.currentView.deleteItemConfirmDialogMessage}">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                     onclick="PF('deleteArticoloPianoMediaConfirmDialog').hide()" />
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                     update="@(.updateableContent)"
+                                     onclick="callDeleteWs()" />
+                    <p:outputLabel value="#{templateView.currentView.idPianificazioneToBeDeleted}"
+                                   styleClass="idPianificazioneToBeDeleted" style="visibility: hidden;" />
+                </p:confirmDialog>
+
+                <!-- dialog conferma pubblicazione piano media -->
+                <p:confirmDialog id="publishPianoMediaDialog" widgetVar="publishPianoMediaDialog"
+                                 global="true" showEffect="fade" hideEffect="fade" closable="false"
+                                 icon="pi pi-exclamation-triangle" styleClass="muiDialog" header="Avviso"
+                                 message="Sei sicuro di voler pubblicare il piano media selezionato?">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                     onclick="PF('publishPianoMediaDialog').hide()" />
+                    <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                     action="#{templateView.currentView.publishPianoMedia}"
+                                     oncomplete="PF('publishPianoMediaDialog').hide()"
+                                     update="@(.updateableContent) @(.publishBtnClass)" />
+                </p:confirmDialog>
+
+                <!-- dialog conferma approvazione -->
+                <p:confirmDialog id="approveConfirmDialog" widgetVar="approveConfirmDialog"
+                                 global="true" showEffect="fade" hideEffect="fade" closable="false"
+                                 icon="pi pi-exclamation-triangle" styleClass="muiDialog" header="Avviso"
+                                 message="Sei sicuro di voler approvare il piano media selezionato?">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                     onclick="PF('approveConfirmDialog').hide()" />
+                    <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                     action="#{templateView.currentView.approvePianoMedia}"
+                                     oncomplete="PF('approveConfirmDialog').hide()"
+                                     update="@(.updateableContent) @(.approvatoBtn) @(.nonApprovatoBtn)" />
+                </p:confirmDialog>
+
+                <!-- dialog conferma non approvazione -->
+                <p:confirmDialog id="notApproveConfirmDialog" widgetVar="notApproveConfirmDialog"
+                                 global="true" showEffect="fade" hideEffect="fade" closable="false"
+                                 icon="pi pi-exclamation-triangle" styleClass="muiDialog" header="Avviso"
+                                 message="Sei sicuro di non voler approvare il piano media selezionato?">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                     onclick="PF('notApproveConfirmDialog').hide()" />
+                    <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                     action="#{templateView.currentView.notApprovePianoMedia}"
+                                     oncomplete="PF('notApproveConfirmDialog').hide()"
+                                     update="@(.updateableContent) @(.approvatoBtn) @(.nonApprovatoBtn) @(.publishBtnClass)" />
+                </p:confirmDialog>
+
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <ui:include src="../dialogs/addItemsDialog.xhtml" />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h:form styleClass="publishAddButtons">
+                                <p:panel rendered="#{templateView.currentView.publishPlanningButtons}"
+                                         style="border: none;">
+                                    <p:commandButton value="Aggiungi articoli" id="addItemsBtn"
+                                                     styleClass="pf-btn-confirm updateableContent"
+                                                     style="border-radius: 5px; float: left;"
+                                                     action="#{templateView.currentView.prepareAddItemsDialog}"
+                                                     disabled="#{templateView.currentView.addItemsBtnDisabled}"
+                                                     oncomplete="PF('addItemsDialog').show()"
+                                                     update="@(.addItemsDialogFormClass) @(.ui-confirmdialog-yes)" />
+                                    <p:commandButton value="Pubblica" id="publishBtn"
+                                                     styleClass="pf-btn-confirm publishBtnClass"
+                                                     style="border-radius: 5px; margin-left: 10px; float: left;"
+                                                     disabled="#{templateView.currentView.publishBtnDisabled}"
+                                                     oncomplete="PF('publishPianoMediaDialog').show()" />
+                                </p:panel>
+                            </h:form>
+                            <h:form styleClass="pianificazioneButtons">
+                                <p:panel rendered="#{templateView.currentView.approvazioneCompratoreButtons}"
+                                         style="border: none; margin-top: -19px;">
+                                    <p:commandButton value="Approvato" styleClass="pf-btn-confirm approvatoBtn"
+                                                     style="border-radius: 5px; margin-left: 10px;"
+                                                     disabled="#{templateView.currentView.approveButtonsDisabled}"
+                                                     oncomplete="PF('approveConfirmDialog').show()" />
+                                    <p:commandButton value="Non Approvato" styleClass="pf-btn-confirm nonApprovatoBtn"
+                                                     style="border-radius: 5px; margin-left: 10px;"
+                                                     disabled="#{templateView.currentView.approveButtonsDisabled}"
+                                                     oncomplete="PF('notApproveConfirmDialog').show()" />
+                                </p:panel>
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <p:panel id="expandable_db_pianificazionepianomedia_pianificazione"
+                             toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_pianificazionepianomedia_pianificazione">
+                        <f:facet name="header">
+                            <p:outputLabel value="Pianificazone" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      styleClass="ag-theme-balham pianificazionepianomedia_pianificazione"
+                                      pt:gridid="db_pianificazionepianomedia_pianificazione">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <h:form>
+                            <p:inputText autocomplete="off" id="pianificazionepianomedia_pianificazione_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_pianificazionepianomedia_pianificazione', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_pianificazionepianomedia_pianificazione')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onerror="redirectToExpiredPage()" ajax="false" >
+                                <p:fileDownload value="#{templateView.currentView.exportPianificazionePianoMedia}" />
+                            </p:commandLink>
+                            </h:form>
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var idPianoMedia = $('.idPianoMediaCurrent').text();
+                            var gridParamsPianoMediaPianificazione = {
+                                gridTabGroup: "pianificazionePianoMediaTabs",
+                                gridTabPosition: 0,
+                                gridCode: "db_pianificazionepianomedia_pianificazione",
+                                gridTitle: "Pianificazione Piano Media - Pianificazione",
+                                url_columnDefs: contextPath + "/resources/pianomediapianificazioni/" + idPianoMedia
+                                    + "/pianificazioni/columnDef" + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + "/resources/pianomediapianificazioni/" + idPianoMedia
+                                    + "/pianificazioni/rowData" + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + "/resources/grid/sorting/db_pianificazionepianomedia_pianificazione",
+                                gridOptions: {
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + "/resources/grid/sorting/save/db_pianificazionepianomedia_pianificazione");
+                                    },
+                                    onCellValueChanged: function (event) {
+                                        callUpdateWs(event);
+                                    }
+                                },
+                                additionColumnDefs: [
+                                    {
+                                        headerName: '',
+                                        width: 60,
+                                        cellRenderer: 'PianificazioneMedia_DeleteBtnRenderer',
+                                        position: 'prepend',
+                                        pinned: 'left'
+                                    }
+                                ],
+                                customizeColumnDefs: [
+                                    {
+                                        columnDefId: "zoneDiff",
+                                        property: "cellRendererParams",
+                                        value: {callback: zoneDiffCallback, btnTitle: "Mostra zone differenziate"}
+                                    }
+                                ]
+                            }
+
+                            function refreshPianoMediaPianificazioni(){
+                                var idPianoMedia = $('.idPianoMediaCurrent').text();
+                                $.ajax({
+                                    type: 'GET',
+                                    url: contextPath + "/resources/pianomediapianificazioni/" + idPianoMedia
+                                        + "/pianificazioni/rowData" + addUrlParamContesto(#{muiContext}),
+                                     success: function (data) {
+                                        getGridOptionFromGridMap('db_pianificazionepianomedia_pianificazione').api.setRowData(data.rowData);
+                                    },
+                                    error: ajaxErrorHandler
+                                });
+                            }
+
+                            function callDeleteWs() {
+                                PF('deleteArticoloPianoMediaConfirmDialog').hide();
+                                var id = $('.idPianificazioneToBeDeleted').text();
+                                $.ajax({
+                                    type: 'DELETE',
+                                    url: contextPath + "/resources/pianomediapianificazioni/items/" + id + "/delete"
+                                        + addUrlParamContesto(#{muiContext}),
+                                    success: function (data) {
+                                        getGridOptionFromGridMap('db_pianificazionepianomedia_pianificazione').api.setRowData(data.rowData);
+                                        addInfoGrowl([
+                                            {name: 'title', value: 'Pianificazione'},
+                                            {name: 'message', value: 'Articolo rimosso con successo'}
+                                        ]);
+                                    },
+                                    error: ajaxErrorHandler
+                                })
+                            }
+
+                            function callUpdateWs(event) {
+                                let rowIndex = getRowNodeId(event);
+                                let rowData = getLeafRowData('db_pianificazionepianomedia_pianificazione')[rowIndex];
+                                let id = rowData.id.value;
+                                let columnToBeUpdated = event.column.colDef.field;
+                                event.data.columnToBeUpdated.value = columnToBeUpdated;
+                                event.data.valueToBeUpdated.value = event.data[columnToBeUpdated].value;
+                                event.data.columnHeaderToBeUpdated.value = event.colDef.headerName;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: contextPath + "/resources/pianomediapianificazioni/items/" + id + "/update"
+                                        + addUrlParamContesto(#{muiContext}),
+                                    contentType: "application/json",
+                                    data: JSON.stringify(event.data),
+                                    success: function (data) {
+                                        var message = data.message ? data.message : "Aggiornamento articolo con successo";
+                                        addInfoGrowl([
+                                            {name: 'title', value: 'Pianificazione'},
+                                            {name: 'message', value: message}
+                                        ]);
+                                    },
+                                    error: function (jqXHR, exception, thrownError) {
+                                        ajaxErrorHandler(jqXHR, exception, thrownError, event)
+                                    }
+                                });
+                            }
+
+                            function zoneDiffCallback(params) {
+                                let dlg = PF('zoneDifferenziateDialog');
+                                dlg.jq.data('id', params.data.id.value);
+                                dlg.show();
+                            }
+
+                            $(document).ready(function () {
+                                if (getCurrentTab(gridParamsPianoMediaPianificazione.gridTabGroup) === gridParamsPianoMediaPianificazione.gridTabPosition &amp;&amp; idPianoMedia) {
+                                    creaGriglia(gridParamsPianoMediaPianificazione);
+                                }
+                            })
+                        </script>
+                    </p:panel>
+                    <p:remoteCommand name="removeArticoloPianificazioneMedia"
+                                     update="deleteArticoloPianoMediaConfirmDialog"
+                                     action="#{templateView.currentView.prepareDeleteItemMessage}" />
+
+                    <p:remoteCommand name="selectAllMediaForArticolo"
+                                     action="#{templateView.currentView.selectAllMediaForArticolo}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

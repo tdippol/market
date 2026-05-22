@@ -1,0 +1,32 @@
+{
+	"folders": {},
+	"connections": {
+		"derby_server-17f55f2cd53-63e7ad48f10c8dce": {
+			"provider": "generic",
+			"driver": "derby_server",
+			"name": "dbpromo",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "1527",
+				"database": "dbpromo",
+				"url": "jdbc:derby://localhost:1527/dbpromo;create=false",
+				"type": "dev",
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}

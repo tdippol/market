@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition>
+    <style type="text/css">
+        .datalist-noborder .ui-widget-content {
+            border: none;
+        }
+        .ui-datalist-item {
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+        .ui-datalist-data {
+            padding-left: 0;
+            list-style-type: none;
+        }
+    </style>
+    <p:sidebar widgetVar="mui-userTab" position="right" style="width: 400px;" baseZIndex="999999">
+        <div class="k-offcanvas-panel">
+            <div class="k-offcanvas-panel__head">
+                <h3 class="k-offcanvas-panel__title">Profile</h3>
+            </div>
+            <div class="k-offcanvas-panel__body">
+                <div class="k-user-card-v3 k-margin-b-30">
+                    <div class="k-user-card-v3__avatar">
+                        <h:graphicImage library="images" name="/users/default.jpg"/>
+                    </div>
+                    <div class="k-user-card-v3__detalis">
+                        <a href="#" class="k-user-card-v3__name">
+                            <h:outputText value="#{templateView.user.name}" style="font-family: Raleway;"/>
+                        </a>
+                        <div class="k-user-card-v3__desc">
+                            <h:form>
+                                <p:commandButton value="logout" action="#{userView.logout}"
+                                                 class="btn btn-pill btn-primary btn-elevate"
+                                                 onerror="redirectToExpiredPage()"/>
+                            </h:form>
+                        </div>
+                            <div class="k-user-card-v3__info" style="text-align: right;">
+                                <i>v.#{templateView.implementationVersion}</i>
+                             </div>
+                    </div>
+                </div>
+                <div class="k-margin-t-40">
+                    <h:form rendered="#{not empty templateView.manuals}">
+                        <h4>Manuali utente</h4>
+                        <p:dataList value="#{templateView.manuals}" var="m" styleClass="datalist-noborder">
+                            <p:commandButton style="border-radius: 50%; margin-right: 0.5em;" ajax="false"
+                                             icon="fa fa-download" onerror="redirectToExpiredPage()">
+                                <p:fileDownload value="#{templateView.downloadManual(m)}"/>
+                            </p:commandButton>
+                            <p:commandLink ajax="false" value="#{m.roleName}" onerror="redirectToExpiredPage()">
+                                <p:fileDownload value="#{templateView.downloadManual(m)}"/>
+                            </p:commandLink>
+                        </p:dataList>
+                    </h:form>
+                </div>
+                <div class="k-margin-t-40">
+                    <h:form rendered="#{not empty templateView.documents}">
+                        <h4>Documenti disponibili</h4>
+                        <p:dataList value="#{templateView.documents}" var="doc" styleClass="datalist-noborder">
+                            <p:commandButton style="border-radius: 50%; margin-right: 0.5em;" ajax="false"
+                                             icon="fa fa-download" onerror="redirectToExpiredPage()">
+                                <p:fileDownload value="#{templateView.downloadDocument(doc)}"/>
+                            </p:commandButton>
+                            <p:commandLink ajax="false" value="#{doc.name}" onerror="redirectToExpiredPage()">
+                                <p:fileDownload value="#{templateView.downloadDocument(doc)}"/>
+                            </p:commandLink>
+                        </p:dataList>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </p:sidebar>
+</ui:composition>
+</html>

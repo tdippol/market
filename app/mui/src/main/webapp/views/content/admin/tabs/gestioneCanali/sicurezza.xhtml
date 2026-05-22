@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form>
+                    <p:panelGrid columns="3" styleClass="updateableCanale">
+                    	<h:outputText></h:outputText>
+                    	<h:outputText value="Read" />
+                    	<h:outputText value="Write" />
+
+                    	<h:outputText value="Owner" />
+                    	<p:selectOneMenu value="#{templateView.currentView.sicurezzaCanale.ownerRead}"
+                    		valueChangeListener="#{templateView.currentView.handleSecurityChangeOWR}">
+                    		<f:selectItems value="#{templateView.currentView.securityValues}" />
+                    		<f:ajax/>
+                    	</p:selectOneMenu>
+                    	<p:selectOneMenu value="#{templateView.currentView.sicurezzaCanale.ownerWrite}"
+                    		valueChangeListener="#{templateView.currentView.handleSecurityChangeOWW}">
+                    		<f:selectItems value="#{templateView.currentView.securityValues}" />
+                    		<f:ajax/>
+                    	</p:selectOneMenu>
+                    	<h:outputText value="Other"/>
+                    	<p:selectOneMenu value="#{templateView.currentView.sicurezzaCanale.otherRead}"
+                    		valueChangeListener="#{templateView.currentView.handleSecurityChangeOTR}">
+                    		<f:selectItems value="#{templateView.currentView.securityValues}" />
+                    		<f:ajax/>
+                    	</p:selectOneMenu>
+                    	<p:selectOneMenu value="#{templateView.currentView.sicurezzaCanale.otherWrite}"
+                    		valueChangeListener="#{templateView.currentView.handleSecurityChangeOTW}">
+                    		<f:selectItems value="#{templateView.currentView.securityValues}" />
+                    		<f:ajax/>
+                    	</p:selectOneMenu>
+
+                    </p:panelGrid>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

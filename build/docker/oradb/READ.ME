@@ -1,0 +1,10 @@
+1. Lanciare lo script build_ora_image.sh : crea l'immagine docker per oracle database xe 18
+2. Verificare che le directory scripts e oradata abbiano settato il gruppo 54321 e che siano read e write sul gruppo
+3. Lanciare il comando `docker-compose up ora_db` : la prima volta crea e inizializza due database (MUIPROMO e DBPROMO), le volte successive no. Ignorare gli eventuali errori sql
+4. Parametri di connessione: 
+ * host: localhost
+ * port: 1521
+ * database: XEPDB1 tipo Service Name
+ * utente DBPROMO/DBPROMO
+ * utente MUIPROMO/MUIPROMO
+ * utente system/Axiante20

@@ -1,0 +1,281 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+<!-- confirm dialog globale -->
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="false">
+        <p:commandButton value="annulla" type="button" styleClass="ui-confirmdialog-no" />
+        <p:commandButton value="conferma" type="button" styleClass="ui-confirmdialog-yes" />
+    </p:confirmDialog>
+<!--dialog per aggiunta connessione -->
+    <p:dialog widgetVar="dlgAddConnectionWV"
+              minimizable="true" maximizable="true"
+              width="800"
+              resizable="false"
+              draggable="true"
+              closable="true"
+              header="Add Connection" styleClass="pf-dialog"
+    >
+        <h:form>
+            <p:panelGrid styleClass="pgAddDialog">
+                <p:row>
+                <p:column style="text-align: left;" colspan="2">
+                    <p:outputLabel value="Nome * " />
+                    <br/>
+                    <p:inputText value="#{gestioneApplicazione.selectedConnectionSetup.connectionName}" style="width: 100%;"  maxlength="20"/>
+                </p:column>
+                    <p:column style="text-align: left;" colspan="2">
+                        <p:outputLabel value="Authentication * " />
+                        <br/>
+                        <p:selectOneMenu value="#{gestioneApplicazione.selectedConnectionSetup.authType}" effect="fade" style="width:100%">
+                            <f:selectItem itemValue="BASIC" itemLabel="BASIC" />
+                            <f:selectItem itemValue="PASSPORT" itemLabel="PASSPORT"  />
+                            <f:selectItem itemValue="NAMESPACE" itemLabel="NAMESPACE" />
+                            <f:selectItem itemValue="SPNEGO" itemLabel="SPNEGO"  />
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: left;">
+                        <p:outputLabel value="Username " />
+                        <br/>
+                        <p:inputText value="#{gestioneApplicazione.selectedConnectionSetup.username}" style="width: 100%;"  maxlength="25"/>
+                    </p:column>
+                    <p:column style="text-align: left;">
+                        <p:outputLabel value="Password " />
+                        <br/>
+                        <p:inputText value="#{gestioneApplicazione.selectedConnectionSetup.password}" style="width: 100%;"  maxlength="25"/>
+                    </p:column>
+
+                    <p:column style="text-align: left;" colspan="2">
+                        <p:outputLabel value="Domain " />
+                        <br/>
+                        <p:inputText value="#{gestioneApplicazione.selectedConnectionSetup.domain}" style="width: 100%;"  maxlength="25"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: left;">
+                        <p:outputLabel value="Host * " />
+                        <br/>
+                        <p:inputText value="#{gestioneApplicazione.selectedConnectionSetup.host}" style="width: 100%;"  maxlength="200"/>
+                    </p:column>
+                    <p:column style="text-align: left;">
+                        <p:outputLabel value="Port * " />
+                        <br/>
+                        <p:inputText  value="#{gestioneApplicazione.selectedConnectionSetup.port}" style="width: 100%;"  maxlength="10">
+                            <p:keyFilter regEx="/[\d\-]/"/>
+                        </p:inputText>
+                    </p:column>
+                    <p:column style="text-align: left;">
+                        <p:outputLabel value="Path * " />
+                        <br/>
+                        <p:inputText value="#{gestioneApplicazione.selectedConnectionSetup.path}" style="width: 100%;"  maxlength="25"/>
+                    </p:column>
+                    <p:column style="text-align: right;vertical-align: bottom;">
+                        <p:selectBooleanCheckbox value="#{gestioneApplicazione.selectedConnectionSetup.validateSsl}" itemLabel="Validate SSL "/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="4" style="text-align: right !important;">
+                        <p:commandButton styleClass="pf-btn-confirm" value="conferma" actionListener="#{gestioneApplicazione.addConnection}"  update="@(.formAddDialog),@(.updateableContent)"/>
+                        <p:commandButton styleClass="pf-btn-cancel" value="annulla" process="@this" oncomplete="PF('dlgAddConnectionWV').hide();" />
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+    <!-- contenuto -->
+	<div class="k-content k-grid__item k-grid__item--fluid col-12"
+		 id="k_content">
+         <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:row>
+                        <p:tabView>
+                            <p:tab title="Gestione Variabili">
+                                <h:form>
+                                    <p:panel toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+                                        <p:dataTable var="applicationProperty" value="#{gestioneApplicazione.applicationPropertiesEntityList}"
+                                                     editable="true"
+                                                     rows="20"
+                                                     paginator="true"
+                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     resizableColumns="true"
+                                                     rowsPerPageTemplate="20,50,100"
+                                                     paginatorPosition="bottom">
+                                            <p:ajax event="rowEdit" listener="#{gestioneApplicazione.editApplicationProperty}" />
+                                            <p:column headerText="Chiave" sortBy="#{applicationProperty.key}" filterBy="#{applicationProperty.key}" filterMatchMode="contains">
+                                                <h:outputText value="#{applicationProperty.key}"/>
+                                            </p:column>
+                                            <p:column headerText="Valore" sortBy="#{applicationProperty.value}" filterBy="#{applicationProperty.value}" filterMatchMode="contains">
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{applicationProperty.value}"/></f:facet>
+                                                    <f:facet name="input"> <p:inputText  value="#{applicationProperty.value}" style="width: 100%;"  maxlength="250"/></f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column style="width:40px;padding:3px!important;">
+                                                <p:rowEditor styleClass="rowEditorButton" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:panel>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Gestione Connessioni">
+                                <h:form>
+                                    <p:panel toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+                                        <f:facet name="header">
+                                            <p:commandLink  actionListener="#{gestioneApplicazione.openAddConnectionDialog}" styleClass="pnlGrid_Header plusButton" oncomplete="PF('dlgAddConnectionWV').show();" update="@(.pgAddDialog)" />
+                                        </f:facet>
+
+                                        <p:dataTable var="connectionSetup" styleClass="pf-datatable" value="#{gestioneApplicazione.connectionSetupEntityList}"
+                                                     editable="true"
+                                                     rows="20"
+                                                     paginator="true"
+                                                     resizableColumns="true"
+                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     rowsPerPageTemplate="20,50,100"
+                                                     paginatorPosition="bottom">
+                                            <p:ajax event="rowEdit" listener="#{gestioneApplicazione.editConnectionSetup}" />
+                                            <p:column headerText="Nome" sortBy="#{connectionSetup.connectionName}" filterBy="#{connectionSetup.connectionName}" filterMatchMode="contains">
+                                                <h:outputText value="#{connectionSetup.connectionName}"/>
+                                            </p:column>
+                                            <p:column headerText="Username" sortBy="#{connectionSetup.username}" filterBy="#{connectionSetup.username}" filterMatchMode="contains">
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{connectionSetup.username}"/></f:facet>
+                                                    <f:facet name="input"> <p:inputText  value="#{connectionSetup.username}" style="width: 100%;"  maxlength="250"/></f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column headerText="Password" sortBy="#{connectionSetup.password}" filterBy="#{connectionSetup.password}" filterMatchMode="contains">
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{connectionSetup.password}"/></f:facet>
+                                                    <f:facet name="input"> <p:inputText  value="#{connectionSetup.password}" style="width: 100%;"  maxlength="250"/></f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column headerText="Domain" sortBy="#{connectionSetup.domain}" filterBy="#{connectionSetup.domain}" filterMatchMode="contains">
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{connectionSetup.domain}"/></f:facet>
+                                                    <f:facet name="input"> <p:inputText  value="#{connectionSetup.domain}" style="width: 100%;"  maxlength="250"/></f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column headerText="Host" sortBy="#{connectionSetup.host}" filterBy="#{connectionSetup.host}" filterMatchMode="contains" >
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{connectionSetup.host}"/></f:facet>
+                                                    <f:facet name="input"> <p:inputText  value="#{connectionSetup.host}" style="width: 100%;"  maxlength="250" required="true" requiredMessage="campo Host obbligatorio"/></f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column headerText="Port" sortBy="#{connectionSetup.port}" filterBy="#{connectionSetup.port}" filterMatchMode="contains" >
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{connectionSetup.port}"/></f:facet>
+                                                    <f:facet name="input">
+                                                        <p:inputText  value="#{connectionSetup.port}" style="width: 100%;"  maxlength="10" required="true" requiredMessage="campo Port obbligatorio">
+                                                            <p:keyFilter regEx="/[\d\-]/"/>
+                                                        </p:inputText>
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column headerText="Path" sortBy="#{connectionSetup.path}" filterBy="#{connectionSetup.path}" filterMatchMode="contains">
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{connectionSetup.path}"/></f:facet>
+                                                    <f:facet name="input"> <p:inputText  value="#{connectionSetup.path}" style="width: 100%;"  maxlength="250" required="true" requiredMessage="campo Path obbligatorio"/></f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column headerText="Validate SSL" sortBy="#{connectionSetup.validateSsl}" filterBy="#{connectionSetup.validateSsl}" filterMatchMode="contains">
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><p:selectBooleanCheckbox disabled="true" value="#{connectionSetup.validateSsl}"/></f:facet>
+                                                    <f:facet name="input"><p:selectBooleanCheckbox value="#{connectionSetup.validateSsl}" onchange="completeClick()"/></f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column headerText="Authentication" sortBy="#{connectionSetup.authType}" filterBy="#{connectionSetup.authType}" filterMatchMode="contains">
+                                                <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{connectionSetup.authType}"/></f:facet>
+                                                    <f:facet name="input">
+                                                        <p:selectOneMenu value="#{connectionSetup.authType}" effect="fade" style="width:100%">
+                                                            <f:selectItem itemValue="BASIC" itemLabel="BASIC" />
+                                                            <f:selectItem itemValue="PASSPORT" itemLabel="PASSPORT"  />
+                                                            <f:selectItem itemValue="NAMESPACE" itemLabel="NAMESPACE" />
+                                                            <f:selectItem itemValue="SPNEGO" itemLabel="SPNEGO"  />
+                                                        </p:selectOneMenu>
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+                                            <p:column style="width:40px;padding:3px!important;">
+                                                <p:rowEditor styleClass="rowEditorButton" />
+                                            </p:column>
+                                            <p:column style="width:40px;padding:3px!important;border-left: none!important;">
+                                                <p:commandButton styleClass="rowDeleteButton" icon="ui-icon-trash" title="Elimina Connessione" action="#{gestioneApplicazione.deleteConnection}" update="@(.updateableContent)">
+                                                    <p:confirm header="Conferma Necessaria" message="Confermi eliminazione Connessione?" icon="ui-icon-alert" />
+                                                    <f:setPropertyActionListener value="#{connectionSetup}" target="#{gestioneApplicazione.selectedConnectionSetup}" />
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:panel>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Gestione Schedulazioni">
+                                <ui:include src="./tabs/gestioneSchedulazioni.xhtml" />
+                            </p:tab>
+                            <p:tab title="Audit Log" >
+                                <ui:include src="tabs/gestioneAuditLog.xhtml"/>
+                            </p:tab>
+                            <p:tab title="Gestione Logo">
+                                <h:form>
+                                <p:panel toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+                                    <p:panelGrid id="pgUploads" styleClass="mui-multigrid-container">
+                                        <p:row>
+                                            <p:column>
+                                                <h:outputText value="Login Image (PNG)"/>
+                                                <br/>
+                                                <p:graphicImage styleClass="refreshImage" cache="false" value="#{imageProducer.image}" style="height:100px;" >
+                                                    <f:param name="mui_image_name" value="logo-login.png" />
+                                                </p:graphicImage>
+                                                <br/>
+                                                <p:fileUpload fileUploadListener="#{gestioneApplicazione.uploadLoginImage}"
+                                                              auto="true" mode="advanced" allowTypes="/(\.|\/)(png)$/"
+                                                              update="@form"
+                                                              fileLimit="1"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="Top Bar Image (PNG)"/>
+                                                <br/>
+                                                <p:graphicImage styleClass="refreshImage" cache="false"
+                                                                value="#{imageProducer.image}"
+                                                                style="height:100px;" >
+                                                        <f:param name="mui_image_name" value="logo-top.png" />
+                                                </p:graphicImage>
+                                                <br/>
+                                                <p:fileUpload fileUploadListener="#{gestioneApplicazione.uploadTopBarImage}"
+                                                              auto="true" mode="advanced" allowTypes="/(\.|\/)(png)$/"
+                                                              update="@form"
+                                                              fileLimit="1"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="Favicon Image (ICO)"/>
+                                                <br/>
+                                                <p:graphicImage styleClass="refreshImage" cache="false"
+                                                                value="#{imageProducer.image}"
+                                                                style="height:100px;" >
+                                                        <f:param name="mui_image_name" value="favicon.ico" />
+                                                </p:graphicImage>
+                                                <br/>
+                                                <p:fileUpload fileUploadListener="#{gestioneApplicazione.uploadFaviconImage}"
+                                                              auto="true" mode="advanced" allowTypes="/(\.|\/)(ico)$/"
+                                                              update="@form"
+                                                              fileLimit="1"/>
+
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:panel>
+                                </h:form>                            
+                            </p:tab>
+                        </p:tabView>
+                    </p:row>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

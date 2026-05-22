@@ -1,0 +1,54 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Data Pubblicazione",
+      "field": "dataPubblicazione",
+      "width": 300,
+      "type": "date",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Stato",
+      "field": "stato",
+      "width": 200,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "width": 400,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Export ID",
+      "field": "exportId",
+      "width": 200,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Esito",
+      "field": "esito",
+      "width": 200,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

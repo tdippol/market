@@ -1,0 +1,42 @@
+nameOverride: ""
+fullnameOverride: ""
+
+# Settings for replicas
+replicas:
+  app: 2
+# Settings for load-balancer (when deployed in local cluster)
+muiService:
+  enabled: true
+  type: NodePort
+
+# Settings for ingress (when deployed in local cluster as ingress-nginx)
+ingress:
+  enabled: true
+  class: gce
+
+rbac:
+  create: true
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: gke-gitlab-service
+
+# Settings for images (hosted on gcr)
+# gitlab.axiante.com:29029/ax_mui/mui/mui-app:latest
+images:
+  registry: gitlab.axiante.com:29029
+  repo: ax_mui
+  app:
+    image_full_name: comingFromCD
+
+# Credentials
+imageCredentials:
+  registry: gitlab.axiante.com:29029
+  username: comingFromCD
+  password: comingFromCD
+  email: foo@axiante.com

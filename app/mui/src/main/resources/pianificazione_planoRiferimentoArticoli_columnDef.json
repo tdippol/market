@@ -1,0 +1,160 @@
+{
+  "columnDef": [
+    {
+      "headerName":"Codice Plano",
+      "field":"codicePlano",
+      "editable":false,
+      "width":100,
+      "hide":true,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName":"Codice Item",
+      "field":"codiceItem",
+      "editable":false,
+      "width":100,
+      "hide":true,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName":"Tipo Item",
+      "field":"tipoItem",
+      "editable":false,
+      "width":50,
+      "hide":true,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName": "Codice Articolo",
+      "field": "codiceArticolo",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Descrizione Articolo",
+      "field": "descrizioneArticolo",
+      "editable": false,
+      "width": 400,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName":"In Out",
+      "field":"inOut",
+      "width":100,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Planogramma",
+      "field":"planogramma",
+      "editable":false,
+      "width":400,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName":"Compratore",
+      "field":"compratore",
+      "width":300,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Reparto",
+      "field":"reparto",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Categoria",
+      "field":"categoria",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Grm",
+      "field":"grm",
+      "width":300,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Sub Grm",
+      "field":"subGrm",
+      "width":300,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Seleziona tutti",
+      "field":"selected",
+      "width":150,
+      "type": "checkbox",
+      "editable":true,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":true,
+      "headerCheckboxSelection":true,
+      "headerCheckboxSelectionFilteredOnly":true
+    }
+  ]
+}

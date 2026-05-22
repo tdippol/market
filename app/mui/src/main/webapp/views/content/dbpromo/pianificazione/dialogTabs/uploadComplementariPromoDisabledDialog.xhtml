@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="updateComplementariPromoDisabledDialog"
+          widgetVar="updateComplementariPromoDisabledDialog"
+          modal="true"
+          closable="true"
+          header="Upload dati complementari"
+          width="500px"
+          height="200px"
+          resizable="false"
+          styleClass="disable-scroll">
+    <h2>Attenzione</h2>
+    <p>Questa promozione è un CashBack Multitransazione</p>
+    <p>Il caricamento dei file complementari non è consentito</p>
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-12">
+                <p:commandButton value="Chiudi"
+                                 styleClass="ui-confirmdialog-no"
+                                 actionListener="#{templateView.currentView.uploadComplementari.clear}"
+                                 oncomplete="PF('updateComplementariPromoDisabledDialog').hide()" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

@@ -1,0 +1,1 @@
+delete from MUIPROMO.APPLICATION_PROPERTIES where ap_key like '%ADMIN_MODE%';

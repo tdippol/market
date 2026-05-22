@@ -1,0 +1,5 @@
+{
+    "@odata.context": "$metadata#Cellsets(Cells(Ordinal,Value,FormattedValue,Updateable,RuleDerived,Consolidated,HasPicklist,PicklistValues))/$entity",
+    "ID": "MLltVGhwAIABAAAg",
+    "Cells": [] 
+}

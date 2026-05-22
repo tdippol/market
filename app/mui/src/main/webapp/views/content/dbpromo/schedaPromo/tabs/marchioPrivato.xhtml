@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_schedapromo_attributi" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_attributi" style="display: inline;">
+                        <p:panel style="width: 50%; margin: auto; border:none">
+                            <f:facet name="header">
+                            </f:facet>
+                            <p:panel>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <p:outputLabel value="abilita" />
+                                    </div>
+                                    <div class="col-2">
+                                        <p:inputSwitch value="${templateView.currentView.marchioPrivatoAbilitato}">
+                                            <p:ajax update="@(.updateableContent)"
+                                                    listener="#{templateView.currentView.toggleMarchioPrivAbilitato}" />
+                                        </p:inputSwitch>
+                                    </div>
+                                    <div class="col-2">
+                                        <p:outputLabel value="automatico" />
+                                    </div>
+                                    <div class="col-2">
+                                        <p:inputSwitch value="${templateView.currentView.marchioPrivatoAutomatico}"
+                                                       disabled="${templateView.currentView.marchioPrivatoDisabled}">
+                                            <p:ajax update="@(.marchioPrivatoToggle)"
+                                                    listener="#{templateView.currentView.toggleMarchioPrivAutomatico}" />
+                                        </p:inputSwitch>
+                                    </div>
+                                    <div class="col-2">
+                                        <p:outputLabel value="esteso" />
+                                    </div>
+                                    <div class="col-2">
+                                        <p:inputSwitch value="${templateView.currentView.marchioPrivatoEsteso}"
+                                                       disabled="${templateView.currentView.marchioPrivatoAutomaticoDisabled}"
+                                                       styleClass="marchioPrivatoToggle">
+                                            <p:ajax listener="#{templateView.currentView.toggleMarchioPrivEsteso}" />
+                                        </p:inputSwitch>
+                                    </div>
+                                </div>
+                            </p:panel>
+                            <p:panel>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p:panel style="border: none;">
+                                            <f:facet name="header">
+                                                <h:outputText value="Selezione Marchio Privato" style="font-size: medium;"/>
+                                            </f:facet>
+
+                                            <p:repeat value="#{templateView.currentView.marchiPrivati}" var="marchio">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <h:outputText value="#{marchio.marchioPrivato.descrizione}" />
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <p:inputSwitch value="#{marchio.attivo}" disabled="${templateView.currentView.marchioPrivatoDisabled}" >
+                                                            <p:ajax listener="#{templateView.currentView.toggleMarchioPrivato(marchio)}" />
+                                                        </p:inputSwitch>
+                                                    </div>
+                                                </div>
+                                            </p:repeat>
+                                        </p:panel>
+                                    </div>
+                                    <div class="col-4">
+                                        <p:panel style="border: none;">
+                                            <f:facet name="header">
+                                                <h:outputText value="Selezione Reparto" style="font-size: medium;"/>
+                                            </f:facet>
+
+                                            <p:repeat value="#{templateView.currentView.repartiMarchioPrivato}" var="repartoPriv">
+                                                <div class="row">
+                                                    <div class="col-1">
+                                                        <h:outputText value="#{repartoPriv.reparto.codiceReparto}" />
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <h:outputText value="#{repartoPriv.reparto.descrizione}" />
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <p:inputSwitch value="#{repartoPriv.attivo}"
+                                                                       disabled="${templateView.currentView.marchioPrivatoDisabled}">
+                                                            <p:ajax listener="#{templateView.currentView.toggleReparto(repartoPriv)}" />
+                                                        </p:inputSwitch>
+                                                    </div>
+                                                </div>
+                                            </p:repeat>
+                                        </p:panel>
+                                    </div>
+                                </div>
+                            </p:panel>
+                        </p:panel>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ui-panel-title {
+            width: 70% !important;
+        }
+    </style>
+</ui:composition>
+
+</html>

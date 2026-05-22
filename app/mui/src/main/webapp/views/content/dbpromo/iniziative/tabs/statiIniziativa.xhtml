@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <div class="col-12">
+                        <ui:include src="../dlgGestioneStatoIniziativa.xhtml" />
+                        <p:remoteCommand name="updateGestioneStato" update="btnGestioneStato"/>
+                        <p:commandButton value="Gestione Stato" style="margin-right: 20px; border-radius: 5px;"
+                                         id="btnGestioneStato" styleClass="pf-btn-confirm btnGestioneStatoClass"
+                                         disabled="#{templateView.currentView.btnGestioneStatoDisabled}"
+                                         actionListener="#{templateView.currentView.prepareDlgGestioneStatoIniziativa}"
+                                         oncomplete="PF('dlgGestioneStatoIniziativa').show()"
+                                         update="@(.dlgGestioneStatoIniziativaClass)" />
+                    </div>
+
+                    <p:panel id="expandable_db_schedainiziativa_stati" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedainiziativa_stati">
+                        <f:facet name="header">
+                            <p:outputLabel value="Storico Stati" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      styleClass=""
+                                      class="ag-theme-balham scheda_stati"
+                                      pt:gridid="db_schedainiziativa_stati">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="statiiniziativa_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedainiziativa_stati',this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedainiziativa_stati')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedainiziativa_stati','Storico Stati Iniziativa',true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedainiziativa_stati','Storico Stati Iniziativa')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var idIniziativa = $('.idIniziativaSelected').text();
+                            var gridParamsSchedaIniziativaStati = {
+                                gridTabGroup: 'tabViewSchedaIniziativa',
+                                gridTabPosition: 0,
+                                gridCode: 'db_schedainiziativa_stati',
+                                gridTitle: 'Scheda Iniziativa - Stati',
+                                url_columnDefs: contextPath + '/resources/iniziative/stati/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/iniziative/' + idIniziativa
+                                    + '/stati/rowData' + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_schedainiziativa_stati',
+                                gridOptions: {
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_schedainiziativa_stati');
+                                    }
+                                }
+                            }
+
+                            $(document).ready(function () {
+                                if (idIniziativa &amp;&amp; currentActiveTab == gridParamsSchedaIniziativaStati.gridTabPosition) {
+                                    creaGriglia(gridParamsSchedaIniziativaStati);
+                                }
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

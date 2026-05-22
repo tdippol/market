@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form>
+                        <p:panel header="Accesso a righe 'Totali'" toggleable="true"
+                                 toggleSpeed="500" closeSpeed="500"
+                                 styleClass="pnlGrid_Header updateableContent">
+                            <p:dataTable var="group" styleClass="pf-datatable"
+                                         widgetVar="gruppiTable" value="#{gestioneGruppi.groupList}"
+                                         rows="20" paginator="true"
+                                         resizableColumns="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="20,50,100"
+                                         rowKey="#{group.id}" rowIndexVar="rowIndex">
+                                <p:column headerText="Codice" sortBy="#{group.codiceGruppo}"
+                                          filterBy="#{group.codiceGruppo}" filterMatchMode="contains">
+                                    <h:outputText value="#{group.codiceGruppo}" />
+                                </p:column>
+                                <p:column headerText="Descrizione"
+                                          sortBy="#{group.descrizione}" filterBy="#{group.descrizione}"
+                                          filterMatchMode="contains">
+                                    <h:outputText value="#{group.descrizione}" />
+                                </p:column>
+                                <p:column headerText="Accesso" >
+                                          <p:selectOneMenu value="#{group.accessoTotaleAsString}">
+                                            <f:selectItem itemLabel="NONE" itemValue=""/>
+                    						<f:selectItem itemLabel="READ" itemValue="READ"/>
+                    						<f:selectItem itemLabel="WRITE" itemValue="WRITE"/>
+                    						<f:ajax listener="#{gestioneGruppi.cambioAccesso(group)}"/>
+                                          </p:selectOneMenu>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

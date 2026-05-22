@@ -1,0 +1,248 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <!-- Dialog aggiunta compratori -->
+                    <p:dialog widgetVar="dlgAddCompratoriToGroup" resizable="false" closable="false" width="800"
+                              styleClass="pf-dialog disable-horizontal-scroll" header="Aggiungi Compratore al Gruppo">
+                        <h:form styleClass="formAddCompratoriToGroup">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p:panel header="Seleziona Compratore" style="margin-bottom: 10px;">
+                                        <p:selectManyMenu id="compratoreSelector" styleClass="compratoreSelector"
+                                                          filter="true" filterMatchMode="contains"
+                                                          style="width: 100%;" showCheckbox="true"
+                                                          value="#{gestioneGruppi.gruppiCompratoriBean.selectedCompratori}">
+                                            <p:ajax event="change" update="@(.ui-confirmdialog-yes)" />
+                                            <f:converter binding="#{compratoriConverter}" />
+                                            <f:selectItems
+                                                    value="#{gestioneGruppi.gruppiCompratoriBean.availableCompratori}"
+                                                    var="c" itemValue="#{c}"
+                                                    itemLabel="[#{c.codiceCompratore}] #{c.descrizione}" />
+                                        </p:selectManyMenu>
+                                        <f:facet name="footer">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <p:commandButton value="Seleziona tutti" styleClass="pf-btn-confirm"
+                                                                     icon="fa fa-fw fa-check-square"
+                                                                     action="#{gestioneGruppi.selectAllCompratori}"
+                                                                     disabled="#{empty gestioneGruppi.gruppiCompratoriBean.availableCompratori}"
+                                                                     update="@(.compratoreSelector), @(.ui-confirmdialog-yes)" />
+                                                    <p:commandButton value="Deseleziona tutti"
+                                                                     styleClass="pf-btn-cancel"
+                                                                     icon="fa fa-fw fa-square"
+                                                                     style="margin-left: 15px;"
+                                                                     action="#{gestioneGruppi.deselectAllCompratori}"
+                                                                     disabled="#{empty gestioneGruppi.gruppiCompratoriBean.availableCompratori}"
+                                                                     update="@(.compratoreSelector), @(.ui-confirmdialog-yes)" />
+                                                </div>
+                                                <div class="col-4">
+                                                    <div style="float: left; margin-top: 15px;">Tipo Accesso</div>
+                                                    <p:inputSwitch showLabels="true" label="Accesso"
+                                                                   value="#{gestioneGruppi.gruppiCompratoriBean.tipoAccesso}"
+                                                                   style="margin-left: 10px; margin-top: 13px !important;"
+                                                                   onLabel="W" offLabel="R">
+                                                        <p:ajax update="@(.formAddCompratoriToGroup)" />
+                                                        <f:converter binding="#{tipoAccessoConverter}" />
+                                                    </p:inputSwitch>
+                                                </div>
+                                            </div>
+                                        </f:facet>
+                                    </p:panel>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col 6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;" process="@this"
+                                                     oncomplete="PF('dlgAddCompratoriToGroup').hide();" />
+                                </div>
+                                <div class="col 6">
+                                    <p:commandButton value="Conferma" styleClass="ui-confirmdialog-yes"
+                                                     actionListener="#{gestioneGruppi.addCompratoriToGroup}"
+                                                     update="@(.formAddCompratoriToGroup), @(.updateableContent)"
+                                                     disabled="#{empty gestioneGruppi.gruppiCompratoriBean.selectedCompratori}"
+                                                     oncomplete="PF('dlgAddCompratoriToGroup').hide();" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </p:dialog>
+
+                    <!-- Dialog conferma copia da gruppo senza reparti -->
+                    <p:confirmDialog widgetVar="dlgGroupNoCompratori" header="Attenzione" styleClass="dlgGroupNoCompratori"
+                                     message="Stai copiando da un gruppo senza compratori associati. Confermi?"
+                                     severity="alert">
+                        <p:commandButton value="SI" update="@(.updateableCompratori)"
+                                         action="#{gestioneGruppi.confirmCopyCompratoriFromGroup}"
+                                         oncomplete="PF('dlgGroupNoCompratori').hide(); PF('dlgCopyCompratoriFromGroup').hide()" />
+                        <p:commandButton value="NO" onclick="PF('dlgGroupNoCompratori').hide()"
+                                         style="float: right;" type="button" />
+                    </p:confirmDialog>
+
+                    <!-- Dialog copia -->
+                    <p:dialog widgetVar="dlgCopyCompratoriFromGroup" resizable="false" closable="false"
+                              styleClass="pf-dialog disable-horizontal-scroll" width="600" height="25vh"
+                              header="Copia da Gruppo">
+                        <h:form id="copyCompratoriFromGroupDlgForm" styleClass="dlgCopyCompratoriFromGroupForm">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="copyGroup" value="Da gruppo" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="copyGroup" styleClass="input-field" style="width: 100%;"
+                                                         filter="true" filterMatchMode="contains"
+                                                         value="#{gestioneGruppi.gruppiCompratoriBean.idCopyGroup}">
+                                            <p:ajax update="@(.dlgCopyCompratoriFromGroupForm) @(.ui-confirmdialog-yes)" />
+                                            <f:selectItem itemLabel="Seleziona gruppo" noSelectionOption="true" />
+                                            <f:selectItems value="#{gestioneGruppi.gruppiCompratoriBean.groupsForCopy}"
+                                                           var="g" itemLabel="#{g.descrizione}" itemValue="#{g.id}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                        <f:facet name="footer">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                                     action="#{gestioneGruppi.resetCopyCompratoriFromGroupDialog}"
+                                                     onclick="PF('dlgCopyCompratoriFromGroup').hide()" />
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton id="copyCompratoriFromGroupDlgConfirmBtn" value="Copia"
+                                                     styleClass="ui-confirmdialog-yes"
+                                                     action="#{gestioneGruppi.preConfirmCopyCompratoriFromGroup}"
+                                                     update="@(.dlgGroupNoCompratori) @(.updateableCompratori)" />
+                                </div>
+                            </div>
+                        </f:facet>
+                    </p:dialog>
+
+                    <h:form>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <p:outputLabel for="gruppo" value="Seleziona Gruppo" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="gruppo" value="#{gestioneGruppi.selectedGroupCombo}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains">
+                                        <f:converter binding="#{groupsConverter}" />
+                                        <p:ajax update="@(.updateableCompratori) @(.buyer-massive-action)" />
+                                        <f:selectItems value="#{gestioneGruppi.groupList}" var="g"
+                                                       itemLabel="#{g.codiceGruppo} - #{g.descrizione}"
+                                                       itemValue="#{g}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <p:commandButton value="Copia" id="copyCompratoriFromGroup" styleClass="pf-btn-confirm"
+                                                 style="float: right;"
+                                                 action="#{gestioneGruppi.openCopyCompratoriFromGroupDialog}"
+                                                 oncomplete="PF('dlgCopyCompratoriFromGroup').show()"
+                                                 update="@(.dlgCopyCompratoriFromGroupForm)" />
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-6">
+                                <p:panel header="Compratori Associati" toggleable="true" toggleSpeed="500"
+                                         closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p:commandButton action="#{gestioneGruppi.removeAllCompratori}"
+                                                             styleClass="pf-btn-danger buyer-massive-action"
+                                                             style="float: right; margin-left: 10px;"
+                                                             disabled="#{empty gestioneGruppi.gruppiCompratoriBean.compratori}"
+                                                             value="Elimina tutti" icon="far fa-fw fa-trash-alt"
+                                                             update="@(.updateableCompratori) @(.buyer-massive-action)">
+                                                <p:confirm header="Attenzione" icon="ui-icon-alert"
+                                                           message="Confermi l'eliminazione di tutti i compratori dal gruppo?" />
+                                            </p:commandButton>
+                                            <p:commandButton action="#{gestioneGruppi.changeCompratoriAllWrite}"
+                                                             styleClass="pf-btn-confirm buyer-massive-action"
+                                                             style="float: right; margin-left: 10px;"
+                                                             disabled="#{empty gestioneGruppi.gruppiCompratoriBean.compratori}"
+                                                             value="Imposta WRITE tutti"
+                                                             update="@(.updateableCompratori)">
+                                                <p:confirm header="Attenzione" icon="ui-icon-alert"
+                                                           message="Confermi il tipo accesso WRITE per tutti i compratori?" />
+                                            </p:commandButton>
+                                            <p:commandButton action="#{gestioneGruppi.changeCompratoriAllRead}"
+                                                             styleClass="pf-btn-confirm buyer-massive-action"
+                                                             style="float: right;"
+                                                             disabled="#{empty gestioneGruppi.gruppiCompratoriBean.compratori}"
+                                                             value="Imposta READ tutti"
+                                                             update="@(.updateableCompratori)">
+                                                <p:confirm header="Attenzione" icon="ui-icon-alert"
+                                                           message="Confermi il tipo accesso READ per tutti i compratori?" />
+                                            </p:commandButton>
+                                        </div>
+                                    </div>
+
+                                    <p:dataTable var="c" styleClass="pf-datatable updateableCompratori"
+                                                 widgetVar="compratoriTable"
+                                                 value="#{gestioneGruppi.gruppiCompratoriBean.compratori}"
+                                                 rowKey="#{c.id}" rowIndexVar="rowIndex">
+                                        <p:column headerText="Compratore" width="50%">
+                                            <h:outputText
+                                                    value="[#{c.compratore.codiceCompratore}] #{c.compratore.descrizione}" />
+                                        </p:column>
+                                        <p:column headerText="Tipo Accesso" width="30%" style="text-align: center;">
+                                            <p:inputSwitch onLabel="W" offLabel="R" value="#{c.tipoAccesso}">
+                                                <f:converter binding="#{tipoAccessoConverter}" />
+                                                <p:ajax update="@(.compratoriTable)"
+                                                        listener="#{gestioneGruppi.toggleCompratoreSecurity}" />
+                                                <f:attribute value="#{c}" name="toggleEntity" />
+                                            </p:inputSwitch>
+                                        </p:column>
+                                        <p:column width="20%" style="text-align: center;">
+                                            <p:commandButton icon="ui-icon-trash" title="Elimina Compratore da Gruppo"
+                                                             action="#{gestioneGruppi.removeCompratoreFromGroup}"
+                                                             update="@(.updateableContent)">
+                                                <p:confirm header="Conferma Necessaria"
+                                                           message="Confermi eliminazione compratore dal gruppo?"
+                                                           icon="ui-icon-alert" />
+                                                <f:setPropertyActionListener value="#{c}"
+                                                                             target="#{gestioneGruppi.gruppiCompratoriBean.selectedGruppoCompratore}" />
+                                            </p:commandButton>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <f:facet name="actions">
+                                        <p:commandLink action="#{gestioneGruppi.openAddCompratoriToGroupDialog}"
+                                                       styleClass="pnlGrid_Header plusButton"
+                                                       update="@(.formAddCompratoriToGroup)" />
+                                    </f:facet>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ui-inputswitch {
+            margin-top: 5px !important;
+        }
+
+        .ui-inputswitch-on > span {
+            color: #ffffff !important;
+        }
+
+        .buyer-massive-action.ui-state-disabled {
+            opacity: .35 !important;
+        }
+    </style>
+</ui:composition>
+</html>

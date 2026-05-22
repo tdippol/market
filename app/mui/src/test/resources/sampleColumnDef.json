@@ -1,0 +1,28 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Articolo",
+      "field": "articolo",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Compratore",
+      "field": "compratore",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

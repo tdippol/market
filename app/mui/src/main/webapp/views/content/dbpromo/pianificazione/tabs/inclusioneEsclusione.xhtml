@@ -1,0 +1,217 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <p:confirmDialog widgetVar="confirmRemoveInclusione" header="Avviso" closable="false"
+                         styleClass="confirmRemoveInclusione" severity="alert"
+                         message="#{templateView.currentView.inclusioneEsclusioneBean.deleteMessage}">
+            <p:commandButton value="SI" widgetVar="btnConfirmRemoveMeccFromCanale"
+                             action="#{templateView.currentView.inclusioneEsclusioneBean.performDelete}"
+                             oncomplete="PF('confirmRemoveInclusione').hide();updateGrids()"
+                             update="@(.btnAddInclusione) @(.btnAddEsclusione) @(.incl-escl)"/>
+            <p:commandButton value="NO" widgetVar="btnConfirmRemoveInclusione" style="float: right;"
+                             action="#{templateView.currentView.inclusioneEsclusioneBean.resetDelete}"
+                             oncomplete="PF('confirmRemoveInclusione').hide()"/>
+        </p:confirmDialog>
+
+        <p:confirmDialog widgetVar="confirmScarico" header="Avviso" closable="false"
+                         styleClass="confirmScarico" severity="alert"
+                         message="Confermi la lista delle inclusioni/esclusi per la promozione selezionata?">
+            <p:commandButton value="SI" widgetVar="btnConfirmRemoveMeccFromCanale"
+                             oncomplete="PF('confirmScarico').hide();"
+                             action="#{templateView.currentView.inclusioneEsclusioneBean.confirmScarico}"/>
+            <p:commandButton value="NO" widgetVar="btnConfirmRemoveInclusione" style="float: right;"
+                             oncomplete="PF('confirmScarico').hide()"/>
+        </p:confirmDialog>
+
+        <ui:include src="dialog/dlgCreaInclusioneEsclusione.xhtml"/>
+
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-2">
+                                <p:outputLabel value="#{templateView.currentView.inclusioneEsclusioneBean.idPromozioneCorrente}"
+                                               styleClass="promozioneCorrente" style="visibility: hidden;"/>
+                            </div>
+                            <p:commandButton value="Conferma" type="button"
+                                             styleClass="pf-btn-confirm confermaBtn" style="float: right;"
+                                             update="@(.confirmScarico)"
+                                             disabled="#{templateView.currentView.inclusioneEsclusioneBean.disabledBtnScarico}"
+                                             onclick="PF('confirmScarico').show()"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div style="background-color: #ffffff;">
+                                <p:panel id="expandable_inclusione" toggleable="false"
+                                         styleClass="pnlGrid_Header updateableContent expandable_inclusione">
+                                    <f:facet name="header">
+                                        <p:commandButton value="+" type="button"
+                                                         styleClass="pf-btn-confirm btnAddInclusione"
+                                                         onclick="addInclusione(); "
+                                                         disabled="#{templateView.currentView.inclusioneEsclusioneBean.disabledBtnAddInclusione}"/>
+                                        <p:outputLabel value="Elementi inclusi" style="padding-left: 10px;"/>
+                                    </f:facet>
+                                    <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                                  class="ag-theme-balham inclusione" pt:gridid="db_inclusione">
+                                    </h:panelGroup>
+                                    <f:facet name="actions">
+                                        <p:inputText autocomplete="off" id="inclusione_quickfilter"
+                                                     placeholder="Filtra..."
+                                                     styleClass="pnlGrid_Header filterInputText planningFilter"
+                                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_inclusione', this.value)"/>
+                                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                                       onclick="expandGrid('db_inclusione')"
+                                                       onerror="redirectToExpiredPage()"/>
+                                        <p:commandLink title="Esporta con raggruppamenti"
+                                                       styleClass="pnlGrid_Header exportButtonGrouped"
+                                                       onclick="onBtExport('db_inclusione', 'Inclusione', true)"
+                                                       onerror="redirectToExpiredPage()"/>
+                                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                                       onclick="onBtExport('db_inclusione', 'Inclusione', false)"
+                                                       onerror="redirectToExpiredPage()"/>
+                                    </f:facet>
+                                    <script type="text/javascript">
+                                        var promozioneCorrente = $('.promozioneCorrente').text();
+                                        if ( promozioneCorrente == null || promozioneCorrente == '' ) {
+                                            promozioneCorrente = '0';
+                                        }
+                                        var gridParamsInclusione = {
+                                            gridCode: 'db_inclusione',
+                                            gridTitle: 'Elementi Inclusi',
+                                            url_columnDefs: contextPath + '/resources/inclusioneesclusione/columnDef/inclusione' + addUrlParamContesto(#{muiContext}),
+                                            url_rowData: contextPath + '/resources/inclusioneesclusione/rowData/' + promozioneCorrente + '/inclusione' + addUrlParamContesto(#{muiContext}),
+                                            url_customSort: contextPath + '/resources/grid/sorting/db_inclusione',
+                                            gridOptions: {
+                                                onSortChanged: function (event) {
+                                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_inclusione');
+                                                }
+                                            },
+                                            additionColumnDefs: [{
+                                                headerName: '',
+                                                width: 35,
+                                                cellRenderer: 'InclusioneEsclusione_DeleteBtnRenderer',
+                                                position: 'prepend',
+                                                pinned: 'left'
+                                            }]
+                                        };
+                                        $(document).ready(function () {
+                                            creaGriglia(gridParamsInclusione);
+                                        });
+                                    </script>
+                                </p:panel>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div style="background-color: #ffffff;">
+                                <p:panel id="expandable_esclusione" toggleable="false"
+                                         styleClass="pnlGrid_Header updateableContent expandable_esclusione">
+                                    <f:facet name="header">
+                                        <p:commandButton value="+" type="button"
+                                                         onclick="addEsclusione(); return false;"
+                                                         styleClass="pf-btn-confirm btnAddEsclusione"
+                                                         disabled="#{templateView.currentView.inclusioneEsclusioneBean.disabledBtnAddEsclusione}"/>
+                                        <p:outputLabel value="Elementi esclusi" style="padding-left: 10px;" />
+                                    </f:facet>
+                                    <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                                  class="ag-theme-balham esclusione" pt:gridid="db_esclusione">
+                                    </h:panelGroup>
+                                    <f:facet name="actions">
+                                        <p:inputText autocomplete="off" id="esclusione_quickfilter" placeholder="Filtra..."
+                                                     styleClass="pnlGrid_Header filterInputText planningFilter"
+                                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_esclusione', this.value)" />
+                                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                                       onclick="expandGrid('db_esclusione')" onerror="redirectToExpiredPage()" />
+                                        <p:commandLink title="Esporta con raggruppamenti"
+                                                       styleClass="pnlGrid_Header exportButtonGrouped"
+                                                       onclick="onBtExport('db_esclusione', 'Esclusione', true)"
+                                                       onerror="redirectToExpiredPage()" />
+                                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                                       onclick="onBtExport('db_esclusione', 'Esclusione', false)"
+                                                       onerror="redirectToExpiredPage()" />
+                                    </f:facet>
+                                    <script type="text/javascript">
+                                        var promozioneCorrente = $('.promozioneCorrente').text();
+                                        if ( promozioneCorrente == null || promozioneCorrente == '' ) {
+                                            promozioneCorrente = '0';
+                                        }
+                                        var gridParamsEsclusione = {
+                                            gridCode: 'db_esclusione',
+                                            gridTitle: 'Elementi Inclusi',
+                                            url_columnDefs: contextPath + '/resources/inclusioneesclusione/columnDef/esclusione' + addUrlParamContesto(#{muiContext}),
+                                            url_rowData: contextPath + '/resources/inclusioneesclusione/rowData/' + promozioneCorrente + '/esclusione' + addUrlParamContesto(#{muiContext}),
+                                            url_customSort: contextPath + '/resources/grid/sorting/db_esclusione',
+                                            gridOptions: {
+                                                onSortChanged: function (event) {
+                                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_esclusione');
+                                                }
+                                            },
+                                            additionColumnDefs: [{
+                                                headerName: '',
+                                                width: 35,
+                                                cellRenderer: 'InclusioneEsclusione_DeleteBtnRenderer',
+                                                position: 'prepend',
+                                                pinned: 'left'
+                                            }]
+                                        };
+
+                                        $(document).ready(function () {
+                                            creaGriglia(gridParamsEsclusione);
+                                        });
+
+                                        function updateGrids() {
+                                            var promozioneCorrente = $('.promozioneCorrente').text();
+                                            updateGrid('db_inclusione', promozioneCorrente)
+                                            updateGrid('db_esclusione', promozioneCorrente)
+                                        }
+
+                                        function updateGrid(gridCode, promozioneCorrente) {
+                                            var newUrl = '';
+                                            if (gridCode === 'db_inclusione') {
+                                                newUrl = contextPath + '/resources/inclusioneesclusione/rowData/' + promozioneCorrente + '/inclusione' + addUrlParamContesto(#{muiContext});
+                                            } else if (gridCode === 'db_esclusione') {
+                                                newUrl = contextPath + '/resources/inclusioneesclusione/rowData/' + promozioneCorrente + '/esclusione' + addUrlParamContesto(#{muiContext});
+                                            }
+                                            $.getJSON(newUrl, function(data) {
+                                                getGridOptionFromGridMap(gridCode).api.setRowData(data.rowData);
+                                            }).fail(
+                                                function(jqxhr, textStatus, error) {
+                                                    console.error('Error fetching new data:', textStatus, error);
+                                                }
+                                            );
+                                        }
+                                    </script>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p:remoteCommand name="removeInclusioneEsclusione"
+                     action="#{templateView.currentView.inclusioneEsclusioneBean.delete}"
+                     oncomplete="PF('confirmRemoveInclusione').show()"
+                     update="@(.confirmRemoveInclusione)"/>
+    <p:remoteCommand name="addInclusione" process="@this"
+                     action="#{templateView.currentView.inclusioneEsclusioneBean.addInclusione}"
+                     oncomplete="PF('dlgInclusioneEsclusione').show();"
+                     update="@(.formAddInclusioneEsclusione) @(.btnSaveInclusione) @(.dlgInclusioneEsclusioneClass)"/>
+    <p:remoteCommand name="addEsclusione" process="@this"
+                     action="#{templateView.currentView.inclusioneEsclusioneBean.addEsclusione}"
+                     oncomplete="PF('dlgInclusioneEsclusione').show();"
+                     update="@(.formAddInclusioneEsclusione) @(.btnSaveInclusione) @(.dlgInclusioneEsclusioneClass)"/>
+    <style>
+        .ui-panel-actions {
+            padding-top: 15px !important;
+        }
+    </style>
+</ui:composition>
+</html>

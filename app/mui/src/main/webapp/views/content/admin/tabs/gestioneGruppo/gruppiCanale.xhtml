@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <p:dialog widgetVar="dlgAddChannelsToGroup" resizable="false" closable="false" width="800"
+                              styleClass="pf-dialog disable-horizontal-scroll" header="Aggiungi Canali al Gruppo">
+                        <h:form styleClass="formAddChannelsToGroup">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p:panel header="Seleziona Canali" style="margin-bottom: 10px;">
+                                        <p:selectManyMenu id="canaliSelector" styleClass="canaliSelector"
+                                                          value="#{gestioneGruppi.selectedChannels}"
+                                                          filter="true" filterMatchMode="contains"
+                                                          showCheckbox="true" style="width: 100%;">
+                                            <p:ajax event="change" update="@(.ui-confirmdialog-yes)" />
+                                            <f:converter binding="#{canaliConverter}" />
+                                            <f:selectItems value="#{gestioneGruppi.availableChannels}" var="c"
+                                                           itemLabel="#{c.gruppoPromo} - #{c.canale.descrizione}"
+                                                           itemValue="#{c.canale}" />
+                                        </p:selectManyMenu>
+                                        <f:facet name="footer">
+                                            <div class="row">
+                                                <p:commandButton value="Seleziona tutti" styleClass="pf-btn-confirm"
+                                                                 icon="fa fa-fw fa-check-square"
+                                                                 action="#{gestioneGruppi.selectAllChannels}"
+                                                                 disabled="#{empty gestioneGruppi.availableChannels}"
+                                                                 update="@(.canaliSelector), @(.ui-confirmdialog-yes)" />
+                                                <p:commandButton value="Deseleziona tutti" styleClass="pf-btn-cancel"
+                                                                 icon="fa fa-fw fa-square"
+                                                                 action="#{gestioneGruppi.deselectAllChannels}"
+                                                                 disabled="#{empty gestioneGruppi.availableChannels}"
+                                                                 update="@(.canaliSelector), @(.ui-confirmdialog-yes)" />
+                                            </div>
+                                        </f:facet>
+                                    </p:panel>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 40px;">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;" process="@this"
+                                                     oncomplete="PF('dlgAddChannelsToGroup').hide();" />
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton styleClass="ui-confirmdialog-yes" value="Conferma"
+                                                     actionListener="#{gestioneGruppi.addChannelToGroup}"
+                                                     update="@(.formAddChannelsToGroup), @(.updateableContent)"
+                                                     disabled="#{empty gestioneGruppi.selectedChannels}"
+                                                     oncomplete="PF('dlgAddChannelsToGroup').hide();" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </p:dialog>
+
+                    <h:form>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <p:outputLabel for="gruppo" value="Seleziona Gruppo" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="gruppo" value="#{gestioneGruppi.selectedGroupCombo}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains">
+                                        <f:converter binding="#{groupsConverter}" />
+                                        <p:ajax update="@(.updateableChannels)" />
+                                        <f:selectItems value="#{gestioneGruppi.groupList}" var="g"
+                                                       itemLabel="#{g.codiceGruppo} - #{g.descrizione}"
+                                                       itemValue="#{g}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-12">
+                                <p:panel header="Canali Associati" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                                         styleClass="pnlGrid_Header updateableContent">
+                                    <p:dataTable var="c" styleClass="pf-datatable updateableChannels" widgetVar="canaliTable"
+                                                 value="#{gestioneGruppi.channels}"
+                                                 rowKey="#{c.gruppoCanale.canale.id}" rowIndexVar="rowIndex">
+                                        <p:column headerText="Codice Gruppo Promozione">
+                                            <h:outputText value="#{c.codiceGruppoPromo}" />
+                                        </p:column>
+                                        <p:column headerText="Gruppo Promozione">
+                                            <h:outputText value="#{c.descGruppoPromo}" />
+                                        </p:column>
+                                        <p:column headerText="Codice Canale">
+                                            <h:outputText value="#{c.gruppoCanale.canale.codiceCanale}" />
+                                        </p:column>
+                                        <p:column headerText="Canale">
+                                            <h:outputText value="#{c.gruppoCanale.canale.descrizione}" />
+                                        </p:column>
+                                        <p:column headerText="Crea Promozione" width="15%" style="text-align: center;">
+                                            <p:selectBooleanCheckbox value="#{c.gruppoCanale.create}">
+                                                <p:ajax event="valueChange" update="@(.canaliTable)"
+                                                        listener="#{gestioneGruppi.toggleFlagGruppoCanale(c, 'CREATE')}" />
+                                            </p:selectBooleanCheckbox>
+                                        </p:column>
+                                        <p:column headerText="Owner" width="15%" style="text-align: center;">
+                                            <p:selectBooleanCheckbox value="#{c.gruppoCanale.owner}">
+                                                <p:ajax event="valueChange" update="@(.canaliTable)"
+                                                        listener="#{gestioneGruppi.toggleFlagGruppoCanale(c, 'OWNER')}" />
+                                            </p:selectBooleanCheckbox>
+                                        </p:column>
+                                        <p:column headerText="Propaga Owner" width="15%" style="text-align: center;">
+                                            <p:selectBooleanCheckbox value="#{c.gruppoCanale.propagaOwner}">
+                                                <p:ajax event="valueChange" update="@(.canaliTable)"
+                                                        listener="#{gestioneGruppi.toggleFlagGruppoCanale(c, 'PROPAGA OWNER')}" />
+                                            </p:selectBooleanCheckbox>
+                                        </p:column>
+                                        <p:column style="width:40px; padding:3px !important;">
+                                            <p:commandButton icon="ui-icon-trash" title="Elimina Canale da Gruppo"
+                                                             action="#{gestioneGruppi.removeChannelFromGroup}"
+                                                             update="@(.updateableContent)">
+                                                <p:confirm header="Conferma Necessaria"
+                                                           message="Confermi eliminazione canale dal gruppo?"
+                                                           icon="ui-icon-alert" />
+                                                <f:setPropertyActionListener value="#{c.gruppoCanale.canale}"
+                                                                             target="#{gestioneGruppi.selectedChannel}" />
+                                            </p:commandButton>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <f:facet name="actions">
+                                        <p:commandLink action="#{gestioneGruppi.openAddChannelsToGroupDialog}"
+                                                       styleClass="pnlGrid_Header plusButton"
+                                                       update="@(.formAddChannelsToGroup)" />
+                                    </f:facet>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

@@ -1,0 +1,36 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID Promozione",
+      "field": "id",
+      "editable": false,
+      "width": 150,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Categoria Minuscola [[CAT_MINUSC]]",
+      "field": "catMinusc",
+      "editable": false,
+      "width": 300,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Categoria Maiuscola [[CAT_MAIUSC]]",
+      "field": "catMaiusc",
+      "editable": false,
+      "width": 300,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Categoria Descrizione Estesa [[CAT_DESC_ESTESA]]",
+      "field": "catDescEstesa",
+      "editable": false,
+      "width": 400,
+      "hide": false,
+      "type": "string"
+    }
+  ]
+}

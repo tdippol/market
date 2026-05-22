@@ -1,0 +1,45 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Stato",
+      "field": "codice",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Data Inizio Stato",
+      "field": "dataInizio",
+      "width": 300,
+      "type": "date",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Fine Stato",
+      "field": "dataFine",
+      "width": 300,
+      "type": "date",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Utente",
+      "field": "utente",
+      "width": 100,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+    
+  ]
+}

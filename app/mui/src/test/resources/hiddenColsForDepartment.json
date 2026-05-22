@@ -1,0 +1,15 @@
+[
+  {
+    "grid": "grid1",
+    "colId": [
+      {
+        "name": "reparto",
+        "visible": true
+      },
+      {
+        "name": "selected",
+        "visible": false
+      }
+    ]
+  }
+]

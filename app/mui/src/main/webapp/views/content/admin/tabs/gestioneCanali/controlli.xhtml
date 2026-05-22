@@ -1,0 +1,174 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+				<div class="col-12">
+					<div id="k_grid_portletpromoGrid" class="k-portlet">
+						<div class="row">
+				            <div class="col-12">
+								<p:commandButton value="Copia da Canale" id="copiaDaCanale" styleClass="pf-btn-confirm "
+												 action="#{templateView.currentView.controlliConfiguratiBean.openCopyFromChannelDialog}"
+												 oncomplete="PF('dlgCopiaDaCanale').show()"
+												 update="@(.dlgCopyFromChannelForm)"/>
+								<p:commandButton value="Copia da Meccanica" id="copiaDaMeccanica" styleClass="pf-btn-confirm"
+												 style="margin-left: 20px;"
+												 action="#{templateView.currentView.controlliConfiguratiBean.resetCopyFromMeccanicaDialog}"
+												 oncomplete="PF('dlgCopiaDaMeccanica').show()"
+												 update="@(.dlgCopiaDaMeccanica)"/>
+				            </div>
+							<!-- Dialog Copia Da Canale -->
+							<p:dialog widgetVar="dlgCopiaDaCanale" resizable="false" closable="false"
+									  styleClass="pf-dialog disable-horizontal-scroll"
+									  width="600" height="25vh" header="Copia da Canale">
+								<h:form id="copiaDaCanaleDlgForm" styleClass="dlgCopyFromChannelForm">
+									<div class="row">
+										<div class="col-6">
+											<div>
+												<p:outputLabel for="copiaCanale" value="Da canale" style="font-size: 14px;" />
+											</div>
+											<div>
+												<p:selectOneMenu id="copiaCanale" styleClass="input-field" style="width: 100%;"
+																 filter="true" filterMatchMode="contains"
+																 value="#{templateView.currentView.controlliConfiguratiBean.idCopyChannel}">
+													<p:ajax update="@(.dlgCopyFromChannelForm) @(.ui-confirmdialog-yes)" />
+													<f:selectItem itemLabel="Seleziona canale" noSelectionOption="true" />
+													<f:selectItems value="#{templateView.currentView.controlliConfiguratiBean.channelsForCopy}" var="c"
+																   itemLabel="#{c.descrizione}"
+																   itemValue="#{c.id}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
+									</div>
+								</h:form>
+			
+								<f:facet name="footer">
+									<div class="row">
+										<div class="col-6">
+											<p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+															 action="#{templateView.currentView.controlliConfiguratiBean.resetCopyFromChannelDialog}"
+															 onclick="PF('dlgCopiaDaCanale').hide()" />
+										</div>
+										<div class="col-6">
+											<p:commandButton id="copiaDaCanaleDlgConfirmBtn" value="Copia"
+															 styleClass="ui-confirmdialog-yes"
+															 disabled="#{empty templateView.currentView.controlliConfiguratiBean.idCopyChannel}"
+															 action="#{templateView.currentView.controlliConfiguratiBean.confirmCopyFromChannel}"
+															 oncomplete="PF('dlgCopiaDaCanale').hide()"
+															 update="@(.configurationTable)" />
+										</div>
+									</div>
+								</f:facet>
+							</p:dialog>				   
+
+							<!-- Dialog Copia Da Meccanica -->
+							<p:dialog widgetVar="dlgCopiaDaMeccanica" resizable="false" closable="false"
+									  styleClass="pf-dialog disable-horizontal-scroll"
+									  width="600" height="25vh" header="Copia da Meccanica">
+								<h:form id="copiaDaMeccanicaForm" styleClass="dlgCopiaDaMeccanica">
+									<div class="row">
+										<div class="col-6">
+											<div>
+												<p:outputLabel for="copiaMeccanica" value="Da Meccanica" style="font-size: 14px;" />
+											</div>
+											<div>
+												<p:selectOneMenu id="copiaMeccanica" styleClass="input-field" style="width: 100%;"
+																 filter="true" filterMatchMode="contains"
+																 value="#{templateView.currentView.controlliConfiguratiBean.idMeccanicaCopy}">
+													<p:ajax update="@(.dlgCopiaDaMeccanica) @(.ui-confirmdialog-yes)" />
+													<f:selectItem itemLabel="Seleziona meccanica" noSelectionOption="true" />
+													<f:selectItems value="#{templateView.currentView.controlliConfiguratiBean.meccanicheForCopy}" var="c"
+																   itemLabel="#{c.codiceMeccanica}-#{c.descrizione}"
+																   itemValue="#{c.id}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
+									</div>
+								</h:form>
+			
+								<f:facet name="footer">
+									<div class="row">
+										<div class="col-6">
+											<p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+															 action="#{templateView.currentView.controlliConfiguratiBean.resetCopyFromMeccanicaDialog}"
+															 onclick="PF('dlgCopiaDaMeccanica').hide()" />
+										</div>
+										<div class="col-6">
+											<p:commandButton id="copiaDaMeccanicaDlgConfirmBtn" value="Copia"
+															 styleClass="ui-confirmdialog-yes"
+															 disabled="#{empty templateView.currentView.controlliConfiguratiBean.idMeccanicaCopy}"
+															 action="#{templateView.currentView.controlliConfiguratiBean.confirmCopyFromMeccania}"
+															 oncomplete="PF('dlgCopiaDaMeccanica').hide()"
+															 update="@(.configurationTable)" />
+										</div>
+									</div>
+								</f:facet>
+							</p:dialog>				   
+							         
+						</div>
+						<div class="row" style="margin-top: 20px;">
+							<div class="col-3">
+								<h:form>
+									<p:dataTable var="s" styleClass="pf-datatable meccanicheAssociate"
+												 widgetVar="meccanicheAssociate" selectionMode="single"
+												 value="#{templateView.currentView.controlliConfiguratiBean.meccaniche}"
+												 rowKey="#{s.codiceMeccanica}" rowIndexVar="rowIndex"
+												 selection="#{templateView.currentView.controlliConfiguratiBean.meccanicaSelezionata}"
+												 >
+										<p:column headerText="Codice" width="20%">
+											<h:outputText value="#{s.codiceMeccanica}" />
+										</p:column>
+										<p:column headerText="Descrizione" width="80%">
+											<h:outputText value="#{s.descrizione}" />
+										</p:column>
+										<p:ajax event="rowSelect" update="@(.configurationTable)"/>
+									</p:dataTable>
+								</h:form>
+							</div>
+							<div class="col-9">
+								<h:form>
+									<p:dataTable var="s" styleClass="pf-datatable configurationTable"
+												 widgetVar="controlliTable" style="width: 100%;"
+												 value="#{templateView.currentView.controlliConfiguratiBean.configurazioni}"
+												 rowKey="#{s.id}" rowIndexVar="rowIndex">
+										<p:column headerText="Codice" >
+											<h:outputText value="#{s.codice}" />
+										</p:column>
+										<p:column headerText="Descrizione" width="25    %">
+											<h:outputText value="#{s.descrizione}" />
+										</p:column>
+										<p:column headerText="Messaggio" width="30%">
+											<h:outputText value="#{s.messaggioErrore}" />
+										</p:column>
+										<p:column headerText="Ambito" >
+											<h:outputText value="#{s.ambito}" />
+										</p:column>
+										<p:column headerText="Tipo" >
+											<h:outputText value="#{s.tipo}" />
+										</p:column>
+										<p:column headerText="Severita" >
+	                                         <p:selectOneMenu value="#{s.severita}" disabled="#{not s.selected}">
+	                                            <f:selectItem itemLabel="Errore" itemValue="Errore"/>
+	                                            <f:selectItem itemLabel="Warning" itemValue="Warning"/>										
+												<p:ajax update="@(.configurationTable)" event="valueChange" listener="#{templateView.currentView.controlliConfiguratiBean.updateSeverita(s.codice, s.severita)}" />
+	                                         </p:selectOneMenu>
+										</p:column>
+										<p:column headerText="Seleziona" >
+											<p:selectBooleanCheckbox value="#{s.selected}" >
+												<p:ajax update="@(.configurationTable)" event="valueChange" listener="#{templateView.currentView.controlliConfiguratiBean.abilitaConfigurazione(s)}" />
+											</p:selectBooleanCheckbox>
+										</p:column>
+									</p:dataTable>
+								</h:form>
+							</div>
+						</div>
+					</div>
+				</div>
+        </div>
+    </div>
+</ui:composition>
+</html>

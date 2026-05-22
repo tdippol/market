@@ -1,0 +1,1 @@
+alter table USERS add LAST_ACCESS TIMESTAMP NULL ;

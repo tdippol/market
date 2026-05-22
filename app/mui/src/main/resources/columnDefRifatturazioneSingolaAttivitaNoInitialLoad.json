@@ -1,0 +1,103 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Id",
+      "field": "id",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": true
+    },
+    {
+      "headerName": "Fornitore",
+      "field": "fornitore",
+      "width": 400,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Rifattura",
+      "field": "rifattura",
+      "width": 125,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Valore Contatto",
+      "field": "valoreContatto",
+      "width": 125,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Costo Contatti",
+      "field": "costoContatti",
+      "width": 125,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Fee Ingresso",
+      "field": "feeIngresso",
+      "width": 125,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Variabile Fisso",
+      "field": "variabileFisso",
+      "width": 125,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Variabile Pct",
+      "field": "variabilePct",
+      "width": 125,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Abbattimento",
+      "field": "abbattimento",
+      "width": 125,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "NC / ND",
+      "field": "ncNd",
+      "width": 125,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Cap Min",
+      "field": "capMin",
+      "width": 100,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Cap Max",
+      "field": "capMax",
+      "width": 100,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Sovrapposizioni",
+      "field": "sovrapposizioni",
+      "width": 150,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Data Liquidazione",
+      "field": "dataLiquidazione",
+      "width": 150,
+      "type": "string",
+      "editable": false
+    }
+  ]
+}

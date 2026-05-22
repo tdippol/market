@@ -1,0 +1,25 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Compratore",
+      "field": "compratore",
+      "width": 400,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Fornitore",
+      "field": "fornitore",
+      "width": 450,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Tipo Promozione",
+      "field": "tipoPromozione",
+      "width": 250,
+      "type": "string",
+      "editable": false
+    }
+  ]
+}

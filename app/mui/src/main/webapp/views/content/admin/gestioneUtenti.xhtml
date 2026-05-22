@@ -1,0 +1,322 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+
+	<div class="k-content k-grid__item k-grid__item--fluid col-12"
+		 id="k_content">
+		<div class="row">
+			<div class="col-12">
+				<div id="k_grid_portletpromoGrid" class="k-portlet">
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+									 closable="false">
+						<p:commandButton value="annulla" type="button"
+										 styleClass="ui-confirmdialog-no" />
+						<p:commandButton value="conferma" type="button"
+										 styleClass="ui-confirmdialog-yes" />
+					</p:confirmDialog>
+
+					<p:dialog widgetVar="dlgAddUserWV" minimizable="true"
+							  maximizable="true" width="800" resizable="false" draggable="true"
+							  closable="true" styleClass="pf-dialog">
+						<f:facet name="header" >
+							<h:outputText id="dlgAddUserDialogId" value="#{templateView.currentView.dialogTitle}" styleClass="dialogHeader"/>
+						</f:facet>
+						<h:form>
+							<p:panelGrid styleClass="pgAddDialog">
+								<p:row>
+									<p:column style="text-align: left;">
+										<p:outputLabel value="Utente * " />
+										<br />
+										<p:inputText id="username"
+													 disabled="#{gestioneUtenti.editAdminFilter}"
+													 value="#{gestioneUtenti.selectedUser.name}"
+													 style="width: 100%;" maxlength="50" />
+									</p:column>
+									<p:column style="text-align: left;">
+										<p:outputLabel value="Nome " />
+										<br />
+										<p:inputText id="name"
+													 disabled="#{gestioneUtenti.editAdminFilter}"
+													 value="#{gestioneUtenti.selectedUser.description}"
+													 style="width: 100%;" maxlength="50" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column style="text-align: left;">
+										<p:outputLabel value="Ruoli * " />
+										<br />
+										<p:selectCheckboxMenu value="#{gestioneUtenti.selectedUser.roles}" label="Ruoli"
+															  style="min-width: 15rem"  disabled="#{gestioneUtenti.editAdminFilter}"
+															  multiple="true" filter="true"
+															  filterMatchMode="startsWith"
+															  panelStyle="width: 30rem"
+															  scrollHeight="250">
+											<f:converter binding="#{rolesConverter}" />
+											<f:selectItems value="#{gestioneUtenti.rolesList}" var="role" itemLabel="#{role.description}" itemValue="#{role}" />
+										</p:selectCheckboxMenu>
+									</p:column>
+									<p:column style="text-align: left;">
+										<p:outputLabel value="Gruppi * " />
+										<br />
+										<p:selectCheckboxMenu value="#{gestioneUtenti.selectedUser.groups}" label="Gruppi"
+															  style="min-width: 15rem"  disabled="#{gestioneUtenti.editAdminFilter}"
+															  multiple="true" filter="true"
+															  filterMatchMode="startsWith"
+															  panelStyle="width: 30rem"
+															  scrollHeight="250">
+											<f:converter binding="#{groupsConverter}" />
+											<f:selectItems value="#{gestioneUtenti.groupList}" var="group" itemLabel="#{group.codiceGruppo} - #{group.descrizione}" itemValue="#{group}" />
+										</p:selectCheckboxMenu>
+									</p:column>
+									<p:column style="text-align: right;vertical-align: bottom;">
+										<p:selectBooleanCheckbox
+												disabled="#{gestioneUtenti.editAdminFilter}"
+												value="#{gestioneUtenti.selectedUser.camLogin}"
+												itemLabel="Autenticazione CAM " />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="2" style="text-align: left;">
+										<p:outputLabel value="Filtri Obbligatori"
+													   style="font-weight: bold;margin-left: -0.8em;margin-top: 1em;" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="2" style="text-align: left;">
+										<ui:insert name="header">
+											<ui:include src="/views/filter/filterPanel.xhtml" >
+												<ui:param name="caller" value="fromGestioneUtenti" />
+											</ui:include>
+										</ui:insert>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="2" style="text-align: right !important;">
+										<p:commandButton styleClass="pf-btn-confirm" value="conferma"
+														 onclick="applyAdminFilters()" />
+										<p:remoteCommand name="persistAdminFilters"
+														 actionListener="#{gestioneUtenti.addUser}"
+														 update="@(.pgAddDialog),@(.updateableContent),@(.dialogHeader)" />
+										<p:commandButton styleClass="pf-btn-cancel" value="annulla"
+														 process="@this" oncomplete="PF('dlgAddUserWV').hide();" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</h:form>
+					</p:dialog>
+
+					<p:remoteCommand name="reloadUsersTable" update="@(.pnlUsers)"
+									 actionListener="#{gestioneUtenti.reloadUsers}" />
+
+					<h:form>
+						<p:panel header="Lista Utenti" toggleable="true" toggleSpeed="500"
+								 closeSpeed="500" styleClass="pnlGrid_Header updateableContent pnlUsers">
+							<p:dataTable var="user" styleClass="pf-datatable" widgetVar="userDataTable"
+										 value="#{gestioneUtenti.usersList}" editable="true" rows="20"
+										 paginator="true" resizableColumns="true"
+										 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										 rowsPerPageTemplate="20,50,100"
+										 rowKey="#{user.id}" rowIndexVar="rowIndex"
+										 filteredValue="#{gestioneUtenti.filteredValues}">
+								<p:ajax event="rowEdit" listener="#{gestioneUtenti.editUser}" />
+
+								<p:column headerText="Utente" sortBy="#{user.name}"
+										  filterBy="#{user.name}" filterMatchMode="contains">
+									<h:outputText value="#{user.name}" />
+								</p:column>
+								<p:column headerText="Nome" sortBy="#{user.description}"
+										  filterBy="#{user.description}" filterMatchMode="contains">
+									<p:cellEditor>
+										<f:facet name="output">
+											<p:outputLabel value="#{user.description}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{user.description}" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="Ruolo" filterMatchMode="contains">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{user.roleList}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectCheckboxMenu value="#{user.roles}" label="Ruoli"
+																  style="min-width: 15rem" disabled="#{gestioneUtenti.editAdminFilter}"
+																  multiple="true" filter="true"
+																  filterMatchMode="contains"
+																  panelStyle="width: 30rem"
+																  scrollHeight="250">
+												<f:converter binding="#{rolesConverter}" />
+												<f:selectItems value="#{gestioneUtenti.rolesList}" var="role" itemLabel="#{role.description}" itemValue="#{role}" />
+											</p:selectCheckboxMenu>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="Gruppo" filterMatchMode="contains">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{user.groupList}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectCheckboxMenu value="#{user.groups}" label="Gruppi"
+																  style="min-width: 15rem" disabled="#{gestioneUtenti.editAdminFilter}"
+																  multiple="true" filter="true"
+																  filterMatchMode="contains"
+																  panelStyle="width: 30rem"
+																  scrollHeight="250">
+												<f:converter binding="#{groupsConverter}" />
+												<f:selectItems value="#{gestioneUtenti.groupList}" var="group" itemLabel="#{group.codiceGruppo} - #{group.descrizione}" itemValue="#{group}" />
+											</p:selectCheckboxMenu>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="Autenticazione CAM"
+										  style="text-align: center;">
+									<p:cellEditor>
+										<f:facet name="output">
+											<p:selectBooleanCheckbox disabled="true"
+																	 value="#{user.camLogin}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectBooleanCheckbox value="#{user.camLogin}"
+																	 onchange="completeClick()" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="Data Ultimo Accesso"
+										  sortBy="#{user.lastAccess}">
+									<h:outputText value="#{user.lastAccess}">
+										<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+									</h:outputText>
+								</p:column>
+								<p:column rendered="false" headerText="Autenticazione NAMESPACE"
+										  style="text-align: center;">
+									<p:cellEditor>
+										<f:facet name="output">
+											<p:selectBooleanCheckbox disabled="true"
+																	 value="#{user.namespaceLogin}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectBooleanCheckbox value="#{user.namespaceLogin}"
+																	 onchange="completeClick()" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column style="width:40px;padding:3px!important;border-right: none!important;">
+									<p:commandLink
+											styleClass="adminFilterButton#{user.adminFilters ne null and user.adminFilters.length() > 2 ? ' active':''}"
+											title="Modifica Filtro"
+											action="#{gestioneUtenti.openEditAdminFilterDialog}"
+											oncomplete="PF('dlgAddUserWV').show(); createCombinedPicklist(JSON.parse('#{user.escapedAdminFilter}'),'fromGestioneUtenti');"
+											update="@(.pgAddDialog),@(.dialogHeader)">
+										<f:setPropertyActionListener value="#{user}"
+																	 target="#{gestioneUtenti.selectedUser}" />
+									</p:commandLink>
+								</p:column>
+								<p:column
+										style="width:40px;padding:3px!important;border-left: none!important;">
+									<p:commandButton styleClass="rowDeleteButton"
+													 icon="ui-icon-closethick" title="Reset preferenze Utente"
+													 action="#{gestioneUtenti.resetUserPrefs}"
+													 update="@(.updateableContent)">
+										<p:confirm header="Conferma Necessaria"
+												   message="Confermi reset delle preferenze Utente?"
+												   icon="ui-icon-alert" />
+										<f:setPropertyActionListener value="#{user}"
+																	 target="#{gestioneUtenti.selectedUser}" />
+									</p:commandButton>
+								</p:column>
+								<p:column
+										style="width:40px;padding:3px!important;border-left: none!important;border-right: none!important;">
+									<p:rowEditor styleClass="rowEditorButton" />
+								</p:column>
+								<p:column style="width:40px;padding:3px!important;border-left: none!important;">
+									<p:commandButton styleClass="rowDeleteButton"
+													 icon="ui-icon-trash" title="Elimina Utente"
+													 actionListener="#{gestioneUtenti.deleteUser(user)}"
+													 update="@(.updateableContent),@(.dialogHeader)">
+										<p:confirm header="Conferma Necessaria"
+												   message="Confermi eliminazione Utente?" icon="ui-icon-alert" />
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+							<!-- this is a hack to have an easy export -->
+							<p:dataTable var="user" id="userExp" style="display: none;"
+										 styleClass="pf-datatable" value="#{gestioneUtenti.usersList}">
+								<p:column headerText="ID">
+									<h:outputText value="#{user.id}" />
+								</p:column>
+								<p:column headerText="Utente">
+									<h:outputText value="#{user.name}" />
+								</p:column>
+								<p:column headerText="Nome">
+									<h:outputText value="#{user.description}" />
+								</p:column>
+								<p:column headerText="Ruolo">
+									<h:outputText value="#{user.roleList}" />
+								</p:column>
+								<p:column headerText="Gruppi">
+									<h:outputText value="#{user.groupList}" />
+								</p:column>
+								<p:column headerText="Autenticazione CAM">
+									<h:outputText value="#{user.camLogin}" />
+								</p:column>
+								<p:column headerText="Admin Filters">
+									<p:inputTextarea value="#{user.adminFilters}" />
+								</p:column>
+								<p:column headerText="Filters">
+									<p:inputTextarea value="#{user.filters}" />
+								</p:column>
+								<p:column headerText="Data Ultimo Accesso">
+									<h:outputText value="#{user.lastAccess}">
+										<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+									</h:outputText>
+								</p:column>
+
+							</p:dataTable>
+							<f:facet name="actions">
+								<p:commandLink
+										action="#{gestioneUtenti.openAddUserDialog}"
+										styleClass="pnlGrid_Header plusButton"
+										oncomplete="PF('dlgAddUserWV').show(); createCombinedPicklist(JSON.parse('{}'),'fromGestioneUtenti');"
+										update="@(.pgAddDialog)" />
+								<p:commandLink ajax="false"
+											   styleClass="pnlGrid_Header exportButton">
+									<p:dataExporter type="xls" target="userExp"
+													fileName="listaUtenti" />
+								</p:commandLink>
+							</f:facet>
+						</p:panel>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<style>
+		.ui-state-active,
+		.ui-widget-content .ui-state-active,
+		.ui-widget-header .ui-state-active,
+		a.ui-button:active,
+		.ui-button:active,
+		.ui-button.ui-state-active:hover {
+			border: none !important;
+			background: none !important;
+			font-weight: normal;
+			color: #000000 !important;
+		}
+	</style>
+	<script>
+		$(document).ready(function() {
+			updateRemoteView();
+			reloadUsersTable()
+		});
+		function completeClick(){
+			document.body.click();
+		}
+	</script>
+</ui:composition>
+</html>

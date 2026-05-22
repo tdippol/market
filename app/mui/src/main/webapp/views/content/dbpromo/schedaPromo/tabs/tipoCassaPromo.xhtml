@@ -1,0 +1,223 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+<ui:composition>
+    <p:confirmDialog widgetVar="cancellaTipoCassaConfirmDialog" global="true" showEffect="fade" hideEffect="fade"
+                     header="Avviso" message="Confermi la cancellazione del tipo cassa ?"
+                     closable="false" styleClass="muiDialog">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                         onclick="PF('cancellaTipoCassaConfirmDialog').hide()"/>
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                         onclick="deleteTipoCassa(); aggiornaPromozione()" />
+    </p:confirmDialog>
+
+    <p:dialog id="tipoCassaDialog" widgetVar="tipoCassaDialog" header="Gestione Tipo Cassa"
+              styleClass="tipoCassaDialog disable-horizontal-scroll" modal="true"
+              width="500" height="auto" resizable="false" closable="false">
+        <h:form id="tipoCassaDialogForm">
+            <div class="row">
+                <div class="col-12">
+                    <div>
+                        <p:outputLabel for="dialogPromozione" value="Promozione" style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:inputText id="dialogPromozione"
+                                     readonly="true"
+                                     styleClass="updateableContent"
+                                     style="width: 100%;"
+                                     value="#{templateView.currentView.promotionSelected.descrizioneEstesa}" />
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: 20px;">
+                    <div>
+                        <p:outputLabel for="dialogCurrentStatePT" value="Stato Corrente" style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:inputText id="dialogCurrentStatePT"
+                                     readonly="true"
+                                     styleClass="updateableContent"
+                                     style="width: 100%;"
+                                     value="#{templateView.currentView.statoCorrente.statoPromozioneEntity.codiceStato} - #{templateView.currentView.statoCorrente.statoPromozioneEntity.label}" />
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: 20px;">
+                    <div>
+                        <p:outputLabel for="tipoCassaPossibili" value="Tipo Cassa Disponibili" style="font-size: 14px;" />
+                    </div>
+                    <div>
+                        <p:selectOneMenu id="tipoCassaPossibili"
+                                         class="input-field"
+                                         style="width: 100%;"
+                                         immediate="true"
+                                         filter="true" filterMatchMode="contains"
+                                         value="#{templateView.currentView.tipoCassa.nuovoTipoCassa}">
+                            <p:ajax update="@(.ui-confirmdialog-yes)" />
+                            <f:selectItem itemLabel="" noSelectionOption="true" />
+                            <f:selectItems value="#{templateView.currentView.tipoCassa.tipoCassaAvailable}"
+                                           var="c" itemValue="#{c.id}"
+                                           itemLabel="#{c.tipo} - #{c.descrizione}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                     oncomplete="PF('tipoCassaDialog').hide()" />
+                </div>
+                <div class="col-6">
+                    <p:commandButton id="tipoCassaConfirmBtn" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                     disabled="#{empty templateView.currentView.tipoCassa.nuovoTipoCassa}"
+                                     action="#{templateView.currentView.tipoCassa.aggiungiTipoCassa}"
+                                     oncomplete="PF('tipoCassaDialog').hide()" />
+                </div>
+            </div>
+        </h:form>
+    </p:dialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:remoteCommand action="#{templateView.currentView.deleteTipoCassa()}" name="aggiornaPromozione"></p:remoteCommand>
+
+                    <p:panel id="expandable_db_schedapromo_tipocassa"
+                             toggleable="true"
+                             toggleSpeed="500"
+                             closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_tipocassa">
+                        <f:facet name="header">
+                            <p:outputLabel value="Tipo Cassa" />
+                        </f:facet>
+
+                        <div class="col-12">
+                            <h:form>
+                            
+                            
+                                <p:remoteCommand name="updateAggiungiTipoCassa" update="@(.aggiungiTipoCassa)" action="#{templateView.currentView.tipoCassa.updateButtonAggiungiTipoCassa}"/>
+                                
+                                <p:commandButton value="Aggiungi" style="margin-right: 20px; border-radius: 5px;"
+                                                 id="aggiungiTipoCassa" class="pf-btn-confirm aggiungiTipoCassa"
+                                                 oncomplete="PF('tipoCassaDialog').show()"
+                                                 action="#{templateView.currentView.tipoCassa.prepareDialog}"
+                                                 disabled="#{templateView.currentView.tipoCassa.btnAggiungiDisabled or not templateView.currentView.btnAggiungiTipoCassaActive}"
+                                                 update="@(.tipoCassaDialog)" />
+                            </h:form>
+                        </div>
+
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham tipocassa"
+                                      pt:gridid="db_schedapromo_tipocassa" />
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off"
+                                         id="tipoCassa_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapromo_tipocassa', this.value)" />
+                            <p:commandLink title="Espandi Griglia"
+                                           styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedapromo_tipocassa')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedapromo_tipocassa', 'TipoCassaRaggruppato', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel"
+                                           styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedapromo_tipocassa', 'TipoCassa')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var promoId = '#{templateView.currentView.idPromozioneCorrente}';
+                            var idTipoCassa;
+                            var gridParams_schedaPromoTipoCassa = {
+                                gridId: 'tipocassa',
+                                gridTabGroup: 'schedaPromo_tabs',
+                                gridTabPosition: #{templateView.currentView.indexOf('TAB_TIPO_CASSA')},
+                                gridCode: 'db_schedapromo_tipocassa',
+                                gridTitle: 'SchedaPromo - Tipo Cassa',
+                                url_columnDefs: contextPath + '/resources/grid/schedapromo/tipocassa/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/grid/schedapromo/tipocassa/rowData/' + promoId,
+                                url_customSort: contextPath + '/resources/grid/sorting/db_schedapromo_tipocassa'
+                            };
+                            var gridOptions_schedaPromoTipoCassa = {
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_schedaPromoTipoCassa.gridCode);
+                                }
+                            };
+                            gridParams_schedaPromoTipoCassa.gridOptions = gridOptions_schedaPromoTipoCassa;
+
+                            gridParams_schedaPromoTipoCassa.additionColumnDefs = [{
+                                headerName: '',
+                                width: 50,
+                                cellRenderer: 'SchedaPromoMeccaniche_DeleteTipoCassaRenderer',
+                                position: 'prepend'
+                            }];
+                            gridParams_schedaPromoTipoCassa.gridOptions = { };
+
+                            $(document).ready(function() {
+                                if (currentActiveTab === gridParams_schedaPromoTipoCassa.gridTabPosition) {
+                                    creaGriglia(gridParams_schedaPromoTipoCassa);
+                                }
+                            });
+
+                            function deleteTipoCassa() {
+                                PF('cancellaTipoCassaConfirmDialog').hide();
+                                $.ajax({
+                                    type: 'DELETE',
+                                    url: contextPath + '/resources/grid/promoTipoCassa/delete/' + promoId,
+                                    contentType: 'text/plain',
+                                    data: { 'idTipoCassa': idTipoCassa },
+                                    success: function(data) {
+                                        addInfoGrowl([
+                                            { name: 'title', value: 'Elimina Tipo Cassa' },
+                                            { name: 'message', value: 'Tipo Cassa eliminata con successo' }
+                                        ]);
+                                        idTipoCassa = '';
+                                        getGridOptionFromGridMap('db_schedapromo_tipocassa').api.setRowData(data.rowData);
+                                        updateAggiungiTipoCassa();
+                                    },
+                                    error: ajaxErrorHandler,
+                                    complete: function(xhr, exception) {
+                                        idTipoCassa = '';
+                                        PF('cancellaTipoCassaConfirmDialog').hide();
+                                    }
+                                })
+                            }
+
+                            function updateRowData(promoId) {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: contextPath + '/resources/grid/schedapromo/tipocassa/rowData/' + promoId,
+                                    contentType: 'application/json',
+                                    success: function (data) {
+                                        getGridOptionFromGridMap('db_schedapromo_tipocassa').api.setRowData(data.rowData);
+                                    },
+                                    error: ajaxErrorHandler
+                                });
+                            }
+
+                            function updateAddButton() {
+                                updateAggiungiTipoCassa();
+                            }
+                        </script>
+
+                        <style>
+                            .pnlGrid_Header .ui-state-disabled {
+                                opacity: 0.5 !important;
+                            }
+                        </style>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

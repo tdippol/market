@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+	<div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+	    <div class="row">
+	        <div class="col-12">
+	            <div id="k_grid_portletpromoGrid" class="k-portlet">
+	                <p:panel id="expandable_db_conf_gestioneColonne" toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent expandable_db_conf_gestioneColonne">
+	                    <f:facet name="header">
+	                        <p:outputLabel value="Gestione Colonne" />
+	                    </f:facet>
+	                    <h:panelGroup layout="block" style="height: 60vh; width: 100%;" class="ag-theme-balham db_conf_gestioneColonne" pt:gridid="db_conf_gestioneColonne"> </h:panelGroup>
+	                    <f:facet name="actions">
+	                        <p:inputText autocomplete="off" id="some_grid_id_from_backend_quickfilter" placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText" onkeyup="onFilterTextBoxChangedpromoGrid('db_conf_gestioneColonne',this.value)" />
+	                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton" onclick="expandGrid('db_conf_gestioneColonne')" onerror="redirectToExpiredPage()" />
+	                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton" onclick="onBtExport('db_conf_gestioneColonne','Configurazione - Gestione Colonne')" onerror="redirectToExpiredPage()" />
+	                    </f:facet>
+
+					    <script type="text/javascript">
+
+					        var gridParams_conf_gestColonne={
+								gridCode:'db_conf_gestioneColonne',
+								gridTitle:'Configurazione - Gestione Colonne',
+								url_columnDefs: contextPath + '/resources/configuration/columnDef/planningCampi' + addUrlParamContesto(#{muiContext}),
+								url_rowData:	contextPath + '/resources/configuration/rowData/planningCampi',
+								url_customSort: contextPath + '/resources/grid/sorting/db_conf_gestioneColonne'
+							}
+							var gridOptions={
+								onCellValueChanged: function(event) {
+									saveCellValue(event);
+								},
+								onSortChanged: function (event) {
+									onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_conf_gestColonne.gridCode);
+								}
+							};
+
+								gridParams_conf_gestColonne.gridOptions=gridOptions;
+
+								$( document ).ready(function() {
+									creaGriglia(gridParams_conf_gestColonne);
+								});
+							
+
+
+								//Funzione richiamata al salvataggio di ogni cella
+								function saveCellValue(event) {
+									
+									var rowIndex	= getRowNodeId(event);
+									var rowData 	= getLeafRowData('db_conf_gestioneColonne');
+									//LT(event)
+									event.data.columnToBeUpdated.value = event.column.colId;
+                					event.data.valueToBeUpdated.value = event.data[event.column.colDef.field].value;
+									event.data.columnHeaderToBeUpdated.value = event.colDef.headerName;
+							
+									$.ajax({
+										type: "POST",
+										url: contextPath+"/resources/configuration/update/planningCampi",
+										contentType: "application/json",
+										data: JSON.stringify(event.data),
+										success: function (data) {
+											
+											rowData[rowIndex] = data;
+                                            getGridOptionFromGridMap('db_conf_gestioneColonne').api.setRowData(rowData);
+                                            
+                                            var updateMessage = data.updateMessage;
+                                            var errorMessage = data.errorMessage;
+                                            if(updateMessage !== undefined &amp;&amp; updateMessage !== null) {
+                                                addInfoGrowl([{name: 'title', value: 'Pianificazione'}, {name: 'message',value: updateMessage}]);
+                                            } else if(errorMessage !== undefined &amp;&amp; errorMessage !== null) {
+                                                addErrorGrowl([{name: "title", value: 'Pianificazione'}, {name: "message",value: errorMessage}]);
+                                            }
+                                            
+
+                                        },
+                                        error: function(jqXHR, exception, thrownError){
+											ajaxErrorHandler(jqXHR, exception, thrownError,event)
+										}
+                                    });
+                            
+                      			  }
+							
+						</script>
+	                </p:panel>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</ui:composition>
+</html>

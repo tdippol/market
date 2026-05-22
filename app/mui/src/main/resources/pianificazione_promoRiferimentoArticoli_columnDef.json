@@ -1,0 +1,136 @@
+{
+  "columnDef": [
+    {
+      "headerName":"Codice Promozione",
+      "field":"codicePromozione",
+      "editable":false,
+      "width":100,
+      "hide":true,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName":"Codice Item",
+      "field":"codiceItem",
+      "editable":false,
+      "width":100,
+      "hide":true,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName":"Tipo Item",
+      "field":"tipoItem",
+      "editable":false,
+      "width":50,
+      "hide":true,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName": "Meccanica",
+      "field": "meccanica",
+      "editable": false,
+      "width": 300,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Offerta",
+      "field": "offerta",
+      "editable": false,
+      "width": 125,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName":"Differenziazione",
+      "field":"differenziazione",
+      "editable":false,
+      "width":200,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName": "Codice Articolo",
+      "field": "codiceArticolo",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Descrizione Articolo",
+      "field": "descrizioneArticolo",
+      "editable": false,
+      "width": 300,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Codice Compratore",
+      "field": "codiceCompratore",
+      "editable": false,
+      "width": 125,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Descrizione Compratore",
+      "field": "descrizioneCompratore",
+      "editable": false,
+      "width": 300,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Seleziona tutti",
+      "field": "selected",
+      "width": 150,
+      "type": "checkbox",
+      "editable": true,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": true,
+      "headerCheckboxSelection": true,
+      "headerCheckboxSelectionFilteredOnly": true
+    }
+  ]
+}

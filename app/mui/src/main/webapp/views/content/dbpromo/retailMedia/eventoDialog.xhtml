@@ -1,0 +1,154 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<p:dialog id="macrospazioEventoDialog" widgetVar="macrospazioEventoDialog" modal="true" closable="false" dynamic="true"
+          resizable="false" header="#{templateView.currentView.eventiDialog.title}" width="50%" height="40vh"
+          styleClass="eventoRetailDialogClass disable-horizontal-scroll">
+    <h:form id="eventoRetailDialogForm" styleClass="updateableEventoContent">
+        <p:inputText tabindex="0" style="visibility: hidden; width:0; height:0;"/>
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <p:outputLabel for="fornitoreEvento" value="Fornitore *" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:selectOneMenu id="fornitoreEvento" value="#{templateView.currentView.eventiDialog.bean.codiceFornitore}"
+                                     disabled="#{templateView.currentView.eventiDialog.fornitoreDisabled}"
+                                     filter="true" filterMatchMode="contains"
+                                     styleClass="updateableEventoContent">
+                        <f:selectItem itemLabel="Seleziona Fornitore" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.fornitoriRetail}"
+                                       var="fornitore"
+                                       itemValue="#{fornitore.codice}"
+                                       itemLabel="#{fornitore.codice} - #{fornitore.descrizione}"/>
+                        <p:ajax event="change" listener="#{templateView.currentView.eventiDialog.onFornitoreChange}"
+                                update="@(.fornitore-deleted) @(.btn-salva-evento) dataInizioEvento dataFineEvento"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel styleClass="fornitore-deleted"
+                                   value="#{templateView.currentView.eventiDialog.labelDataEliminazioneFornitore}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="dataInizioEvento" value="Data inizio *" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:datePicker id="dataInizioEvento" class="input-field"
+                                  style="width: 100%; background-color: transparent;"
+                                  value="#{templateView.currentView.eventiDialog.bean.dataInizio}"
+                                  readonlyInput="true" pattern="dd/MM/yyyy"
+                                  disabled="#{templateView.currentView.eventiDialog.dataInizioDisabled}"
+                                  styleClass="updateableEventoContent">
+                        <p:ajax event="dateSelect"
+                                listener="#{templateView.currentView.eventiDialog.onDataInizioSelect}"
+                                update="@(.btn-salva-evento) dataFineEvento"/>
+                        <f:ajax event="change"
+                                listener="#{templateView.currentView.eventiDialog.onDataInizioChange}"
+                                update="@(.btn-salva-evento) dataFineEvento"/>
+                    </p:datePicker>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="dataFineEvento" value="Data fine *" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:datePicker id="dataFineEvento" class="input-field"
+                                  style="width: 100%; background-color: transparent;"
+                                  value="#{templateView.currentView.eventiDialog.bean.dataFine}"
+                                  readonlyInput="true" pattern="dd/MM/yyyy"
+                                  disabled="#{templateView.currentView.eventiDialog.dataFineDisabled}"
+                                  styleClass="updateableEventoContent">
+                        <p:ajax event="dateSelect"
+                                listener="#{templateView.currentView.eventiDialog.onDataFineSelect}"
+                                update="@(.btn-salva-evento)"/>
+                        <f:ajax event="change"
+                                listener="#{templateView.currentView.eventiDialog.onDataFineChange}"
+                                update="@(.btn-salva-evento)"/>
+                    </p:datePicker>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="eventoCausale" value="Causale *" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:selectOneMenu
+                            id="eventoCausale" value="#{templateView.currentView.eventiDialog.bean.codiceCausale}"
+                            disabled="#{templateView.currentView.eventiDialog.causaleDisabled}"
+                            filter="true" filterMatchMode="contains"
+                            styleClass="updateableEventoContent">
+                        <f:selectItem itemLabel="Causale" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.causaliRetail}"
+                                       var="causale"
+                                       itemValue="#{causale.codice}"
+                                       itemLabel="#{causale.descrizione}"/>
+                        <p:ajax event="change" listener="#{templateView.currentView.eventiDialog.onCausaleChange}"
+                                update="@(.btn-salva-evento)"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="eventoValore" value="Valore Contributo *" class="input-field-label"/>
+                </div>
+                <div>
+                    <div>
+                        <p:inputNumber id="eventoValore" symbol=" €"
+                                       symbolPosition="s" decimalSeparator="," thousandSeparator="."
+                                       style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                       value="#{templateView.currentView.eventiDialog.bean.valoreContributo}"
+                                       disabled="#{templateView.currentView.eventiDialog.contributoDisabled}"
+                                       minValue="0" decimalPlaces="2"
+                                       styleClass="updateableEventoContent">
+                            <p:ajax event="change" listener="#{templateView.currentView.eventiDialog.onValoreChange}"
+                                    update="@(.btn-salva-evento)"/>
+                        </p:inputNumber>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-12">
+                <div>
+                    <p:outputLabel for="eventoNote" value="Note *" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:inputTextarea id="eventoNote" style="width:100%"
+                                     value="#{templateView.currentView.eventiDialog.bean.note}"
+                                     styleClass="updateableEventoContent">
+                        <p:ajax event="change" listener="#{templateView.currentView.eventiDialog.onNoteChange}"
+                                update="@(.btn-salva-evento)"/>
+                    </p:inputTextarea>
+                </div>
+            </div>
+        </div>
+    </h:form>
+    <div class="row footer-row">
+        <div class="col-6" style="align-content: start">
+            <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                             onclick="PF('macrospazioEventoDialog').hide()"/>
+        </div>
+        <div class="col-6">
+            <p:commandButton value="Salva" styleClass="ui-confirmdialog-yes btn-salva-evento"
+                             disabled="#{templateView.currentView.eventiDialog.btnSalvaEventoDisabled}"
+                             action="#{templateView.currentView.saveRetailEvent}"
+                             oncomplete="PF('macrospazioEventoDialog').hide()"
+                             update="@(.db_grid_eventi) @(.db_grid_macrospazi)"/>
+        </div>
+    </div>
+    <style>
+        .fornitore-deleted {
+            margin-left: 10px;
+            padding-top: 5px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</p:dialog>
+</html>

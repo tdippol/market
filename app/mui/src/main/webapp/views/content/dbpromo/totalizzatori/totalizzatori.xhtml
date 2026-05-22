@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_totalizzatori" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_totalizzatori">
+                        <f:facet name="header">
+                            <p:outputLabel value="Totalizzatori" />
+                        </f:facet>
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham pianificazione" pt:gridid="db_promozione_totalizzatori">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_promozione_totalizzatori_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText planningFilter"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_promozione_totalizzatori', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_promozione_totalizzatori')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_promozione_totalizzatori', 'Totalizzatori', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_promozione_totalizzatori', 'Totalizzatori', false)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Ricarica Griglia" styleClass="pnlGrid_Header reloadButton"
+                                           onclick="reloadGrid()" onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+                            var gridParamsTotalizzatori = {
+                                gridTabPosition: 0,
+                                gridCode: 'db_promozione_totalizzatori',
+                                gridTitle: 'Totalizzatori Promo',
+                                url_columnDefs: contextPath + '/resources/totalizzatoriPromo/columnDef/'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/totalizzatoriPromo/rowData/'
+                                    + #{ templateView.currentView.idPromozioneCorrente != null ? templateView.currentView.idPromozioneCorrente : 'null'}
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_promozione_totalizzatori',
+                                gridOptions: {
+                                    onSortChanged: function(event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_promozione_totalizzatori');
+                                    }
+                                }
+                            };
+                            $(document).ready(function() {
+                                if (currentActiveTab === gridParamsTotalizzatori.gridTabPosition) {
+                                    creaGriglia(gridParamsTotalizzatori);
+                                }
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

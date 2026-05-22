@@ -1,0 +1,2 @@
+alter table  MUIPROMO.USERS add  DB_FILTERS CLOB DEFAULT '{}';
+alter table  MUIPROMO.USERS add  LAST_ACCESS TIMESTAMP (6);

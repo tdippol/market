@@ -1,0 +1,24 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Attributo",
+      "field": "attributo",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Valore",
+      "field": "valore",
+      "width": 300,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

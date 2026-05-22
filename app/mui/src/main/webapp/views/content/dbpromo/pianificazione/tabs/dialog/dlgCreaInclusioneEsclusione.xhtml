@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+>
+<p:dialog id="dlgInclusioneEsclusione" widgetVar="dlgInclusioneEsclusione" modal="true" closable="false"
+          header="#{templateView.currentView.inclusioneEsclusioneBean.dialogHeader}" width="50%" height="50vh"
+          resizable="false" styleClass="disable-horizontal-scroll dlgInclusioneEsclusioneClass">
+    <h:form id="formAddInclusioneEsclusione" styleClass="formAddInclusioneEsclusione"
+            style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-8">
+                <div><p:outputLabel for="promozione" value="Promozione" styleClass="label-txt"/></div>
+                <div>
+                    <h:outputText id="promozione" styleClass="promozione"
+                                  value="#{templateView.currentView.inclusioneEsclusioneBean.bean.promozione}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-8">
+                <div><p:outputLabel for="meccanica" value="Meccanica" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="meccanica" styleClass="input-field meccanica" style="width: 100%;"
+                                     value="#{templateView.currentView.inclusioneEsclusioneBean.bean.meccanica}">
+                        <f:selectItem itemLabel="" noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.inclusioneEsclusioneBean.bean.meccaniche}"
+                                       var="mecc" itemLabel="#{mecc.codiceMeccanica} - #{mecc.descrizione}"
+                                       itemValue="#{mecc.id}"/>
+                        <p:ajax event="change" update="@(.tipoElemento)"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-8">
+                <div><p:outputLabel for="tipoElemento" value="Tipo Elemento" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="tipoElemento" styleClass="input-field tipoElemento" style="width: 100%;"
+                                     value="#{templateView.currentView.inclusioneEsclusioneBean.bean.tipoElemento}"
+                                     disabled="#{templateView.currentView.inclusioneEsclusioneBean.bean.meccanica == null}">
+                        <f:selectItem itemLabel="" noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.inclusioneEsclusioneBean.bean.tipiElemento}"
+                                       var="elem" itemLabel="#{elem.description}" itemValue="#{elem.description}"/>
+                        <p:ajax event="change" update="@(.elemento) @(.descrizione)"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-4">
+                <div><p:outputLabel for="elemento" value="Cod. Elemento" styleClass="label-txt"/></div>
+                <div>
+                    <p:inputText id="elemento" styleClass="input-field elemento" style="width: 100%;"
+                                 value="#{templateView.currentView.inclusioneEsclusioneBean.bean.elemento}"
+                                 disabled="#{templateView.currentView.inclusioneEsclusioneBean.bean.tipoElemento == null}">
+                        <p:ajax event="keyup" update="@(.descrizione) @(.btnSaveInclusione)"
+                                listener="#{templateView.currentView.inclusioneEsclusioneBean.lookupElemento}"/>
+                    </p:inputText>
+                </div>
+            </div>
+            <div class="col-4">
+                <div><p:outputLabel for="descrizione" value="Elemento" styleClass="label-txt"/></div>
+                <div>
+                    <h:outputText id="descrizione" styleClass="descrizione"
+                                  value="#{templateView.currentView.inclusioneEsclusioneBean.bean.descrizione}"/>
+                </div>
+            </div>
+        </div>
+    </h:form>
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton id="btnCancelInclusioneEsclusione" value="Annulla" styleClass="ui-confirmdialog-no"
+                                 style="float: left;"
+                                 oncomplete="PF('dlgInclusioneEsclusione').hide()"
+                                 action="#{templateView.currentView.inclusioneEsclusioneBean.resetDialog}"/>
+            </div>
+            <div class="col-6">
+                <p:commandButton id="btnConfirmInclusioneEsclusione" value="Conferma"
+                                 styleClass="btnSaveInclusione ui-confirmdialog-yes"
+                                 oncomplete="updateGrids(); PF('dlgInclusioneEsclusione').hide()"
+                                 disabled="#{templateView.currentView.inclusioneEsclusioneBean.bean.okDisabled}"
+                                 actionListener="#{templateView.currentView.inclusioneEsclusioneBean.saveBean}"
+                                 update="@(.btnAddInclusione) @(.btnAddEsclusione) @(.incl-escl)"/>
+            </div>
+        </div>
+    </f:facet>
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+    </style>
+</p:dialog>
+</html>

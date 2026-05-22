@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+   
+    <p:panelGrid styleClass="editLayout" rendered="#{gestioneMenuRole.newMenuBean != null}">
+        <!-- selezione dinamica -->
+        <p:row style="border-color:rgba(255, 255, 255, 0.5) !important;">
+            <p:column style="text-align: left;" >
+                <p:panel styleClass="mui_invisiblePanel leafDependant" >
+                    <p:outputLabel value="Pagina dinamica? "/>
+                    <br />
+                    <p:inputSwitch  value="#{gestioneMenuRole.newMenuBean.dynamic}" onLabel="SI" offLabel="NO">
+                        <p:ajax update="@(.dynamicDependant)" />
+                    </p:inputSwitch>
+                </p:panel>
+            </p:column>
+            <p:column style="text-align: left;">
+                <p:panel styleClass="mui_invisiblePanel dynamicDependant leafDependant">
+                    <p:outputLabel value="Layout: *"  rendered="#{gestioneMenuRole.newMenuBean.dynamic}"/>
+                    <br />
+                    <p:selectOneMenu
+                        value="#{gestioneMenuRole.newMenuBean.url}"
+                        style="width: 100%;" rendered="#{gestioneMenuRole.newMenuBean.dynamic}">
+                        <f:selectItems value="#{gestioneMenuRole.availableTemplates}" />
+                    </p:selectOneMenu>
+                </p:panel>
+            </p:column>
+        </p:row>
+        <!-- selezione link -->
+        <p:row style="border-color:rgba(255, 255, 255, 0.5) !important;">
+             <p:column style="text-align: left;" >
+                <p:panel styleClass="mui_invisiblePanel dynamicDependant leafDependant" >
+                <p:outputLabel value="Link esterno? " rendered="#{!gestioneMenuRole.newMenuBean.dynamic}"/>
+                <br />
+                <p:inputSwitch onLabel="SI" offLabel="NO" value="#{gestioneMenuRole.newMenuBean.external}" rendered="#{!gestioneMenuRole.newMenuBean.dynamic}" >
+                    <p:ajax update="@(.externalLinkDependant)" />
+                </p:inputSwitch>
+                </p:panel>
+               </p:column>
+                <p:column style="text-align: left;">
+                <p:panel  styleClass="mui_invisiblePanel externalLinkDependant dynamicDependant" >
+                    <p:outputLabel value="URL: *" rendered="#{!gestioneMenuRole.newMenuBean.dynamic and gestioneMenuRole.newMenuBean.external }"/>
+                    <p:outputLabel value="PATH: *" rendered="#{!gestioneMenuRole.newMenuBean.dynamic and !gestioneMenuRole.newMenuBean.external }"/>
+                    <br />
+                    <p:inputText
+                        value="#{gestioneMenuRole.newMenuBean.url}"
+                        style="width: 100%;" maxlength="500" rendered="#{!gestioneMenuRole.newMenuBean.dynamic }"/>
+                </p:panel>
+                </p:column>
+                <p:column style="text-align: left;">
+                <p:panel
+                    styleClass="mui_invisiblePanel externalLinkDependant dynamicDependant" >
+                    <p:outputLabel
+                        value="Bean: *" rendered="#{!gestioneMenuRole.newMenuBean.dynamic and !gestioneMenuRole.newMenuBean.external}"/>
+                    <br />
+                    <p:inputText
+                        value="#{gestioneMenuRole.newMenuBean.bean}"
+                        style="width: 100%;" maxlength="500" rendered="#{!gestioneMenuRole.newMenuBean.dynamic and !gestioneMenuRole.newMenuBean.external }"/>
+                </p:panel>
+                </p:column>
+        </p:row>
+    </p:panelGrid>
+    <f:facet name="footer">
+        <div style="border: none; text-align: right;" >
+        <p:column colspan="3" style="text-align: right !important;">
+            <p:commandButton value="Salva" update="@(.menuRolesMenu)"
+            action="#{gestioneMenuRole.updateSelectedNode}"
+            oncomplete="PF('editLayout').hide()"
+            styleClass="pf-btn-confirm" />
+        <p:commandButton value="Annulla"
+            action="#{gestioneMenuRole.resetSelectedNode}"
+            oncomplete="PF('editLayout').hide()" styleClass="pf-btn-cancel" />
+        </p:column>
+        </div>
+    </f:facet>
+</ui:composition>
+</html>

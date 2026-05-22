@@ -1,0 +1,60 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <p:tabView dynamic="true" cache="false" widgetVar="pianoMediaAmministrazione_tabs">
+                        <p:ajax event="tabChange" listener="#{templateView.currentView.onTabChange}" />
+                        <p:tab title="Gestione Anagrafiche">
+                            <ui:include src="tabs/gestioneAnagrafiche.xhtml" />
+                        </p:tab>
+                        <p:tab title="Associazione Controlli">
+                            <ui:include src="tabs/associazioneControlli.xhtml" />
+                        </p:tab>
+                        <p:tab title="Configurazione Inizializzazione Piano">
+                            <ui:include src="tabs/gestioneInizializzazione.xhtml" />
+                        </p:tab>
+                        <p:tab title="Operazioni Massive" rendered="#{templateView.currentView.admin}">
+                            <ui:include src="tabs/operazioniMassive.xhtml" />
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ui-tabs {
+            padding: 0;
+        }
+
+        .ui-tabs-nav {
+            background: #ececec !important;
+        }
+
+        .ui-tabs-panels {
+            border: 1px solid gray;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .ui-tabs .ui-tabs-panel {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+        .ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .ui-icon-carat-1-s {
+            transform: rotate(180deg) !important;
+        }
+    </style>
+</ui:composition>
+</html>

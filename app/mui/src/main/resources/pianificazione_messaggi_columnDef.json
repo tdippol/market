@@ -1,0 +1,149 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID",
+      "field": "id",
+      "editable": false,
+      "width": 50,
+      "hide": true,
+      "type": "string"
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Id Messaggio",
+      "field": "idMessaggio",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "numeric"
+    },
+    {
+      "headerName": "Sequenza Stampa",
+      "field": "sequenzaStampa",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Font Entity",
+      "field": "fontEntity",
+      "editable": false,
+      "width": 250,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Testo",
+      "field": "testo",
+      "editable": false,
+      "width": 500,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Logo",
+      "field": "logo",
+      "editable": false,
+      "width": 250,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Taglio Carta",
+      "field": "taglioCarta",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Barcode",
+      "field": "barcode",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Font",
+      "field": "font",
+      "editable": false,
+      "width": 150,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Allineamento",
+      "field": "allineamento",
+      "editable": false,
+      "width": 150,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Bold",
+      "field": "bold",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Colore",
+      "field": "fontStile",
+      "editable": false,
+      "width": 200,
+      "hide": false,
+      "type": "string"
+    },
+
+    {
+      "headerName": "Bottone",
+      "field": "bottone",
+      "editable": false,
+      "width": 150,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Codice",
+      "field": "codice",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Regolamento",
+      "field": "regolamento",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Barra",
+      "field": "barra",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Variabile",
+      "field": "variabile",
+      "editable": false,
+      "width": 250,
+      "hide": false,
+      "type": "string"
+    }
+  ]
+}

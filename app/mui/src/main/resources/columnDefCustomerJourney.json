@@ -1,0 +1,54 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID",
+      "field": "id",
+      "width": 100,
+      "hide": true,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "field": "sottoclasse",
+      "width": 150,
+      "hide": false,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "field": "descrizione",
+      "width": 400,
+      "hide": false,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "field": "priorita",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": true
+    },
+    {
+      "field": "delay",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": true
+    },
+    {
+      "field": "attiva",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true
+    },
+    {
+      "field": "dataScarico",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": false
+    }
+  ]
+}

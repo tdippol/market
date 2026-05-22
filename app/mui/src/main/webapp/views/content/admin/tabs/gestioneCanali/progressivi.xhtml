@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form>
+                        <p:dataTable var="status" styleClass="pf-datatable updateableCanale" style="width: 40%;"
+                                     widgetVar="progressiviTable" value="#{templateView.currentView.progressivi}"
+                                     rowKey="#{status.id}" rowIndexVar="rowIndex">
+                            <p:column headerText="Anno" width="30%"  sortBy="#{status.anno}">
+                                <h:outputText value="#{status.anno}"/>
+                            </p:column>
+                            <p:column headerText="Ultimo codice" width="70%">
+                                <h:outputText value="#{status.lastProgressivo}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

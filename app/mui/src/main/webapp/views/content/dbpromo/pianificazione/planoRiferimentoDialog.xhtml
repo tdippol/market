@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="planoRiferimentoDialog" widgetVar="planoRiferimentoDialog" modal="true" closable="false"
+          header="#{templateView.currentView.planoRiferimentoBean.title}" width="95%"
+          height="80vh" resizable="false" styleClass="updateableContentPlanoRif disable-horizontal-scroll">
+
+    <h:form id="planoRiferimentoForm" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="updateableContentPlanoRifForm">
+        <div class="row">
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="meccanicaDefaultPlanoRif" value="Meccanica di default" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="meccanicaDefaultPlanoRif" widgetVar="meccanicaDefaultPlanoRif"
+                                     styleClass="input-field" style="width: 100%;"
+                                     filter="true" filterMatchMode="contains"
+                                     value="#{templateView.currentView.planoRiferimentoBean.idMeccanicaDefault}">
+                        <p:ajax update="@(.updateableContentPlanoRifForm) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="Seleziona meccanica" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.planoRiferimentoBean.meccaniche}" var="m"
+                                       itemLabel="#{m.codiceMeccanica} - #{m.descrizione}" itemValue="#{m.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+    <p:tabView dynamic="true" cache="false" widgetVar="planoRiferimentoTab">
+        <p:tab id="planoRif-tab-articolo" title="Articolo">
+            <ui:include src="dialogTabs/planoRifArticoloTab.xhtml" />
+        </p:tab>
+    </p:tabView>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 action="#{templateView.currentView.planoRiferimentoBean.resetDialog}"
+                                 oncomplete="PF('planoRiferimentoDialog').hide()" />
+            </div>
+            <div class="col-6">
+                <p:commandButton value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 id="confirmPlanoRiferimentoDialogBtn"
+                                 disabled="#{templateView.currentView.planoRiferimentoBean.confirmDialogBtnDisabled}"
+                                 action="#{templateView.currentView.confirmPlanoRiferimento}"
+                                 update="@(.updateableContent) @(.numeroArticoliClass)"
+                                 oncomplete="PF('planoRiferimentoDialog').hide()" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

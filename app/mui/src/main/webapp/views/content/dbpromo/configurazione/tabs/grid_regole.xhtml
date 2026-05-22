@@ -1,0 +1,170 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<ui:composition>
+    <ui:include src="addRegolaDialog.xhtml" />
+
+    <div class="col-12" style="padding:0px">
+            <p:panel id="expandable_db_planning_configurazione" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                     styleClass="pnlGrid_Header updateableContent expandable_db_planning_configurazione">
+                
+                     <f:facet name="header">
+                        <p:commandButton title="Crea Regola"
+                                         value="+"
+                                         disabled="#{templateView.currentView.btnAddRegolaDisabled}"
+                                         style="margin:0px;margin-right: 10px; border-radius: 5px;"
+                                         action="#{templateView.currentView.initRegolaDialog}"
+                                         oncomplete="PF('addRegolaDialog').show()"
+                                         update="@(.addRegolaDialogClass)"
+                                         id="planningAddConfig"
+                                         class="pf-btn-confirm btnAddRegola" />
+                        <p:outputLabel value="Regole" />
+                    </f:facet>
+                
+                     <h:panelGroup layout="block" style="height: 30vh; width: 100%;" class="ag-theme-balham"
+                              pt:gridid="db_planning_configurazione">
+                </h:panelGroup>
+                <f:facet name="actions">
+                    <p:inputText autocomplete="off" id="db_planning_configurazione_quickfilter" placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText" onkeyup="onFilterTextBoxChangedpromoGrid('db_planning_configurazione',this.value)" />
+	                <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton" onclick="expandGrid('db_planning_configurazione')" onerror="redirectToExpiredPage()" />
+                    <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton" onclick="onBtExport('db_planning_configurazione','Regole')" onerror="redirectToExpiredPage()" />
+	            </f:facet>
+
+                <script type="text/javascript">
+                    var idCurrentSet = '#{templateView.currentView.idSetPianificazioneCorrente}';
+                    var gridParams_PlanningConfigurazione = {
+                        gridCode: 'db_planning_configurazione',
+                        gridTitle: 'Pianificazione - Configurazione',
+                        url_columnDefs: contextPath + '/resources/configuration/columnDef/planningConfigurazione' + addUrlParamContesto(#{muiContext}),
+                        url_rowData: '',
+                        url_customSort: contextPath + '/resources/grid/sorting/db_planning_configurazione',
+                        subordinate_rowData: true
+                    };
+                    var gridOptions = {
+                        onCellValueChanged: function(event) {updateCell_Regola(event)},
+                        onSortChanged: function (event) {
+                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_PlanningConfigurazione.gridCode);
+                        }
+                    };
+
+                    gridParams_PlanningConfigurazione.customizeColumnDefs=[
+                        {columnDefId:"tipoRiga",property:"pinned",value:'left'},
+                        {columnDefId:"campo",property:"pinned",value:'left'},
+                        {columnDefId:"codiceCampo",property:"pinned",value:'left'}
+					];
+
+                    
+                    gridParams_PlanningConfigurazione.additionColumnDefs=[
+                               { headerName: '', width: 45, cellRenderer: 'PianConfig_Regole_BtnCellRenderer',position:'prepend' ,pinned: 'left' }
+                    ];
+
+                    gridParams_PlanningConfigurazione.gridOptions = gridOptions;
+
+                    $(document).ready(function() {
+                        if(idCurrentSet!=''){
+                            creaGriglia(gridParams_PlanningConfigurazione);
+                        }
+                    });
+
+
+            function refreshRowData_regole(idHeader){
+                if(idHeader!==undefined){
+                    showAgGridLoadingOverlay('db_planning_configurazione')
+                    $.ajax({
+                        type: "GET",
+                        url: contextPath+"/resources/configuration/rowData/planningConfigurazione/" + idHeader,
+                        contentType: "application/json",
+                        success: function (data) {
+                            if(data!=undefined){
+                                getGridOptionFromGridMap('db_planning_configurazione').api.setRowData(data.rowData);
+                                LT('Refreshed row data "'+gridParams_PlanningConfigurazione.gridTitle+'" => ',data.rowData)
+                            }
+                        },
+                        error: ajaxErrorHandler,
+                        complete: function(){
+                            hideAgGridLoadingOverlay('db_planning_configurazione')
+                        }
+                    });
+                }else{
+                    getGridOptionFromGridMap('db_planning_configurazione').api.setRowData([]);
+                    getGridOptionFromGridMap('db_planning_configurazione').api.showNoRowsOverlay();
+                }
+            }
+
+
+
+            function updateCell_Regola(event){
+
+                let gridCode='db_planning_configurazione'
+                var rowIndex = getRowNodeId(event);
+                var rowData = getRowData(gridCode);
+                var rowToUpdate = rowData[rowIndex]
+                var idToUpdate = rowToUpdate.idCfgPianificazione.value
+                let url=contextPath+'/resources/configuration/planningConfigurazione/'+idToUpdate
+
+                event.data.columnToBeUpdated.value = event.column.colId;
+                event.data.valueToBeUpdated.value = event.data[event.column.colDef.field].value;
+                event.data.columnHeaderToBeUpdated.value = event.colDef.headerName;
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(event.data),
+                    success: function (data) {
+                        rowData[rowIndex] = data;
+                        getGridOptionFromGridMap(gridCode).api.setRowData(rowData);
+                        addInfoGrowl([{ name: 'title', value: 'Modifica regola' }, {name: 'message',value: data.callbackMessage}]);
+                    },
+                    error: function(jqXHR, exception, thrownError){
+						ajaxErrorHandler(jqXHR, exception, thrownError,event)
+                    }
+                });
+
+            }
+
+
+            function deletePlanningRegola(){
+                var removePlanning_idRegola = $('.removePlanning_idRegola').text();
+
+                if(removePlanning_idRegola!=''){
+                $.ajax({
+                                    type: "DELETE",
+                                    url: contextPath+'/resources/configuration/planningConfigurazione/'+ removePlanning_idRegola,
+                                    contentType: "text/plain",
+                                    success: function (data) {
+                                    	getGridOptionFromGridMap('db_planning_configurazione').api.setRowData(data.rowData);
+                                        addInfoGrowl([{ name: 'title', value: 'Elimina Regola' }, {name: 'message',value: data.callbackMessage}]);
+                                        // reload grid header
+                                        refreshRowData_header()
+                                    },
+                                    error: ajaxErrorHandler,
+                                    complete:function(){
+                                    }
+                                });
+                }
+                PF('removePlanningRegola_dialog').hide()
+            }
+                </script>
+                
+            <p:remoteCommand name="removePlanningRegola"
+                             update="removePlanningRegola_dialog @(.removePlanning_idRegola)"
+                             action="#{templateView.currentView.removePlanningRegola}" />
+            <p:confirmDialog id="removePlanningRegola_dialog" widgetVar="removePlanningRegola_dialog" global="true" showEffect="fade" hideEffect="fade" icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog" header="Avviso" message="#{templateView.currentView.confirmDeleteMessage}">
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left" onclick="PF('removePlanningRegola_dialog').hide()"/>
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right" onclick="deletePlanningRegola()" />
+            </p:confirmDialog>
+
+            <p:outputLabel value="#{ templateView.currentView.removePlanningIdRegola }" class="removePlanning_idRegola" style="visibility: hidden;"/>
+
+            </p:panel>
+        </div>
+
+</ui:composition>
+
+</html>

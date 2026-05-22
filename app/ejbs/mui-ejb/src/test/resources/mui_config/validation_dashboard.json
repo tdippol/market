@@ -1,0 +1,359 @@
+{
+	"connection": "pluto",
+	"configurations": [
+		{
+			"name": "test8",
+			"logMemory": true,
+			"logTime": true,
+			"skip": true,
+			"MDX": {
+				"ROWS": {
+					"NON_EMPTY": false,
+					"DIMENSIONS": {
+						"Legal Entity": "{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Legal Entity] )}, 0)}, ASC)}",
+						"Account": "{TM1SORT( {TM1FILTERBYLEVEL( { DRILLDOWNMEMBER( {TM1SUBSETALL([Account])}, {[Account].[PL]} ) }, 0)}, ASC)}"
+					}
+				},
+				"COLS": {
+					"NON_EMPTY": false,
+					"DIMENSIONS": {
+						"Month": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Month] )}, 0)}, ASC)}} "
+					}
+				},
+				"FROM": "[Validation Dashboard DE]",
+				"WHERE": {
+					"Validation Dashboard": "[PAYROLL]",
+					"Year": "[2016]"
+				}
+			},
+			"ElementSelector": {
+				"ValidationDashboard": {
+					"lable": "Validation Dashboard",
+					"Dimension": "Validation Dashboard",
+					"Show": "Name",
+					"mdx": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Validation Dashboard] )}, 0)}, ASC)}} ",
+					"enabled": true
+				},
+				"Year": {
+					"lable": "Year",
+					"Dimension": "Year",
+					"Show": "Name",
+					"mdx": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Year] )}, 0)}, ASC)}} ",
+					"enabled": true
+				}
+			},
+			"ExecuteMDX": {
+				"Members": [
+					"Name",
+					"Attributes/Alias",
+					"Attributes/Country"
+				],
+				"Cells": [
+					"Ordinal",
+					"Value",
+					"Updateable",
+					"Consolidated",
+					"HasPicklist",
+					"PicklistValues"
+				]
+			},
+			"autoGroupColumnDef": {
+				"cellRendererParams": {
+					"suppressCount": true
+				},
+				"field": "LegalEntity.Alias",
+				"headerName": "Legal Entity",
+				"width": 300,
+				"pinned": "left",
+				"type": [
+					"TM1Element"
+				]
+			},
+			"columnDefs": [
+				{
+					"headerName": "Year",
+					"field": "Year.Name",
+					"width": 100,
+					"hide": false,
+					"rowGroup": true,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "Legal Entity.Country",
+					"field": "LegalEntity.Country",
+					"width": 100,
+					"hide": true,
+					"rowGroup": true,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "Legal Entity.Name",
+					"field": "LegalEntity.Name",
+					"width": 100,
+					"hide": true,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "Legal Entity.Alias",
+					"field": "LegalEntity.Alias",
+					"width": 200,
+					"hide": true,
+					"rowGroup": true,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "Account",
+					"field": "Account.Name",
+					"width": 100,
+					"hide": true,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "Account.Alias",
+					"field": "Account.Alias",
+					"width": 300,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "Q1",
+					"marryChildren": true,
+					"children": [
+						{
+							"headerName": "M01",
+							"field": "Month$M01",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "M02",
+							"field": "Month$M02",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "M03",
+							"field": "Month$M03",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "Total Q1",
+							"width": 100,
+							"editable": false,
+							"columnGroupShow": "always",
+							"aggFunc": "sum",
+							"type": [
+								"TotalDataColumnNumber",
+								"numericColumn"
+							],
+							"valueGetter": "getValue(\"Month$M01\")+getValue(\"Month$M02\")+getValue(\"Month$M03\")"
+						}
+					]
+				},
+				{
+					"headerName": "Q2",
+					"marryChildren": true,
+					"children": [
+						{
+							"headerName": "M04",
+							"field": "Month$M04",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "M05",
+							"field": "Month$M05",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "M06",
+							"field": "Month$M06",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "Total Q2",
+							"width": 100,
+							"editable": false,
+							"columnGroupShow": "always",
+							"aggFunc": "sum",
+							"type": [
+								"TotalDataColumnNumber",
+								"numericColumn"
+							],
+							"valueGetter": "getValue(\"Month$M04\")+getValue(\"Month$M05\")+getValue(\"Month$M06\")"
+						}
+					]
+				},
+				{
+					"headerName": "Q3",
+					"marryChildren": true,
+					"children": [
+						{
+							"headerName": "M07",
+							"field": "Month$M07",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "M08",
+							"field": "Month$M08",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "M09",
+							"field": "Month$M09",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "Total Q3",
+							"width": 100,
+							"editable": false,
+							"columnGroupShow": "always",
+							"aggFunc": "sum",
+							"type": [
+								"TotalDataColumnNumber",
+								"numericColumn"
+							],
+							"valueGetter": "getValue(\"Month$M07\")+getValue(\"Month$M08\")+getValue(\"Month$M09\")"
+						}
+					]
+				},
+				{
+					"headerName": "Q4",
+					"marryChildren": true,
+					"children": [
+						{
+							"headerName": "M10",
+							"field": "Month$M10",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "M11",
+							"field": "Month$M11",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "M12",
+							"field": "Month$M12",
+							"width": 100,
+							"editable": true,
+							"columnGroupShow": "open",
+							"aggFunc": "sum",
+							"type": [
+								"TM1DataColumnNumber",
+								"numericColumn"
+							]
+						},
+						{
+							"headerName": "Total Q4",
+							"width": 100,
+							"editable": false,
+							"columnGroupShow": "always",
+							"aggFunc": "sum",
+							"type": [
+								"TotalDataColumnNumber",
+								"numericColumn"
+							],
+							"valueGetter": "getValue(\"Month$M10\")+getValue(\"Month$M11\")+getValue(\"Month$M12\")"
+						}
+					]
+				},
+				{
+					"headerName": "Year Total",
+					"width": 100,
+					"editable": false,
+					"aggFunc": "sum",
+					"type": [
+						"TotalDataColumnNumber",
+						"numericColumn"
+					],
+					"valueGetter": "getValue(\"Month$M01\")+getValue(\"Month$M02\")+getValue(\"Month$M03\")+getValue(\"Month$M04\")+getValue(\"Month$M05\")+getValue(\"Month$M06\")+getValue(\"Month$M07\")+getValue(\"Month$M08\")+getValue(\"Month$M09\")+getValue(\"Month$M10\")+getValue(\"Month$M11\")+getValue(\"Month$M12\")"
+				}
+			]
+		}
+	]
+}

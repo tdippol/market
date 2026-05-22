@@ -1,0 +1,53 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID",
+      "field": "id",
+      "editable": false,
+      "width": 10,
+      "hide": true,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "SEQUENZA STAMPA",
+      "field": "sequenzaStampa",
+      "editable": false,
+      "width": 200,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "SEZIONE",
+      "field": "sezione",
+      "editable": false,
+      "width": 200,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "DESCRIZIONE CASTELLETTO",
+      "field": "testo",
+      "editable": false,
+      "width": 400,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "cellClass": "column-editable",
+      "type": "string"
+    }
+  ]
+}

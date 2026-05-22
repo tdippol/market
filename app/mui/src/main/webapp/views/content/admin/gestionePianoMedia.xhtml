@@ -1,0 +1,234 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form id="selezionaCanaleForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-6 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="canale" value="Seleziona Canale" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="canale" value="#{templateView.currentView.idCanaleSelezionato}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains">
+
+                                        <f:selectItem itemLabel="Selezionare canale" itemValue=""
+                                                      noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.canali}" var="c"
+                                                       itemLabel="#{c.gruppoPromozioneEntity.descrizione}: #{c.descrizione}"
+                                                       itemValue="#{c.id}" />
+                                    <p:ajax partialSubmit="true" update="@form"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="ui-g-3 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="modalitaCompratore" value="Modalita Compratore" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputSwitch id="modalitaCompratore"
+                                                   value="#{templateView.currentView.modalitaCompratore}">
+                                        <p:ajax partialSubmit="true" update="@form" />
+                                    </p:inputSwitch>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <!-- Dialog aggiunta Sicurezza Accessi per Gruppo -->
+                <p:dialog widgetVar="addSecurityDialog" resizable="false" closable="false" width="850"
+                          styleClass="pf-dialog disable-horizontal-scroll" header="Aggiungi sicurezza accessi">
+                    <h:form styleClass="addSecurityDialogForm">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <p:outputLabel for="gruppo" value="Seleziona Gruppo"
+                                                   styleClass="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="gruppo"
+                                                     value="#{templateView.currentView.accessiBean.gruppoSelected}"
+                                                     styleClass="input-field" style="width: 100%;"
+                                                     filter="true" filterMatchMode="contains">
+                                        <f:converter binding="#{groupsConverter}" />
+                                        <p:ajax update="@(.updatableAccessi) @(.addSecurityDialogConfirmBtn)" />
+                                        <f:selectItem itemLabel="Seleziona gruppo" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.accessiBean.groupList}"
+                                                       var="g" itemLabel="#{g.codiceGruppo} - #{g.descrizione}"
+                                                       itemValue="#{g}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-3">
+                                <div>
+                                    <p:outputLabel for="accessoScheda" value="Accesso Scheda"
+                                                   styleClass="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputSwitch id="accessoScheda" showLabels="true" onLabel="W" offLabel="R"
+                                                   value="#{templateView.currentView.accessiBean.accessoScheda}">
+                                        <p:ajax update="@(.addSecurityDialogForm)" />
+                                        <f:converter binding="#{tipoAccessoConverter}" />
+                                    </p:inputSwitch>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div>
+                                    <p:outputLabel for="accessoPianificazione" value="Accesso Pianificazione"
+                                                   styleClass="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputSwitch id="accessoPianificazione" showLabels="true" onLabel="W" offLabel="R"
+                                                   value="#{templateView.currentView.accessiBean.accessoPianificazione}">
+                                        <p:ajax update="@(.addSecurityDialogForm)" />
+                                        <f:converter binding="#{tipoAccessoConverter}" />
+                                    </p:inputSwitch>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div>
+                                    <p:outputLabel for="pianificazioneCompratore" value="Pianificazione Compratore"
+                                                   styleClass="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectBooleanCheckbox id="pianificazioneCompratore"
+                                                             value="#{templateView.currentView.accessiBean.pianificazioneCompratore}">
+                                        <p:ajax update="@(.addSecurityDialogForm)" />
+                                    </p:selectBooleanCheckbox>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div>
+                                    <p:outputLabel for="filtroArticoli" value="Filtro Articoli"
+                                                   styleClass="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectBooleanCheckbox id="filtroArticoli"
+                                                             value="#{templateView.currentView.accessiBean.filtroArticoli}">
+                                        <p:ajax update="@(.addSecurityDialogForm)" />
+                                    </p:selectBooleanCheckbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                 style="float: left;" process="@this"
+                                                 oncomplete="PF('addSecurityDialog').hide()" />
+                            </div>
+                            <div class="col-6">
+                                <p:commandButton value="Conferma"
+                                                 styleClass="ui-confirmdialog-yes addSecurityDialogConfirmBtn"
+                                                 actionListener="#{templateView.currentView.addSecurityDialogConfirm}"
+                                                 update="@(.addSecurityDialogForm) @(.updatableAccessi)"
+                                                 disabled="#{empty templateView.currentView.accessiBean.gruppoSelected}"
+                                                 oncomplete="PF('addSecurityDialog').hide()" />
+                            </div>
+                        </div>
+                    </h:form>
+                </p:dialog>
+
+                <!-- Dialog conferma eliminazione security -->
+                <p:confirmDialog widgetVar="removeSecurityConfirmDialog" severity="alert"
+                                 header="Conferma necessaria"
+                                 message="Confermi l'eliminazione della sicurezza per questo gruppo?">
+                    <p:commandButton value="SI" update="@(.sicurezzaAccessiPanel)"
+                                     action="#{templateView.currentView.removeSecurity}"
+                                     oncomplete="PF('removeSecurityConfirmDialog').hide()" />
+                    <p:commandButton value="NO" type="button" style="float: right;"
+                                     onclick="PF('removeSecurityConfirmDialog').hide()" />
+                </p:confirmDialog>
+
+                <div class="k-portlet">
+                    <h:form>
+                        <p:panel header="Sicurezza Accessi" styleClass="pnlGrid_Header sicurezzaAccessiPanel">
+                            <p:dataTable widgetVar="accessiTable" styleClass="pf-datatable updatableAccessi"
+                                         var="s" value="#{templateView.currentView.sicurezzaAccessi}"
+                                         rowKey="#{s.id}" rowIndexVar="rowIndex">
+                                <p:column headerText="Gruppo" width="30%">
+                                    <h:outputText value="#{s.group.codiceGruppo} - #{s.group.descrizione}" />
+                                </p:column>
+
+                                <p:column headerText="Accesso Scheda" width="15%" style="text-align: center;">
+                                    <p:inputSwitch onLabel="W" offLabel="R" value="#{s.accessoScheda}">
+                                        <f:converter binding="#{tipoAccessoConverter}" />
+                                        <p:ajax update="@(.accessiTable)"
+                                                listener="#{templateView.currentView.toggleAccessoScheda(s)}" />
+                                    </p:inputSwitch>
+                                </p:column>
+
+                                <p:column headerText="Accesso Pianificazione" width="15%" style="text-align: center;">
+                                    <p:inputSwitch onLabel="W" offLabel="R" value="#{s.accessoPianificazione}">
+                                        <f:converter binding="#{tipoAccessoConverter}" />
+                                        <p:ajax update="@(.accessiTable)"
+                                                listener="#{templateView.currentView.toggleAccessoPianificazione(s)}" />
+                                    </p:inputSwitch>
+                                </p:column>
+
+                                <p:column headerText="Pianificazione Compratore" width="15%"
+                                          style="text-align: center;">
+                                    <p:selectBooleanCheckbox value="#{s.pianificazioneCompratore}">
+                                        <p:ajax event="valueChange" update="@(.accessiTable)"
+                                                listener="#{templateView.currentView.togglePianificazioneCompratore(s)}" />
+                                    </p:selectBooleanCheckbox>
+                                </p:column>
+
+                                <p:column headerText="Filtro Articoli" width="15%" style="text-align: center;">
+                                    <p:selectBooleanCheckbox value="#{s.filtroArticoli}">
+                                        <p:ajax event="valueChange" update="@(.accessiTable)"
+                                                listener="#{templateView.currentView.toggleFiltroArticoli(s)}" />
+                                    </p:selectBooleanCheckbox>
+                                </p:column>
+
+                                <p:column width="10%" style="text-align: center;">
+                                    <p:commandButton icon="ui-icon-trash" title="Elimina sicurezza per questo gruppo"
+                                                     onclick="PF('removeSecurityConfirmDialog').show()">
+                                        <f:setPropertyActionListener value="#{s}"
+                                                                     target="#{templateView.currentView.selectedSecurity}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+
+                            <f:facet name="actions">
+                                <p:commandLink action="#{templateView.currentView.openAddSecurityDialog}"
+                                               oncomplete="PF('addSecurityDialog').show()"
+                                               styleClass="pnlGrid_Header plusButton"
+                                               update="@(.addSecurityDialogForm)" />
+                            </f:facet>
+                        </p:panel>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style type="text/css">
+        .input-field-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: black;
+        }
+
+        .ui-inputswitch {
+            margin-top: 5px !important;
+        }
+
+        .ui-inputswitch-on > span {
+            color: #ffffff !important;
+        }
+    </style>
+</ui:composition>
+</html>

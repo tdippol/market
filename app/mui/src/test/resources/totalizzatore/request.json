@@ -1,0 +1,72 @@
+{
+  "idIniziativa": 903,
+  "dataInizio": "01/01/2023",
+  "dataFine": "31/12/2023",
+  "decimali": 2,
+  "parent": {
+    "idTotalizzatore": null,
+    "descrizione": "DESCRIZIONE INIZIATIVA DI TEST",
+    "segno": 1,
+    "actionType": null,
+    "idParent": null,
+    "exportVs": null
+  },
+  "figli": [
+    {
+      "idTotalizzatore": null,
+      "descrizione": "ACCUMULO OGGETTI SULLA SPESA",
+      "segno": 1,
+      "actionType": 60,
+      "idParent": null,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": null,
+      "descrizione": "ACCUMULO OGGETTI SUI PF",
+      "segno": 1,
+      "actionType": 61,
+      "idParent": null,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": null,
+      "descrizione": "ACCUMULO OGGETTI SUI PRODOTTI",
+      "segno": 1,
+      "actionType": 62,
+      "idParent": null,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": null,
+      "descrizione": "REDENZIONE OGGETTI",
+      "segno": -1,
+      "actionType": 64,
+      "idParent": null,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": null,
+      "descrizione": "REDENZIONE OGGETTI",
+      "segno": -1,
+      "actionType": 66,
+      "idParent": null,
+      "exportVs": 1
+    },
+    {
+      "idTotalizzatore": null,
+      "descrizione": "ACCREDITI MANUALI OGGETTI",
+      "segno": 1,
+      "actionType": 0,
+      "idParent": null,
+      "exportVs": 0
+    },
+    {
+      "idTotalizzatore": null,
+      "descrizione": "STORNI MANUALI OGGETTI",
+      "segno": -1,
+      "actionType": 0,
+      "idParent": null,
+      "exportVs": 0
+    }
+  ]
+}

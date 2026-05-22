@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    
+<ui:composition>
+    <h:form styleClass="fromGridActions">
+        <h:panelGroup layout="block" class="row">
+            <h:panelGroup layout="block" class="col-6">
+                <p:panel rendered="#{templateView.currentView.availableActions ne null and fn:length(templateView.currentView.availableActions) >0}" styleClass="mui_invisiblePanel">
+                    <ui:repeat var="action" value="#{templateView.currentView.availableActions}">
+                        <p:commandButton 
+                            id="#{action.componentId eq null ? 'error' : action.componentId}" 
+                            value="#{action.label}" 
+                            actionListener="#{templateView.currentView.prepareSelections}"
+	                        styleClass="pf-btn-confirm" onclick="PF('dlgSelezioniActions').show();"
+	                        style="margin-right: 0.5em;"
+	                        update="@(.dataGridSelections)"
+	                        rendered="#{templateView.isComponentVisible(action.componentId) and not action.silent}"
+	                        disabled="#{templateView.isComponentDisabled(action.componentId)}"
+	                        onerror="redirectToExpiredPage()"
+                        >
+                        <f:param name="componentId" value="#{action.componentId}" />
+                        </p:commandButton>
+                        <p:commandButton 
+                            id="#{action.componentId eq null ? 'error' : action.componentId}_silent" 
+                            value="#{action.label}" 
+                            onclick="setLoadingStatus(this); silentActionFilter('#{action.silentActionParams}','#{templateView.currentJsonFilter}', '#{action.componentId}');"
+	                        styleClass="pf-btn-confirm"
+	                        style="margin-right: 0.5em;"
+	                        update="@(.dataGridSelections)"
+	                        rendered="#{templateView.isComponentVisible(action.componentId) and action.silent}"
+	                        disabled="#{templateView.isComponentDisabled(action.componentId)}"
+	                        onerror="redirectToExpiredPage()"
+                        >
+                        <f:param name="componentId" value="#{action.componentId}" />
+                        </p:commandButton>
+
+                    </ui:repeat>
+               </p:panel>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="col-6" style="text-align: right" >
+                <p:panel rendered="#{templateView.currentView.availableLinks ne null and fn:length(templateView.currentView.availableLinks) >0}" styleClass="mui_invisiblePanel">
+                    <ui:repeat var="link" value="#{templateView.currentView.availableLinks}">
+                        <p:commandButton 
+							id="linkButton#{link.id}"
+							value="#{link.label}" 
+							styleClass="pf-btn-confirm" style="margin-right: 0.5em; background-color:#5578eb !important;"
+                            actionListener="#{templateView.simulateMenuClick()}" 
+							update="@(.updateContent)"
+                            onclick="setLoadingStatus(this)"
+                            onerror="redirectToExpiredPage()"
+                            >
+                            <f:param name="menuId" value="#{link.id}" />
+                        </p:commandButton>
+                    </ui:repeat>
+               </p:panel>
+            </h:panelGroup>
+        </h:panelGroup>
+        
+    </h:form>
+</ui:composition>
+</html>

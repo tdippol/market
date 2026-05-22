@@ -1,0 +1,144 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<p:dialog id="addCumulabilitaDialog" widgetVar="addCumulabilitaDialog" modal="true" closable="false" dynamic="true"
+          header="Crea nuova #{templateView.currentView.currentTab.title}" width="60%" height="75vh" resizable="false"
+          styleClass="addCumulabilitaDialogClass disable-horizontal-scroll">
+
+    <h:form id="addCumulabilitaDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="addCumulabilitaDialogClass addCumulabilitaDialogForm">
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-12">
+                <div>
+                    <p:outputLabel for="dialogPianificazioneDescrizione" value="Descrizione" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputText id="dialogPianificazioneDescrizione" required="true"
+                                 style="width: 100%; text-transform: uppercase;"
+                                 value="#{templateView.currentView.dlgBean.descrizione}">
+                        <p:ajax update="@(.ui-confirmdialog-yes)" />
+                    </p:inputText>
+                </div>
+                <div style="margin-top: 10px;">
+                    <p:outputLabel for="dialogPianificazioneAddPrefisso" value="Selezione prefisso BS" style="font-size: 14px;" />
+                    <h:panelGroup id ="dialogPianificazioneAddPrefisso" layout="block" style="height: 30vh; width: 100%;"
+                                  class="ag-theme-balham" pt:gridid="db_prefissobs">
+                    </h:panelGroup>
+                    <f:facet name="actions">
+                        <p:inputText autocomplete="off" id="db_prefissobs_quickfilter" placeholder="Filtra..."
+                                     styleClass="pnlGrid_Header filterInputText"
+                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_prefissobs',this.value)" />
+                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                       onclick="expandGrid('db_prefissobs')"
+                                       onerror="redirectToExpiredPage()" />
+                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                       onclick="onBtExport('db_prefissobs','PrefissiBS')"
+                                       onerror="redirectToExpiredPage()" />
+                    </f:facet>
+
+                    <script type="text/javascript">
+                        var idCumulabilita = ''
+
+                        var gridParams_prefissobs = {
+                            gridCode: 'db_prefissobs',
+                            gridTitle: 'Selezione Prefisso',
+                            url_columnDefs: contextPath + '/resources/grid/prefissobs/columnDef' + addUrlParamContesto(#{muiContext}),
+                            url_rowData: contextPath + '/resources/grid/prefissobs/rowdata',
+                            url_customSort: contextPath + '/resources/grid/sorting/db_cumulabilita'
+                        };
+                        var gridOptions = {
+                            rowSelection: 'single',
+                            onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_prefissobs.gridCode);
+                            },
+                            onSelectionChanged: onSelectionPrefisso,
+                        };
+
+                        gridParams_prefissobs.gridOptions = gridOptions;
+
+                        $(document).ready(function() {
+                            creaGriglia(gridParams_prefissobs);
+                        });
+
+
+                        function onSelectionPrefisso() {
+                            var selectedRows = getGridOptionFromGridMap('db_prefissobs').api.getSelectedRows()
+                            var codicePromo;
+                            var prefissoBS;
+                            if (selectedRows.length > 0) {
+                                CL();
+                                codicePromo = selectedRows[0].codice_promozione.value;
+                                prefissoBS = selectedRows[0].prefisso_bs.value;
+                                codiceCanale = selectedRows[0].codice_canale.value;
+                                PF('dataInizio').jq.val(selectedRows[0].innerDataInizio.value).trigger('change');
+                                PF('dataFine').jq.val(selectedRows[0].innerDataFine.value).trigger('change');
+                                updateAddCumulabilitaDialogOnTableSelection(
+                                    [
+                                        { name: "codicePromo", value: codicePromo },
+                                        { name: "prefissoBS", value: prefissoBS }
+                                    ]
+                                );
+                            }
+                        }
+                    </script>
+
+                </div>
+                <div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                        <div>
+                            <p:outputLabel for="dataInizio" value="Data inizio" class="input-field-label" />
+                        </div>
+                        <div>
+                            <p:datePicker id="dataInizio" widgetVar="dataInizio" inputStyleClass="input-field"
+                                          styleClass="updateableDialogContent"
+                                          value="#{templateView.currentView.dlgBean.dataInizio}"
+                                          showOn="button" pattern="dd-MM-yyyy" locale="it">
+                                <p:ajax event="dateSelect" update="@(.ui-confirmdialog-yes)" />
+                                <p:ajax event="change" update="@(.ui-confirmdialog-yes)" />
+                            </p:datePicker>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                        <div>
+                            <p:outputLabel for="dataFine" value="Data fine" class="input-field-label" />
+                        </div>
+                        <div>
+                            <p:datePicker id="dataFine" widgetVar="dataFine" inputStyleClass="input-field"
+                                          styleClass="updateableDialogContent"
+                                          value="#{templateView.currentView.dlgBean.dataFine}"
+                                          showOn="button" pattern="dd-MM-yyyy" locale="it">
+                                <p:ajax event="dateSelect" update="@(.ui-confirmdialog-yes)" />
+                                <p:ajax event="change" update="@(.ui-confirmdialog-yes)" />
+                            </p:datePicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button"
+                                 styleClass="ui-confirmdialog-no updateableDialogContent" style="float: left;"
+                                 onclick="PF('addCumulabilitaDialog').hide()" update="@(.addCumulabilitaDialogClass)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="addCumulabilitaDialogConfirmBtn" value="Conferma"
+                                 styleClass="ui-confirmdialog-yes updateableDialogContent"
+                                 oncomplete="PF('addCumulabilitaDialog').hide()"
+                                 disabled="#{templateView.currentView.dlgBean.confirmBtnDisabled}"
+                                 action="#{templateView.currentView.confirmCumulabilitaDialog}"
+                                 onclick="setLoadingStatus(this)"
+                                 update="@(.updateableContent) @(.addCumulabilitaDialogClass)" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

@@ -1,0 +1,131 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <ui:include src="addSottoclasseDialog.xhtml" />
+
+    <!-- Dialog conferma pubblicazione -->
+    <p:confirmDialog widgetVar="pubblicaSottoclassiConfirmDialog" severity="info"
+                     header="Conferma necessaria"
+                     message="Confermi la pubblicazione di tutte le sottoclassi?">
+        <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                         onclick="PF('pubblicaSottoclassiConfirmDialog').hide()" />
+        <p:commandButton value="SI" styleClass="ui-confirmdialog-yes" style="float: right;"
+                         update="@(.updateableContent) @(.pubblicaSottoclassiDialogBtn)"
+                         action="#{templateView.currentView.pubblicaSottoclassi}"
+                         oncomplete="PF('pubblicaSottoclassiConfirmDialog').hide()" />
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:panelGroup layout="block" styleClass="col-12"
+                                  style="margin-top: 20px; margin-bottom: 20px; padding-left: 20px; padding-right: 20px;"
+                                  id="panelButtonsCustomerJourney">
+                        <p:commandButton value="Aggiungi Sottoclasse" id="btnAddSottoclasse"
+                                         style="border-radius: 5px;"
+                                         styleClass="pf-btn-confirm btnAddSottoclasse"
+                                         action="#{templateView.currentView.initDialog}"
+                                         oncomplete="PF('addSottoclasseDialog').show()"
+                                         update="@(.addSottoclasseDialogForm)" />
+                        <p:commandButton value="Pubblica Sottoclassi" id="pubblicaSottoclassi"
+                                         style="border-radius: 5px; float: right;"
+                                         styleClass="pf-btn-confirm pubblicaSottoclassiDialogBtn"
+                                         disabled="#{templateView.currentView.handleBtnPubblicaSottoclassi()}"
+                                         onclick="PF('pubblicaSottoclassiConfirmDialog').show()" />
+                    </h:panelGroup>
+
+                    <p:panel id="expandable_db_grid_customerJourney" toggleable="true" toggleSpeed="500"
+                             closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+                        <f:facet name="header">
+                            <p:outputLabel value="Customer Journey" />
+                        </f:facet>
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham db_grid_customerJourney"
+                                      pt:gridid="db_grid_customerJourney">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="some_grid_id_from_backend_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_customerJourney', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_customerJourney')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_customerJourney', 'Customer Journey', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_customerJourney', 'Customer Journey')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:remoteCommand name="refreshButtons"
+                                             actionListener="#{templateView.currentView.handleBtnPubblicaSottoclassi}"
+                                             update="@(.pubblicaSottoclassiDialogBtn)" />
+                        </f:facet>
+                        <script>
+                            var gridParamsCustomerJourney = {
+                                gridCode: 'db_grid_customerJourney',
+                                gridTitle: 'Customer Journey',
+                                url_columnDefs: contextPath + '/resources/customerJourney/columnDef'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/customerJourney/rowData'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_grid_customerJourney',
+                                gridOptions: {
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_customerJourney')
+                                    },
+                                    onCellValueChanged: function(event) {
+                                        saveCellValue(event);
+                                    }
+                                }
+                            }
+                            $(document).ready(function () {
+                                creaGriglia(gridParamsCustomerJourney);
+                            });
+
+                            function saveCellValue(event) {
+                                let id = event.data.id.value;
+                                let fieldCode = event.column.colDef.field;
+                                let value = event.data[fieldCode].value;
+                                if (id &amp;&amp; fieldCode &amp;&amp; value !== null &amp;&amp; value !== undefined) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: contextPath + '/resources/customerJourney/sottoclasse/' + id + addUrlParamContesto(#{muiContext}),
+                                        contentType: "application/json",
+                                        data: JSON.stringify({"field": fieldCode, "value": value}),
+                                        success: function(data, textStatus, jqXHR) {
+                                            let rowNode = event.api.getRowNode(event.node.id);
+                                            if (rowNode &amp;&amp; data.rowData &amp;&amp; data.rowData.length > 0) {
+                                                rowNode.setData(data.rowData[0]);
+                                            }
+                                            refreshButtons();
+                                            addInfoGrowl([
+                                                {name: 'title', value: "Sottoclasse"},
+                                                {name: 'message', value: "Sottoclasse modificata con successo!"}
+                                            ]);
+                                        },
+                                        error: function(jqXHR, exception, thrownError) {
+                                            ajaxErrorHandler(jqXHR, exception, thrownError, event);
+                                        }
+                                    });
+                                } else {
+                                    addErrorGrowl([
+                                        {name: "title", value: "Errore"},
+                                        {name: "message", value: "Modifica non riuscita!"}
+                                    ]);
+                                }
+                            }
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

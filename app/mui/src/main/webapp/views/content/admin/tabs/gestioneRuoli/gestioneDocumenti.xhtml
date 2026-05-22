@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:confirmDialog message="Vuoi sovrascrivere il documento?" header="Attenzione" severity="alert"
+                     widgetVar="dialogOverwriteFile">
+        <p:commandButton value="Annulla"
+                         styleClass="ui-confirmdialog-no" style="float: left;"
+                         oncomplete="PF('dialogOverwriteFile').hide()"
+                         action="#{gestioneRuoli.dialogCancelUpload}"
+                         update="@(.dialogOverwriteFileClass)" />
+        <p:commandButton id="addRegolaDialogConfirmBtn" value="Conferma"
+                         styleClass="ui-confirmdialog-yes"
+                         oncomplete="PF('dialogOverwriteFile').hide()"
+                         action="#{gestioneRuoli.dialogConfirmUpload}"
+                         update="@(.dialogOverwriteFileClass)" />
+    </p:confirmDialog>
+
+	<div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-6">
+                <h:form id="roleForm">
+                    <p:panel widgetVar="rolePanel" style="margin-bottom: 10px;" styleClass="rolePanel">
+                        <p:dataTable value="#{gestioneRuoli.rolesList}" scrollable="true" scrollHeight="640"
+                                     var="role" id="tableRole" styleClass="pf-datatable"
+                                     selectionMode="single" rowKey="#{role.id}"
+                                     selection="#{gestioneRuoli.gestioneDocumentiBean.selectedRole}">
+                            <p:ajax event="rowSelect" update="@(.docsPanel)"
+                                    listener="#{gestioneRuoli.onRowSelected}" />
+                            <p:column headerText="Ruolo" width="400">
+                                <h:outputText value="#{role.name}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+            </div>
+            <div class="col-6">
+                <h:form id="docForm">
+                    <p:panel header="Documenti visibili per ruolo: #{gestioneRuoli.gestioneDocumentiBean.selectedRole.name}"
+                             style="width: 100%; max-height: 640px; overflow: auto; display: block"
+                             styleClass="docsPanel">
+                        <p:dataTable value="#{gestioneRuoli.gestioneDocumentiBean.documents}" id="documents"
+                                     scrollable="true" scrollHeight="640" styleClass="pf-datatable docsPanel"
+                                     selectionMode="multiple" widgetVar="documents" var="doc" rowKey="#{doc.entity.id}"
+                                     selection="#{gestioneRuoli.gestioneDocumentiBean.selectedDocs}">
+                            <p:ajax event="rowSelect" update="@(.docsPanel)" />
+                            <p:column headerText="Nome file" width="400">
+                                <p:commandButton style="border-radius: 50%; margin-right: 0.5em;" ajax="false"
+                                                 icon="fa fa-download" onerror="redirectToExpiredPage()">
+                                    <p:fileDownload value="#{templateView.downloadDocument(doc.entity)}"/>
+                                </p:commandButton>
+                                <p:commandLink ajax="false" value="#{doc.entity.name}" onerror="redirectToExpiredPage()">
+                                    <p:fileDownload value="#{templateView.downloadDocument(doc.entity)}"/>
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Visibile" style="text-align: center;" width="100">
+                                <p:selectBooleanCheckbox value="#{doc.associated}"
+                                                         disabled="#{gestioneRuoli.gestioneDocumentiBean.selectManyDisabled}">
+                                    <p:ajax event="valueChange"
+                                            listener="#{gestioneRuoli.toggleDocumentForRole(doc)}" />
+                                </p:selectBooleanCheckbox>
+                            </p:column>
+                            <p:column style="text-align: center;" width="50">
+                                <p:commandButton styleClass="rowDeleteButton" icon="ui-icon-trash" title="Elimina documento"
+                                                 update="@(.docsPanel)"
+                                                 action="#{gestioneRuoli.deleteDocument}">
+                                    <p:confirm header="Conferma Necessaria" message="Confermi eliminazione documento?"
+                                               icon="ui-icon-alert" />
+                                    <f:setPropertyActionListener value="#{doc.entity}"
+                                                                 target="#{gestioneRuoli.gestioneDocumentiBean.selectedDoc}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                        <f:facet name="footer">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p:commandButton value="Seleziona tutti" styleClass="pf-btn-confirm"
+                                                     icon="fa fa-fw fa-check-square" update="@(.docsPanel)"
+                                                     disabled="#{gestioneRuoli.gestioneDocumentiBean.btnSelectAllDocsDisabled}"
+                                                     action="#{gestioneRuoli.selectAllDocs}" />
+                                </div>
+                                <div class="col-4">
+                                    <p:commandButton value="Deseleziona tutti" styleClass="pf-btn-cancel"
+                                                     icon="fa fa-fw fa-square" update="@(.docsPanel)"
+                                                     disabled="#{gestioneRuoli.gestioneDocumentiBean.btnDeselectAllDocsDisabled}"
+                                                     action="#{gestioneRuoli.deselectAllDocs}" />
+                                </div>
+                                <div class="col-4">
+                                    <p:fileUpload label="Seleziona file"
+                                                  fileUploadListener="#{gestioneRuoli.handleDocumentFileUpload}"
+                                                  dragDropSupport="false" auto="true" mode="advanced"
+                                                  fileLimit="1" update="@(.docsPanel) @this"
+                                                  sizeLimit="52428800"
+                                                  invalidSizeMessage="File troppo grande; dimensione massima consentita 50 Mb"
+                                                  widgetVar="documentUploadWidget" />
+                                </div>
+                            </div>
+                        </f:facet>
+                    </p:panel>
+                </h:form>
+            </div>
+        </div>
+	</div>
+</ui:composition>
+</html>

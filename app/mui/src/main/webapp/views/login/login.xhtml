@@ -1,0 +1,97 @@
+<!DOCTYPE html
+		PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+>
+<!--
+Theme: Axiante - Keen - Top Menu - Fluid Layout
+Author: Axiante
+Website: http://www.axiante.com/
+Contact:
+Follow:
+Dribbble:
+Like:
+License:
+-->
+
+<!-- begin::Head -->
+	<h:head>
+		<meta charset="utf-8" />
+		<title>Esselunga | MUI </title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<h:outputStylesheet library="vendors" name="general/bootstrap-select/dist/css/bootstrap-select.css" />
+		<h:outputStylesheet library="vendors" name="custom/line-awesome/css/line-awesome.css" />
+		<h:outputStylesheet library="vendors" name="custom/fontawesome5/css/all.css" />
+		<link rel="shortcut icon" type="image/x-icon" href="#{resource['images:logos/favicon.ico']}" />
+	</h:head><!-- end::Head -->
+
+<!-- begin::Body -->
+<body
+	class="k-header--fixed k-header-mobile--fixed k-aside--enabled k-aside--fixed k-aside--offcanvas-default">
+	<!--   Begin Container -->
+	<div class="container">
+		<div class="row justify-content-end">
+			<!--begin: welcome -->
+			<div class="col-1" style="margin-top: 20px; margin-right: 20px">
+			</div>
+			<!--end: welcome -->
+		</div>
+		<div class="row justify-content-center" style="margin-top: 100px;">
+			<div class="col-12 col-md-8">
+				<div class="k-login-v2__body-wrapper">
+					<div class="k-login-v2__body-container">
+						<div class="k-login-v2__body-title" style="text-align: center; margin-bottom: 20px;">
+							<p:graphicImage styleClass="refreshImage" cache="false"  library="images" name="logos/logo-login.png" style="width:300px;" />
+						</div>
+
+						<!--begin::Form-->
+						<h:form
+							class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="post">
+							<p:growl id="growl" showDetail="true" styleclass="growlClass"><p:autoUpdate /></p:growl>
+
+							<h:outputText value="Username:" style="font-family: Raleway;"/>
+							<p:inputText value="#{loginView.username}"
+								class="form-control" autocomplete="on" style="background-color: #ffffff !important;"/>
+
+
+							<h:outputText value="Password:" style="font-family: Raleway;"/>
+							<p:password value="#{loginView.password}" class="form-control" style="background-color: #ffffff !important;"/>
+							<br />
+							<div class="row">
+      							<div class="col-12 col-md-4">
+       								<div class="form-group">
+            							<div class="col-6">
+                							<p:commandButton value="Login" actionListener="#{loginView.login}"
+													class="btn btn-pill btn-primary btn-elevate" style="font-family: Raleway;"/>
+           								 </div>
+        							</div>
+      							</div>
+      							<div class="col-12 col-md-5">
+      							</div>
+      							<div class="col-12 col-md-3">
+                                	<a class="btn btn-link" href="http://w10cslmg21/password/reset">
+                      					Forgot Your Password?
+                  					</a>
+                    			</div>
+    						</div>
+						</h:form>
+					</div>
+					<!--end::Form-->
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!--end::Container-->
+</body>
+
+<!-- end::Body -->
+
+</html>
+

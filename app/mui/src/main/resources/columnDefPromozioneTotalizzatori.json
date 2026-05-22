@@ -1,0 +1,64 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Id Totalizzatore",
+      "field": "idTotalizzatore",
+      "width": 300,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "width": 300,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Action Type",
+      "field": "actionType",
+      "width": 100,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Segno",
+      "field": "segno",
+      "width": 100,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Parent",
+      "field": "parent",
+      "width": 300,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Export VS",
+      "field": "exportVs",
+      "width": 100,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Codice Item",
+      "field": "codiceItem",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": true
+    },
+    {
+      "headerName": "Codice Promozione",
+      "field": "codicePromo",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": true
+    },
+    {
+      "headerName": "Tipo Item",
+      "field": "tipoItem",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": true
+    },
+    {
+      "headerName": "Codice Articolo",
+      "field": "codiceArticolo",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Descrizione Articolo",
+      "field": "descrizioneArticolo",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Compratore",
+      "field": "compratore",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Reparto",
+      "field": "reparto",
+      "width": 200,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Categoria",
+      "field": "categoria",
+      "width": 200,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Grm",
+      "field": "grm",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Sub Grm",
+      "field": "subGrm",
+      "width": 300,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Zona",
+      "field": "zona",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Volantino",
+      "field": "volantino",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 200,
+      "type": "date",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 200,
+      "type": "date",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Seleziona tutti",
+      "field": "selected",
+      "width": 140,
+      "type": "checkbox",
+      "editable": true,
+      "hide": false,
+      "checkboxSelection": true,
+      "headerCheckboxSelection": true,
+      "headerCheckboxSelectionFilteredOnly": true
+
+    }
+  ]
+}
+

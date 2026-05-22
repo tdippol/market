@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+>
+<p:confirmDialog widgetVar="savePianoMediaConfirmDialog" global="true" showEffect="fade" hideEffect="fade"
+                 header="Avviso" message="Confermi la creazione del piano media selezionato?"
+                 icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog">
+    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                     onclick="PF('savePianoMediaConfirmDialog').hide()" />
+    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                     onclick="savePianoMediaSelected()"
+                     oncomplete="PF('savePianoMediaConfirmDialog').hide()" />
+
+    <script type="text/javascript">
+        function savePianoMediaSelected() {
+            PF('savePianoMediaConfirmDialog').hide();
+            showAgGridLoadingOverlay('db_grid_creaPianoMedia');
+            var rowData = getRowData('db_grid_creaPianoMedia');
+            $.ajax({
+                type: "POST",
+                url: contextPath + '/resources/pianomedia/creaPianoMedia/save' + addUrlParamContesto(#{muiContext}),
+                contentType: "application/json",
+                data: JSON.stringify(rowData[rowIndex]),
+                success: function (data) {
+                    rowData[rowIndex] = data;
+                    getGridOptionFromGridMap('db_grid_creaPianoMedia').api.setRowData(rowData);
+                    addInfoGrowl([
+                        {name: 'title', value: 'Piano Media'},
+                        {name: 'message', value: 'Piano Media creato'}
+                    ]);
+                    if (#{templateView.currentView.landingPage} === 0) {
+                        console.log('no navigation set for crea promo');
+                    } else {
+                        linkButtonSchedaPianoMedia([
+                            { name:'menuId', value: #{templateView.currentView.landingPage} },
+                            { name:'currentPianoMediaId', value: data.idPianoMedia }
+                        ]);
+                    }
+                },
+                error: function (jqXHR, exception, thrownError) {
+                    ajaxErrorHandler(jqXHR, exception, thrownError, event);
+                    rowData[rowIndex].message = jqXHR.responseJSON.message;
+                    getGridOptionFromGridMap('db_grid_creaPianoMedia').api.setRowData(rowData);
+                },
+                complete: function () {
+                    hideAgGridLoadingOverlay('db_grid_creaPianoMedia');
+                }
+            })
+        }
+    </script>
+    <p:remoteCommand name="linkButtonSchedaPianoMedia" action="#{templateView.simulateMenuClick()}" />
+</p:confirmDialog>
+</html>

@@ -1,0 +1,196 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <h:form id="schedaPianoForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="pianomedia" value="Piano media" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="pianomedia"
+                                                     value="#{templateView.currentView.idPianoMediaSelected}" class="input-field"
+                                                     filter="true" filterMatchMode="contains"
+                                                     styleClass="updateableContent"
+                                                     style="width: 100%; background-color: white; text-transform: capitalize;">
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.pianoMediaList}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.id}" />
+                                        <p:ajax update="@(.updateableContent)"  />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-5">
+                                <div>
+                                    <p:outputLabel for="promoRiferimento" value="Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText styleClass="updateableContent" class="input-field" style="width: 100%; background-color: transparent;"
+                                                 id="promoRiferimento" readonly="true"
+                                                 value="#{templateView.currentView.promozioneRiferimento}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="anno" value="Anno" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="anno" readonly="true" styleClass="updateableContent"
+                                                 class="input-field" style="width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.anno}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataInizio" value="Data inizio" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizio" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.dataInizio}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataFine" value="Data fine" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataFine" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.dataFine}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="stato" value="Stato" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="stato" readonly="true"
+                                                 styleClass="updateableContent updateCambioStato"
+                                                 class="input-field"
+                                                 value="#{templateView.currentView.stato}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataInizioStato" value="Data inizio stato"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizioStato" readonly="true" styleClass="updateableContent updateCambioStato"
+                                                 class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.inizioStato}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1" style="padding-top: 15px !important;">
+                                <p:commandButton
+                                        id="linkButton_pianificazionePianoMedia"
+                                        value="Pianificazione"
+                                        styleClass="pf-btn-confirm linkPianificazionePianoMedia updateableContent updateCambioStato"
+                                        style="margin-right: 0.5em; background-color: #5578eb !important;  float: right;"
+                                        actionListener="#{templateView.simulateMenuClick()}"
+                                        update="@(.updateableContent)"
+                                        onclick="setLoadingStatus(this)"
+                                        disabled="#{templateView.currentView.btnPianificazioneDisabled}">
+                                    <f:param name="menuId" value="#{templateView.currentView.landingPage}" />
+                                    <f:param name="currentPianoMediaId"
+                                             value="#{templateView.currentView.idPianoMediaSelected}" />
+                                </p:commandButton>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-8">
+                                <p:spacer width="100" height="10" />
+                            </div>
+                        </div>
+
+                        <p:outputLabel value="#{templateView.currentView.idPianoMediaSelected }"
+                                       class="statiIdPianoMedia"
+                                       style="visibility: hidden;" />
+
+                        <style>
+                            .input-field {
+                                border-radius: 3px;
+                                border-color: gray;
+                            }
+
+                            .input-field-label {
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: black;
+                            }
+
+                            .ui-tabs {
+                                padding: 0;
+                            }
+
+                            .ui-tabs-nav {
+                                background: #ececec !important;
+                            }
+
+                            .ui-tabs-panels {
+                                border: 1px solid gray;
+                                background: white;
+                                border-radius: 3px;
+                            }
+
+                            .ui-tabs .ui-tabs-panel {
+                                padding-top: 0;
+                                padding-bottom: 0;
+                            }
+
+                            .ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+                                border-top-left-radius: 5px;
+                                border-top-right-radius: 5px;
+                            }
+
+                            .ui-icon-carat-1-s {
+                                transform: rotate(180deg) !important;
+                            }
+
+                            #schedaPianoForm\:pianomedia_items > li {
+                                text-transform: capitalize;
+                            }
+                        </style>
+                    </h:form>
+
+                    <p:tabView cache="false" widgetVar="schedaPromo_tabs" styleClass="updateCambioStato tabScheda"
+                               activeIndex="#{templateView.currentView.activeTab}">
+                        <p:ajax event="tabChange" update="@(.updateableContent)"
+                                listener="#{templateView.currentView.onTabChange}" />
+                        <p:tab title="Stati">
+                            <ui:include src="tabs/statiPiano.xhtml" />
+                        </p:tab>
+                        <p:tab title="Pianificazone">
+                            <ui:include src="tabs/pianificazione.xhtml" />
+                        </p:tab>
+                        <p:tab title="Controlli">
+                            <ui:include src="tabs/controlli.xhtml" />
+                        </p:tab>
+                        <p:tab title="Modifica Testata">
+                            <ui:include src="tabs/editPiano.xhtml" />
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

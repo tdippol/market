@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+<ui:composition>
+        <h:form id="formIngridSelections_#{gridId}" styleClass="dataGridSelections">
+            <p:dataGrid var="filter" styleClass="dataGridSelections" value="#{templateView.currentView.currentIngridJsonFilter}" columns="3" layout="grid" rows="6" paginator="false">
+                <p:panel header="#{filter.label}" style="text-align:left">
+                    <h:panelGrid columns="1" style="width:100%">
+                        <p:selectCheckboxMenu value="#{filter.selectedValues}" filter="true" filterMatchMode="contains" style="width: 100%;" label="" multiple="true">
+                            <f:selectItems value="#{filter.values}" />
+                        </p:selectCheckboxMenu>
+                    </h:panelGrid>
+                </p:panel>
+                <f:facet name="footer">
+                    <p:commandButton styleClass="pf-btn-confirm" style="float: right;" value="conferma" 
+                        onclick="setLoadingStatus(this)" 
+                        oncomplete="PF('dlgIngridSelections_#{gridId}').hide();updateRemoteView([{name:'grid', value: '#{gridId}'},{name:'reload', value:'true'}])" 
+                        update="@this"  
+                        action="#{templateView.currentView.applyIngridFilters(gridId)}"
+                        onerror="redirectToExpiredPage()"
+                        />
+                    <p:commandButton styleClass="pf-btn-cancel" style="float: right;" value="annulla" process="@this"  oncomplete="PF('dlgIngridSelections_#{gridId}').hide();"  onerror="redirectToExpiredPage()"/>
+                </f:facet>
+            </p:dataGrid>
+        </h:form>
+</ui:composition>
+</html>

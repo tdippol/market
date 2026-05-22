@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<ui:composition>
+	<!-- Action Dialog -->
+	<ui:include src="/views/content/actionDialog.xhtml"/>
+	<div class="k-content k-grid__item k-grid__item--fluid" id="k_content">
+		<div class="row">
+			<div class="col-12">
+				<!-- Check Compulsory Filters -->
+				<ui:fragment rendered="#{!templateView.renderCumpulsoryFilters}">
+					<script type="text/javascript">
+						$(document).ready(function() {
+							showFilterSpinner();
+							PF('wxfilterDialog').show();
+							openFiltersDialog();
+							addInfoGrowl([{name: 'title', value: 'Attenzione'}, {
+								name: 'message',
+								value: '#{templateView.compulsoryFiltersMessage}'
+							}]);
+						});
+					</script>
+				</ui:fragment>
+				<!-- View Selections -->
+				<ui:include src="/views/content/viewPreSelections.xhtml"/>
+				<!-- Action Buttons -->
+				<ui:include src="/views/content/actionButtons.xhtml"/>
+				<!-- Grid content -->
+				<p:panelGrid styleClass="mui-multigrid-container" rendered="#{fn:length(templateView.currentView.availableGrids) eq 1}">
+                    <p:row>
+                        <p:column style="width: 100%">
+                            <ui:include src="/views/content/grid.xhtml">
+                                <ui:param name="gridId" value="#{templateView.currentView.availableGrids[0]}" />
+                            </ui:include>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+			</div>
+		</div>
+	</div>
+</ui:composition>
+</html>

@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+
+                    <h:form id="selezionaGruppoCanaleForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="gruppoCanale" value="Seleziona Gruppo Canale" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="gruppoCanale" value="#{templateView.currentView.idChannelSelected}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains">
+                                        <p:ajax update="@(.updateableWorkflow)" />
+                                        <f:selectItems value="#{templateView.currentView.groupsChannels}" var="gc"
+                                                       itemLabel="#{gc.group.descrizione}:#{gc.channel.descrizione}"
+                                                       itemValue="#{gc.channel.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:tabView dynamic="true" cache="false" 
+                               widgetVar="gestioneWorkflow_tabs"
+                               class="tabGestioneWorkflow"
+                               activeIndex="#{templateView.currentView.activeTab}"
+                               >
+                               <p:ajax event="tabChange" listener="#{templateView.currentView.tabChanged}"></p:ajax>
+                        <p:tab title="Stati Consentiti" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneWorkflow/statiConsentiti.xhtml" />
+                        </p:tab>
+                        <p:tab title="Transizioni" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneWorkflow/transizioni.xhtml" />
+                        </p:tab>
+                        <p:tab title="Regole Elementi UI" class="tabGestioneWorkflow">
+                            <ui:include src="tabs/gestioneWorkflow/regole.xhtml" />
+                        </p:tab>
+                    </p:tabView>
+
+
+                    <style>
+                        .input-field {
+                            border-radius: 3px;
+                            border-color: gray;
+                        }
+                        .input-field-label {
+                            font-size: 14px;
+                            font-weight: 500;
+                            color: black;
+                        }
+                        .ui-tabs {
+                            padding: 0;
+                        }
+                        .ui-tabs-nav {
+                            background: #ececec !important;
+                        }
+                        .ui-tabs-panels {
+                            border: 1px solid gray;
+                            background: white;
+                            border-radius: 3px;
+                        }
+                        .ui-tabs .ui-tabs-panel {
+                            padding-top: 0px;
+                            padding-bottom: 0px;
+                        }
+                        .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+                            border-top-left-radius: 5px;
+                            border-top-right-radius: 5px;
+                        }
+                    </style>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

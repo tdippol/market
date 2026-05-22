@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletReportBuoniBSGrid" class="k-portlet" style="background: #ececec;">
+                    <div class="ui-g-12" style="padding: 10px;">
+                        <h:form>
+                            <div class="ui-g-12 ui-md-3 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="codiceBuono" value="Codice Buono"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="codiceBuono" styleClass="updateableCodiceBuonoInput"
+                                                 class="input-field"
+                                                 style="width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.codiceBuono}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-3 ui-lg-4"
+                                 style="padding-top: 15px !important; margin-left: 75px !important;">
+                                <p:commandButton value="In corso" style="margin-right: 20px; border-radius: 5px;"
+                                                 id="cercaInCorso" class="pf-btn-confirm"
+                                                 action="#{templateView.currentView.cercaInCorsoAction}"
+                                                 update="@(.updateablePanelContent)" />
+                                <p:commandButton value="Futuri" style="margin-right: 20px; border-radius: 5px;"
+                                                 id="cercaFuturi" class="pf-btn-confirm"
+                                                 action="#{templateView.currentView.cercaFuturiAction}"
+                                                 update="@(.updateablePanelContent)" />
+                                <p:commandButton value="Completati" style="border-radius: 5px;"
+                                                 id="cercaCompletati" class="pf-btn-confirm"
+                                                 action="#{templateView.currentView.cercaCompletatiAction}"
+                                                 update="@(.updateablePanelContent)" />
+                            </div>
+                        </h:form>
+                    </div>
+
+                    <p:panel id="expandable_db_grid_buoniBS" toggleable="true" toggleSpeed="500"
+                             closeSpeed="500" styleClass="pnlGrid_Header updateablePanelContent">
+                        <f:facet name="header">
+                            <p:outputLabel
+                                    value="Buono presente nelle promozioni #{templateView.currentView.searchType}" />
+                        </f:facet>
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham grid_buonoInPromo"
+                                      pt:gridid="db_grid_buonoInPromo">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="buonoInPromoFilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_buonoInPromo', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_buonoInPromo')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_buonoInPromo', 'Riepilogo Promozioni', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_buonoInPromo', 'Riepilogo Promozioni')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="application/javascript">
+                            function loadGridReportBuoniBS(searchType, codiceBuono) {
+                                var cambiaBuonoGridParams = {
+                                    gridCode: 'db_grid_buonoInPromo',
+                                    gridTitle: 'Buoni in Promo',
+                                    url_columnDefs: contextPath + '/resources/reportBuonoInPromo/columnDef',
+                                    url_rowData: contextPath + '/resources/reportBuonoInPromo/rowData/'
+                                        + codiceBuono + '/' + searchType,
+                                    url_customSort: contextPath + '/resources/grid/sorting/db_grid_buonoInPromo',
+                                    gridOptions: {
+                                        autoGroupColumnDef: {
+                                            headerName: 'Promozione',
+                                            width: 500,
+                                            cellStyle: {fontWeight: 'bold'},
+                                            field: 'descrizioneEstesa.value',
+                                            cellRendererParams: {
+                                                suppressCount: true
+                                            }
+                                        },
+                                        onSortChanged: function (event) {
+                                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_buonoInPromo');
+                                        }
+                                    }
+                                };
+                                creaGriglia(cambiaBuonoGridParams);
+                            }
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .input-field {
+            border-radius: 3px;
+            border-color: gray;
+        }
+
+        .input-field-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: black;
+        }
+    </style>
+</ui:composition>
+</html>

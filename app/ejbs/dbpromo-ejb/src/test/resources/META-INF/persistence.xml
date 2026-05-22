@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+	<persistence-unit name="test-dbpromo" transaction-type="RESOURCE_LOCAL">
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.AssortimentoFornitoreEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CanaleLastProgEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CanalePromozioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CategoriaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgAbilitaMeccCanaleEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgCanaleNegoziEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgParametriEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgPianificazTipoRigaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgPianificazioneCampiEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgPianificazioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgSetPianificazioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgStatiCanaleConsentEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgStatiTransizioniEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CompratoreEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CreaPromozioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.FornitoreEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.GrmEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.GruppoPromozioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.ItemEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MeccanicheEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.NegozioEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.ProcessLogEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromoStatiConsentitiEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromoStatiTransizioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneMeccanicheEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneNegozioEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozionePianificazioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneStatoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneTestataEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.RepartoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.ResponsabileEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.SubGrmEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.TipoNegozioEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromoPubblicazioneTestataEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.AssortimentoNegozioEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.TipoTerminaleCassaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneTipoTerminaleEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.StatoPromozioneEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgTipoElementoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgConfHeaderEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgLivelloPianificazioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgAzioniEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.UploadFidayEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.CheckCompratoriEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CheckTestataEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CheckPianificazioneEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgCanaleSecEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiPromoDbPromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiPromoArticoliDbPromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiPromoArticoliDbPromoId</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiPlanoDbPromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiPlanoArticoliDbPromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiPlanoArticoliDbPromoId</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.ReportSovrapposizioniEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.ReportSovrapposizioniNegoziEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgAbilitaCheckEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgCheckEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgSovrapposizioneMeccanicheEntity</class>
+
+		<class>com.axiante.mui.business.BooleanConverter</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.PrestazioniEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.ContributiStatoAnagraficaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.ContributiPromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.ContributiPromoArticoloEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.IniziativaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.IniziativaStatoEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiSottoclasseEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.ReportVendutoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.ReportVendutoId</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiFlagEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiFlagDominioEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgCanaleFlagEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiPromozioneFlagEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.AttributiPromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgCanaliAttributiEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneAttributiEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.TotalizzatoriEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.TemplateTotalizzatoriEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.ValorePuntoEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.ClusterClienteEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.SupportoMediaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgCanaleReparto</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.SupportoMediaCfgCheckEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgPianoMediaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CreaPianoMediaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaPromoDbpromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaStatoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianificazionePianoMediaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaStatiTransizioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaStatiConsentitiEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaControlliEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaPianificazioneDettaglioEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaPromoArticoliDbPromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianoMediaPromoArticoliDettaglioDbPromoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianificazioneAnagraficaPianoMediaEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgCanaleReparto</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.MarchioPrivatoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneMarchioPrivatoEntity</class>
+		<class>com.axiante.mui.business.ModalitaMarchioPrivatoConverter</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromoRepartoMarchioPrivato</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.CastellettoMessaggiEntity</class>
+		<class>com.axiante.mui.business.MessaggiFontEnumConverter</class>
+		<class>com.axiante.mui.business.MessaggiAllineamentoEnumConverter</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.PianificazioneTotalizzatoriEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.AttributoArticoloEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.FormaPagamentoEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiReportArticoloEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiReportArticoloId</class>
+		
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiReportBSEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiReportBSId</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiIniziativaEntity</class>
+
+		<!-- cumulabilita -->
+		<class>com.axiante.mui.dbpromo.persistence.entities.CumulabilitaEsclusivitaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CumulabilitaBuoniEntity</class>
+		<class>com.axiante.mui.business.CumulabilitaTypeConverter</class>
+
+		<!-- configurazione castelletto messaggi -->
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiCfgCastellettoMessaggiComponentEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiCfgDefaultCastellettoMessaggiEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiFontStileEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgCanaleDispositivoEntity</class>
+		<class>com.axiante.mui.business.MessaggiComponentsEnumConverter</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiFontEntities</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiBottoneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.DescCategoriaBuoniEntity</class>
+
+		<!-- descrizione id messaggi -->
+		<class>com.axiante.mui.dbpromo.persistence.entities.CfgIdMessaggiEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.SottoclasseEntity</class>
+
+		<class>com.axiante.mui.dbpromo.persistence.entities.ObiettivoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.SottoscrizioneEntity</class>
+		<!-- retail media -->
+		<class>com.axiante.mui.dbpromo.persistence.entities.CausaliRetailEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.FornitoriRetailEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiMacrospazioMediaEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.MuiEventoRetailEntity</class>
+
+		<!-- rifatturazione -->
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromoFatturazioneDefaultEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromoFatturazioneEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneCostiContattoEntity</class>
+		<class>com.axiante.mui.dbpromo.persistence.entities.TipoPromoRifatturazioneEntity</class>
+		
+		<class>com.axiante.mui.dbpromo.persistence.entities.PromozioneAttiva</class>
+		<properties>
+			<!-- h2 -->
+			<!-- posso ricreare lo schema senza reinizializzare il db, 50% + veloce -->
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+			<property name="javax.persistence.jdbc.url"
+					  value="jdbc:h2:mem:DBPROMO;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS DBPROMO;MODE=ORACLE"/>
+			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+			<property name="javax.persistence.jdbc.user" value="sa"/>
+			<property name="javax.persistence.jdbc.password" value="sa"/>
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+
+			<!-- eclipse link specifics -->
+			<property name="eclipselink.logging.level" value="SEVERE"/>
+			<!-- <property name="eclipselink.logging.level" value="ALL"/> -->
+<!--
+			<property name="eclipselink.logging.logger" value="DefaultLogger"/>
+			<property name="eclipselink.logging.level.sql" value="FINE"/>
+			<property name="eclipselink.logging.parameters" value="true"/>
+-->
+
+		</properties>
+	</persistence-unit>
+</persistence>

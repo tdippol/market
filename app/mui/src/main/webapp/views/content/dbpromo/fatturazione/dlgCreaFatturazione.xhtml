@@ -1,0 +1,243 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<p:dialog id="dlgAddFatturazione" widgetVar="dlgAddFatturazione" modal="true" closable="false"
+          header="Creazione Fatturazione" width="90%" height="80vh" resizable="false"
+          styleClass="disable-horizontal-scroll">
+    <h:form id="formAddFatturazione" styleClass="formAddFatturazione" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="selectPromo" value="Promozione" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="selectPromo" widgetVar="selectPromo" filter="true" filterMatchMode="contains"
+                                     styleClass="input-field selectPromo" style="width: 100%;"
+                                     value="#{templateView.currentView.idPromozioneSelected}">
+                        <p:ajax update="@(.selectCompratore) @(.selectFornitore) @(.selectPrestazione)
+                                        @(.dataLiquidazione) @(.inputValore) @(.noteCompratore) @(.panelErrorMessage)
+                                        @(.selectTipologiaArticoli) @(.panelArticoli) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.promozioni}" var="p"
+                                       itemLabel="#{p.descrizioneEstesa}" itemValue="#{p.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="selectCompratore" value="Compratore" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="selectCompratore" widgetVar="selectCompratore" filter="true" filterMatchMode="contains"
+                                     styleClass="input-field selectCompratore" style="width: 100%;"
+                                     disabled="#{empty templateView.currentView.idPromozioneSelected or templateView.currentView.maxProgressivoReachedFlag}"
+                                     value="#{templateView.currentView.idCompratoreSelected}">
+                        <p:ajax update="@(.selectFornitore) @(.selectPrestazione) @(.panelErrorMessage)
+                                        @(.dataLiquidazione) @(.inputValore) @(.noteCompratore)
+                                        @(.selectTipologiaArticoli) @(.panelArticoli) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="Seleziona compratore" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.compratori}" var="c"
+                                       itemLabel="#{c.fullDescription}" itemValue="#{c.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="selectFornitore" value="Fornitore" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="selectFornitore" widgetVar="selectFornitore" filter="true" filterMatchMode="contains"
+                                     styleClass="input-field selectFornitore" style="width: 100%;"
+                                     disabled="#{empty templateView.currentView.idCompratoreSelected or templateView.currentView.maxProgressivoReachedFlag}"
+                                     value="#{templateView.currentView.idFornitoreSelected}">
+                        <p:ajax update="@(.selectPrestazione) @(.dataLiquidazione) @(.inputValore) @(.noteCompratore)
+                                        @(.selectTipologiaArticoli) @(.panelErrorMessage) @(.panelArticoli)
+                                        @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="Seleziona fornitore" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.fornitori}" var="f"
+                                       itemLabel="#{f.fullDescription}" itemValue="#{f.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="selectPrestazione" value="Prestazione" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="selectPrestazione" widgetVar="selectPrestazione"
+                                     styleClass="input-field selectPrestazione" style="width: 100%;"
+                                     disabled="#{templateView.currentView.selectPrestazioneDisabled}"
+                                     value="#{templateView.currentView.codicePrestazioneSelected}">
+                        <p:ajax update="@(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="Seleziona prestazione" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.prestazioni}" var="p"
+                                       itemLabel="#{p.descrizionePrestazione}" itemValue="#{p.codicePrestazione}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-2">
+                <div>
+                    <p:outputLabel for="dataLiquidazione" value="Data Liquidazione" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:datePicker id="dataLiquidazione" inputStyle="width: 100%;" styleClass="dataLiquidazione"
+                                  showOn="button" pattern="dd-MM-yyyy" locale="it"
+                                  mindate="#{templateView.currentView.minDataLiquidazione}"
+                                  disabled="#{templateView.currentView.dataLiquidazioneDisabled}"
+                                  value="#{templateView.currentView.dataLiquidazione}">
+                        <p:ajax event="dateSelect" update="@(.ui-confirmdialog-yes)" />
+                        <p:ajax event="change" update="@(.ui-confirmdialog-yes)" />
+                    </p:datePicker>
+                </div>
+            </div>
+            <div class="col-2">
+                <div>
+                    <p:outputLabel for="valore" value="Valore Applicato" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:inputNumber id="valore" styleClass="input-field inputValore" style="width: 100%;"
+                                   decimalPlaces="2" decimalSeparator="," thousandSeparator="."
+                                   disabled="#{templateView.currentView.dataLiquidazioneDisabled}"
+                                   value="#{templateView.currentView.inputValore}">
+                        <p:ajax />
+                    </p:inputNumber>
+                </div>
+            </div>
+            <div class="col-2">
+                <div>
+                    <p:outputLabel for="noteCompratore" value="Note Compratore" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:inputText id="noteCompratore" styleClass="input-field noteCompratore" style="width: 100%;"
+                                 disabled="#{templateView.currentView.dataLiquidazioneDisabled}"
+                                 value="#{templateView.currentView.noteCompratore}">
+                        <p:ajax />
+                    </p:inputText>
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="selectTipologiaArticoli" value="Articoli" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="selectTipologiaArticoli" widgetVar="selectTipologiaArticoli"
+                                     styleClass="input-field selectTipologiaArticoli" style="width: 100%;"
+                                     disabled="#{templateView.currentView.dataLiquidazioneDisabled}"
+                                     value="#{templateView.currentView.tipologiaArticoliSelected}">
+                        <p:ajax update="@(.formAddFatturazione)" />
+                        <f:selectItem itemLabel="Seleziona tipologia articoli" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.tipologiaArticoli}" var="a"
+                                       itemLabel="#{a.label}" itemValue="#{a}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <p:outputPanel styleClass="panelErrorMessage" style="text-align: center; margin-top: 10px;">
+            <p:outputLabel rendered="#{not empty templateView.currentView.errorMessage}"
+                           value="#{templateView.currentView.errorMessage}" styleClass="label-txt-error" />
+        </p:outputPanel>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-12">
+                <p:panel id="expandable_db_grid_fatturazione_articoli" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                         closable="false" styleClass="pnlGrid_Header panelArticoli">
+                    <f:facet name="header">
+                        <p:outputLabel value="" />
+                    </f:facet>
+
+                    <h:panelGroup layout="block" style="height: 60vh; width: 100%;" styleClass="ag-theme-balham"
+                                  pt:gridid="db_grid_fatturazione_articoli">
+                    </h:panelGroup>
+
+                    <f:facet name="actions">
+                        <p:inputText autocomplete="off" id="fatturazione_articoli_quickfilter" placeholder="Filtra..."
+                                     styleClass="pnlGrid_Header filterInputText"
+                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_fatturazione_articoli', this.value)" />
+                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                       onclick="expandGrid('db_grid_fatturazione_articoli')" onerror="redirectToExpiredPage()" />
+                        <p:commandLink title="Esporta con raggruppamenti"
+                                       styleClass="pnlGrid_Header exportButtonGrouped"
+                                       onclick="onBtExport('db_grid_fatturazione_articoli', 'Fatturazione', true)"
+                                       onerror="redirectToExpiredPage()" />
+                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                       onclick="onBtExport('db_grid_fatturazione_articoli', 'Fatturazione', false)"
+                                       onerror="redirectToExpiredPage()" />
+                    </f:facet>
+                </p:panel>
+
+                <p:remoteCommand name="onItemSelected" update="@(.ui-confirmdialog-yes)"
+                                 action="#{templateView.currentView.itemSelected}" />
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton id="btnCancelAddFatturazione" value="Annulla" styleClass="ui-confirmdialog-no"
+                                 style="float: left;"
+                                 oncomplete="PF('dlgAddFatturazione').hide()"
+                                 update="@(.formAddFatturazione)"
+                                 action="#{templateView.currentView.resetDialogAddFatturazione}" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="btnConfirmAddFatturazione" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('dlgAddFatturazione').hide()"
+                                 disabled="#{templateView.currentView.btnConfirmAddFatturazioneDisabled}"
+                                 update="@(.updateableFatturazione) @(.formAddFatturazione)"
+                                 action="#{templateView.currentView.confirmDialogAddFatturazione}" />
+            </div>
+        </div>
+    </f:facet>
+
+    <script title="text/javascript">
+        function loadGridFatturazioneArticoli(idPromozione, codiceCompratore, codiceFornitore, tipologia) {
+            var gridParamsFatturazioneArticoli = {
+                gridCode: 'db_grid_fatturazione_articoli',
+                gridTitle: 'Fatturazione - Articoli',
+                url_columnDefs: contextPath + '/resources/fatturazione/articoli/columnDef' + addUrlParamContesto(#{muiContext}),
+                url_rowData: contextPath + '/resources/fatturazione/articoli/rowData/promozione/' + idPromozione
+                    + '/compratore/' + codiceCompratore + '/fornitore/' + codiceFornitore + '/' + tipologia
+                    + addUrlParamContesto(#{muiContext}),
+                url_customSort: contextPath + '/resources/grid/sorting/db_grid_fatturazione_articoli',
+                gridOptions: {
+                    rowSelection: 'multiple',
+                    suppressRowClickSelection: true,
+                    onSelectionChanged: onFatturazioneItemRowSelected,
+                    onSortChanged: function (event) {
+                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_fatturazione_articoli');
+                    }
+                }
+            };
+            if (idPromozione &amp;&amp; codiceCompratore &amp;&amp; codiceFornitore) {
+                creaGriglia(gridParamsFatturazioneArticoli);
+            }
+        }
+
+        function onFatturazioneItemRowSelected(event) {
+            var ids = event.api.getSelectedNodes().map(x => x.data.id.value);
+            onItemSelected([{ name: "itemsIds", value: JSON.stringify(ids) }]);
+        }
+    </script>
+
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+
+        .label-txt-error {
+            color: darkred;
+            font-size: 16px;
+        }
+    </style>
+</p:dialog>
+
+</html>

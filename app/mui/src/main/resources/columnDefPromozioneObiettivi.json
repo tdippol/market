@@ -1,0 +1,89 @@
+{
+  "columnDef": [
+    {
+      "headerName": "",
+      "width": 50,
+      "cellRenderer": "TotalizzatoriObiettivo_DeleteObiettivoRenderer",
+      "position": "prepend",
+      "pinned": "left"
+    },
+    {
+      "headerName": "Id",
+      "field": "id",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": true
+    },
+    {
+      "headerName": "Id Totalizzatore",
+      "field": "idTotalizzatore",
+      "width": 150,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Codice Iniziativa",
+      "field": "codiceIniziativa",
+      "width": 250,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Codice Promo",
+      "field": "codicePromo",
+      "width": 250,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Descrizione Promo",
+      "field": "descrizionePromo",
+      "width": 400,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Target",
+      "field": "target",
+      "width": 200,
+      "type": "numeric",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Buono Premio",
+      "field": "buonoPremio",
+      "width": 200,
+      "type": "numeric",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Attivo",
+      "field": "attivo",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

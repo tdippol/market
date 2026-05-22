@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <ui:include src="dlgCreaFatturazione.xhtml" />
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <p:commandButton value="Crea Fatturazione" class="pf-btn-confirm" id="addFatturazione"
+                                 action="#{templateView.currentView.prepareDialogAddFatturazione}"
+                                 oncomplete="PF('dlgAddFatturazione').show()" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_grid_fatturazione" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableFatturazione">
+                        <f:facet name="header">
+                            <p:outputLabel value="Riepilogo Fatturazioni"/>
+                        </f:facet>
+
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham grid_fatturazione"
+                                      pt:gridid="db_grid_fatturazione">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_grid_fatturazione_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_fatturazione',this.value)"/>
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_fatturazione')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_fatturazione','Riepilogo Fatturazioni',true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_fatturazione','Riepilogo Fatturazioni')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <p:remoteCommand name="goToSchedaFatturazione"
+                                         update="@(.panelArticoli)"
+                                         action="#{templateView.simulateMenuClick()}" />
+
+                        <script type="text/javascript">
+                            var gridParamsFatturazioni = {
+                                gridCode: 'db_grid_fatturazione',
+                                gridTitle: 'Riepilogo Fatturazioni',
+                                url_columnDefs: contextPath + '/resources/fatturazione/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/fatturazione/rowData' + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_grid_fatturazione'
+                            };
+                            var gridOptionsFatturazioni = {
+                                autoGroupColumnDef: {
+                                    headerName: 'Contributo',
+                                    width: 500,
+                                    cellStyle: { fontWeight: 'bold' },
+                                    field: 'fornitore.value',
+                                    cellRendererParams: {
+                                        suppressCount: true
+                                    }
+                                },
+                                suppressAggFuncInHeader: true,
+                                onCellDoubleClicked: openSchedaFatturazione,
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParamsFatturazioni.gridCode);
+                                }
+                            };
+                            gridParamsFatturazioni.gridOptions = gridOptionsFatturazioni;
+
+                            function openSchedaFatturazione(param) {
+                                if (param.data !== undefined) {
+                                    goToSchedaFatturazione([
+                                        { name: 'menuId', value: #{templateView.currentView.landingPage} },
+                                        { name: 'currentPromozioneId', value: param.data.idPromozione.value },
+                                        { name: 'currentRataId', value: param.data.id.value }
+                                    ]);
+                                }
+                            }
+
+                            $(document).ready(function () {
+                                creaGriglia(gridParamsFatturazioni);
+                            });
+                        </script>
+                        <style>
+                            .pull-right {
+                                text-align: right !important;
+                            }
+                        </style>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

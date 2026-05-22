@@ -1,0 +1,115 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Anno",
+      "field": "anno",
+      "width": 75,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Codice Canale",
+      "field": "codice_canale",
+      "width": 50,
+      "hide": true,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Canale",
+      "field": "canale",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Codice Gruppo",
+      "field": "codice_gruppo",
+      "width": 50,
+      "hide": true,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Gruppo",
+      "field": "gruppo",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 150,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 150,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Prefisso BS",
+      "field": "prefisso_bs",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Codice Promozione",
+      "field": "codice_promozione",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Promozione",
+      "field": "promozione",
+      "width": 250,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+
+  ]
+}

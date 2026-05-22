@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="addRegolaDialog" widgetVar="addRegolaDialog" modal="true" closable="false" dynamic="true"
+          header="Crea nuova regola per il set #{templateView.currentView.pianificazioneSelected.descrizione}"
+          width="50%" height="40vh" resizable="false"
+          styleClass="addRegolaDialogClass disable-horizontal-scroll">
+    <h:form id="addRegolaDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            class="addRegolaDialogClass addRegolaDialogForm">
+        <div class="row">
+            <div class="col-8">
+                <div>
+                    <p:outputLabel for="dialogTipoRiga" value="Tipo Riga" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="dialogTipoRiga"
+                                     value="#{templateView.currentView.regolaDialogBackingBean.idTipoRigaSelected}"
+                                     class="input-field" style="width: 100%;">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.regolaDialogBackingBean.tipoRighe}" var="r"
+                                       itemLabel="#{r.descrizione}" itemValue="#{r.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-8" style="margin-top: 20px;">
+                <div>
+                    <p:outputLabel for="dialogCampo" value="Campo" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="dialogCampo" filter="true" filterMatchMode="contains"
+                                     value="#{templateView.currentView.regolaDialogBackingBean.idCampoSelected}"
+                                     class="input-field" style="width: 100%;">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.regolaDialogBackingBean.campi}" var="c"
+                                       itemLabel="#{templateView.currentView.regolaDialogBackingBean.customDesc(c)}"
+                                       itemValue="#{c.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('addRegolaDialog').hide()"
+                                 update="@(.addRegolaDialogClass)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="addRegolaDialogConfirmBtn" value="Conferma"
+                                 styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('addRegolaDialog').hide()"
+                                 disabled="#{templateView.currentView.regolaDialogBackingBean.confirmBtnDisabled}"
+                                 action="#{templateView.currentView.confirmRegolaDialog}"
+                                 onclick="setLoadingStatus(this)"
+                                 update="@(.updateableContent) @(.addRegolaDialogClass)" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

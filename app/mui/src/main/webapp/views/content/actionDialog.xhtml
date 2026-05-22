@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:composition>
+	<p:dialog header="Selezionare Valori"
+			  widgetVar="dlgSelezioniActions"
+			  id="dlgSelezioniActions"
+			  styleClass="dlgSelezioniActions"
+			  resizable="false"
+			  modal="true"
+			  draggable="false"
+			  >
+		<h:form id="formSelezioniActions" styleClass="dataGridSelections">
+			<p:dataGrid var="filter" styleClass="dataGridSelections" value="#{templateView.currentView.selectedAction.visibleParams}" columns="2" layout="grid" rows="6" paginator="false">
+				<p:panel header="#{filter.label}" style="text-align:left">
+					<h:panelGrid columns="1" style="width:100%">
+						<p:inputText rendered="#{!filter.hasPicklist}" readonly="#{filter.disabled}"
+									 value="#{filter.selectedValue}" style="width: 100%;"
+									 required="true" requiredMessage="Inserire #{filter.label}"/>
+						<p:selectOneMenu rendered="#{filter.hasPicklist}"
+										 value="#{filter.selectedValue}" style="width: 100%;"
+										 filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="Nessuna Selezione" itemValue="" />
+							<f:selectItems value="#{filter.values}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</p:panel>
+				<f:facet name="footer">
+					<p:commandButton widgetVar="actionSelectionConfirm" styleClass="pf-btn-confirm" style="float: right;" value="conferma" onclick="setLoadingStatus(this)" actionListener="#{templateView.currentView.performAction}" update="@this"  onerror="redirectToExpiredPage()"/>
+					<p:commandButton styleClass="pf-btn-cancel" style="float: right;" value="annulla" process="@this" oncomplete="PF('dlgSelezioniActions').hide();"  onerror="redirectToExpiredPage()"/>
+					<ui:fragment rendered="#{templateView.currentView.selectedAction.autoLaunchAction}">
+                       <p:remoteCommand 
+                           name="triggerSubmit" 
+                           actionListener="#{templateView.currentView.performAction}" 
+                           onerror="redirectToExpiredPage()" 
+                           onstart="setLoadingStatus(PF('actionSelectionConfirm').jq.get(0))"  
+                           update="@(.pf-btn-confirm)" />
+                        <script type="text/javascript">
+                        $(document).ready(function() {
+                            setTimeout(function(){ triggerSubmit(); }, 500);
+                        });
+                        </script>
+					</ui:fragment>
+				</f:facet>
+			</p:dataGrid>
+		</h:form>
+	</p:dialog>
+</ui:composition>
+</html>

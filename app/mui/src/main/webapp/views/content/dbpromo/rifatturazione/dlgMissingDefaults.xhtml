@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+<p:dialog id="dlgMissingDefaults" widgetVar="dlgMissingDefaults" modal="true" closable="false"
+          header="Default Mancanti" width="70%" height="75vh" resizable="false"
+          onShow="loadMissingDefaults()"
+          styleClass="disable-horizontal-scroll dlgMissingDefaultsClass">
+    <div class="row">
+        <div class="col-12">
+            <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                <p:panel id="expandable_db_grid_rifatturazione_missingdefaults"
+                         toggleable="true" toggleSpeed="500" closeSpeed="500"
+                         styleClass="pnlGrid_Header updateableMissingDefaults">
+                    <f:facet name="header">
+                        <p:outputLabel value=""/>
+                    </f:facet>
+                    <h:panelGroup layout="block"
+                                  style="height: 60vh; width: 100%;"
+                                  class="ag-theme-balham grid_rifatturazione_missingdefaults"
+                                  pt:gridid="db_grid_rifatturazione_missingdefaults">
+                    </h:panelGroup>
+                    <f:facet name="actions">
+                        <p:inputText autocomplete="off" id="grid_rifatturazione_missingdefaults_quickfilter"
+                                     placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_rifatturazione_missingdefaults', this.value)"/>
+                        <!--suppress JSUnresolvedReference -->
+                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                       onclick="expandGrid('db_grid_rifatturazione_missingdefaults')"
+                                       onerror="redirectToExpiredPage()"/>
+                        <!--suppress JSUnresolvedReference -->
+                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                       onclick="onBtExport('db_grid_rifatturazione_missingdefaults', 'Riepilogo Rifatturazioni Defaults Mancanti')"
+                                       onerror="redirectToExpiredPage()"/>
+                    </f:facet>
+                </p:panel>
+            </div>
+        </div>
+    </div>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-12">
+                <p:commandButton id="btnCloseMissingDefaults" value="Chiudi" styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('dlgMissingDefaults').hide()"/>
+            </div>
+        </div>
+    </f:facet>
+    <script type="text/javascript">
+        function loadMissingDefaults() {
+            var gridParamsRifatturazioneMissingDefaults = {
+                gridCode: 'db_grid_rifatturazione_missingdefaults',
+                gridTitle: 'Riepilogo Rifatturazione Initial Load Missing Defaults',
+                url_columnDefs: contextPath + '/resources/rifatturazione/initialload/missingDefaults/columnDef',
+                url_rowData: contextPath + '/resources/rifatturazione/initialload/missingDefaults/rowData',
+                url_customSort: contextPath + '/resources/grid/sorting/db_grid_rifatturazione_missingdefaults',
+                gridOptions: {
+                    onSortChanged: function (event) {
+                        // noinspection JSUnresolvedReference
+                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_rifatturazione_missingdefaults');
+                    }
+                }
+            };
+            creaGriglia(gridParamsRifatturazioneMissingDefaults);
+        }
+    </script>
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+
+        .label-txt-error {
+            color: darkred;
+            font-size: 16px;
+        }
+    </style>
+</p:dialog>
+</html>

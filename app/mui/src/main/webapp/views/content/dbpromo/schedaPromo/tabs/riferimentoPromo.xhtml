@@ -1,0 +1,220 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <p:remoteCommand name="promozioneSelected" update="@(.ui-confirmdialog-yes)"
+                     actionListener="#{templateView.currentView.promoRifBean.selezionaPromo}" />
+
+    <!-- Dialog conferma carica da promo -->
+    <p:confirmDialog widgetVar="confirmCaricaDaPromo" header="Avviso" styleClass="dlgBulkUpdate"
+                     message="#{templateView.currentView.promoRifBean.dlgConfirmMessage}" severity="alert" >
+        <p:commandButton value="SI" update="@(.growlClass), @(.updateableContent)"
+                         actionListener="#{templateView.currentView.scegliPromo}"
+                         oncomplete="PF('dlgCaricaDaPromo').hide();PF('confirmCaricaDaPromo').hide()"
+                         disabled="#{empty templateView.currentView.promoRifBean.sourcePromoSelected}" />
+        <p:commandButton value="NO" onclick="PF('confirmCaricaDaPromo').hide()"
+                         style="float: right;" type="button" />
+    </p:confirmDialog>
+
+	<!-- Dialog conferma eliminazione associazione -->
+    <p:confirmDialog widgetVar="confirmRemoveRif" header="Avviso" styleClass="dlgEliminaRiferimento" 
+                     message="#{templateView.currentView.promoRifBean.dlgRemoveRifMessage}" severity="alert" >
+        <p:commandButton value="SI" update="@(.growlClass), @(.updateableContent)"
+                         actionListener="#{templateView.currentView.removeRif}"
+                         oncomplete="PF('confirmRemoveRif').hide();"
+                         />
+        <p:commandButton value="NO" onclick="PF('confirmRemoveRif').hide()"
+                         style="float: right;" type="button" />
+    </p:confirmDialog>
+	
+    <!-- Dialog scelta promozione riferimento -->
+    <p:dialog widgetVar="dlgCaricaDaPromo" modal="true" showEffect="fade" hideEffect="fade" closable="false"
+              styleClass="muiDialog" width="95%">
+        <p:panel id="expandable_db_grid_selezionaPromo" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                 styleClass="pnlGrid_Header updateableContent">
+            <f:facet name="header">
+                <p:outputLabel value="Seleziona Promozione"/>
+            </f:facet>
+            <h:panelGroup layout="block"
+                          style="height: 60vh; width: 100%;"
+                          class="ag-theme-balham grid_selezionaPromo"
+                          pt:gridid="db_grid_selezionaPromo">
+            </h:panelGroup>
+            <f:facet name="actions">
+                <p:inputText autocomplete="off" id="selezionaPromo_quickfilter" placeholder="Filtra..."
+                             styleClass="pnlGrid_Header filterInputText"
+                             onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_selezionaPromo', this.value)"/>
+            </f:facet>
+
+            <script>
+                var gridParams = {
+                    gridCode: 'db_grid_selezionaPromo',
+                    gridTitle: 'Seleziona Promo',
+                    url_columnDefs: contextPath + '/resources/grid/columnDef/selezionaPromozioni' + addUrlParamContesto(#{muiContext}),
+                    url_rowData: contextPath + '/resources/grid/rowData/selezionaPromozioni',
+                    url_customSort: contextPath + '/resources/grid/sorting/db_grid_selezionaPromo'
+                };
+                var gridOptions = {
+                    rowSelection: 'single',
+                    onSelectionChanged: onPromoItemRowSelected,
+                    onSortChanged: function (event) {
+                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams.gridCode);
+                    }
+                };
+                gridParams.gridOptions = gridOptions;
+
+                $( document ).ready(function() {
+                    creaGriglia(gridParams);
+                });
+
+                function onPromoItemRowSelected(event) {
+                    promozioneSelected([{name:'sourcePromoSelected', value:event.api.getSelectedRows()[0].codice.value}]);
+                }
+            </script>
+        </p:panel>
+
+        <f:facet name="footer">
+            <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                             onclick="PF('dlgCaricaDaPromo').hide()" />
+            <p:commandButton value="Conferma" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                             oncomplete="PF('confirmCaricaDaPromo').show()"
+                             actionListener="#{templateView.currentView.promoRifBean.confirmCaricaDaPromo}"
+                             disabled="#{empty templateView.currentView.promoRifBean.sourcePromoSelected}"
+                             update="@(.dlgBulkUpdate)" />
+        </f:facet>
+    </p:dialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form id="formPromoRiferimento" styleClass="updateableContent">
+                        <div class="row">
+                            <div class="col-12">
+                                <p:commandButton value="Scegli Promo" id="caricaDaPromo"
+                                                 styleClass="pf-btn-confirm" style="margin:0; border-radius: 5px"
+                                                 disabled="#{not templateView.currentView.btnScegliPromoActive}"
+                                                 actionListener="#{templateView.currentView.promoRifBean.preparePromoDialog}"
+                                                 oncomplete="PF('dlgCaricaDaPromo').show()"
+                                                 update="@(.muiDialog)" />
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="codicePromoRif" value="Codice" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="codicePromoRif" readonly="true"
+                                                 styleClass="updateableContent" class="input-field" style="width: 100%;"
+                                                 value="#{templateView.currentView.promoRifBean.promoRiferimento != null ? templateView.currentView.promoRifBean.promoRiferimento.codicePromozione : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="descrizionePromoRif" value="Descrizione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="descrizionePromoRif" readonly="true"
+                                                 styleClass="updateableContent" class="input-field" style="width: 100%;"
+                                                 value="#{templateView.currentView.promoRifBean.promoRiferimento != null ? templateView.currentView.promoRifBean.promoRiferimento.descrizioneEstesa : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataInizioPromoRif" value="Data inizio" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizioPromoRif" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%;" readonly="true"
+                                                 value="#{templateView.currentView.promoRifBean.promoRiferimento != null ? templateView.currentView.promoRifBean.promoRiferimento.dataInizio : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataFinePromoRif" value="Data fine" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataFinePromoRif" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%;" readonly="true"
+                                                 value="#{templateView.currentView.promoRifBean.promoRiferimento != null ? templateView.currentView.promoRifBean.promoRiferimento.dataFine : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="statoPromoRif" value="Stato" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="statoPromoRif" readonly="true" styleClass="updateableContent"
+                                                 class="input-field" style="width: 100%"
+                                                 value="#{templateView.currentView.promoRifBean.promoRiferimento != null ? templateView.currentView.promoRifBean.promoRiferimento.stato : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="gruppoPromoRif" value="Gruppo" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="gruppoPromoRif" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%;" readonly="true"
+                                                 value="#{templateView.currentView.promoRifBean.promoRiferimento != null ? templateView.currentView.promoRifBean.promoRiferimento.descrizioneGruppo : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="canalePromoRif" value="Tipo Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="canalePromoRif" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%;" readonly="true"
+                                                 value="#{templateView.currentView.promoRifBean.promoRiferimento != null ? templateView.currentView.promoRifBean.promoRiferimento.descrizioneCanale : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:spacer />
+                                </div>
+                                <div>
+                                    <p:spacer />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:spacer />
+                                </div>
+                                <div>
+                                    <p:spacer />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:spacer />
+                                </div>
+                                <div>
+                                    <p:commandButton value="Elimina Associazione" id="deletePromoRifBtn"
+                                              styleClass="pf-btn-confirm" style="margin:0; border-radius: 5px"
+                                              actionListener="#{templateView.currentView.prepareRemovePromoRifDialog}"
+                                              oncomplete="PF('confirmRemoveRif').show()"
+                                              disabled="#{not templateView.currentView.btnEliminaAssociazionePromoActive}"
+                                              update="@(.dlgEliminaRiferimento), @(.updateableContent)" />
+                                </div>
+                            </div>                                                        
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

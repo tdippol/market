@@ -1,0 +1,271 @@
+.ui-sidebar-right {
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+.ui-sidebar-mask {
+    z-index: 0!important
+}
+
+.mui-menu-open-button {
+    width: 24px!important;
+    height: 24px!important
+}
+
+.ui-sidebar {
+    padding: 5px 5px 0 0!important
+}
+
+.mui-menu {
+    margin-top: 40px!important;
+    background: none!important;
+    border: none!important
+}
+
+.mui-menu .ui-panelmenu-header {
+    background: none!important;
+    border: none!important
+}
+
+.mui-menu .ui-panelmenu-content {
+    background: none!important;
+    border: none!important
+}
+
+.mui-menu .ui-panelmenu-header a {
+    color: #5f6281!important
+}
+
+.mui-menu .ui-menuitem-link:hover,
+.mui-menu .ui-menuitem-link:hover .ui-menuitem-text,
+.mui-menu .ui-panelmenu-header.ui-state-active a,
+.mui-menu .ui-panelmenu-header:hover a {
+    color: #1cac81!important;
+    background-color: #f8f8fb!important
+}
+
+.mui-menu .ui-menuitem {
+    padding: 5px!important
+}
+
+.mui-menu .ui-panelmenu-header,
+.mui-menu .ui-icon-triangle-1-e,
+.mui-menu .ui-icon-triangle-1-s {
+    margin-left: 5px!important
+}
+
+.mui-menu .ui-panelmenu-content {
+    padding-left: 5px!important
+}
+
+.mui-menu .ui-icon-triangle-1-s {
+    background-image:url("#{resource['primefaces-axiante-mui/images/ui-icons_80c2ae_256x240.png']}")
+}
+
+.mui-menubar {
+    background: none!important;
+    border: none!important;
+    display: -webkit-box!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
+    -webkit-box-align: stretch!important;
+    -ms-flex-align: stretch!important;
+    align-items: stretch!important;
+    height: 100%!important;
+    margin: 0 0 0 10px!important
+}
+
+.mui-menubar .ui-menuitem:before {
+    padding-left: 20px!important;
+    content: "•"!important
+}
+
+.mui-menubar .ui-helper-reset {
+    margin-left: 10px!important;
+    margin-top: -8px!important
+}
+
+.mui-menubar .ui-helper-reset>.ui-menuitem>.ui-submenu-link:hover {
+    border-radius: 4px!important;
+    background-color: #26252d!important
+}
+
+.mui-menubar .ui-helper-reset>.ui-menuitem {
+    height: 100%!important;
+    margin: 4px 0 0 0!important;
+    font-size: 1.075rem!important;
+    font-weight: 500!important;
+    font-family: Raleway!important
+}
+
+.ui-menubar .ui-menuitem-link {
+    padding: 11px 15px!important
+}
+
+.mui-menubar .ui-menuitem-text {
+    color: #fff!important;
+    font-weight: 500!important;
+    margin-right: 5px!important
+}
+
+.mui-menubar .ui-menu-list>.ui-menuitem,
+.mui-menubar .ui-menu-list>.ui-menuitem-link,
+.mui-menubar .ui-menu-list>.ui-menuitem-link-badge {
+    display: -webkit-box!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
+    -webkit-box-align: center!important;
+    -ms-flex-align: center!important;
+    align-items: center!important;
+    line-height: 0!important;
+    white-space: nowrap!important
+}
+
+.mui-menubar .ui-menu-list .ui-menu-child>.ui-menuitem:hover>.ui-menuitem-link>.ui-menuitem-text,
+.mui-menubar .ui-menu-list .ui-menu-child>.ui-menuitem:hover {
+    color: #1cac81!important;
+    background-color: #f8f8fb!important
+}
+
+.mui-menubar .ui-menu-list .ui-shadow {
+    background-color: #fff!important;
+    -webkit-box-shadow: 0 0 50px 0 rgba(82, 63, 105, .15)!important;
+    box-shadow: 0 0 50px 0 rgba(82, 63, 105, .15)!important
+}
+
+.mui-menubar .ui-menu-child .ui-menuitem-text {
+    color: #5f6281!important;
+    font-size: 13px!important;
+    font-weight: 400!important
+}
+
+.ui-menu-list .ui-menu-child {
+    width: 320px!important
+}
+
+
+
+
+
+/*#######################################################*/
+/*#######################################################*/
+/*#######################################################*/
+/*#######################################################*/
+/*#######################################################*/
+		.menuPagBtn{
+			width:70px;
+			height: 80px;
+			line-height: 80px;
+			text-align: center;
+			color: #fff;
+			border:0;
+			background-color: Transparent;
+			font-size:15px;
+		}
+		.menuPagBtn:hover{
+			border:0;
+			background-color: #9ed6be30;
+			color:#1cac81;
+		}
+		.menuPagBtn:active{
+			border:0;
+			color:#1cac81 !important;
+			background-color: #9ed6be60!important;
+		}
+		.menuPagBtnDisabled{
+			color:#555e5b !important;
+		}
+		.menuPagBtnDisabled:hover{
+			color:#555e5b !important;
+			background-color: Transparent !important;
+		}
+		.menuPagBtnDisabled:active{
+			border:0 !important;
+			color:#555e5b !important;
+			background-color: Transparent !important;
+		}
+		#menuPagPrev{
+			margin-left:50px;
+		}
+		#menuPagNext{
+			margin-right:50px;
+		}
+		
+		
+
+div.ui-menu>ul.ui-menu-list>li::before{
+	padding-left: 0 !important;
+	content: none !important;
+}
+
+
+form.ax-menu-container>div.ui-menu>ul.ui-menu-list>li>ul>li a.ui-menuitem-link{
+    /*background-color: #f90;*/
+    padding: 6px 15px!important;
+}
+
+
+
+form.ax-menu-container>div.ui-widget.ui-widget-content{
+	height:75% !important;
+}
+
+
+form.ax-menu-container>div.ui-menu>ul.ui-menu-list>li{
+	/*display:none !important;*/
+}
+
+/*Riduzione dell'alteza degli li per far spazio alla barra sotto delle pagine*/
+.mui-menubar .ui-helper-reset>.ui-menuitem{
+    //height: 60%!important;
+    //margin: 15px 0 0 0!important;
+	margin-top: 13px  !important;
+    padding: 0!important;;
+}
+.mui-menubar{
+	//background-color:red !important;
+	//border:2px solid red !important;
+}
+/* Pages */
+#menu_pageContainer{
+	color:white;
+	text-align:center;
+	width:90%;
+	height:10px;
+	float:left;
+	//background-color:green;
+	//border:2px solid green;
+	margin-bottom:0px;
+	margin-top:4px;
+}
+.pages_stepContainer {
+  list-style: none;
+  /*margin: 20px 0;*/
+  padding: 0px;
+  text-align: center;
+}
+
+.pages_stepContainer li {
+  display: inline-block;
+  width: 54px;
+  height: 10px;
+  margin-right: 5px;
+  
+  text-indent: -999px;
+  border-radius: 5px;
+  cursor: pointer;
+  /*overflow: hidden;*/
+  background: #555e5b;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2);
+  
+}
+
+.pages_stepContainer li:hover {
+  background: #9ed6be;
+}
+
+.pages_stepContainer li.active {
+  background: #1cac81;
+}
+
+

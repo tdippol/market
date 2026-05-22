@@ -1,0 +1,10 @@
+{
+	"rows": {
+		"Reparto":"REP_01",
+		"Promozione":"2019_401",
+		"Versione":"UFF"
+		},
+	"columns": "Scenario$TGT_MKT$$MisuraTimone_dot_$N_ART_PROMO",
+	"oldValue": 123456,
+	"newValue": 123
+}

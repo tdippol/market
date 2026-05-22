@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<p:dialog id="pianificazionePromoDialog" widgetVar="pianificazionePromoDialog" modal="true" closable="false"
+          header="Pianificazione: #{templateView.currentView.pianificazionePromoDialogBackingBean.title}" width="95%"
+          height="80vh" resizable="false" styleClass="updateableContentPianificazioneDialog disable-horizontal-scroll">
+    <h:form id="pianificazionePromoDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="updateableContentPianificazioneDialogForm">
+        <div class="row">
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="pianificazionePromoDialogMeccanica" value="Meccanica"
+                                   style="font-size: 14px;"/>
+                </div>
+                <div>
+                    <p:selectOneMenu id="pianificazionePromoDialogMeccanica"
+                                     widgetVar="pianificazionePromoDialogMeccanica"
+                                     filter="true" filterMatchMode="contains"
+                                     disabled="#{templateView.currentView.pianificazionePromoDialogBackingBean.meccanicaSelectDisabled}"
+                                     value="#{templateView.currentView.pianificazionePromoDialogBackingBean.idMeccanicaCorrente}"
+                                     class="input-field" style="width: 100%;">
+                        <p:ajax update="@(.updateableContentPianificazioneDialogForm) @(.ui-confirmdialog-yes)"/>
+                        <p:ajax update="@(.pianificazione_dialog)"
+                                listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.showTabView}"/>
+                        <f:selectItem itemLabel="Seleziona meccanica" noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{templateView.currentView.pianificazionePromoDialogBackingBean.meccaniche}"
+                                var="me"
+                                itemLabel="#{me.codiceMeccanica} - #{me.descrizione}" itemValue="#{me.id}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <h:panelGroup layout="block" styleClass="col-4"
+                          rendered="#{templateView.currentView.pianificazionePromoDialogBackingBean.tipoElementoSelectRendered}">
+                <div>
+                    <p:outputLabel for="pianificazionePromoDialogTipoElemento" value="Tipo Elemento"
+                                   style="font-size: 14px;"/>
+                </div>
+                <div>
+                    <p:selectOneMenu id="pianificazionePromoDialogTipoElemento"
+                                     disabled="#{templateView.currentView.pianificazionePromoDialogBackingBean.tipoElementoSelectDisabled}"
+                                     value="#{templateView.currentView.pianificazionePromoDialogBackingBean.idTipoElemento}"
+                                     class="input-field" style="width: 100%;">
+                        <p:ajax update="@(.updateableContentPianificazioneDialogForm) @(.ui-confirmdialog-yes)"/>
+                        <p:ajax update="@(.pianificazione_dialog)"
+                                listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.showTabView}"/>
+                        <f:selectItem itemLabel="Seleziona tipo elemento" noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{templateView.currentView.pianificazionePromoDialogBackingBean.tipoElementi}"
+                                var="te" itemLabel="#{te}" itemValue="#{te}"/>
+                    </p:selectOneMenu>
+                </div>
+            </h:panelGroup>
+
+            <!-- selezione gruppo -->
+            <h:panelGroup layout="block" styleClass="col-4"
+                          rendered="#{templateView.currentView.pianificazionePromoDialogBackingBean.renderSelezionaGruppo}">
+                <div>
+                    <p:outputLabel for="pianificazionePromoDialogGruppo" value="Selezione Gruppo"
+                                   style="font-size: 14px;"/>
+                </div>
+                <div>
+                    <p:selectOneMenu id="pianificazionePromoDialogGruppo"
+                                     disabled="#{templateView.currentView.pianificazionePromoDialogBackingBean.disableSelezionaGruppo}"
+                                     value="#{templateView.currentView.pianificazionePromoDialogBackingBean.gruppoSelezionato}"
+                                     class="input-field" style="width: 100%;">
+                        <p:ajax update="@(.updateableContentPianificazioneDialogForm) @(.ui-confirmdialog-yes)"/>
+                        <f:selectItem itemLabel="Seleziona Gruppo" noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{templateView.currentView.pianificazionePromoDialogBackingBean.userDTO.gruppi}"
+                                var="te" itemLabel="#{te}" itemValue="#{te}"/>
+                    </p:selectOneMenu>
+                </div>
+
+            </h:panelGroup>
+
+        </div>
+    </h:form>
+
+    <script type="text/javascript">
+
+        function hideTabView() {
+            $('.pianificazione_dialog').hide();
+        }
+
+        function refreshBtnConfitmJS(){
+            refreshBtnConfirm();
+        }
+
+    </script>
+
+    <p:tabView dynamic="true" cache="false" style="display: none;" styleClass="pianificazione_dialog"
+               onTabShow="handleTabChange(index)"
+               widgetVar="pianificazione_dialog_inserisci_tabs">
+        <p:ajax event="tabChange" update="@(.planningConfirmBtn)"
+                listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.onTabChange}"/>
+        <p:tab id="tab-selezione" title="Selezione">
+            <ui:include src="dialogTabs/selezioneTab.xhtml"/>
+        </p:tab>
+        <p:tab id="tab-upload" title="Upload"
+               rendered="#{templateView.currentView.pianificazionePromoDialogBackingBean.uploadTabRendered}">
+            <ui:include src="dialogTabs/uploadTab.xhtml"/>
+        </p:tab>
+        <p:tab id="tab-copia-incolla" title="Copia / Incolla"
+               rendered="#{templateView.currentView.pianificazionePromoDialogBackingBean.copyPasteTabRendered}">
+            <ui:include src="dialogTabs/copiaIncollaTab.xhtml"/>
+        </p:tab>
+    </p:tabView>
+
+    <f:facet name="footer">
+        <div class="row">
+            <p:remoteCommand name="refreshBtnConfirm" update="pianificazionePromoDialogConfirmBtn"></p:remoteCommand>
+            <div class="col-6">
+                <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 action="#{templateView.currentView.pianificazionePromoDialogBackingBean.resetDialog}"
+                                 onclick="PF('pianificazionePromoDialog').hide()"/>
+            </div>
+            <div class="col-6">
+                <p:commandButton id="pianificazionePromoDialogConfirmBtn" value="Conferma"
+                                 styleClass="ui-confirmdialog-yes planningConfirmBtn"
+                                 oncomplete="PF('pianificazionePromoDialog').hide()"
+                                 disabled="#{templateView.currentView.pianificazionePromoDialogBackingBean.confirmPianificazioneDialogBtnDisabled}"
+                                 action="#{templateView.currentView.confirmAddPianificazione}"
+                                 onclick="setLoadingStatus(this)"
+                                 update="@(.updateableContent), @(.confirmPianificazioneDialogBtn), @(.numeroArticoliClass)" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

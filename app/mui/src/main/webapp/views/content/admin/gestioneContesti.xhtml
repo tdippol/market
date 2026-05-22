@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <!-- Dialog aggiunta contesto -->
+                    <p:dialog widgetVar="dlgAddContext" resizable="false" closable="false" width="800"
+                              styleClass="pf-dialog disable-horizontal-scroll" header="Nuovo Contesto">
+                        <h:form styleClass="dlgAddContextForm">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="contextCode" value="Codice" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="contextCode" style="width: 100%;" class="input-field"
+                                                     maxlength="#{gestioneContesti.maxCodeLength}"
+                                                     value="#{gestioneContesti.contextCode}">
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="contextDesc" value="Descrizione" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="contextDesc" style="width: 100%;" class="input-field"
+                                                     maxlength="#{gestioneContesti.maxDescLength}"
+                                                     value="#{gestioneContesti.contextDesc}">
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 40px;">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left" process="@this"
+                                                     oncomplete="PF('dlgAddContext').hide()" />
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton value="Salva" styleClass="ui-confirmdialog-yes"
+                                                     actionListener="#{gestioneContesti.addContext}"
+                                                     update="@(.dlgAddContextForm), @(.updateableContent), @(.updateableContexts)" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </p:dialog>
+
+                    <h:form id="selezionaContestoForm" styleClass="updateableContent">
+                        <div class="row" style="padding: 10px;">
+                            <div class="col-4">
+                                <div>
+                                    <p:outputLabel for="contesto" value="Seleziona Contesto" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="contesto" value="#{gestioneContesti.idSelectedContext}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains">
+                                        <p:ajax update="@(.updateableContexts)" />
+                                        <f:selectItems value="#{gestioneContesti.contexts}" var="c"
+                                                       itemLabel="#{c.context.code} - #{c.context.description}"
+                                                       itemValue="#{c.context.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <p:commandButton value="Aggiungi" id="addContext" styleClass="pf-btn-confirm"
+                                                 style="margin-top: 20px;"
+                                                 action="#{gestioneContesti.openAddContextDialog}"
+                                                 oncomplete="PF('dlgAddContext').show()"
+                                                 update="@(.dlgAddContextForm)" />
+                            </div>
+                        </div>
+                    </h:form>
+                    <div class="row" style="margin-top: 20px; padding: 10px;">
+                        <div class="col-12">
+                            <h:form>
+                                <p:dataTable var="channel" styleClass="pf-datatable updateableContexts" style="width: 75%;"
+                                             widgetVar="canaliTable" value="#{gestioneContesti.selectedContext.channels}"
+                                             rowKey="#{channel.ch.id}" rowIndexVar="rowIndex">
+                                    <p:column headerText="Codice Canale" width="20%">
+                                        <h:outputText value="#{channel.ch.codiceCanale}" />
+                                    </p:column>
+                                    <p:column headerText="Descrizione" width="40%">
+                                        <h:outputText value="#{channel.ch.descrizione}" />
+                                    </p:column>
+                                    <p:column headerText="Sigla Canale" width="20%">
+                                        <h:outputText value="#{channel.ch.sigla}" />
+                                    </p:column>
+                                    <p:column width="20%" style="text-align: center;">
+                                        <p:selectBooleanCheckbox value="#{channel.available}">
+                                            <p:ajax event="valueChange" update="@(.updateableContexts)"
+                                                    listener="#{gestioneContesti.toggleChannelAvailable(channel)}" />
+                                        </p:selectBooleanCheckbox>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .input-field {
+            border-radius: 3px;
+            border-color: gray;
+        }
+        .input-field-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: black;
+        }
+    </style>
+</ui:composition>
+</html>

@@ -1,0 +1,4436 @@
+
+[
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "4620037-RECHARGE OF PERSONNEL EXPENSES-WAGES AND SALARY",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "4620037",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G4620510-RECHARGE PERSONNEL COSTS",
+            "Alias": "4620037-RECHARGE OF PERSONNEL EXPENSES-WAGES AND SALARY",
+            "G Account": "G4620510",
+            "G Account Description": "RECHARGE PERSONNEL COSTS",
+            "Account Description": "RECHARGE OF PERSONNEL EXPENSES-WAGES AND SALARY",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "4620037",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Cost Center",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Cost Center",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "HRGRXXX",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGRXXX - NO MAP",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "4620051-RECHARGE OF CLOTHING ALLOWANCES",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "4620051",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G4620540-RECHARGE CLOTHING ALLOWANCE",
+            "Alias": "4620051-RECHARGE OF CLOTHING ALLOWANCES",
+            "G Account": "G4620540",
+            "G Account Description": "RECHARGE CLOTHING ALLOWANCE",
+            "Account Description": "RECHARGE OF CLOTHING ALLOWANCES",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "4620051",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "4620511-RECHARGE OF TRAVELLING EXPENSES",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "4620511",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5502505-TRAVEL & LODGING",
+            "Alias": "4620511-RECHARGE OF TRAVELLING EXPENSES",
+            "G Account": "G5502505",
+            "G Account Description": "TRAVEL & LODGING",
+            "Account Description": "RECHARGE OF TRAVELLING EXPENSES",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "4620511",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5410518-SALARY",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5410518",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5410520-COMPENSATION W/O SALES C. LTI&BONUS",
+            "Alias": "5410518-SALARY",
+            "G Account": "G5410520",
+            "G Account Description": "COMPENSATION W/O SALES C. LTI&BONUS",
+            "Account Description": "SALARY",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5410518",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "AAA",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Employee",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Employee",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR001-Base compensation – National Labor Agreements",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5410542-TEMPORARY INDIRECT (PERSONNEL COST)",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5410542",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5410542-TEMPORARY EMPLOYMENT (PERSONNEL COST)",
+            "Alias": "5410542-TEMPORARY INDIRECT (PERSONNEL COST)",
+            "G Account": "G5410542",
+            "G Account Description": "TEMPORARY EMPLOYMENT (PERSONNEL COST)",
+            "Account Description": "TEMPORARY INDIRECT (PERSONNEL COST)",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5410542",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Cost Center",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Cost Center",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR037-Temporary employment (personnel cost)",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5420005-PMP INCENTIVE BONUS",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5420005",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5420005-BONUS&INCENTIVES (BONUS&PMP)",
+            "Alias": "5420005-PMP INCENTIVE BONUS",
+            "G Account": "G5420005",
+            "G Account Description": "BONUS&INCENTIVES (BONUS&PMP)",
+            "Account Description": "PMP INCENTIVE BONUS",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5420005",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5420010-LTI",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5420010",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5420010-LTI",
+            "Alias": "5420010-LTI",
+            "G Account": "G5420010",
+            "G Account Description": "LTI",
+            "Account Description": "LTI",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5420010",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5430505-PENSION PROVISION",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5430505",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5441520-PENSION PLAN&SOCIAL CONTRIBUTION",
+            "Alias": "5430505-PENSION PROVISION",
+            "G Account": "G5441520",
+            "G Account Description": "PENSION PLAN&SOCIAL CONTRIBUTION",
+            "Account Description": "PENSION PROVISION",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5430505",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Employee",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Employee",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR026-TFR",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5441520-SOCIAL CONTRIBUTION - CLERKS",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5441520",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5441520-PENSION PLAN&SOCIAL CONTRIBUTION",
+            "Alias": "5441520-SOCIAL CONTRIBUTION - CLERKS",
+            "G Account": "G5441520",
+            "G Account Description": "PENSION PLAN&SOCIAL CONTRIBUTION",
+            "Account Description": "SOCIAL CONTRIBUTION - CLERKS",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5441520",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Employee",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Employee",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR027-Social security charges (included Pension contribution mandatory by law)",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5450505-REDUNDANCY INCENTIVES",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5450505",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5450505-PERSONNEL - NON RECURRING COSTS",
+            "Alias": "5450505-REDUNDANCY INCENTIVES",
+            "G Account": "G5450505",
+            "G Account Description": "PERSONNEL - NON RECURRING COSTS",
+            "Account Description": "REDUNDANCY INCENTIVES",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5450505",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5460505-SHOP PERSONNEL FEES",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5460505",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5460505-SALES COMMISSIONS",
+            "Alias": "5460505-SHOP PERSONNEL FEES",
+            "G Account": "G5460505",
+            "G Account Description": "SALES COMMISSIONS",
+            "Account Description": "SHOP PERSONNEL FEES",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5460505",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Employee",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Employee",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR014-Sales commissions",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5480520-TRANSFER AND RENT CONTRIBUTIONS",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5480520",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5480540-OTHER BENEFITS&PERSONNEL COSTS",
+            "Alias": "5480520-TRANSFER AND RENT CONTRIBUTIONS",
+            "G Account": "G5480540",
+            "G Account Description": "OTHER BENEFITS&PERSONNEL COSTS",
+            "Account Description": "TRANSFER AND RENT CONTRIBUTIONS",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5480520",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5480530-INSURANCES",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5480530",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5480540-OTHER BENEFITS&PERSONNEL COSTS",
+            "Alias": "5480530-INSURANCES",
+            "G Account": "G5480540",
+            "G Account Description": "OTHER BENEFITS&PERSONNEL COSTS",
+            "Account Description": "INSURANCES",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5480530",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5480540-OTHER PERSONNEL COSTS",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5480540",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5480540-OTHER BENEFITS&PERSONNEL COSTS",
+            "Alias": "5480540-OTHER PERSONNEL COSTS",
+            "G Account": "G5480540",
+            "G Account Description": "OTHER BENEFITS&PERSONNEL COSTS",
+            "Account Description": "OTHER PERSONNEL COSTS",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5480540",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Cost Center",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Cost Center",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR024-Other allowances",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5502520-TRAVELLING EXP. EMPLOYEE  - AIR TICKETS",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5502520",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5502505-TRAVEL & LODGING",
+            "Alias": "5502520-TRAVELLING EXP. EMPLOYEE  - AIR TICKETS",
+            "G Account": "G5502505",
+            "G Account Description": "TRAVEL & LODGING",
+            "Account Description": "TRAVELLING EXP. EMPLOYEE  - AIR TICKETS",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5502520",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5502525-TRAVELLING EXP. EMPLOYEE   - OTHER",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5502525",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5502505-TRAVEL & LODGING",
+            "Alias": "5502525-TRAVELLING EXP. EMPLOYEE   - OTHER",
+            "G Account": "G5502505",
+            "G Account Description": "TRAVEL & LODGING",
+            "Account Description": "TRAVELLING EXP. EMPLOYEE   - OTHER",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5502525",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5502530-TRAVELLING EXP.EMPLOYEE   - ACCOMODATION",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5502530",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5502505-TRAVEL & LODGING",
+            "Alias": "5502530-TRAVELLING EXP.EMPLOYEE   - ACCOMODATION",
+            "G Account": "G5502505",
+            "G Account Description": "TRAVEL & LODGING",
+            "Account Description": "TRAVELLING EXP.EMPLOYEE   - ACCOMODATION",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5502530",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5502535-TRAVELLING EXP. EMPLOYEE   - KM ALLOWANCE",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5502535",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5502505-TRAVEL & LODGING",
+            "Alias": "5502535-TRAVELLING EXP. EMPLOYEE   - KM ALLOWANCE",
+            "G Account": "G5502505",
+            "G Account Description": "TRAVEL & LODGING",
+            "Account Description": "TRAVELLING EXP. EMPLOYEE   - KM ALLOWANCE",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5502535",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5503505-PERSONNEL SELECTION EXPENSES",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5503505",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5503505-PERSONNEL RECRUITMENT",
+            "Alias": "5503505-PERSONNEL SELECTION EXPENSES",
+            "G Account": "G5503505",
+            "G Account Description": "PERSONNEL RECRUITMENT",
+            "Account Description": "PERSONNEL SELECTION EXPENSES",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5503505",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Cost Center",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Cost Center",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "HRGRXXX",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGRXXX - NO MAP",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5503510-PERSONNEL TRAINING EXPENSES - TECHNICAL",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5503510",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5503510-TRAINING EXPENSES",
+            "Alias": "5503510-PERSONNEL TRAINING EXPENSES - TECHNICAL",
+            "G Account": "G5503510",
+            "G Account Description": "TRAINING EXPENSES",
+            "Account Description": "PERSONNEL TRAINING EXPENSES - TECHNICAL",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5503510",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Cost Center",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Cost Center",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "HRGRXXX",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGRXXX - NO MAP",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5507505-CONSULTANCY FEES TAX AND ADMINISTRATIVE",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5507505",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5507505-CONSULTANCY FEES TAX AND ADMINISTRATIVE",
+            "Alias": "5507505-CONSULTANCY FEES TAX AND ADMINISTRATIVE",
+            "G Account": "G5507505",
+            "G Account Description": "CONSULTANCY FEES TAX AND ADMINISTRATIVE",
+            "Account Description": "CONSULTANCY FEES TAX AND ADMINISTRATIVE",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5507505",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5507510-CONSULTANCY FEES LEGAL",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5507510",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5507510-CONSULTANCY FEES LEGAL",
+            "Alias": "5507510-CONSULTANCY FEES LEGAL",
+            "G Account": "G5507510",
+            "G Account Description": "CONSULTANCY FEES LEGAL",
+            "Account Description": "CONSULTANCY FEES LEGAL",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5507510",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5507515-CONSULTANCY FEES TECHNICAL",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5507515",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5507515-CONSULTANCY FEES TECHNICAL",
+            "Alias": "5507515-CONSULTANCY FEES TECHNICAL",
+            "G Account": "G5507515",
+            "G Account Description": "CONSULTANCY FEES TECHNICAL",
+            "Account Description": "CONSULTANCY FEES TECHNICAL",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5507515",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5507535-OTHER CONSULTANCY FEES",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5507535",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5507520-CONSULTANCY FEES - OTHER",
+            "Alias": "5507535-OTHER CONSULTANCY FEES",
+            "G Account": "G5507520",
+            "G Account Description": "CONSULTANCY FEES - OTHER",
+            "Account Description": "OTHER CONSULTANCY FEES",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5507535",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5511515-CAR RENTING FEES ALLOCATED",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5511515",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5511515-COMPANY CAR",
+            "Alias": "5511515-CAR RENTING FEES ALLOCATED",
+            "G Account": "G5511515",
+            "G Account Description": "COMPANY CAR",
+            "Account Description": "CAR RENTING FEES ALLOCATED",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5511515",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5806520-EXTRAORDINARY LOSSES PMP ADJUSTMENT",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5806520",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5806530-EXTRAORDINARY ITEMS (INCL.WINDFALL)",
+            "Alias": "5806520-EXTRAORDINARY LOSSES PMP ADJUSTMENT",
+            "G Account": "G5806530",
+            "G Account Description": "EXTRAORDINARY ITEMS (INCL.WINDFALL)",
+            "Account Description": "EXTRAORDINARY LOSSES PMP ADJUSTMENT",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5806520",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Employee",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Employee",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR033-Out of time costs / incomes + Other",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "5806545-PERSONNEL COSTS PREVIOUS PERIOD & EXTRAORDINARY",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "5806545",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5450505-PERSONNEL - NON RECURRING COSTS",
+            "Alias": "5806545-PERSONNEL COSTS PREVIOUS PERIOD & EXTRAORDINARY",
+            "G Account": "G5450505",
+            "G Account Description": "PERSONNEL - NON RECURRING COSTS",
+            "Account Description": "PERSONNEL COSTS PREVIOUS PERIOD & EXTRAORDINARY",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "5806545",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "KR05420003-RETENTION BONUS ACCRUAL",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "KR05420003",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5410520-COMPENSATION W/O SALES C. LTI&BONUS",
+            "Alias": "KR05420003-RETENTION BONUS ACCRUAL",
+            "G Account": "G5410520",
+            "G Account Description": "COMPENSATION W/O SALES C. LTI&BONUS",
+            "Account Description": "RETENTION BONUS ACCRUAL",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "KR05420003",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Employee",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Employee",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR012-Bonus & Incentives",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "M5420010-LTI",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "M5420010",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5420010-LTI",
+            "Alias": "M5420010-LTI",
+            "G Account": "G5420010",
+            "G Account Description": "LTI",
+            "Account Description": "LTI",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "M5420010",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "-Set Detail- To Be Mapped",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "2",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "M5480515-UNIFORMS",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "M5480515",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5480515-UNIFORMS",
+            "Alias": "M5480515-UNIFORMS",
+            "G Account": "G5480515",
+            "G Account Description": "UNIFORMS",
+            "Account Description": "UNIFORMS",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "M5480515",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Cost Center",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Cost Center",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR036-Uniform allowance",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    },
+    {
+        "LegalEntity":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "E134",
+            "Name": "Legal Entity",
+            "Consolidated": false 
+        },
+        "Account":
+        {
+            "Account Alias": "M5480525-CLOTHING ALLOWANCE",
+            "LastDate_Upload": "2017-08-21",
+            "Account": "M5480525",
+            "Type": "PL",
+            "LastPeriod_Upload": "2017-M07",
+            "G Account Alias": "G5480540-OTHER BENEFITS&PERSONNEL COSTS",
+            "Alias": "M5480525-CLOTHING ALLOWANCE",
+            "G Account": "G5480540",
+            "G Account Description": "OTHER BENEFITS&PERSONNEL COSTS",
+            "Account Description": "CLOTHING ALLOWANCE",
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "M5480525",
+            "Name": "Account",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Check":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "ok",
+            "Name": "Check",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Detail":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "By Employee",
+            "Name": "Detail",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "By Employee",
+                "By Cost Center" 
+            ] 
+        },
+        "AccountSetUp$DetailSaved":
+        {
+            "Updateable": true,
+            "HasPicklist": false,
+            "Value": "By Employee",
+            "Name": "Detail Saved",
+            "Consolidated": false 
+        },
+        "AccountSetUp$Message":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "To Be Validated",
+            "Name": "Message",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHR":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "",
+            "Name": "Reporting HR",
+            "Consolidated": false 
+        },
+        "AccountSetUp$ReportingHRAlias":
+        {
+            "Updateable": true,
+            "HasPicklist": true,
+            "Value": "HRGR023-Clothing allowance",
+            "Name": "Reporting HR Alias",
+            "Consolidated": false,
+            "PicklistValues": 
+            [
+                "HRG010-Base compensation",
+                "HRG020-Additional monthly pay",
+                "HRG030-Personal Contracts",
+                "HRG050-Compensation reduction",
+                "HRG060-Situation specific allowances",
+                "HRG070-Back pay and Balancing",
+                "HRG080-Accrued Holidays",
+                "HRG090-Taken Holidays",
+                "HRG100-Leave and Absenteeism",
+                "HRG110-Managerial Salaries",
+                "HRG130-Overtime and bank of hours",
+                "HRG140-Productivity and other bonuses",
+                "HRG150-Other",
+                "HRG170-Bonus/PMP",
+                "HRG180-Sales commissions",
+                "HRG190-LTI",
+                "HRG210-Company car",
+                "HRG220-Luncheon vouchers",
+                "HRG230-Other benefits",
+                "HRG240-Health & Life insurances",
+                "HRG250-Clothing allowance",
+                "HRG260-Other allowances/payments",
+                "HRG280-Employee leaving entitlement",
+                "HRG290-Social security charges",
+                "HRG300-Health Funds",
+                "HRG310-Pension plans",
+                "HRG320-IRAP (only for Italian legal entities)",
+                "HRG330-Recharge clothing",
+                "HRG340-Recharge personnel cost",
+                "HRG350-Personnel costs charged",
+                "HRG363-Temporary employment (Personnel Cost)",
+                "HRG370-Severance / lay-off",
+                "HRG380-Restructuring",
+                "HRG390-Una tantum and advance notice (paid or deducted)",
+                "HRG400-Out of time costs / incomes + Other",
+                "HRG420-Uniforms",
+                "HRG430-Board of Directors fees",
+                "HRG440-Temporary Employment (G&A)",
+                "HRG450-Personnel Recruitment",
+                "HRG460-Training Expenses",
+                "HRG470-Other income (services rendered)",
+                "HRG480-Travel & Lodging",
+                "HRG490-Travel & Lodging Managerial",
+                "HRG500-Consultancy fees tax and administrative",
+                "HRG510-Consultancy fees legal",
+                "HRG520-Consultancy fees technical",
+                "HRG530-Consultancy fees - Other",
+                "HRGR000-No Item",
+                "HRGRXXX-NO MAP",
+                "New Element",
+                "New Element 2" 
+            ] 
+        },
+        "AccountSetUp$Warn":
+        {
+            "Updateable": false,
+            "HasPicklist": false,
+            "Value": "null",
+            "Name": "Warn",
+            "Consolidated": false 
+        } 
+    } 
+]

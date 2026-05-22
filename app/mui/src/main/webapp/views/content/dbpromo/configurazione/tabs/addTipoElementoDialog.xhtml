@@ -1,0 +1,119 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="addTipoElementoDialog" widgetVar="addTipoElementoDialog" modal="true" closable="false" dynamic="true"
+          header="Crea nuovo tipo elemento per il set #{templateView.currentView.pianificazioneSelected.descrizione}"
+          width="50%" height="40vh" resizable="false"
+          styleClass="addTipoElementoDialogClass disable-horizontal-scroll">
+    <h:form id="addTipoElementoDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            class="addTipoElementoDialogClass addTipoElementoDialogForm">
+        <div class="row">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogRaggruppamento" value="Raggruppamento" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputNumber id="dialogRaggruppamento" decimalPlaces="0" size="3"
+                                   styleClass="input-field" inputStyle="width: 100%;"
+                                   value="#{templateView.currentView.tipoElementoDialogBackingBean.raggruppamento}">
+                        <p:ajax update="@(.addTipoElementoDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:inputNumber>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogTotale" value="Totale" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="dialogTotale"
+                                             value="#{templateView.currentView.tipoElementoDialogBackingBean.totale}">
+                        <p:ajax update="@(.addTipoElementoDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogReparto" value="Reparto" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="dialogReparto"
+                                             value="#{templateView.currentView.tipoElementoDialogBackingBean.reparto}">
+                        <p:ajax update="@(.addTipoElementoDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogGrm" value="Grm" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="dialogGrm"
+                                             value="#{templateView.currentView.tipoElementoDialogBackingBean.grm}">
+                        <p:ajax update="@(.addTipoElementoDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogArticolo" value="Articolo" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="dialogArticolo"
+                                             value="#{templateView.currentView.tipoElementoDialogBackingBean.articolo}">
+                        <p:ajax update="@(.addTipoElementoDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogAttributo" value="Attributo" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="dialogAttributo"
+                                             value="#{templateView.currentView.tipoElementoDialogBackingBean.attributo}">
+                        <p:ajax update="@(.addTipoElementoDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogOmogeneo" value="Omogeneo" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="dialogOmogeneo"
+                                             value="#{templateView.currentView.tipoElementoDialogBackingBean.omogeneo}">
+                        <p:ajax update="@(.addTipoElementoDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('addTipoElementoDialog').hide()"
+                                 update="@(.addTipoElementoDialogClass)"
+                />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="addTipoElementoDialogConfirmBtn" value="Conferma"
+                                 styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('addTipoElementoDialog').hide()"
+                                 disabled="#{templateView.currentView.tipoElementoDialogBackingBean.confirmBtnDisabled}"
+                                 action="#{templateView.currentView.confirmTipoElementoDialog}"
+                                 onclick="setLoadingStatus(this)"
+                                 update="@(.updateableContent) @(.addTipoElementoDialogClass)" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

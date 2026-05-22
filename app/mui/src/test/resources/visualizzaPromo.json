@@ -1,0 +1,100 @@
+{
+   "promozione":[
+      {
+            "id":"0001",
+            "anno":"2020",
+            "canali":[
+               {
+                  "tipoCanale":"Buoni potenziamento",
+                  "canale":[
+                     {
+                        "id":"0011",
+                        "descrizioneEstesa":"Gio 11-08-20 Buoni potenziamento XXXX",
+                        "dataInizio":"20-09-2020",
+                        "dataFine":"20-12-2020",
+                        "statoPromozione":"attivo",
+                        "noteMarketing":"abcdef"
+                     },
+                     {
+                        "id":"0021",
+                        "descrizioneEstesa":"Gio 18-08-20 Buoni potenziamento XXXX",
+                        "dataInizio":"20-09-2020",
+                        "dataFine":"20-12-2020",
+                        "statoPromozione":"attivo",
+                        "noteMarketing":"abcdef"
+                     }
+                  ]
+               },
+               {
+                  "tipoCanale":"Buoni categoria",
+                  "canale":[
+                     {
+                        "id":"0031",
+                        "descrizioneEstesa":"Gio 11-08-20 Buoni categoria XXXX",
+                        "dataInizio":"20-09-2020",
+                        "dataFine":"20-12-2020",
+                        "statoPromozione":"attivo",
+                        "noteMarketing":"abcdef"
+                     },
+                     {
+                        "id":"0041",
+                        "descrizioneEstesa":"Gio 18-08-20 Buoni categoria XXXX",
+                        "dataInizio":"20-09-2020",
+                        "dataFine":"20-12-2020",
+                        "statoPromozione":"attivo",
+                        "noteMarketing":"abcdef"
+                     }
+                  ]
+               }
+            ]
+      },
+      {
+            "id":"0002",
+            "anno":"2020",
+            "canali":[
+               {
+                  "tipoCanale":"Buoni potenziamento",
+                  "canale":[
+                     {
+                        "id":"0012",
+                        "descrizioneEstesa":"Gio 11-04-20 Buoni potenziamento XXXX",
+                        "dataInizio":"20-03-2020",
+                        "dataFine":"20-08-2020",
+                        "statoPromozione":"attivo",
+                        "noteMarketing":"abcdef"
+                     },
+                     {
+                        "id":"0022",
+                        "descrizioneEstesa":"Gio 18-04-20 Buoni potenziamento XXXX",
+                        "dataInizio":"20-03-2020",
+                        "dataFine":"20-08-2020",
+                        "statoPromozione":"attivo",
+                        "noteMarketing":"abcdef"
+                     }
+                  ]
+               },
+               {
+                  "tipoCanale":"Buoni categoria",
+                  "canale":[
+                     {
+                        "id":"0023",
+                        "descrizioneEstesa":"Gio 11-08-20 Buoni categoria XXXX",
+                        "dataInizio":"20-09-2020",
+                        "dataFine":"20-12-2020",
+                        "statoPromozione":"attivo",
+                        "noteMarketing":"abcdef"
+                     },
+                     {
+                        "id":"0024",
+                        "descrizioneEstesa":"Gio 18-08-20 Buoni categoria XXXX",
+                        "dataInizio":"20-09-2020",
+                        "dataFine":"20-12-2020",
+                        "statoPromozione":"attivo",
+                        "noteMarketing":"abcdef"
+                     }
+                  ]
+               }
+            ]
+      }
+   ]
+}

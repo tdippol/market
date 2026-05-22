@@ -1,0 +1,170 @@
+[
+
+    {
+        "name": "Cubes",
+        "request": {
+            "type": "GET",
+            "path": "/api/v1/Cubes",
+            "query": []
+        },
+        "response": {
+            "status": 200,
+            "pathToBody": "getVersion.json",
+            "headers": [
+                {
+                    "name": "Set-Cookie",
+                    "value": "TM1SessionId"
+                }
+            ]
+        }
+    },
+	{
+		"name": "getVersion",
+		"request": {
+			"type": "GET",
+			"path": "/api/v1/Configuration/ProductVersion/$value",
+			"query": []
+		},
+		"response": {
+			"status": 200,
+			"pathToBody": "getVersion.json",
+			"headers": [
+				{
+					"name": "Set-Cookie",
+					"value": "TM1Cookie pippo"
+				}
+			]
+		}
+	},
+	{
+		"name": "closeSession",
+		"request": {
+			"type": "POST",
+			"path": "/api/v1/ActiveSession/tm1.Close",
+			"query": []
+		},
+		"response": {
+			"status": 201,
+			"pathToBody": ""
+		}
+	},
+	{
+		"name": "deleteCellSet",
+		"request": {
+			"type": "DELETE",
+			"path": "/api/v1/Cellsets*",
+			"query": []
+		},
+		"response": {
+			"status": 201,
+			"pathToBody": ""
+		}
+	},
+	{
+		"name": "generateCellset",
+		"request": {
+			"type": "GET",
+			"path": "/api/v1/Cellsets('stVqWl4-AYA4AAAg')",
+			"query": [
+				{
+					"name": "$expand",
+					"value": "Axes($expand=Hierarchies($select=Name),Tuples($expand=Members($select=Name,Level,Attributes,UniqueName)))"
+				}
+			],
+			"body": ""
+		},
+		"response": {
+			"status": 200,
+			"pathToBody": "expandAxes.json"
+		}
+	},
+	{
+		"name": "expandAxes",
+		"request": {
+			"type": "GET",
+			"path": "/api/v1/Cellsets('stVqWl4-AYA4AAAg')",
+			"query": [
+				{
+					"name": "$expand",
+					"value": "Axes($expand=Hierarchies($select=Name),Tuples($expand=Members($select=Name)))"
+				}
+			],
+			"body": ""
+		},
+		"response": {
+			"status": 200,
+			"pathToBody": "expandAxes.json"
+		}
+	},
+	{
+		"name": "expandCells",
+		"request": {
+			"type": "GET",
+			"path": "/api/v1/Cellsets('stVqWl4-AYA4AAAg')",
+			"query": [
+				{
+					"name": "$expand",
+					"value": "Cells($select=Ordinal,Value)"
+				}
+			],
+			"body": ""
+		},
+		"response": {
+			"status": 200,
+			"pathToBody": "expandCells.json"
+		}
+	},
+	{
+		"name": "expandCube",
+		"request": {
+			"type": "POST",
+			"path": "/api/v1/ExecuteMDX",
+			"query": [
+				{
+					"name": "$expand",
+					"value": "Cube"
+				}
+			],
+			"body": ""
+		},
+		"response": {
+			"status": 200,
+			"pathToBody": "expandCube.json"
+		}
+	},
+	{
+		"name": "expandExistingCube",
+		"request": {
+			"type": "GET",
+			"path": "/api/v1/Cellsets('stVqWl4-AYA4AAAg')",
+			"query": [
+				{
+					"name": "$expand",
+					"value": "Cube"
+				}
+			]
+		},
+		"response": {
+			"status": 200,
+			"headers": [
+				{
+					"name": "Set-Cookie",
+					"value": "TM1Cookie pippo"
+				}
+			],
+			"pathToBody": ""
+		}
+	},
+	{
+		"name": "countCells",
+		"request": {
+			"type": "GET",
+			"path": "/api/v1/Cellsets('stVqWl4-AYA4AAAg')",
+			"query": []
+		},
+		"response": {
+			"status": 200,
+			"pathToBody": "countCells.json"
+		}
+	}
+]

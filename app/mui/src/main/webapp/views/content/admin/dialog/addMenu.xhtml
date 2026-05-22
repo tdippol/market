@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+    <h:form>
+        <p:panelGrid styleClass="addMenu"
+            rendered="#{gestioneMenuRole.newMenuBean != null}">
+            <p:row>
+                <p:column style="text-align: left;">
+                    <p:outputLabel value="Parent * " />
+                    <br />
+                    <p:selectOneMenu rendered="#{gestioneMenuRole.newMenuBean ne null}"
+                        value="#{gestioneMenuRole.newMenuBean.idParent}"
+                        effect="fade" style="width:100%" filter="true"
+                        filterMatchMode="contains">
+                        <f:selectItems value="#{gestioneMenuRole.newMenuBean.dropdownMenu}" />
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column style="text-align: left;">
+                    <p:outputLabel value="Label * " />
+                    <br />
+                    <p:inputText value="#{gestioneMenuRole.newMenuBean.label}"
+                        style="width: 100%;" maxlength="100" />
+                </p:column>
+                <p:column style="text-align: left;">
+                    <p:outputLabel value="Order * " />
+                    <br />
+                    <p:inputNumber value="#{gestioneMenuRole.newMenuBean.order}"
+                        size="3" maxlength="3" decimalPlaces="0"/>
+                </p:column>
+            </p:row>
+            <!-- selezione foglia -->
+            <p:row>
+                <p:column style="text-align: left;">
+                    <p:outputLabel value="Livello foglia? " />
+                    <br />
+                    <p:inputSwitch value="#{gestioneMenuRole.newMenuBean.leafNode}" onLabel="SI" offLabel="NO" id="leafNodeSwith">
+                        <p:ajax update="@(.leafDependant)"/>
+                    </p:inputSwitch>
+                </p:column>
+                <p:column style="text-align: left;" />
+                <p:column style="text-align: left;" />
+            </p:row>
+            <!-- selezione dinamica -->
+            <p:row>
+                <p:column style="text-align: left;" >
+                    <p:panel styleClass="mui_invisiblePanel leafDependant" >
+                        <p:outputLabel value="Pagina dinamica? " />
+                        <br />
+                        <p:inputSwitch  value="#{gestioneMenuRole.newMenuBean.dynamic}" onLabel="SI" offLabel="NO" disabled="#{gestioneMenuRole.newMenuBean.dynamicDisabled}" styleClass="leafDependant">
+                            <p:ajax update="@(.dynamicDependant)"/>
+                        </p:inputSwitch>
+                    </p:panel>
+                </p:column>
+                <p:column style="text-align: left;">
+                    <p:panel styleClass="mui_invisiblePanel leafDependant" >
+                        <p:outputLabel value="Layout: *"  />
+                        <br />
+                        <p:selectOneMenu
+                            value="#{gestioneMenuRole.newMenuBean.url}" style="width: 100%;" disabled="#{gestioneMenuRole.newMenuBean.layoutDisabled}" styleClass="leafDependant dynamicDependant" >
+                            <f:selectItems value="#{gestioneMenuRole.availableTemplates}" />
+                        </p:selectOneMenu>
+                    </p:panel>
+                </p:column>
+            </p:row>
+            <!-- selezione link -->
+            <p:row>
+                <p:column style="text-align: left;" >
+                    <p:panel styleClass="mui_invisiblePanel" >
+                    <p:outputLabel value="Link esterno? " />
+                    <br />
+                    <p:inputSwitch id="externalSwitch" value="#{gestioneMenuRole.newMenuBean.external}" onLabel="SI" offLabel="NO" 
+                        disabled="#{gestioneMenuRole.newMenuBean.externalDisabled}" styleClass="leafDependant dynamicDependant" immediate="true">
+                        <p:ajax update="@(.externalLinkDependant)"/>
+                    </p:inputSwitch>
+                    </p:panel>
+                </p:column>
+                    <p:column style="text-align: left;">
+                    <p:panel  styleClass="mui_invisiblePanel externalLinkDependant dynamicDependant" >
+                        <p:outputLabel value="URL: *" rendered="#{gestioneMenuRole.newMenuBean.external}" disabled="#{!gestioneMenuRole.newMenuBean.external}" styleClass="leafDependant"/>
+                        <p:outputLabel value="PATH: *" rendered="#{!gestioneMenuRole.newMenuBean.external}" disabled="#{!gestioneMenuRole.newMenuBean.external}" styleClass="leafDependant"/>
+                        <br />
+                        <p:inputText
+                            value="#{gestioneMenuRole.newMenuBean.url}"
+                            style="width: 100%;" maxlength="500" 
+                            disabled="#{gestioneMenuRole.newMenuBean.dynamic}" styleClass="leafDependant"/>
+                    </p:panel>
+                    </p:column>
+                    <p:column style="text-align: left;">
+                    <p:panel
+                        styleClass="mui_invisiblePanel externalLinkDependant dynamicDependant" >
+                        <p:outputLabel value="Bean: *" rendered="#{!gestioneMenuRole.newMenuBean.external}" />
+                        <br />
+                        <p:inputText
+                            value="#{gestioneMenuRole.newMenuBean.bean}"
+                            style="width: 100%;" maxlength="500" disabled="#{gestioneMenuRole.newMenuBean.dynamic}" rendered="#{!gestioneMenuRole.newMenuBean.external}" styleClass="leafDependant"/>
+                    </p:panel>
+                    </p:column>
+            </p:row>
+            <f:facet name="footer">
+                <p:column colspan="3" style="text-align: right !important;">
+                    <p:commandButton styleClass="pf-btn-confirm" value="Salva"
+                        actionListener="#{gestioneMenuRole.addMenu}" update="@(.menuRolesMenu)"
+                        oncomplete="PF('addMenu').hide();" />
+                    <p:commandButton styleClass="pf-btn-cancel" value="Annulla"
+                        process="@this" oncomplete="PF('addMenu').hide();" />
+                </p:column>
+            </f:facet>
+        </p:panelGrid>
+    </h:form>
+</ui:composition>
+</html>

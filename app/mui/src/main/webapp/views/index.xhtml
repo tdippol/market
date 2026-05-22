@@ -1,0 +1,219 @@
+<!DOCTYPE html 
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+>
+<!-- begin::Head -->
+<h:head>
+	<title>#{templateView.title}</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<h:outputStylesheet library="vendors" name="general/bootstrap-select/dist/css/bootstrap-select.css" />
+	<h:outputStylesheet library="vendors" name="general/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+	<h:outputStylesheet library="vendors" name="custom/line-awesome/css/line-awesome.css" />
+	<h:outputStylesheet library="vendors" name="custom/fontawesome5/css/all.css" />
+	<link rel="shortcut icon" type="image/x-icon" href="#{resource['images:logos/favicon.ico']}" />
+	<h:outputStylesheet library="vendors" name="general/bootstrap-datetimepicker/timepicker.css" />
+
+
+	<h:outputScript library="vendors" name="general/popper.js/dist/umd/popper.min.js" />
+	<h:outputScript library="vendors" name="general/bootstrap/dist/js/bootstrap.min.js" />
+	<h:outputScript library="vendors" name="general/bootstrap-select/dist/js/bootstrap-select.js" />
+	<h:outputScript library="vendors" name="general/bootstrap-datepicker/bootstrap-datepicker.js" />
+	<h:outputScript library="vendors" name="general/bootstrap-datepicker/locales/bootstrap-datepicker.it.js" />
+	<h:outputScript library="vendors" name="general/bootstrap-datetimepicker/timepicker.js" />
+
+	<h:outputScript library="vendors" name="daypilot-all.min.js" />
+
+	<!-- tutti questi sono caricati se siamo con le pagine dinamiche (agGrid) -->
+
+	<h:outputScript library="js" name="ag-grid-locale/locale.it.js?v=#{templateView.implementationVersion}" />
+
+	<h:outputScript library="js" name="formatnumbers.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js"
+					name="ag-grid/ag-grid-enterprise.min.noStyle.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/license.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridDateCellRenderer.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridDateCellEditor.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridPicklistCellEditor.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridCheckboxCellRenderer.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridCheckboxCellEditor.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridColumnsTypes.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridNumericCellEditorK.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridNumericCellEditor.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridNumericCellEditorInt.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridNumericCellEditorK.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js"
+					name="ag-grid/agGridNumericCellRendererInt.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridNumericCellRendererK.js?v=#{templateView.implementationVersion}" />
+	<h:outputScript library="js" name="ag-grid/agGridUneditableCellEditor.js?v=#{templateView.implementationVersion}" />
+
+
+</h:head>
+	<!-- end::Head -->
+	<!-- begin::Body -->
+	<h:body class="k-header--fixed k-header-mobile--fixed k-aside--enabled k-aside--fixed k-aside--offcanvas-default" >
+		<!-- 
+		<ui:debug hotkey="x" rendered="#{facesContext.application.projectStage == 'Development'}" />
+ 		-->
+
+		<h:form id="formGrowl">
+			<p:growl widgetVar="growl" id="growl" showDetail="true" styleclass="growlClass" life="8000"/>
+		</h:form>
+		<!-- global tooltip -->
+		<p:tooltip />
+		<!-- global spinner -->
+		<p:dialog widgetVar="globalSpinner"  styleClass="globalSpinner" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" position="center center" onShow="PF('globalSpinner').initPosition()">
+			<div class="spinnerContainer">
+				<i class="loading-spin" style="width: 300px;height: 200px;line-height:200px;"/>
+				<br/>
+				<i >Awaiting response from backend ...</i>
+			</div>
+		</p:dialog>
+		
+		<!-- timeout controller -->
+		<ui:insert name="timeout">
+			<ui:include src="headers/sessionTimeout.xhtml" />
+		</ui:insert>
+		<h:panelGroup rendered="#{not empty templateView.user}">
+			<!-- begin:: Header Mobile -->
+			<ui:insert name="headermobile">
+				<ui:include src="headers/mobile/headermobile.xhtml" />
+			</ui:insert>
+			<!-- end:: Header Mobile -->
+			<div class="k-grid k-grid--hor k-grid--root ">
+				<div class="k-grid__item k-grid__item--fluid k-grid k-grid--ver k-page">
+					<div class="k-grid__item k-grid__item--fluid k-grid k-grid--hor k-wrapper" id="k_wrapper">
+					<!-- begin:: Header -->
+					<ui:insert name="header">
+						<ui:include src="headers/desk/header.xhtml" />
+					</ui:insert>
+					<!-- end:: Header -->
+					<!-- begin:: Sub-header -->
+					<ui:insert name="subheader">
+						<ui:include src="subheader/subheader.xhtml" />
+					</ui:insert>
+					<!-- end:: Sub-header -->
+					<div class="k-grid__item k-grid__item--fluid k-grid k-grid--ver k-grid--stretch">
+						<p:outputPanel id="updateContent" layout="block" styleClass="k-content-wrapper k-grid__item k-grid__item--fluid k-grid k-grid--ver updateContent">
+							
+						<script>
+							var muiEnv='';
+							if('#{templateView.agGridView}'=='true'){
+								muiEnv='mui';
+							}else{
+								muiEnv='dbPromo';
+							}
+
+							
+						</script>
+
+
+
+							<h:form>
+								<h:outputScript library="js" name="common.js?v=#{templateView.implementationVersion}" />
+						
+								<h:outputScript library="js" name="ag-grid/agGridDefault.js?v=#{templateView.implementationVersion}"  rendered="#{templateView.agGridView}"/>
+								<h:outputScript library="js" name="dbpromo/dbpromoColumnsTypes.js?v=#{templateView.implementationVersion}"  rendered="#{not templateView.agGridView}"/>
+						   		<h:outputScript library="js" name="dbpromo/AxCellRenderer.js?v=#{templateView.implementationVersion}"  rendered="#{not templateView.agGridView}"/>
+						   		<h:outputScript library="js" name="dbpromo/AxCellEditor.js?v=#{templateView.implementationVersion}"  rendered="#{not templateView.agGridView}"/>
+
+						   		<h:outputScript library="js" name="dbpromo/agGridDefault.js?v=#{templateView.implementationVersion}"  rendered="#{not templateView.agGridView}"/>
+								
+						   		<script>
+									var contextPath= "${request.contextPath}";
+								</script>
+						   
+							    <p:remoteCommand name="initGlobalFilters"  update="k_sub_header" oncomplete="refreshGlobalFilters(#{templateView.currentView.jsonFilter})" />
+							    <p:remoteCommand name="addErrorGrowl" actionListener="#{templateView.addErrorGrowl}" update="@(.filterSelection)" onerror="redirectToExpiredPage()" />
+								<p:remoteCommand name="addInfoGrowl" actionListener="#{templateView.addInfoGrowl}" update="@(.filterSelection)" onerror="redirectToExpiredPage()" />
+								<p:remoteCommand name="addWarningGrowl" actionListener="#{templateView.addWarningGrowl}" update="@(.filterSelection)" onerror="redirectToExpiredPage()" />
+						
+								<p:remoteCommand name="updateRemoteView" async="true" actionListener="#{templateView.currentView.updateView}" update="@(.filterSelection),@(.fromGridActions)" oncomplete="asynchGridLoad(xhr, status, args)" onerror="redirectToExpiredPage()" />
+								<p:remoteCommand name="updateCell" actionListener="#{templateView.updateCellsByOrdinal}" oncomplete="asynchUpdateGrid(xhr, status, args)" onerror="redirectToExpiredPage()"/>
+								<p:remoteCommand name="persistHiddenColumns" actionListener="#{templateView.persistHiddenColumns}" onerror="redirectToExpiredPage()"/>
+								<p:remoteCommand name="toggleNonEmpty" actionListener="#{templateView.toggleNonEmpty}" oncomplete="asynchGridLoad(xhr, status, args)" onerror="redirectToExpiredPage()"/>
+								<p:remoteCommand name="performPreSelection" actionListener="#{templateView.performPreSelection}" onstart="PF('globalSpinner').show()" oncomplete="PF('globalSpinner').hide()" onerror="redirectToExpiredPage()"/>
+								<p:remoteCommand name="getPicklistValues" actionListener="#{templateView.getPicklistValues}" oncomplete="asynchPicklistValues(xhr, status, args)" onerror="redirectToExpiredPage()"/>
+								<p:remoteCommand name="openFiltersDialog" update="@(.formFilterDialog)" oncomplete="createCombinedPicklist(#{templateView.currentView.currentJsonFilter});" onerror="redirectToExpiredPage()"/>
+								<p:remoteCommand name="performSilentAction" action="#{templateView.currentView.performSilentAction()}" onerror="redirectToExpiredPage()"/>
+							</h:form>
+							<!-- begin:: Content -->
+							<ui:insert name="content">
+								<ui:include src="#{templateView.currentView.viewFile}" >
+									<ui:param name="muiContext" value="#{templateView.currentView.contesto}"></ui:param>
+								</ui:include>
+							</ui:insert>
+							
+							<!-- end:: Content -->
+						</p:outputPanel>
+					</div>
+					<!-- begin:: Footer -->
+					<div class="k-footer k-grid__item" id="k_footer">
+						<div class="k-footer__menu" />
+					</div>
+					<!-- end:: Footer -->
+				</div>
+			</div>
+		</div>
+		<!-- end:: Page -->
+		<!-- begin:: Topbar Offcanvas Panels -->
+		<!-- begin::Offcanvas Toolbar Profile -->
+		<ui:insert name="toolbar">
+			<ui:include src="user/userbar.xhtml" />
+		</ui:insert>
+		<!-- end::Offcanvas Toolbar Profile -->
+		<!-- end:: Topbar Offcanvas Panels -->
+		<!-- begin::Scrolltop -->
+		<div id="k_scrolltop" class="k-scrolltop">
+			<i class="la la-arrow-up"></i>
+		</div>
+		<!-- begin::Global Config -->
+		<script type="text/javascript">
+			var KAppOptions = {
+				"colors" : {
+					"state" : {
+						"brand" : "#1cac81",
+						"metal" : "#c4c5d6",
+						"light" : "#ffffff",
+						"accent" : "#00c5dc",
+						"_old_primary" : "#5867dd",
+						"primary" : "#f07d00",
+						"success" : "#34bfa3",
+						"info" : "#36a3f7",
+						"warning" : "#ffb822",
+						"danger" : "#fd3995",
+						"focus" : "#9816f4"
+					},
+					"base" : {
+						"label" : [ "#b9bdc1", "#aeb2b7", "#414b4c", "#343d3e" ],
+						"shape" : [ "#eef4f3", "#e0e9e6", "#80c3af", "#41675c" ]
+					}
+				}
+			};
+		</script>
+	   
+
+		<h:outputScript library="js" name="filterSystem.js?v=#{templateView.implementationVersion}" />
+		<h:outputScript library="js" name="scripts.bundle.js?v=#{templateView.implementationVersion}" />
+		<h:outputScript library="js" name="app.bundle.js?v=#{templateView.implementationVersion}" />
+		
+  
+  
+  
+  
+		<h:outputScript library="js" name="menu.js?v=#{templateView.implementationVersion}"   />
+		<h:outputScript library="js" name="muiLocales.js?v=#{templateView.implementationVersion}" />
+		</h:panelGroup>
+		<h:panelGroup rendered="#{empty templateView.user}">
+			<h:outputText value="you shouldn't be here since you're not logged in! We caught you, get out!" />
+		</h:panelGroup>
+  
+	</h:body>
+
+
+</html>

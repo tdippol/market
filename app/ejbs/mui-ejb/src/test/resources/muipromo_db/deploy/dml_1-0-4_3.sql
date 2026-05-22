@@ -1,0 +1,12 @@
+UPDATE MUIPROMO.MENU SET ORDER_ID = 4 WHERE ID_MENU = 31;
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (49, null, 'Reporting', null, null, 3, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (50, 49, 'Analisi Budget-Venduto', null, null, 1, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (51, 50, 'Categoria', 'reporting/analisiBudget-Venduto/categoria.xhtml', 'agGrid', 1, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (52, 50, 'Articolo', 'reporting/analisiBudget-Venduto/articolo.xhtml', 'agGrid', 2, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (53, 49, 'Storico articolo per zona (ACQ)', 'reporting/storicoArticoloPerZonaAcq.xhtml', 'agGrid', 2, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (54, 49, 'Copia in Pianificazione', 'reporting/copiaInPianificazione.xhtml', 'copiaInPianificazione', 3, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (55, 49, 'Sintesi Campagna', 'reporting/sintesiCampagna.xhtml', 'agGrid', 4, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (56, 49, 'Dettaglio Campagna', 'reporting/dettaglioCampagna.xhtml', 'agGrid', 5, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (57, 49, 'Dettaglio Zona', 'reporting/dettaglioZona.xhtml', 'agGrid', 6, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (58, 49, 'Timone Reparto', 'reporting/timoneReparto.xhtml', 'agGrid', 7, 0);
+INSERT INTO MUIPROMO.MENU (ID_MENU, PARENT_ID, LABEL, URL, BEAN, ORDER_ID, EXTERNAL_LINK) VALUES (59, 49, 'Storico articolo per zona (MKT)', 'reporting/storicoArticoloPerZonaMkt.xhtml', 'agGrid', 8, 0);

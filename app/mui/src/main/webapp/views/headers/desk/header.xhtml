@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+	<div id="k_header"
+		class="k-header k-grid__item k-grid k-grid--ver  k-header--fixed ">
+
+		<!-- begin:: Brand -->
+		<ui:insert name="brand">
+			<ui:include src="brand.xhtml" />
+		</ui:insert>
+		<!-- end:: Brand -->
+
+		<!-- begin: Header Menu -->
+		<button class="k-header-menu-wrapper-close"
+			id="k_header_menu_mobile_close_btn">
+			<i class="la la-close"></i>
+		</button>
+		<!-- start:menu wrapper -->
+		<ui:insert name="menuwrapper">
+			<ui:include src="menu.xhtml" />
+		</ui:insert>
+		<!-- end:menu wrapper -->
+		<!-- end: Header Menu -->
+
+		<!-- begin:: Header Topbar -->
+		<div class="k-header__topbar k-grid__item k-grid__item--fluid">
+
+			<!--begin: User bar -->
+			<h:form>
+			<p:commandLink style="height: 100%;"  styleClass="k-header__topbar-item k-header__topbar-item--user" oncomplete="PF('mui-userTab').show()">
+				<div class="k-header__topbar-welcome"></div>
+				<div class="k-header__topbar-username"><h:outputText value=" #{templateView.user.name}" /></div>
+				<div class="k-header__topbar-wrapper">
+					<h:graphicImage library="images" name="users/default.jpg" />
+				</div>
+			</p:commandLink>
+			</h:form>
+			<!--end: User bar -->
+		</div>
+
+		<!-- end:: Header Topbar -->
+	</div>
+</ui:composition>
+</html>

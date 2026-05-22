@@ -1,0 +1,114 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<p:dialog id="confirmPianificazioneDialog" widgetVar="confirmPianificazioneDialog" modal="true" closable="false"
+          dynamic="true" header="Conferma Pianificazione" width="50%" resizable="false"
+          styleClass="disable-horizontal-scroll confirmPianificazioneDialog">
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content"
+         style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form id="confirmPianificazioneDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+                            styleClass="confirmPianificazioneDialogForm">
+                        <p:panel id="expandable_confirm_pianificazione_dialog" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                                 styleClass="pnlGrid_Header updateableContent" style="text-align: center;">
+                            <f:facet name="header">
+                                <p:outputLabel value="Seleziona compratori" />
+                            </f:facet>
+
+                            <h:panelGroup layout="block" style="height: 52vh; width: 100%;"
+                                          class="ag-theme-balham confirmPianificazione"
+                                          pt:gridid="confirm_pianificazione_dialog">
+                            </h:panelGroup>
+
+                            <f:facet name="actions">
+                                <p:inputText autocomplete="off" id="selezioneTab_quickfilter" placeholder="Filtra..."
+                                             styleClass="pnlGrid_Header filterInputText"
+                                             onkeyup="onFilterTextBoxChangedpromoGrid('confirm_pianificazione_dialog',this.value)"/>
+                            </f:facet>
+                        </p:panel>
+
+                        <p:remoteCommand name="selectBuyersCmd" update="@(.confirmPianificazioneDialogBtn)"
+                                         action="#{templateView.currentView.selectBuyers}"/>
+
+                        <p:outputLabel value="#{templateView.currentView.idPromozioneCorrente}"
+                                       class="idPromozioneCorrenteConfirmPianificazione" style="visibility: hidden;"/>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        var idPromozioneCorrente = $('.idPromozioneCorrenteConfirmPianificazione').text();
+        var gridParams_confirmPianificazione = {
+            gridId: 'db_confirm_pianificazione_dialog',
+            gridTabGroup: 'confirm_pianificazione_dialog_tabs',
+            gridTabPosition: 0,
+            gridCode: 'confirm_pianificazione_dialog',
+            gridTitle: 'Conferma Pianificazione - Selezione Compratori',
+            url_columnDefs: contextPath + '/resources/pianificazionepromo/confirmDialogCompratori/columnDef' + addUrlParamContesto(#{muiContext}),
+            url_rowData: contextPath + '/resources/pianificazionepromo/confirmDialogCompratori/rowData/' + idPromozioneCorrente,
+            url_customSort: contextPath + '/resources/grid/sorting/confirm_pianificazione_dialog'
+        };
+        var gridOptions_confirmPianificazione = {
+            rowSelection: 'multiple',
+            suppressRowClickSelection: true,
+            onSelectionChanged: onConfirmPlanoItemRowSelected,
+            onSortChanged: function (event) {
+                onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_confirmPianificazione.gridCode);
+            }
+        };
+        gridParams_confirmPianificazione.sortColumnDefs = [
+            { columnDefId: "selected", newPosition:0 }
+        ];
+        gridParams_confirmPianificazione.customizeColumnDefs = [
+            { columnDefId: "selected", property: "editable", value: false }
+        ];
+        gridParams_confirmPianificazione.gridOptions = gridOptions_confirmPianificazione;
+        creaGriglia(gridParams_confirmPianificazione);
+    });
+
+    function onConfirmPlanoItemRowSelected(event) {
+        var ids = event.api.getSelectedNodes().map(x => x.data.id.value);
+        selectBuyersCmd([ { name: "buyersIds", value: JSON.stringify(ids) } ]);
+    }
+
+    function refreshAfterConfirm() {
+        PF('confirmPianificazioneDialog').hide();
+        refreshHeaderData();
+    }
+</script>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" widgetVar="cancelPianificazioneDialogBtn"
+                                 styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('confirmPianificazioneDialog').hide()" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="confirmPianificazioneDialogBtn" value="Conferma"
+                                 widgetVar="confirmPianificazioneDialogBtn"
+                                 styleClass="ui-confirmdialog-yes confirmPianificazioneDialogBtn"
+                                 action="#{templateView.currentView.confirmPianificazione}"
+                                 onclick="PF('cancelPianificazioneDialogBtn').disable();PF('confirmPianificazioneDialogBtn').disable();"
+                                 disabled="#{empty templateView.currentView.buyersIds}"
+                                 onsuccess="reloadGrid()"
+                                 oncomplete="refreshAfterConfirm()" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

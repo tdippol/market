@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+    <h:panelGrid columns="2" cellpadding="5" styleClass="editLabel">
+        <h:outputLabel for="label" value="Label:" />
+        <p:inputText id="label"
+            value="#{gestioneMenuRole.newMenuBean.label}"
+            required="true" label="label" />
+        <f:facet name="footer">
+            <p:commandButton value="Salva" update="treeMenu"
+                action="#{gestioneMenuRole.updateSelectedNode}"
+                oncomplete="PF('editLabel').hide()" styleClass="pf-btn-confirm" />
+            <p:commandButton value="Annulla"
+                action="#{gestioneMenuRole.resetSelectedNode}"
+                oncomplete="PF('editLabel').hide()" styleClass="pf-btn-cancel" />
+        </f:facet>
+    </h:panelGrid>
+</ui:composition>
+</html>

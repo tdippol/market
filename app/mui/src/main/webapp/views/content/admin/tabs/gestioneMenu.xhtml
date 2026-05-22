@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+    <div class="row">
+        <div class="col-8">
+            <p:outputPanel
+                style="width: 100%;max-height: 640px;overflow: auto;display: block">
+                <p:tree value="#{gestioneMenuRole.menu}" var="node" dynamic="false"
+                    selectionMode="single" selection="#{gestioneMenuRole.selectedNode}"
+                    style="width:100%" draggable="true" droppable="true"
+                    dropRestrict="sibilings" styleClass="menuRolesMenu" id="treeMenu">
+                    <p:ajax event="select"
+                        update="@(.rolesSelector) @(.treeButtons) @(.editLabel) @(.editLayout)" />
+                    <p:ajax event="dragdrop" listener="#{gestioneMenuRole.onDragDrop}" />
+                    <p:treeNode type="folder" expandedIcon="fa fa-fw fa-minus-square"
+                        collapsedIcon="fa fa-fw fa-plus-square">
+                        <h:outputText value="#{node.label} [#{node.idMenu}]"
+                            style="min-height:25px !important" />
+                    </p:treeNode>
+                    <p:treeNode type="external"
+                        icon="fa fa-fw fa-external-link-square-alt">
+                        <h:outputText value="#{node.label} [#{node.idMenu}]"
+                            style="min-height:25px !important" />
+                    </p:treeNode>
+                    <p:treeNode type="internal" icon="fa fa-fw fa-splotch">
+                        <h:outputText value="#{node.label} [#{node.idMenu}]"
+                            style="min-height:25px !important" />
+                    </p:treeNode>
+
+                </p:tree>
+            </p:outputPanel>
+            <h:panelGroup layout="block" styleClass="row treeButtons"
+                style="margin-bottom:10px;">
+                <p:commandButton value="Collapse"
+                    styleClass="pf-btn-confirm treeButtons"
+                    icon="fa fa-fw fa-minus-square"
+                    action="#{gestioneMenuRole.collapseAll}" update="@(.updatableDialog) @(.menuRolesMenu)" />
+                <p:commandButton value="Expand"
+                    styleClass="pf-btn-confirm treeButtons"
+                    icon="fa fa-fw fa-plus-square"
+                    action="#{gestioneMenuRole.expandAll}" update="@(.updatableDialog) @(.menuRolesMenu)" />
+
+                <p:commandButton value="" styleClass="pf-btn-confirm treeButtons" icon="fa fa-arrow-up" action="#{gestioneMenuRole.moveUp}" update="@(.menuRolesMenu)" disabled="#{empty gestioneMenuRole.selectedNode}"/>
+                <p:commandButton value="" styleClass="pf-btn-confirm treeButtons" icon="fa fa-arrow-down" action="#{gestioneMenuRole.moveDown}" update="@(.menuRolesMenu)" disabled="#{empty gestioneMenuRole.selectedNode}"/>
+
+                <p:commandButton value="Aggiungi Menu"
+                    styleClass="pf-btn-confirm treeButtons"
+                    icon="fa fa-fw fa-file-medical" update="@(.updatableDialog) @(.pgAddDialog) @(.addMenu)"
+                    action="#{gestioneMenuRole.prepareNewMenu}"
+                    oncomplete="PF('addMenu').show()" />
+                
+                <p:commandButton value="Modifica Label" icon="fa fa-fw fa-edit"
+                    styleClass="pf-btn-confirm treeButtons"
+                    actionListener="#{gestioneMenuRole.prepareEditLayout}"
+                    oncomplete="PF('editLabel').show()" />
+                
+                <p:commandButton value="Modifica Layout/Type"
+                    icon="fa fa-fw fa-grip-vertical"
+                    styleClass="pf-btn-confirm treeButtons"
+                    oncomplete="PF('editLayout').show(); return false;"
+                    actionListener="#{gestioneMenuRole.prepareEditLayout}"
+                    disabled="#{!gestioneMenuRole.editLayout}" update="@(.updatableDialog) @(.editLayout)" />
+                
+                <p:commandButton value="Modifica Configurazioni"
+                    styleClass="pf-btn-confirm treeButtons"
+                    icon="fa fa-fw fa-file-signature"
+                    oncomplete="PF('editConfig').show()"
+                    action="#{gestioneMenuRole.prepareConfigrationEditing}"
+                    update="@(.updatableDialog) @(.editConfig)"
+                    disabled="#{not (gestioneMenuRole.selectedNode.type eq 'internal')}" />
+                <p:commandButton value="Cancella Nodo"
+                    styleClass="pf-btn-confirm treeButtons"
+                    icon="fa fa-fw fa-trash-alt" update="treeMenu"
+                    oncomplete="PF('confirmDelete').show();"
+                    disabled="#{!gestioneMenuRole.deletableNode}" />
+            </h:panelGroup>
+        </div>
+        <div class="col-4">
+            <p:panel header="Ruoli Associati" style="margin-bottom:10px;">
+                <p:selectManyMenu id="rolesSelector" styleClass="rolesSelector"
+                                  value="#{gestioneMenuRole.selectedRoles}" filter="false" showCheckbox="true"
+                                  disabled="#{gestioneMenuRole.selectedNode == null}" style="width:100%">
+                    <f:converter binding="#{rolesConverter}" />
+                    <p:ajax event="change"
+                        listener="#{gestioneMenuRole.updateRolesAssociation}"
+                        process="@this"></p:ajax>
+                    <f:selectItems value="#{gestioneMenuRole.roles}" var="role"
+                        itemLabel="#{role.name}" itemValue="#{role}" />
+                </p:selectManyMenu>
+                <f:facet name="footer">
+                    <div class="row">
+                        <p:commandButton value="Seleziona tutti"
+                            styleClass="pf-btn-confirm" icon="fa fa-fw fa-check-square"
+                            action="#{gestioneMenuRole.selectAllRoles}"
+                            update="@(.rolesSelector)"
+                            disabled="#{gestioneMenuRole.selectedNode.parent == null}" />
+                        <p:commandButton value="Deseleziona tutti"
+                            styleClass="pf-btn-cancel" icon="fa fa-fw fa-square"
+                            action="#{gestioneMenuRole.deselectAllRoles}"
+                            update="@(.rolesSelector)"
+                            disabled="#{gestioneMenuRole.selectedNode.parent == null}" />
+                    </div>
+                </f:facet>
+            </p:panel>
+        </div>
+    </div>
+</ui:composition>
+</html>

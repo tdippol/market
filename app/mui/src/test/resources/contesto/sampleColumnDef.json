@@ -1,0 +1,16 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Fornitore",
+      "field": "fornitore",
+      "width": 500,
+      "type": "string",
+      "editable": false,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

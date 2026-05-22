@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="addHeaderDialog" widgetVar="addHeaderDialog" modal="true" closable="false" dynamic="true"
+          header="Crea nuovo header per il set #{templateView.currentView.pianificazioneSelected.descrizione}"
+          width="50%" height="50vh" resizable="false"
+          styleClass="addHeaderDialogClass disable-horizontal-scroll">
+    <h:form id="addHeaderDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="addHeaderDialogClass addHeaderDialogForm">
+        <div class="row">
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="dialogMeccanica" value="Meccanica" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="dialogMeccanica" filter="true" filterMatchMode="contains"
+                                     value="#{templateView.currentView.headerDialogBackingBean.idMeccanicaSelected}"
+                                     class="input-field" style="width: 100%;">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.headerDialogBackingBean.meccaniche}" var="m"
+                                       itemLabel="#{m.codiceMeccanica} - #{m.descrizione}" itemValue="#{m.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="dialogLivello" value="Livello Pianificazione" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="dialogLivello"
+                                     value="#{templateView.currentView.headerDialogBackingBean.idLivelloSelected}"
+                                     class="input-field" style="width: 100%;">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.headerDialogBackingBean.livelli}" var="l"
+                                       itemLabel="#{l.descrizione}" itemValue="#{l.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogMinSet" value="Min Set" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputNumber id="dialogMinSet" decimalPlaces="0" size="3"
+                                   styleClass="input-field" inputStyle="width: 100%;"
+                                   value="#{templateView.currentView.headerDialogBackingBean.minSet}">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:inputNumber>
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogMaxSet" value="Max Set" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputNumber id="dialogMaxSet" decimalPlaces="0" size="3"
+                                   styleClass="input-field" inputStyle="width: 100%;"
+                                   value="#{templateView.currentView.headerDialogBackingBean.maxSet}">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:inputNumber>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;" id="raggr">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogMinRaggr" value="Min Raggruppamento" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputNumber id="dialogMinRaggr" decimalPlaces="0" size="3"
+                                   styleClass="input-field" inputStyle="width: 100%;"
+                                   value="#{templateView.currentView.headerDialogBackingBean.minRaggr}">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:inputNumber>
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogMaxRaggr" value="Max Raggruppamento" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputNumber id="dialogMaxRaggr" decimalPlaces="0" size="3"
+                                   styleClass="input-field" inputStyle="width: 100%;"
+                                   value="#{templateView.currentView.headerDialogBackingBean.maxRaggr}">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:inputNumber>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="dialogUnicaInPromo" value="Unica In Promo" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="dialogUnicaInPromo"
+                                             value="#{templateView.currentView.headerDialogBackingBean.unicaInPromo}">
+                        <p:ajax update="@(.addHeaderDialogForm) @(.ui-confirmdialog-yes)" />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('addHeaderDialog').hide()"
+                                 update="@(.addHeaderDialogClass)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="addHeaderDialogConfirmBtn" value="Conferma"
+                                 styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('addHeaderDialog').hide()"
+                                 disabled="#{templateView.currentView.headerDialogBackingBean.confirmBtnDisabled}"
+                                 actionListener="#{templateView.currentView.confirmHeaderDialog}"
+                                 onclick="setLoadingStatus(this)"
+                                 update="@(.updateableContent) @(.addHeaderDialogClass)" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<ui:composition>
+    <ui:include src="sottoscrizioni/creaSottoscrizioneDialog.xhtml" />
+
+    <p:confirmDialog widgetVar="deleteSottoscrizioneConfirmDialog" global="true" showEffect="fade" hideEffect="fade"
+                     header="Avviso" message="Confermi la cancellazione della sottoscrizione ?" closable="false"
+                     styleClass="muiDialog">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                         onclick="PF('deleteSottoscrizioneConfirmDialog').hide()"/>
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                         onclick="deleteSottoscrizione();" />
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <p:panel id="expandable_db_sottoscrizioni" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_sottoscrizioni updateableSottoscrizione">
+                        <f:facet name="header">
+                            <p:commandButton title="Inserisci Sottoscrizione" value="+"
+                                             style="margin: 0 10px 0 0; border-radius: 5px;"
+                                             action="#{templateView.currentView.initCreaSottoscrizioneDialog}"
+                                             oncomplete="PF('creaSottoscrizioneDialog').show()"
+                                             update="@(.creaSottoscrizioneDialogForm)"
+                                             id="creaSottoscrizioneBtn"
+                                             styleClass="pf-btn-confirm">
+                                <p:resetInput target="creaSottoscrizioneDialog" />
+                            </p:commandButton>
+                            <p:outputLabel value="Sottoscrizioni" />
+                        </f:facet>
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      styleClass="ag-theme-balham sottoscrizioni"
+                                      pt:gridid="db_sottoscrizioni">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_sottoscrizioni_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText planningFilter"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_sottoscrizioni', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_sottoscrizioni')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_sottoscrizioni', 'Sottoscrizioni', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_sottoscrizioni', 'Sottoscrizioni', false)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Ricarica Griglia" styleClass="pnlGrid_Header reloadButton"
+                                           onclick="reloadGrid()" onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+                            var idSottoscrizione = "";
+
+                            function deleteSottoscrizione() {
+                                if (idSottoscrizione === "") {
+                                    addErrorGrowl([
+                                        { name: 'title', value: 'Errore eliminazione Sottoscrizione' },
+                                        { name: 'message', value: 'Sottoscrizione non selezionata' }
+                                    ]);
+                                } else {
+                                    $.ajax({
+                                        type: "DELETE",
+                                        url: contextPath + '/resources/sottoscrizioni/' + idSottoscrizione,
+                                        contentType: "application/json",
+                                        success: function (data) {
+                                            addInfoGrowl([
+                                                { name: 'title', value: 'Eliminazione Sottoscrizione' },
+                                                { name: 'message', value: 'Sottoscrizione eliminata con successo'}
+                                            ]);
+                                            getGridOptionFromGridMap('db_sottoscrizioni').api.setRowData(data.rowData);
+                                        },
+                                        error: ajaxErrorHandler,
+                                        complete: function (jqXHR, exception) {
+                                            idSottoscrizione = "";
+                                            PF('deleteSottoscrizioneConfirmDialog').hide();
+                                        }
+                                    });
+                                }
+                            }
+
+                            var gridParamsSottoscrizioni = {
+                                gridCode: 'db_sottoscrizioni',
+                                gridTitle: 'Sottoscrizioni',
+                                url_columnDefs: contextPath + '/resources/sottoscrizioni/columnDef/'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/sottoscrizioni/rowData/'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_sottoscrizioni',
+                                gridOptions: {
+                                    onSortChanged: function(event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_sottoscrizioni');
+                                    }
+                                }
+                            };
+                            $(document).ready(function() {
+                                creaGriglia(gridParamsSottoscrizioni);
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

@@ -1,0 +1,104 @@
+{
+  "columnDef": [
+    {
+      "headerName":"Seleziona tutti",
+      "field":"selected",
+      "width":150,
+      "type": "checkbox",
+      "editable":true,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":true,
+      "headerCheckboxSelection":true,
+      "headerCheckboxSelectionFilteredOnly":true
+    },
+    {
+      "headerName": "ID",
+      "field": "id",
+      "width": 100,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Canale",
+      "field": "canale",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Cod. Promo",
+      "field": "codicePromo",
+      "width": 150,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Promozione",
+      "field": "promozione",
+      "width": 300,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Prefisso Cumulabile",
+      "field": "prefissoCumulabile",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Buono",
+      "field": "buono",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 150,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 150,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

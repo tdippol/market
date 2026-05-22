@@ -1,0 +1,24 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Tipo",
+      "field": "tipo",
+      "width": 100,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "width": 350,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

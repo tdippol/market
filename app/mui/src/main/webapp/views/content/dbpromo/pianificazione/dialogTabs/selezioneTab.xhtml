@@ -1,0 +1,430 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content"
+         style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form>
+                        <p:panel id="expandable_pianificazione_dialog_inserisci_selezione" toggleable="true"
+                                 toggleSpeed="500" closeSpeed="500"
+                                 styleClass="pnlGrid_Header updateableContent expandable_pianificazione_dialog_inserisci_selezione"
+                                 style="text-align: center;">
+                            <p:outputLabel
+                                    value="#{ templateView.currentView.pianificazionePromoDialogBackingBean.idTipoElemento }"
+                                    class="selezioneLabel" />
+                            <f:facet name="header">
+                                <div class="articoloCompratori">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <p:selectOneMenu id="pianificazionePromoDialogCompratori"
+                                                             onchange="showLoading_gridData()"
+                                                             value="#{templateView.currentView.pianificazionePromoDialogBackingBean.idCompratoreCorrente}"
+                                                             class="input-field" style="width: 250px; font-size: 14px;"
+                                                             filter="true" filterMatchMode="contains">
+                                                <p:ajax update="@(.selezioneTab) @(.buyerChosen)"
+                                                        listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.updateSelezioneGrid}" />
+                                                <f:selectItem itemLabel="Seleziona compratore"
+                                                              noSelectionOption="true" />
+                                                <f:selectItems
+                                                        value="#{templateView.currentView.pianificazionePromoDialogBackingBean.compratori.entrySet()}"
+                                                        var="entry" itemLabel="#{entry.value}"
+                                                        itemValue="#{entry.key}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="col-4">
+                                            <p:selectOneMenu id="pianificazionePromoDialogFornitori"
+                                                             onchange="showLoading_gridData()"
+                                                             value="#{templateView.currentView.pianificazionePromoDialogBackingBean.idFornitoreCorrente}"
+                                                             class="input-field" style="width: 250px; font-size: 14px;"
+                                                             filter="true" filterMatchMode="contains">
+                                                <p:ajax update="@(.selezioneTab) @(.supplierChosen)"
+                                                        listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.updateSelezioneGrid}" />
+                                                <f:selectItem itemLabel="Seleziona fornitore"
+                                                              noSelectionOption="true" />
+                                                <f:selectItems
+                                                        value="#{templateView.currentView.pianificazionePromoDialogBackingBean.fornitori.entrySet()}"
+                                                        var="entry" itemLabel="#{entry.value}"
+                                                        itemValue="#{entry.key}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="col-4">
+                                            <p:selectOneMenu id="pianificazionePromoDialogReparti"
+                                                             onchange="showLoading_gridData()"
+                                                             value="#{templateView.currentView.pianificazionePromoDialogBackingBean.idRepartoCorrente}"
+                                                             class="input-field" style="width: 250px; font-size: 14px;"
+                                                             filter="true" filterMatchMode="contains">
+                                                <p:ajax update="@(.selezioneTab) @(.departmentChosen)"
+                                                        listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.updateSelezioneGrid}" />
+                                                <f:selectItem itemLabel="Seleziona reparto" noSelectionOption="true" />
+                                                <f:selectItems
+                                                        value="#{templateView.currentView.pianificazionePromoDialogBackingBean.reparti.entrySet()}"
+                                                        var="entry" itemLabel="#{entry.value}"
+                                                        itemValue="#{entry.key}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+                                        <div class="col-4">
+                                            <p:selectOneMenu id="pianificazionePromoDialogCategorie"
+                                                             onchange="showLoading_gridData()"
+                                                             value="#{templateView.currentView.pianificazionePromoDialogBackingBean.idCategoriaCorrente}"
+                                                             class="input-field" style="width: 250px; font-size: 14px;"
+                                                             filter="true" filterMatchMode="contains">
+                                                <p:ajax update="@(.selezioneTab) @(.categoryChosen)"
+                                                        listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.updateSelezioneGrid}" />
+                                                <f:selectItem itemLabel="Seleziona categoria"
+                                                              noSelectionOption="true" />
+                                                <f:selectItems
+                                                        value="#{templateView.currentView.pianificazionePromoDialogBackingBean.categorie.entrySet()}"
+                                                        var="entry" itemLabel="#{entry.value}"
+                                                        itemValue="#{entry.key}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="col-4">
+                                            <p:selectOneMenu id="pianificazionePromoDialogGrm"
+                                                             onchange="showLoading_gridData()"
+                                                             value="#{templateView.currentView.pianificazionePromoDialogBackingBean.idGrmCorrente}"
+                                                             class="input-field" style="width: 250px; font-size: 14px;"
+                                                             filter="true" filterMatchMode="contains">
+                                                <p:ajax update="@(.selezioneTab) @(.grmChosen)"
+                                                        listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.updateSelezioneGrid}" />
+                                                <f:selectItem itemLabel="Seleziona GRM" noSelectionOption="true" />
+                                                <f:selectItems
+                                                        value="#{templateView.currentView.pianificazionePromoDialogBackingBean.grm.entrySet()}"
+                                                        var="entry" itemLabel="#{entry.value}"
+                                                        itemValue="#{entry.key}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="col-4">
+                                            <p:selectOneMenu id="pianificazionePromoDialogMarchioPriv"
+                                                             onchange="showLoading_gridData()"
+                                                             value="#{templateView.currentView.pianificazionePromoDialogBackingBean.idMarchioPrivCorrente}"
+                                                             class="input-field" style="width: 250px; font-size: 14px;"
+                                                             filter="true" filterMatchMode="contains">
+                                                <p:ajax update="@(.selezioneTab) @(.marchioPrivChosen)"
+                                                        listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.updateSelezioneGrid}" />
+                                                <f:selectItem itemLabel="Seleziona Marchio Privato"
+                                                              noSelectionOption="true" />
+                                                <f:selectItems
+                                                        value="#{templateView.currentView.pianificazionePromoDialogBackingBean.marchioPrivato.entrySet()}"
+                                                        var="entry" itemLabel="#{entry.value}"
+                                                        itemValue="#{entry.key}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <div id="selezioneTabLoader" class="spinnerContainerSelezione">
+                                <i class="loading-spin"
+                                   style="position: absolute; line-height: 30vh; display: none; z-index: 9999; "></i>
+                            </div>
+
+                            <h:panelGroup layout="block" style="height: 52vh; width: 100%;"
+                                          styleClass="ag-theme-balham selezioneTab updateableGridPianificazione"
+                                          pt:gridid="pianificazione_dialog_inserisci_selezione">
+                            </h:panelGroup>
+
+                            <f:facet name="actions">
+                                <p:inputText autocomplete="off" id="selezioneTab_quickfilter" placeholder="Filtra..."
+                                             styleClass="pnlGrid_Header filterInputText"
+                                             onkeyup="onFilterTextBoxChangedpromoGrid('pianificazione_dialog_inserisci_selezione',this.value)"/>
+                                <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                               onclick="expandGrid('pianificazione_dialog_inserisci_selezione')"
+                                               onerror="redirectToExpiredPage()"/>
+                                <p:commandLink title="Esporta con raggruppamenti"
+                                               styleClass="pnlGrid_Header exportButtonGrouped"
+                                               onclick="onBtExport('pianificazione_dialog_inserisci_selezione','Export',true)"
+                                               onerror="redirectToExpiredPage()"/>
+                                <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                               onclick="onBtExport('pianificazione_dialog_inserisci_selezione','some title from backend')"
+                                               onerror="redirectToExpiredPage()"/>
+                            </f:facet>
+
+                            <script type="text/javascript">
+
+                                var selezioneTabGridOptions;
+                                var columnDefSelezione;
+                                var rowDataSelezione;
+                                var elementType = $('.selezioneLabel').text();
+                                var buyerIdSelected = $('.buyerChosen').text();
+                                var supplierIdSelected = $('.supplierChosen').text();
+                                var departmentIdSelected = $('.departmentChosen').text();
+                                var categoryIdSelected = $('.categoryChosen').text();
+                                var grmIdSelected = $('.grmChosen').text();
+                                var marchioPrivIdSelected = $('.marchioPrivChosen').text();
+                                var codiceGruppoSelezionato = $('.codiceGruppoSelezionato').text();
+                                var currentItemSelected;
+
+                                function showSpinner() {
+                                    // PF("globalSpinner").show();
+                                }
+
+                                $(document).ready(function () {
+                                    if (buyerIdSelected == "") {
+                                        buyerIdSelected = null;
+                                    }
+                                    if (supplierIdSelected == "") {
+                                        supplierIdSelected = null;
+                                    }
+                                    if (departmentIdSelected == "") {
+                                        departmentIdSelected = null;
+                                    }
+                                    if (categoryIdSelected == "") {
+                                        categoryIdSelected = null;
+                                    }
+                                    if (grmIdSelected == "") {
+                                        grmIdSelected = null;
+                                    }
+                                    if (marchioPrivIdSelected == "") {
+                                        marchioPrivIdSelected = null;
+                                    }
+                                    if ( codiceGruppoSelezionato == ""){
+                                        codiceGruppoSelezionato = null;
+                                    }
+
+                                    if (elementType != "") {
+                                        loadSelezioneGrid(elementType, buyerIdSelected, supplierIdSelected,
+                                            departmentIdSelected, categoryIdSelected, grmIdSelected, marchioPrivIdSelected, codiceGruppoSelezionato);
+                                    }
+
+                                });
+
+                                function showLoading_gridData(){
+                                	getGridOptionFromGridMap('pianificazione_dialog_inserisci_selezione').api.setRowData([]);
+                                	getGridOptionFromGridMap('pianificazione_dialog_inserisci_selezione').api.showLoadingOverlay();
+                                	
+                                }
+
+                                function loadSelezioneGrid(idTipoElementoSelezionato, idCompratoreSelezionato,
+                                                           idFornitoreSelezionato, idRepartoSelezionato,
+                                                           idCategoriaSelezionata, idGrmSelezionato,
+                                                           codiceMarchioPrivSelezionato, codiceGruppoSelezionato) {
+
+                                    var idMeccanicaCorrente = $('.idMeccanicaCorrenteSelezione').text();
+                                    var idPromozioneCorrente = $('.idPromozioneCorrenteSelezione').text();
+
+                                    if (idTipoElementoSelezionato === null || idTipoElementoSelezionato === 'null' ||
+                                        idMeccanicaCorrente === 'null' || idMeccanicaCorrente == '') {
+                                        console.log("Nessun tipo elemento selezionato");
+                                    } else {
+                                        renderTabView(idTipoElementoSelezionato);
+
+                                        var gridParams_pianificazione_dialog_inserisci_selezione = {
+                                            gridId: 'db_pianificazione_dialog_inserisci_selezione',
+                                            gridTabGroup: 'pianificazione_dialog_inserisci_tabs',
+                                            gridTabPosition: 0,
+                                            gridCode: 'pianificazione_dialog_inserisci_selezione',
+                                            gridTitle: 'Pianificazione - Dialog Inserisci - Selezione',
+                                            url_columnDefs: contextPath+'/resources/pianificazionepromo/selezioneTab/columnDef/'
+                                                + idTipoElementoSelezionato
+                                                + addUrlParamContesto(#{muiContext}),
+                                            url_rowData: contextPath+'/resources/pianificazionepromo/selezioneTab/rowData/'
+                                                + idPromozioneCorrente + '/'+ idMeccanicaCorrente + '/' + idTipoElementoSelezionato + '/' + idCompratoreSelezionato + '/'
+                                                + codiceGruppoSelezionato
+                                                + addUrlParamContesto(#{muiContext}),
+                                            url_customSort: contextPath + '/resources/grid/sorting/pianificazione_dialog_inserisci_selezione'
+                                        };
+
+                                        var gridOptions_pianificazione_dialog_inserisci_selezione = {
+                                            rowSelection: 'multiple',
+                                            suppressRowClickSelection: true,
+                                            onSelectionChanged: onItemRowSelected,
+                                            onSortChanged: function (event) {
+                                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_pianificazione_dialog_inserisci_selezione.gridCode);
+                                            }
+                                        };
+
+                                        gridParams_pianificazione_dialog_inserisci_selezione.sortColumnDefs=[
+                  						  {columnDefId:"selected",newPosition:0},
+                  					  	];
+                                        gridParams_pianificazione_dialog_inserisci_selezione.customizeColumnDefs=[
+                                            {columnDefId:"selected",property:"editable",value:false}
+                                        ];
+                                        gridParams_pianificazione_dialog_inserisci_selezione.gridOptions = gridOptions_pianificazione_dialog_inserisci_selezione;
+
+                                        $(document).ready(function () {
+                                            if (getCurrentTab(gridParams_pianificazione_dialog_inserisci_selezione.gridTabGroup) == gridParams_pianificazione_dialog_inserisci_selezione.gridTabPosition) {
+                                                
+                                                if(idTipoElementoSelezionato.toUpperCase() !== 'TOTALE'){
+                                                    creaGriglia(gridParams_pianificazione_dialog_inserisci_selezione);
+                                                }
+
+                                            }
+
+                                        });
+                                    }
+
+                                }
+
+                                function updateSelezioneGrid(idTipoElementoSelezionato, idCompratoreSelezionato,
+                                                             idFornitoreSelezionato, idRepartoSelezionato,
+                                                             idCategoriaSelezionata, idGrmSelezionato,
+                                                             codiceMarchioPrivSelezionato, _codiceGruppoSelezionato, itemCompratoreSelezionati) {
+
+                                    currentItemSelected = itemCompratoreSelezionati;
+
+                                    var idMeccanicaCorrente = $('.idMeccanicaCorrenteSelezione').text();
+                                    var idPromozioneCorrente = $('.idPromozioneCorrenteSelezione').text();
+
+                                    const set = new Set(itemCompratoreSelezionati.map(function (o) {
+                                            return o.itemId.toString()
+                                        }
+                                    ));
+
+                                    buyerIdSelected = idCompratoreSelezionato;
+                                    supplierIdSelected = idFornitoreSelezionato;
+                                    departmentIdSelected = idRepartoSelezionato;
+                                    categoryIdSelected = idCategoriaSelezionata;
+                                    grmIdSelected = idGrmSelezionato;
+                                    marchioPrivIdSelected = codiceMarchioPrivSelezionato;
+                                    codiceGruppoSelezionato = _codiceGruppoSelezionato;
+
+                                    renderTabView(idTipoElementoSelezionato);
+
+                                    if (getGridOptionFromGridMap('pianificazione_dialog_inserisci_selezione') === undefined || getGridOptionFromGridMap('pianificazione_dialog_inserisci_selezione').api === undefined) {
+
+                                        if (idTipoElementoSelezionato != null &amp;&amp; buyerIdSelected != null
+                                            &amp;&amp; supplierIdSelected != null &amp;&amp; departmentIdSelected != null
+                                            &amp;&amp; categoryIdSelected != null &amp;&amp; grmIdSelected != null
+                                            &amp;&amp; marchioPrivIdSelected != null
+                                        ) {
+                                            loadSelezioneGrid(idTipoElementoSelezionato, buyerIdSelected, idFornitoreSelezionato,
+                                                idRepartoSelezionato, idCategoriaSelezionata, idGrmSelezionato, codiceMarchioPrivSelezionato, codiceGruppoSelezionato);
+                                        }
+                                    } else {
+
+                                     //Questo metodo è invocato solo da tipoElemento === 'ARTICOLO'
+                                        if (idMeccanicaCorrente != '') {
+                                            let callback_obj = {}
+                                            callback_obj.idCompratoreSelected = isNaN(idCompratoreSelezionato) ? undefined : new Number(idCompratoreSelezionato);
+                                            callback_obj.idFornitoreSelected = isNaN(idFornitoreSelezionato) ? undefined : new Number(idFornitoreSelezionato);
+                                            callback_obj.idRepartoSelected = isNaN(idRepartoSelezionato) ? undefined : new Number(idRepartoSelezionato);
+                                            callback_obj.idCategoriaSelected = isNaN(idCategoriaSelezionata) ? undefined : new Number(idCategoriaSelezionata);
+                                            callback_obj.idGrmSelected = isNaN(idGrmSelezionato) ? undefined : new Number(idGrmSelezionato);
+                                            callback_obj.codiceMarchioPrivSelected = codiceMarchioPrivSelezionato === "null" ? undefined : codiceMarchioPrivSelezionato;
+                                            callback_obj.gruppoSelected = _codiceGruppoSelezionato === "null" ? undefined : _codiceGruppoSelezionato;
+
+                                            $.ajax({
+                                                type: "POST",
+                                                url: contextPath + '/resources/pianificazionepromo/selezioneTab/' + idPromozioneCorrente + '/'
+                                                    + idMeccanicaCorrente + '/article/rowData' + addUrlParamContesto(#{muiContext}),
+                                                contentType: "application/json",
+                                                data: JSON.stringify(callback_obj),
+                                                success: function (data) {
+                                                    getGridOptionFromGridMap('pianificazione_dialog_inserisci_selezione').api.setRowData(data.rowData);
+
+                                                    getGridOptionFromGridMap('pianificazione_dialog_inserisci_selezione').api.forEachNode((node) => {
+                                                        node.setSelected(set.has(node.data.id.value));
+                                                    });
+
+                                                    $(".loading-spin").hide();
+                                                },
+                                                error: ajaxErrorHandler
+                                            });
+
+                                        }
+
+                                    }
+                                }
+
+                                function renderTabView(idTipoElementoSelezionato) {
+
+                                    var tipoElementoSelezionato = idTipoElementoSelezionato;
+
+                                    if (tipoElementoSelezionato === undefined || tipoElementoSelezionato == "" || tipoElementoSelezionato === "null") {
+                                        $('.pianificazione_dialog').hide();
+                                        $('.articoloCompratori').hide();
+                                        $('.selezioneLabel').hide();
+                                    } else if (tipoElementoSelezionato.toUpperCase() === 'TOTALE') {
+                                        $('.pianificazione_dialog').hide();
+                                    } else if (tipoElementoSelezionato.toUpperCase() === 'ARTICOLO') {
+                                        $('.pianificazione_dialog').show();
+                                        $('.articoloCompratori').show();
+                                        $('.selezioneLabel').hide();
+                                    } else {
+                                        $('.pianificazione_dialog').show();
+                                        $('.articoloCompratori').hide();
+                                        $('.selezioneLabel').show();
+                                    }
+                                    if (tipoElementoSelezionato !== undefined &amp;&amp;
+                                        tipoElementoSelezionato != "" &amp;&amp;
+                                        tipoElementoSelezionato !== "null") {
+                                        $('#tipoElemento').show();
+                                    }
+                                }
+
+                                function onItemRowSelected(event) {
+                                    jsonObj = [];
+
+                                    $.each(event.api.getSelectedNodes(), function (key, value) {
+                                    	
+                                        item = {}
+                                        item["idItem"] = value.data.id.value;
+                                        item["selected"] = value.selected;
+                                        item["elementDescription"] = value.data.elemento.value;
+                                        
+                                        jsonObj.push(item);
+                                    });
+
+                                    selezionaItem([{name: "itemSelected", value: JSON.stringify(jsonObj)}]);
+                                }
+
+                            </script>
+                            <style>
+                                [col-id~=ag-Grid-AutoColumn] {
+                                    font-weight: bold;
+                                }
+
+                                .ag-header-cell {
+                                    background-color: inherit !important;
+                                }
+
+                                .ui-dialog-title {
+                                    font-size: 18px;
+                                }
+                            </style>
+                        </p:panel>
+                        <p:remoteCommand name="selezionaItem" update="pianificazionePromoDialogConfirmBtn"
+                                         action="#{templateView.currentView.pianificazionePromoDialogBackingBean.selezionaItems}"/>
+                    </h:form>
+                    <p:outputLabel
+                            value="#{ templateView.currentView.pianificazionePromoDialogBackingBean.idCompratoreCorrente }"
+                            class="buyerChosen" style="visibility: hidden;"/>
+                    <p:outputLabel
+                            value="#{ templateView.currentView.pianificazionePromoDialogBackingBean.idFornitoreCorrente }"
+                            class="supplierChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{ templateView.currentView.pianificazionePromoDialogBackingBean.idRepartoCorrente }"
+                            class="departmentChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{ templateView.currentView.pianificazionePromoDialogBackingBean.idCategoriaCorrente }"
+                            class="categoryChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{ templateView.currentView.pianificazionePromoDialogBackingBean.idGrmCorrente }"
+                            class="grmChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{ templateView.currentView.pianificazionePromoDialogBackingBean.idMarchioPrivCorrente }"
+                            class="marchioPrivChosen" style="visibility: hidden;" />
+
+                    <p:outputLabel
+                            value="#{ templateView.currentView.pianificazionePromoDialogBackingBean.idMeccanicaCorrente }"
+                            class="idMeccanicaCorrenteSelezione" style="visibility: hidden;" />
+
+                    <p:outputLabel
+                            value="#{templateView.currentView.pianificazionePromoDialogBackingBean.promozioneCorrente.id}"
+                            class="idPromozioneCorrenteSelezione" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{templateView.currentView.pianificazionePromoDialogBackingBean.gruppoSelezionato}"
+                            class="codiceGruppoSelezionato" style="visibility: hidden;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

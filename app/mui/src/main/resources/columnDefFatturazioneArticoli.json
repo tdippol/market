@@ -1,0 +1,92 @@
+{
+  "columnDef": [
+    {
+      "headerName":"Seleziona tutti",
+      "field":"selected",
+      "type": "checkbox",
+      "width":140,
+      "editable":true,
+      "hide":false,
+      "checkboxSelection":true,
+      "headerCheckboxSelection":true,
+      "headerCheckboxSelectionFilteredOnly":true
+    },
+    {
+      "headerName": "Codice Articolo",
+      "field": "codiceArticolo",
+      "type": "string",
+      "width": 150,
+      "hide": false,
+	  "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "type": "string",
+      "width": 300,
+      "hide": false,
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Compratore",
+      "field":"compratore",
+      "type": "string",
+      "width":300,
+      "editable":false,
+      "hide":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Reparto",
+      "field":"reparto",
+      "type": "string",
+      "width":200,
+      "editable":false,
+      "hide":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Categoria",
+      "field":"categoria",
+      "type": "string",
+      "width":200,
+      "editable":false,
+      "hide":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Grm",
+      "field":"grm",
+      "type": "string",
+      "width":300,
+      "editable":false,
+      "hide":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Sub Grm",
+      "field":"subGrm",
+      "type": "string",
+      "width":300,
+      "editable":false,
+      "hide":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

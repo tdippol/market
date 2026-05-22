@@ -1,0 +1,43 @@
+<!DOCTYPE html 
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+	<p:panel styleClass="filterPanel" >
+		<div class="col-12">
+			<!--begin::TAB-->
+			<ul class="nav nav-tabs nav-tabs-line" role="tablist">
+				<ui:repeat var="dimension" value="#{templateView.currentView.availableFilters}" varStatus="dimensionIndex">
+					<li class="nav-item"><a class="nav-link #{dimensionIndex.first ? 'active' :''}"
+						data-toggle="tab" href="#k_tabs_#{dimension.code}"
+						role="tab"> #{dimension.description} </a></li>
+				</ui:repeat>
+			</ul>
+
+			<div class="tab-content">
+				<ui:repeat var="panel" value="#{templateView.currentView.availableFilters}" varStatus="tabIndex">
+					<div class="tab-pane #{tabIndex.first ? 'active': ''}" id="k_tabs_#{panel.code}" role="tabpanel">
+						<div class="form-group row" id="#{caller}filter_#{panel.code}">
+							<ui:repeat var="attributes" value="#{panel.attributes}">							
+								<div class="col-4" id="#{caller}#{panel.code}_#{attributes.code}" style="height: 140px;">
+									<label class="col-6">#{attributes.desc}</label> 
+									<a href="#" style="float: right;"  id="#{caller}clear_#{panel.code}_#{attributes.code}" 
+									class="link_clear_selection_#{caller}#{panel.code}" attr-code="#{attributes.code}" attr-type="#{attributes.type}">
+										<small><i class="fa fa-times-circle"></i> Rimuovi</small>
+									</a>
+									<div class="dropdown bootstrap-select show-tick form-control k_ CombinedPicklist CombinedPicklist_#{panel.code}" style="height: 0px;">
+									</div>								
+								</div>
+							</ui:repeat>
+						</div>
+					</div>
+				</ui:repeat>
+			</div>
+		</div>
+	</p:panel>
+</ui:composition>
+</html>

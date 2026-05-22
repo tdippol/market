@@ -1,0 +1,330 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<p:dialog id="addItemsDialog" widgetVar="addItemsDialog" styleClass="addItemsDialogClass disable-horizontal-scroll"
+          modal="true" closable="false" resizable="false" width="90%" height="80vh"
+          header="Aggiunta articoli in pianificazione">
+    <h:form id="addItemsDialogForm" styleClass="addItemsDialogFormClass" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="addItemsPromozione" value="Promozione" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="addItemsPromozione" widgetVar="addItemsPromozione"
+                                     filter="true" filterMatchMode="contains"
+                                     styleClass="input-field" style="width: 100%"
+                                     value="#{templateView.currentView.addItemsBean.currentPromoRif}">
+                        <p:ajax update="@(.updateableAddItemsContent) @(.currentPromoRif) @(.ui-confirmdialog-yes)
+                                        @(.subGrmChosen) @(.grmChosen) @(.categoriaChosen) @(.repartoChosen)
+                                        @(.buyerChosen) @(.dataInizioChosen) @(.dataFineChosen) @(.volantinoChosen)"
+                                listener="#{templateView.currentView.addItemsBean.resetDialog}" />
+                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.addItemsBean.promoAvailable}" var="p"
+                                       itemLabel="#{p.label}" itemValue="#{p.key}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-4">
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.currentPromoRif}"
+                               styleClass="currentPromoRif" style="visibility: hidden;" />
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.subGrm}"
+                               styleClass="subGrmChosen" style="visibility: hidden;" />
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.grm}"
+                               styleClass="grmChosen" style="visibility: hidden;" />
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.categoria}"
+                               styleClass="categoriaChosen" style="visibility: hidden;" />
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.reparto}"
+                               styleClass="repartoChosen" style="visibility: hidden;" />
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.reparto}"
+                               styleClass="buyerChosen" style="visibility: hidden;" />
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.dataInizio}"
+                               styleClass="dataInizioChosen" style="visibility: hidden;" />
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.dataFine}"
+                               styleClass="dataFineChosen" style="visibility: hidden;" />
+                <p:outputLabel value="#{templateView.currentView.addItemsBean.volantino}"
+                               styleClass="volantinoChosen" style="visibility: hidden;" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-12">
+                <p:panel id="expandableAddItemsDialogPanels" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                         styleClass="pnlGrid_Header updateableAddItemsContent"
+                         style="text-align: center;">
+                    <f:facet name="header">
+                        <p:outputLabel value="Seleziona articoli" />
+                    </f:facet>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <p:outputLabel for="filterSubGrm" value="SubGrm" style="float: left;" />
+                            <p:selectOneMenu id="filterSubGrm" filter="true" filterMatchMode="contains"
+                                             styleClass="input-field" style="width: 100%;"
+                                             value="#{templateView.currentView.addItemsBean.subGrm}"
+                                             onchange="showLoadingGridData()">
+                                <p:ajax update="@(.subGrmChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <f:selectItem itemLabel="Seleziona SubGrm" noSelectionOption="true" />
+                                <f:selectItems value="#{templateView.currentView.addItemsBean.subGrmAvailable}" var="s"
+                                               itemLabel="#{s.label}" itemValue="#{s.key}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="col-3">
+                            <p:outputLabel for="filterGrm" value="Grm" style="float: left;" />
+                            <p:selectOneMenu id="filterGrm" filter="true" filterMatchMode="contains"
+                                             styleClass="input-field" style="width: 100%;"
+                                             value="#{templateView.currentView.addItemsBean.grm}"
+                                             onchange="showLoadingGridData()">
+                                <p:ajax update="@(.grmChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <f:selectItem itemLabel="Seleziona Grm" noSelectionOption="true" />
+                                <f:selectItems value="#{templateView.currentView.addItemsBean.grmAvailable}" var="g"
+                                               itemLabel="#{g.label}" itemValue="#{g.key}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="col-3">
+                            <p:outputLabel for="filterCategoria" value="Categoria" style="float: left;" />
+                            <p:selectOneMenu id="filterCategoria" filter="true" filterMatchMode="contains"
+                                             styleClass="input-field" style="width: 100%;"
+                                             value="#{templateView.currentView.addItemsBean.categoria}"
+                                             onchange="showLoadingGridData()">
+                                <p:ajax update="@(.categoriaChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <f:selectItem itemLabel="Seleziona Categoria" noSelectionOption="true" />
+                                <f:selectItems value="#{templateView.currentView.addItemsBean.categorieAvailable}"
+                                               var="c" itemLabel="#{c.label}" itemValue="#{c.key}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="col-3">
+                            <p:outputLabel for="filterReparto" value="Reparto" style="float: left;" />
+                            <p:selectOneMenu id="filterReparto" filter="true" filterMatchMode="contains"
+                                             styleClass="input-field" style="width: 100%;"
+                                             value="#{templateView.currentView.addItemsBean.reparto}"
+                                             onchange="showLoadingGridData()">
+                                <p:ajax update="@(.repartoChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <f:selectItem itemLabel="Seleziona Reparto" noSelectionOption="true" />
+                                <f:selectItems value="#{templateView.currentView.addItemsBean.repartiAvailable}"
+                                               var="r" itemLabel="#{r.label}" itemValue="#{r.key}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+                        <div class="col-3">
+                            <p:outputLabel for="filterBuyer" value="Compratore" style="float: left;" />
+                            <p:selectOneMenu id="filterBuyer" filter="true" filterMatchMode="contains"
+                                             styleClass="input-field" style="width: 100%;"
+                                             value="#{templateView.currentView.addItemsBean.buyer}"
+                                             onchange="showLoadingGridData()">
+                                <p:ajax update="@(.buyerChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <f:selectItem itemLabel="Seleziona Compratore" noSelectionOption="true" />
+                                <f:selectItems value="#{templateView.currentView.addItemsBean.compratoriAvailable}"
+                                               var="c" itemLabel="#{c.label}" itemValue="#{c.key}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="col-3">
+                            <p:outputLabel for="filterDataInizio" value="Data inizio" style="float: left;" />
+                            <p:datePicker id="filterDataInizio" inputStyle="width: 100%;" style="width: 100%;"
+                                          inputStyleClass="date-picker-class"
+                                          showOn="button" pattern="dd-MM-yyyy" locale="it"
+                                          placeholder="Seleziona Data Inizio"
+                                          mindate="#{templateView.currentView.addItemsBean.minDate}"
+                                          maxdate="#{templateView.currentView.addItemsBean.maxDate}"
+                                          value="#{templateView.currentView.addItemsBean.dataInizio}">
+                                <p:ajax event="dateSelect" update="@(.dataInizioChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <p:ajax event="change" update="@(.dataInizioChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                            </p:datePicker>
+                        </div>
+                        <div class="col-3">
+                            <p:outputLabel for="filterDataFine" value="Data Fine" style="float: left;" />
+                            <p:datePicker id="filterDataFine" inputStyle="width: 100%;" style="width: 100%;"
+                                          inputStyleClass="date-picker-class"
+                                          showOn="button" pattern="dd-MM-yyyy" locale="it"
+                                          placeholder="Seleziona Data Fine"
+                                          mindate="#{templateView.currentView.addItemsBean.minDate}"
+                                          maxdate="#{templateView.currentView.addItemsBean.maxDate}"
+                                          value="#{templateView.currentView.addItemsBean.dataFine}">
+                                <p:ajax event="dateSelect" update="@(.dataFineChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <p:ajax event="change" update="@(.dataFineChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                            </p:datePicker>
+                        </div>
+                        <div class="col-3">
+                            <p:outputLabel for="filterVolantino" value="Volantino" style="float: left;" />
+                            <p:selectOneMenu id="filterVolantino" filter="true" filterMatchMode="contains"
+                                             styleClass="input-field" style="width: 100%;"
+                                             value="#{templateView.currentView.addItemsBean.volantino}"
+                                             onchange="showLoadingGridData()">
+                                <p:ajax update="@(.volantinoChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <f:selectItem itemLabel="Seleziona Volantino" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Tutti" itemValue="VOLANTINO_TUTTI" />
+                                <f:selectItem itemLabel="A volantino" itemValue="VOLANTINO_SI" />
+                                <f:selectItem itemLabel="Non a volantino" itemValue="VOLANTINO_NO" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+                        <div class="col-3">
+                            <p:outputLabel for="filterZone" value="Zone" style="float: left;" />
+                            <p:selectOneMenu id="filterZone" filter="true" filterMatchMode="contains"
+                                             styleClass="input-field" style="width: 100%;"
+                                             value="#{templateView.currentView.addItemsBean.zona}"
+                                             onchange="showLoadingGridData()">
+                                <p:ajax update="@(.buyerChosen)"
+                                        listener="#{templateView.currentView.addItemsBean.updateItems}" />
+                                <f:selectItem itemLabel="Seleziona Zona" noSelectionOption="true" />
+                                <f:selectItems value="#{templateView.currentView.addItemsBean.zoneAvailable}"
+                                               var="c" itemLabel="#{c.label}" itemValue="#{c.key}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="col-3">
+                        </div>
+                        <div class="col-3">
+                        </div>
+                        <div class="col-3">
+                        </div>
+                    </div>
+
+
+
+
+
+                    <h:panelGroup layout="block" style="width: 100%; height: 52vh;"
+                                  styleClass="ag-theme-balham itemsPanel"
+                                  pt:gridid="db_add_items_dialog_grid">
+                    </h:panelGroup>
+
+                    <f:facet name="actions">
+                        <p:inputText autocomplete="off" id="db_add_items_dialog_grid_quickfilter"
+                                     placeholder="Filtra..."
+                                     styleClass="pnlGrid_Header filterInputText"
+                                     onkeyup="onFilterTextBoxChangedpromoGrid('pianificazione_dialog_inserisci_selezione', this.value)" />
+                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                       onclick="expandGrid('db_add_items_dialog_grid')"
+                                       onerror="redirectToExpiredPage()" />
+                        <p:commandLink title="Esporta con raggruppamenti"
+                                       styleClass="pnlGrid_Header exportButtonGrouped"
+                                       onclick="onBtExport('db_add_items_dialog_grid', 'Pianificazione Articoli Media - Selezione', true)"
+                                       onerror="redirectToExpiredPage()" />
+                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                       onclick="onBtExport('db_add_items_dialog_grid', 'Pianificazione Articoli Media - Selezione')"
+                                       onerror="redirectToExpiredPage()" />
+                    </f:facet>
+
+                    <script type="text/javascript">
+                        var idPianoMedia = $('.idPianoMediaCurrent').text();
+                        var currentPromoRif = $('.currentPromoRif').text();
+                        var gridParams_addItemsDialog = {
+                            gridCode: 'db_add_items_dialog_grid',
+                            gridTitle: 'Pianificazione Articoli Media - Selezione',
+                            url_columnDefs: contextPath + "/resources/pianomediapianificazioni/items/columnDef"
+                                + addUrlParamContesto(#{muiContext}),
+                            url_rowData: contextPath + "/resources/pianomediapianificazioni/" + idPianoMedia
+                                + "/items/" + currentPromoRif + "/rowData"
+                                + addUrlParamContesto(#{muiContext}),
+                            url_customSort: contextPath + '/resources/grid/sorting/db_add_items_dialog_grid',
+                            sortColumnDefs: [{columnDefId: 'selected', newPosition: 0}],
+                            customizeColumnDefs: [{columnDefId: 'selected', property: 'editable', value: false}],
+                            gridOptions: {
+                                rowSelection: 'multiple',
+                                suppressRowClickSelection: true,
+                                onSelectionChanged: onItemRowSelected,
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_add_items_dialog_grid');
+                                }
+                            }
+                        }
+
+                        $(document).ready(function () {
+                            if (idPianoMedia &amp;&amp; currentPromoRif) {
+                                loadGrid();
+                            }
+                        });
+
+                        function loadGrid() {
+                            creaGriglia(gridParams_addItemsDialog);
+                        }
+
+                        function onItemRowSelected(event) {
+                            var obj = [];
+                            $.each(event.api.getSelectedNodes(), function (key, value) {
+                                obj.push({
+                                    codiceItem: value.data.codiceItem.value,
+                                    codicePromo: value.data.codicePromo.value,
+                                    tipoItem: value.data.tipoItem.value
+                                });
+                            });
+                            selezionaAddItems([{name: 'itemSelected', value: JSON.stringify(obj)}]);
+                        }
+
+                        function showLoadingGridData() {
+                            getGridOptionFromGridMap('db_add_items_dialog_grid').api.setRowData([]);
+                            getGridOptionFromGridMap('db_add_items_dialog_grid').api.showLoadingOverlay();
+                        }
+
+                        function loadGridFiltered(queryFilter) {
+                            let contesto = addUrlParamContesto(#{muiContext});
+                            let urlQueryParams = contesto ? contesto : '?';
+                            if (queryFilter) {
+                                urlQueryParams += '&amp;' + queryFilter;
+                            }
+                            $.ajax({
+                                type: 'GET',
+                                url: contextPath + "/resources/pianomediapianificazioni/" + idPianoMedia
+                                    + "/items/" + currentPromoRif + "/rowData" + urlQueryParams,
+                                contentType: "application/json",
+                                success: function (data) {
+                                    if (data) {
+                                        getGridOptionFromGridMap('db_add_items_dialog_grid').api.setRowData(data.rowData);
+                                    }
+                                },
+                                error: ajaxErrorHandler,
+                                complete: function () {
+                                    hideAgGridLoadingOverlay('db_add_items_dialog_grid');
+                                }
+                            });
+                        }
+                    </script>
+
+                    <style type="text/css">
+                        .ui-dialog-title {
+                            font-size: 18px;
+                        }
+
+                        .date-picker-class::placeholder {
+                            color: #495057;
+                        }
+                    </style>
+                </p:panel>
+                <p:remoteCommand name="selezionaAddItems" update="@(.ui-confirmdialog-yes)"
+                                 action="#{templateView.currentView.addItemsBean.selectedItems}" />
+            </div>
+        </div>
+    </h:form>
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton id="btnCancelAddPianificazione" value="Annulla" styleClass="ui-confirmdialog-no"
+                                 style="float: left;" oncomplete="PF('addItemsDialog').hide()" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="btnConfirmAddPianificazione" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 disabled="#{templateView.currentView.addItemsBean.addItemsBtnDisabled}"
+                                 action="#{templateView.currentView.confirmAddItems}"
+                                 update="@(.expandable_db_pianificazionepianomedia_pianificazione) @(.publishBtnClass)"
+                                 onclick="setLoadingStatus(this)"
+                                 oncomplete="PF('addItemsDialog').hide()" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+</html>

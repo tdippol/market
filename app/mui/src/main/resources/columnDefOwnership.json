@@ -1,0 +1,14 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Owner",
+      "field": "owner",
+      "width": 400,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

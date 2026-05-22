@@ -1,0 +1,350 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      >
+
+<ui:composition>
+    <ui:include src="dlgClonaPromozione.xhtml" />
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <h:form id="schedaPromoForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="promotions" value="Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promotions"
+                                                     value="#{templateView.currentView.idPromozioneCorrente}" class="input-field"
+                                                     disabled="#{not templateView.currentView.editTestata.locked or not templateView.currentView.contattiBean.locked}"
+                                                     filter="true" filterMatchMode="contains"
+                                                     style="width: 100%; background-color: white;" >
+                                        <p:ajax update="@(.updateableContent) @(.tabScheda) @(.linkPianificazione) @(.promoDataInizio) @(.promoDataFine)" />
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.promozioni}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.id}" />
+                                    </p:selectOneMenu>
+                                    <p:remoteCommand name="refreshHeaderData" update="schedaPromoForm"
+                                                     action="#{templateView.currentView.applyFilterToPromozioni}" />
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="codice" value="Codice" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="codice" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.codicePromozione : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="descrizione" value="Descrizione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText styleClass="updateableContent" class="input-field" style="width: 100%; background-color: transparent;"
+                                                 id="descrizione" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.descrizione : ''}" />
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="gruppo" value="Gruppo" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="gruppo" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.muiCanalePromozione.gruppoPromozioneEntity.descrizione  : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="canale" value="Tipo Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="canale" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.muiCanalePromozione.descrizione : ''}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="anno" value="Anno" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="anno" readonly="true" styleClass="updateableContent"
+                                                 class="input-field" style="width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.anno : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataInizio" value="Data inizio" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizio" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true" 
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.dataInizio : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataFine" value="Data fine" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataFine" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.dataFine : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="stato" value="Stato" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="stato" readonly="true" styleClass="updateableContent updateCambioStato"
+                                                 class="input-field" style="#{templateView.currentView.statoStyleError}"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.statoCorrente.statoPromozioneEntity.codiceStato : ''} #{templateView.currentView.promotionSelected != null ? '-' : ''} #{templateView.currentView.promotionSelected != null ? templateView.currentView.statoCorrente.statoPromozioneEntity.label : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataInizioStato" value="Data inizio stato"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizioStato" readonly="true" styleClass="updateableContent updateCambioStato"
+                                                 class="input-field" style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.statoCorrente.dataInizioStato : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataUltimaPubblicazione" value="Ultima pubblicazione"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataUltimaPubblicazione" readonly="true"
+                                                 styleClass="updateableContent updateCambioStato" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.promotionSelected != null ?templateView.currentView.ultimaPubblicazione : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+
+                            <h:panelGroup layout="block" rendered="#{templateView.currentView.fieldOraInizioRendered}">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <div>
+                                        <p:outputLabel for="oraInizio" value="Ora inizio" class="input-field-label" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="oraInizio" styleClass="updateableContent" class="input-field"
+                                                     style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true"
+                                                     value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.oraInizio : ''}">
+                                            <f:convertDateTime pattern="HH:mm" locale="it_IT" />
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" rendered="#{templateView.currentView.fieldOraFineRendered}">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <div>
+                                        <p:outputLabel for="oraFine" value="Ora fine" class="input-field-label" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="oraFine" styleClass="updateableContent" class="input-field"
+                                                     style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true"
+                                                     value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.oraFine : ''}">
+                                            <f:convertDateTime pattern="HH:mm" locale="it_IT" />
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" rendered="#{templateView.currentView.fieldValorePuntoRendered}">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <div>
+                                        <p:outputLabel value="Valore Punto Fragola" class="input-field-label" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="valorePunto" readonly="true" styleClass="updateableContent updateCambioStato"
+                                                     class="input-field" style="#{templateView.currentView.statoStyleError}"
+                                                     value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.valorePunto : ''}" />
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel value="Owner" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <h:panelGroup layout="block" rendered="#{templateView.currentView.tabEditRendered}">
+                                        <i class="far fa-fw fa-check-square fa-2x" style="font-size: xx-large"></i>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" rendered="#{not templateView.currentView.tabEditRendered}">
+                                        <i class="far fa-fw fa-square fa-2x" style="font-size: xx-large"></i>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+
+                            <h:panelGroup layout="block" rendered="#{not templateView.currentView.fieldOraInizioRendered}">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" rendered="#{not templateView.currentView.fieldOraFineRendered}">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                            </h:panelGroup>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-2" style="padding-top: 15px !important;">
+                                <p:commandButton
+                                        id="linkButton_pianificazione"
+                                        value="Pianificazione"
+                                        styleClass="pf-btn-confirm linkPianificazione"
+                                        style="background-color: #5578eb !important; float: left;"
+                                        action="#{templateView.simulateMenuClick()}"
+                                        update="@(.updateableContent)"
+                                        onclick="setLoadingStatus(this)"
+                                        disabled="#{templateView.currentView.promotionSelected == null or templateView.currentView.btnPianificazioneDisabled or not templateView.currentView.editTestata.locked or not templateView.currentView.contattiBean.locked}">
+                                    <f:param name="menuId" value="#{templateView.currentView.landingPage}" />
+                                    <f:param name="currentPromoId" value="#{templateView.currentView.idPromozioneCorrente}" />
+                                </p:commandButton>
+                                <p:commandButton id="clona-promozione" value="Clona Promo"
+                                                 styleClass="clona-promo-btn" style="float: right;"
+                                                 action="#{templateView.currentView.prepareClonaPromo}"
+                                                 rendered="#{templateView.currentView.btnClonaPromoRendered}"
+                                                 disabled="#{templateView.currentView.promotionSelected == null or not templateView.currentView.editTestata.locked or not templateView.currentView.contattiBean.locked}"
+                                                 update="@(.dlgClonaPromoForm)"
+                                                 onclick="PF('dlgClonaPromo').show()" />
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+						    function updateSchedaPromoHeader() {
+						        refreshHeaderData();
+						    }
+
+						    function updateSchedaTab() {
+						        $("div[gridid$='db_schedapromo_stati']").html("");
+						        $( '.tabScheda' ).addClass( 'ui-state-disabled');
+						    }
+
+                            function redirectTo(menuId) {
+                                redirectToMenuId([{ name:'menuId', value:menuId }]);
+                            }
+
+                        </script>
+                        <style>
+                            .input-field {
+                                border-radius: 3px;
+                                border-color: gray;
+                            }
+
+                            .input-field-label {
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: black;
+                            }
+
+                            .ui-tabs {
+                                padding: 0;
+                            }
+
+                            .ui-tabs-nav {
+                                background: #ececec !important;
+                            }
+
+                            .ui-tabs-panels {
+                                border: 1px solid gray;
+                                background: white;
+                                border-radius: 3px;
+                            }
+
+                            .ui-tabs .ui-tabs-panel {
+                                padding-top: 0px;
+                                padding-bottom: 0px;
+                            }
+
+                            .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+                                border-top-left-radius: 5px;
+                                border-top-right-radius: 5px;
+                            }
+
+                            .ui-icon-carat-1-s {
+                                transform: rotate(180deg) !important;
+                            }
+
+                            .clona-promo-btn {
+                                background: #FF5F15 !important;
+                                color: #ffffff !important;
+                                height: 35px;
+                                padding: 0;
+                                font-weight: normal !important;
+                                text-shadow: none !important;
+                                border-width: 1px !important;
+                                border-color: #FF5F15 !important;
+                                margin-top: 10px;
+                                margin-bottom: 10px
+                            }
+
+                            .clona-promo-btn.ui-state-hover,
+                            .clona-promo-btn.ui-state-focus {
+                                background: #E34F00 !important;
+                                border: solid 1px #E34F00 !important
+                            }
+
+                        </style>
+                        <p:remoteCommand name="redirectToMenuId" action="#{templateView.simulateMenuClick()}" />
+                        <p:remoteCommand name="goToCopiedPromo" action="#{templateView.simulateMenuClick()}" />
+                    </h:form>
+
+                    <script>
+                        var currentActiveTab = #{templateView.currentView.activeTab};
+
+                        function setSchedaPromoCurrentTab(index){
+                            currentActiveTab=index;
+                        }
+                    </script>
+                    <p:tabView dynamic="true" cache="false" onTabShow="setSchedaPromoCurrentTab(index)"
+                               widgetVar="schedaPromo_tabs" styleClass="updateCambioStato tabScheda"
+                               activeIndex="#{templateView.currentView.activeTab}"
+                               disabled="#{templateView.currentView.promotionSelected == null}">
+
+                        <p:ajax event="tabChange"
+                                listener="#{templateView.currentView.onTabChange}"/>
+
+                        <c:forEach items="#{templateView.currentView.renderedTabItems}" var="tab" varStatus="loop">
+                                <p:tab title="#{tab.title}"
+                                       disabled="#{templateView.currentView.promotionSelected == null or not templateView.currentView.editTestata.locked or not templateView.currentView.contattiBean.locked}">
+                                    <f:subview id="tab_#{loop.index}">
+                                        <ui:include src="#{tab.content}" />
+                                    </f:subview>
+                                </p:tab>                                
+                        </c:forEach>
+                    </p:tabView>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

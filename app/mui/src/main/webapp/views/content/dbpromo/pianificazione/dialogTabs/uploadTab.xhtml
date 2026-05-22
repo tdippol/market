@@ -1,0 +1,129 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <p:panel id="expandable_uploadTab" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header">
+
+                        <h:form>
+                            <div class="ui-g-12" style="padding: 10px;">
+                                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                    <p:fileUpload label="Seleziona file"
+                                                  invalidFileMessage="Formato del file non valido"
+                                                  fileUploadListener="#{templateView.currentView.pianificazionePromoDialogBackingBean.handleFileUpload}"
+                                                  dragDropSupport="false" auto="true" mode="advanced"
+                                                  allowTypes="/(\.|\/)(xls|xlsx)$/" fileLimit="1"
+                                                  update="pianificazionePromoDialogConfirmBtn @this @(.panelUploadFeedback)"
+                                                  widgetVar="pianificazioneUploadWidget"/>
+                                    <p:growl id="messages" showDetail="true"/>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                    <p:panel header="Template" style="border: none;">
+                                        <h:commandLink>
+                                            <p:fileDownload
+                                                    value="#{templateView.currentView.pianificazionePromoDialogBackingBean.downloadTemplate}" />
+                                            <div class="spacer" style="padding-top: 5px;" />
+                                            <i class="fa fa-file-excel-o fa-lg" style="color: green; "
+                                               title="Download template"
+                                               aria-hidden="true"></i>
+                                        </h:commandLink>
+                                    </p:panel>
+                                </div>
+                            </div>
+                        </h:form>
+
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                            });
+                        </script>
+                        <style>
+                            [col-id~=ag-Grid-AutoColumn],
+                            [col-id~=tipoPuntoVendita],
+                            [col-id~=defaultFlag] {
+                                font-weight: bold;
+                            }
+
+                            [col-id~=flag],
+                            [col-id~=dataInizio],
+                            [col-id~=dataFine] {
+                                background-color: white;
+                            }
+
+                            .ag-header-cell {
+                                background-color: inherit !important;
+                            }
+
+                            body .splitButtonStyle .ui-button {
+                                background-color: #178b68 !important;
+                                color: #ffffff;
+                            }
+
+                            body .splitButtonStyle .ui-button.ui-state-hover {
+                                background-color: #178b68 !important;
+                            }
+
+                            body .splitButtonStyle .ui-button.ui-state-focus {
+                                background-color: #178b68 !important;
+                                outline: 0 none;
+                            }
+
+                            .menuItemStyle {
+                                background-color: #178b68 !important;
+                                color: #ffffff !important;
+                            }
+
+                            .menuItemStyle a {
+                                background-color: #178b68 !important;
+                                color: #ffffff !important;
+                            }
+
+                            .menuItemStyle a:hover {
+                                background-color: #178b68 !important;
+                                color: #ffffff !important;
+                            }
+
+                            .ui-dialog-title {
+                                font-size: 18px;
+                            }
+
+                            .panelUploadFeedback {
+                                border: none !important;
+                            }
+                        </style>
+                    </p:panel>
+                    <p:panel styleClass="panelUploadFeedback">
+                        <p:panel
+                                rendered="#{not empty templateView.currentView.pianificazionePromoDialogBackingBean.codes}">
+                            <div>
+                                <h:outputLabel
+                                        value="Elementi analizzati: #{templateView.currentView.pianificazionePromoDialogBackingBean.codes.size()}" />
+                            </div>
+                            <div>
+                                <h:outputLabel
+                                        value="Elementi distinti al netto dei doppioni: #{templateView.currentView.pianificazionePromoDialogBackingBean.codesUnique.size()}" />
+                            </div>
+                            <div>
+                                <h:outputLabel
+                                        value="Elementi validi: #{templateView.currentView.pianificazionePromoDialogBackingBean.codesValid.size()}" />
+                            </div>
+                            <div>
+                                <h:outputLabel
+                                        value="Elementi non validi: #{templateView.currentView.pianificazionePromoDialogBackingBean.codesNotValid.size()}" />
+                            </div>
+                        </p:panel>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

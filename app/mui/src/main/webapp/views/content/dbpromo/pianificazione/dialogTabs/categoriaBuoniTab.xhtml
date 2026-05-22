@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content"
+         style="margin-bottom: 0 !important; padding-bottom: 0 !important;">
+        <div class="row">
+            <div class="col-12">
+                <h:form>
+                    <p:commandButton id="addCategoriaBuonoBtn" value="Aggiungi" styleClass="pf-btn-confirm addCategoriaBuonoBtnClass"
+                                     actionListener="#{templateView.currentView.messaggiCastellettiBean.categoriaBuoniBean.addCategoriaBuono}"
+                                     disabled="#{templateView.currentView.messaggiCastellettiBean.categoriaBuoniBean.addCategoriaBuonoBtnDisabled}"
+                                     update="@(.updateableCategoriaBuoniContent) @this"/>
+                </h:form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_categoria_buoni" toggleable="false"
+                             styleClass="pnlGrid_Header updateableCategoriaBuoniContent">
+                        <f:facet name="header">
+                            <p:outputLabel value="Categoria Buoni"/>
+                        </f:facet>
+                        <h:panelGroup layout="block" styleClass="ag-theme-balham"
+                                      style="width: 100%; height: 30vh;"
+                                      pt:gridid="db_categoria_buoni">
+                        </h:panelGroup>
+                        <p:outputLabel value="#{templateView.currentView.messaggiCastellettiBean.categoriaBuoniBean.idPromozione}"
+                                       styleClass="updateableCategoriaBuoniContent idPromozioneClass" style="visibility: hidden" />
+                        <script type="text/javascript">
+                            var idPianificazione = $('.idPianificazioneClass').text();
+                            var gridParamsCategoriaBuoni = {
+                                gridId: 'db_categoria_buoni',
+                                gridTabGroup: 'pianificazione_castelletti_grid_tabs',
+                                gridTabPosition: 0,
+                                gridCode: 'db_categoria_buoni',
+                                url_columnDefs: contextPath + '/resources/pianificazionepromo/messaggi/categoriabuoni/columnDef'
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/pianificazionepromo/messaggi/categoriabuoni/rowData/'
+                                    + idPianificazione + addUrlParamContesto(#{muiContext}),
+                                gridOptions: {
+                                    onCellValueChanged: function(event) {
+                                        updateCategoriaBuoni(event);
+                                    }
+                                }
+                            }
+
+                            function updateCategoriaBuoni(event) {
+                                let idPromozione = $('.idPromozioneClass').text();
+                                const column = event.column.colDef.field;
+                                const value = event.data[column].value;
+                                const payload = {column: column, value: value};
+                                $.ajax({
+                                    type: "POST",
+                                    url: contextPath + '/resources/pianificazionepromo/messaggi/categoriabuoni/'
+                                        + idPromozione + addUrlParamContesto(#{muiContext}),
+                                    contentType: "application/json",
+                                    data: JSON.stringify(payload),
+                                    success: function (data, textStatus, jqXHR) {
+                                        var errorMessage = data.errorMessage;
+                                        getGridOptionFromGridMap('db_categoria_buoni').api.setRowData(data.rowData);
+                                        if (errorMessage !== undefined &amp;&amp; errorMessage !== null) {
+                                            addErrorGrowl([
+                                                {name: "title", value: 'Aggiornamento'},
+                                                {name: 'message', value: errorMessage}
+                                            ]);
+                                        } else {
+                                            addInfoGrowl([
+                                                {name: 'title', value: 'Aggiornamento'},
+                                                {name: 'message', value: 'Categoria Buoni aggiornata correttamente'}
+                                            ]);
+                                        }
+                                    },
+                                    error: function(jqXHR, exception, thrownError) {
+                                        console.error("Error calling ws to update CategoriaBuono with idPromozione: " + idPromozione);
+                                        ajaxErrorHandler(jqXHR, exception, thrownError,event)
+                                    }
+                                });
+                            }
+
+                            $(document).ready(function () {
+                                if (getCurrentTab(gridParamsCategoriaBuoni.gridTabGroup) == gridParamsCategoriaBuoni.gridTabPosition) {
+                                    creaGriglia(gridParamsCategoriaBuoni);
+                                }
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

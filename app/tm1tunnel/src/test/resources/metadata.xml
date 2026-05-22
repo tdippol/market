@@ -1,0 +1,3419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/os/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/os/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="ibm.tm1.api.v1" Alias="tm1">
+            <ComplexType Name="Attributes" OpenType="true">
+                <Property Name="Caption" Type="Edm.String"/>
+            </ComplexType>
+            <EntityType Name="LocalizedAttributes">
+                <Key>
+                    <PropertyRef Name="LocaleID"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A combination of international language codes defined by ISO 639-1 to identify major
+            languages and IETF language tags to identify specific locales.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            For example, "fr" identifies French and "fr-CA" identifies Canadian French.
+          </String>
+                </Annotation>
+                <Property Name="LocaleID" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the locale. To use the default locale, specify 'Default'.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Attributes" Type="ibm.tm1.api.v1.Attributes">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A set of attributes for the locale.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EnumType Name="AttributeType">
+                <Member Name="Numeric"/>
+                <Member Name="String"/>
+                <Member Name="Alias"/>
+            </EnumType>
+            <EntityType Name="AttributeDefinition">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            An interface to describe an attribute.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the attribute.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Type" Type="ibm.tm1.api.v1.AttributeType" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The type of the attribute.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="ApplicationContextFacet">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            The facet of the application context.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the application context facet.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Values" Type="Collection(ibm.tm1.api.v1.ApplicationContextFacetValue)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The value of the application context facet, see ApplicationContextFacetValue.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ApplicationContextFacetValue">
+                <Key>
+                    <PropertyRef Name="Value"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A value for a facet of the application context.
+          </String>
+                </Annotation>
+                <Property Name="Value" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The application context facet value.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Facet" Type="ibm.tm1.api.v1.ApplicationContextFacet" Partner="Values">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The description of the application context facet value, see also ApplicationContextFacet.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Annotation" OpenType="true">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            An element that represents a single annotation.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            An annotation applies a term to a model element and defines how to calculate a value for the term application.
+          </String>
+                </Annotation>
+                <Property Name="ID" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the annotation.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Text" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The text of the annotation.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Creator" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The creator of the annotation.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Created" Type="Edm.DateTimeOffset">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The date that the annotation was created.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="LastUpdatedBy" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the element that updated the annotation.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="LastUpdated" Type="Edm.DateTimeOffset">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The date and time value of the last update of this annotation, with a time zone offset.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="ApplicationContext" Type="Collection(ibm.tm1.api.v1.ApplicationContextFacetValue)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              An interface to the collection of configuration information for the annotation.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="DimensionalContext" Type="Collection(ibm.tm1.api.v1.Member)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              An interface to the collection of dimensions for the annotation.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Attachments" Type="Collection(ibm.tm1.api.v1.Attachment)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Attached documents that provide details and background.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Attachment" HasStream="true">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            An attached document that provides details and background.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the attachment.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Description" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A description of the attachment.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ContentType" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The type of content in the attachment.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Size" Type="Edm.Int64">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The size of the attachment.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="Cube">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            Represents a single cube on a TM1 server.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Name of the cube as it is registered on the server.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Rules" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Cube rules expand the standard hierarchical consolidation operations
+              that you may define within a dimension.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="DrillthroughRules" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Rules associating drill-through scripts with regions of cells in the cube.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              Drill-through processes can return query results against either cubes or relational tables.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="LastSchemaUpdate" Type="Edm.DateTimeOffset">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Last schema update date of the cube.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="LastDataUpdate" Type="Edm.DateTimeOffset">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Last data update date of the cube.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Attributes" Type="ibm.tm1.api.v1.Attributes">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Captions and resource attributes of the cube.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Dimensions" Type="Collection(ibm.tm1.api.v1.Dimension)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Represents dimensions that perform calculations, control labels, and format data entry.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Views" Type="Collection(ibm.tm1.api.v1.View)" Partner="Cube" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Represents a View object on the TM1 Server.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              A View is a child object of a Cube.
+              You can retrieve a list of available Views, or find a specific
+              View using the appropriate methods in the Cube class. View objects can
+              be queried for information (such as name or subsets) or changed. Executing
+              a View results in a Cellset object, which can be used to read the actual
+              cell data.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="PrivateViews" Type="Collection(ibm.tm1.api.v1.View)" Partner="Cube" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Private views are accessible only by the user who registered them.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              A private registered view is a named object. It persists after the termination of a client session.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Annotations" Type="Collection(ibm.tm1.api.v1.Annotation)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Comments that provide additional information about the cube.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="LocalizedAttributes" Type="Collection(ibm.tm1.api.v1.LocalizedAttributes)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Translated string values for properties of the cube.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Dimension">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            Represents a single dimension on a TM1 server.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            A dimension is a broad grouping of descriptive data about a major aspect of a business, such as products,
+            dates, or locations. Each dimension includes different levels of members in one or more hierarchies
+            and an optional set of calculated members or special categories.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the dimension.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="UniqueName" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The caption for the dimension.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Attributes" Type="ibm.tm1.api.v1.Attributes">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A property of the dimension.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              Attributes have a finite domain within the context of the dimension that they
+              belong to. For example, a dimension for a customer may have attributes that describe the city, region,
+              and country that the customer belongs to.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Hierarchies" Type="Collection(ibm.tm1.api.v1.Hierarchy)" Partner="Dimension" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              More specific groupings within a dimension.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              For example, for the Years dimension, data can
+              be organized into smaller groups, such as Years, Current Month, and All Dates.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="DefaultHierarchy" Type="ibm.tm1.api.v1.Hierarchy">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The default hierarchy of the dimension.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="LocalizedAttributes" Type="Collection(ibm.tm1.api.v1.LocalizedAttributes)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Translated string values for properties of the dimensions.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Edge">
+                <Key>
+                    <PropertyRef Name="ParentName"/>
+                    <PropertyRef Name="ComponentName"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            Represents the relationship between two or more hierarchies and their weight.
+          </String>
+                </Annotation>
+                <Property Name="ParentName" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the parent of the component in the hierarchy.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ComponentName" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the component in the hierarchy.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Weight" Type="Edm.Double">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The weight of the component in the edge.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Hierarchy" Type="ibm.tm1.api.v1.Hierarchy" Partner="Edges" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The hierarchy of the component in the edge.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Parent" Type="ibm.tm1.api.v1.Element" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The parent of the component.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Component" Type="ibm.tm1.api.v1.Element" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The component.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Hierarchy">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A hierarchy organizes dimensions into a hierarchical structure, with each dimension representing a different
+            level of the hierarchy.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            For example, you have separate dimensions for days, months, and quarters.
+            You group them into a dimension called year.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the hierarchy.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="UniqueName" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The caption of the hierarchy.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Cardinality" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cardinality of a relationship is the number of related rows for each of the two query subjects.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              Relationships exist between two query subjects. The cardinality of a relationship is the number
+              of related rows for each of the two query subjects. The rows are related by the expression of
+              the relationship. This expression usually refers to the primary and foreign keys of the underlying
+              tables.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Structure" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Specifies whether the hierarchy is balanced or unbalanced.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              A value of 0 indicates a balanced structure and a value of 2 indicates an unbalanced structure.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Attributes" Type="ibm.tm1.api.v1.Attributes">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The attributes of the hierarchy.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Dimension" Type="ibm.tm1.api.v1.Dimension" Partner="Hierarchies" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A dimension that is part of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Elements" Type="Collection(ibm.tm1.api.v1.Element)" Partner="Hierarchy" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The elements of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Edges" Type="Collection(ibm.tm1.api.v1.Edge)" Partner="Hierarchy" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The edges of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Subsets" Type="Collection(ibm.tm1.api.v1.Subset)" Partner="Hierarchy" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The subsets of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="PrivateSubsets" Type="Collection(ibm.tm1.api.v1.Subset)" Partner="Hierarchy" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The private subsets of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Members" Type="Collection(ibm.tm1.api.v1.Member)" Partner="Hierarchy" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The members of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="AllMember" Type="ibm.tm1.api.v1.Member" Partner="Hierarchy">
+                    <Annotation Term="Core.Description">
+                        <String>
+              An aggregation of all of the members of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="DefaultMember" Type="ibm.tm1.api.v1.Member" Partner="Hierarchy">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The default member of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Levels" Type="Collection(ibm.tm1.api.v1.Level)" Partner="Hierarchy" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of levels in the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="LocalizedAttributes" Type="Collection(ibm.tm1.api.v1.LocalizedAttributes)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Translated string values for properties of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="ElementAttributes" Type="Collection(ibm.tm1.api.v1.AttributeDefinition)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The attributes of the elements of the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Element">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            An element in a dimension that identifies the location of a cell in a cube.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the element.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="UniqueName" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The element's invariant name.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Type" Type="ibm.tm1.api.v1.ElementType">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The type of the element, one of Numeric, String, or Consolidated.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Level" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The level to which the element belongs within the dimension hierarchy.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              Level 0 identifies leaf elements. Each level of consolidation within
+              the dimension hierarchy is incremented by 1.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Index" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A value that corresponds to the position of the element within a dimension.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              The first element within a dimension has an index value of 1, the second
+              element has an index value of 2, and so on.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Attributes" Type="ibm.tm1.api.v1.Attributes">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The attributes of the element.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Hierarchy" Type="ibm.tm1.api.v1.Hierarchy" Partner="Elements" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The hierarchy of the element in the dimension.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Parents" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The parent element of the element in the hierarchy.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Components" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The collection of elements in the dimension.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Edges" Type="Collection(ibm.tm1.api.v1.Edge)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The collection of edges in the dimension.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="LocalizedAttributes" Type="Collection(ibm.tm1.api.v1.LocalizedAttributes)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Translated string values for properties of the element.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Subset">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the subset.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="UniqueName" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the subset, preceded by the parent dimension and separated by a colon,
+              for example, [dimension_name]:[subset_name].
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Expression" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              An MDX expression that defines the subset.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Hierarchy" Type="ibm.tm1.api.v1.Hierarchy" Partner="Subsets" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The hierarchies that are included in the subset.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Elements" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The elements that are included in the subset.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EnumType Name="ElementType">
+                <Member Name="Numeric" Value="1"/>
+                <Member Name="String" Value="2"/>
+                <Member Name="Consolidated" Value="3"/>
+            </EnumType>
+            <EnumType Name="MemberType">
+                <Member Name="Unknown" Value="0"/>
+                <Member Name="Regular" Value="1"/>
+                <Member Name="All" Value="2"/>
+                <Member Name="Measure" Value="3"/>
+                <Member Name="Formula" Value="4"/>
+            </EnumType>
+            <EntityType Name="Member">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A set of elements that are members of the consolidation.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the member.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="UniqueName" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the member, preceded by the name of the parent,
+              for example, [dimension_name]:[member_name].
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Type" Type="ibm.tm1.api.v1.MemberType">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The type of the member.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Ordinal" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A number that identifies an entity's position in a series.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="IsPlaceholder" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether this member is a placeholder.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Weight" Type="Edm.Double">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The weight of the member within a consolidation.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              Weight is a factor applied to an individual member when summing
+              the members of a consolidation.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Attributes" Type="ibm.tm1.api.v1.Attributes">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The attributes of the member.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Hierarchy" Type="ibm.tm1.api.v1.Hierarchy" Partner="Members" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The hierarchy of the member.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Level" Type="ibm.tm1.api.v1.Level" Partner="Members" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The level within the hierarchy on which this member resides.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Element" Type="ibm.tm1.api.v1.Element" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The member element.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Parent" Type="ibm.tm1.api.v1.Member" Partner="Children">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The parent of the member in the consolidation.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Children" Type="Collection(ibm.tm1.api.v1.Member)" Partner="Parent">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The children of the member in the consolidation.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="LocalizedAttributes" Type="Collection(ibm.tm1.api.v1.LocalizedAttributes)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Translated string values for properties of the member.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Level">
+                <Key>
+                    <PropertyRef Name="Number"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A level in the hierarchy of a set of cubes.
+          </String>
+                </Annotation>
+                <Property Name="Number" Type="Edm.Int32" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The level number.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the level.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="UniqueName" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The unique name of the level.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Cardinality" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cardinality of the level, that is, the number of elements in the level.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Type" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The type of the level.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Hierarchy" Type="ibm.tm1.api.v1.Hierarchy" Partner="Levels" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The hierarchy of the level.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Members" Type="Collection(ibm.tm1.api.v1.Member)" Partner="Level">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The members of the level.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ProcessErrorLog">
+                <Key>
+                    <PropertyRef Name="Timestamp"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A process error log entry.
+          </String>
+                </Annotation>
+                <Property Name="Timestamp" Type="Edm.DateTimeOffset" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The date and time of the process error.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Content" Type="Edm.Stream">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The content of the process error.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="Process">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A TurboIntegrator process that can be used to manipulate TM1 data and metadata.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of a TurboIntegrator process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="HasSecurityAccess" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the user security access to run this process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="PrologProcedure" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The code that is executed during the Prolog stage of the process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="MetadataProcedure" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The code that is executed during the Metadata stage of the process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="DataProcedure" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The code that is executed during the Data stage of the process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="EpilogProcedure" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The code that is executed during the Epilog stage of the process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="DataSource" Type="ibm.tm1.api.v1.ProcessDataSource">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The source of the data for the process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Parameters" Type="Collection(ibm.tm1.api.v1.ProcessParameter)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Parameters used by the process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Variables" Type="Collection(ibm.tm1.api.v1.ProcessVariable)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Variables used by the process.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="ErrorLogs" Type="Collection(ibm.tm1.api.v1.ProcessErrorLog)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of error logs for the process.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <ComplexType Name="ProcessParameter">
+                <Property Name="Name" Type="Edm.String" Nullable="false"/>
+                <Property Name="Prompt" Type="Edm.String"/>
+                <Property Name="Value" Type="Edm.PrimitiveType"/>
+            </ComplexType>
+            <ComplexType Name="ProcessVariable">
+                <Property Name="Name" Type="Edm.String" Nullable="false"/>
+                <Property Name="Type" Type="ibm.tm1.api.v1.ProcessVariableType" Nullable="false"/>
+                <Property Name="Position" Type="Edm.Int32"/>
+                <Property Name="StartByte" Type="Edm.Int32"/>
+                <Property Name="EndByte" Type="Edm.Int32"/>
+            </ComplexType>
+            <ComplexType Name="ProcessDataSource" OpenType="true">
+                <Property Name="Type" Type="Edm.String" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="NameValuePair">
+                <Property Name="Name" Type="Edm.String" Nullable="false"/>
+                <Property Name="Value" Type="Edm.PrimitiveType"/>
+            </ComplexType>
+            <EnumType Name="ProcessVariableType">
+                <Member Name="String" Value="1"/>
+                <Member Name="Numeric" Value="2"/>
+            </EnumType>
+            <EntityType Name="View" Abstract="true">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A view of data in a cube.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the view.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Cube" Type="ibm.tm1.api.v1.Cube" Partner="Views" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The parent cube of the view.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="MDXView" BaseType="ibm.tm1.api.v1.View">
+                <Annotation Term="Core.Description">
+                    <String>
+            A view of a cube that is defined by an MDX expression.
+          </String>
+                </Annotation>
+                <Property Name="MDX" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              An MDX expression that defines a cube view.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="NativeView" BaseType="ibm.tm1.api.v1.View">
+                <Annotation Term="Core.Description">
+                    <String>
+            A native view of a cube.
+          </String>
+                </Annotation>
+                <Property Name="Columns" Type="Collection(ibm.tm1.api.v1.ViewAxisSelection)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The dimension elements that exist on the column axis of a view.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Rows" Type="Collection(ibm.tm1.api.v1.ViewAxisSelection)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The dimension elements that exist on the row axis of a view.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Titles" Type="Collection(ibm.tm1.api.v1.ViewTitle)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The dimension elements that exist as title (context) elements of a view.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="SuppressEmptyColumns" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that suppresses any columns that contain only zero values.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="SuppressEmptyRows" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that suppresses any rows that contain only zero values.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="FormatString" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The format of the elements in the view.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <ComplexType Name="ViewAxisSelection">
+                <NavigationProperty Name="Subset" Type="ibm.tm1.api.v1.Subset" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="ViewTitle">
+                <NavigationProperty Name="Subset" Type="ibm.tm1.api.v1.Subset" Nullable="false"/>
+                <NavigationProperty Name="Selected" Type="ibm.tm1.api.v1.Element" Nullable="false"/>
+            </ComplexType>
+            <EntityType Name="Cellset">
+                <Annotation Term="Core.Description">
+                    <String>
+            The result of an execution of a view or an MDX expression.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            A cellset represents a snapshot of your data at a certain point in time.
+            You can use the cellset ID within a session instead of running a view or MDX multiple times.
+            Running a view or MDX expression multiple times can yield different results each time
+            and can have an impact on memory resources.
+            When operations on a cellset have completed, you should delete the cellset if you are not
+            ending the session. When a session ends, the cellset is deleted automatically.
+          </String>
+                </Annotation>
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Read-only property that provides a unique identifier for the cellset for the current session.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              The ID does not persist outside of a session because a cellset is transient.
+              You cannot depend on the ID being consistent. If you try to access a cellset by using a previous
+              ID value after the session has ended or when the cellset has been deleted, an error is received.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Cube" Type="ibm.tm1.api.v1.Cube" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The contents of the cellset.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Axes" Type="Collection(ibm.tm1.api.v1.CellsetAxis)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of axes for the cellset.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Cells" Type="Collection(ibm.tm1.api.v1.CellsetCell)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Individual cell value that makes up part of the cellset.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="CellsetAxis">
+                <Key>
+                    <PropertyRef Name="Ordinal"/>
+                </Key>
+                <Property Name="Ordinal" Type="Edm.Int32" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A number that identifies an entity's position in a series.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Cardinality" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cardinality of the cellset axis.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Hierarchies" Type="Collection(ibm.tm1.api.v1.Hierarchy)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of hierarchies for this cellset axis.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Tuples" Type="Collection(ibm.tm1.api.v1.CellsetAxisTuple)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of tuples for this cellset axis.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="CellsetAxisTuple">
+                <Key>
+                    <PropertyRef Name="Ordinal"/>
+                </Key>
+                <Property Name="Ordinal" Type="Edm.Int32" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A number that identifies an entity's position in a series.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Members" Type="Collection(ibm.tm1.api.v1.Member)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of members that make up this cellset axis.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EnumType Name="CellStatus">
+                <Member Name="Null"/>
+                <Member Name="Data"/>
+                <Member Name="Error"/>
+            </EnumType>
+            <EntityType Name="Drillthrough" Abstract="true">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            The definition of a drill through on the current cell.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the drill through.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="CubeDrillthrough" BaseType="ibm.tm1.api.v1.Drillthrough">
+                <Annotation Term="Core.Description">
+                    <String>
+            A drill through that drills to a view of a cube.
+          </String>
+                </Annotation>
+            </EntityType>
+            <EntityType Name="RelationalDrillthrough" BaseType="ibm.tm1.api.v1.Drillthrough">
+                <Annotation Term="Core.Description">
+                    <String>
+            A drill through that drills to an Open Database Connectivity (ODBC) table.
+          </String>
+                </Annotation>
+            </EntityType>
+            <ComplexType Name="DrillthroughRow">
+      </ComplexType>
+            <EnumType Name="ConflictResolution">
+                <Member Name="UsingSource"/>
+                <Member Name="UsingTarget"/>
+                <Member Name="Individually"/>
+            </EnumType>
+            <EntityType Name="CellsetCell">
+                <Key>
+                    <PropertyRef Name="Ordinal"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A cell in a cellset.
+          </String>
+                </Annotation>
+                <Property Name="Ordinal" Type="Edm.Int64" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A number that identifies an entity's position in a series.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Status" Type="ibm.tm1.api.v1.CellStatus" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The status of the cell, that is, NULL, DATA, or ERROR.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Value" Type="Edm.PrimitiveType">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The value of the cell in the cellset.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="FormatString" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The format of the cell in the cellset.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="FormattedValue" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The formatted value of the cell in the cellset.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Updateable" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A value that indicates whether the cell is updateable.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="RuleDerived" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the cell is rule derived.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Annotated" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the cell is annotated.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Consolidated" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the cell is consolidated.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Language" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The language of the value of the cell.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="HasPicklist" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the value of the cell can be selected from a drop-down list.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="PicklistValues" Type="Collection(Edm.String)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The collection of available values that can be selected from the drop-down list.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="HasDrillthrough" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether drill-through scripts are defined on the cell.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="DrillthroughScripts" Type="Collection(ibm.tm1.api.v1.Drillthrough)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The collection of drill throughs.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Group">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A user group on a TM1 server.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of a user group on the TM1 server.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              There are three predefined groups on each server: Admin, DataAdmin, and SecurityAdmin.
+              Other user groups can be created by an administrator as required.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Users" Type="Collection(ibm.tm1.api.v1.User)" Partner="Groups">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The names of users in a given group.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EnumType Name="UserType" IsFlags="true">
+                <Member Name="User" Value="0"/>
+                <Member Name="SecurityAdmin" Value="1"/>
+                <Member Name="DataAdmin" Value="2"/>
+                <Member Name="Admin" Value="3"/>
+            </EnumType>
+            <EntityType Name="User">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A user on a TM1 server.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The unique name of the user.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="FriendlyName" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The friendly name, also known as the display name, of the user.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Password" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The password for the user.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Type" Type="ibm.tm1.api.v1.UserType" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The type of the user.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="IsActive" Type="Edm.Boolean" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the user is currently logged in to the TM1 server.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Groups" Type="Collection(ibm.tm1.api.v1.Group)" Partner="Users">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The defined groups that the user belongs to. A user can belong to multiple groups.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Sessions" Type="Collection(ibm.tm1.api.v1.Session)" Partner="User">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The set of currently active sessions of this user.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Sandbox">
+                <Annotation Term="Core.Description">
+                    <String>
+            A sandbox that allows you to work with your data without affecting your base.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            Sandboxes allow you to work with your data in different versions, allowing you to add or
+            modify it to see the results without affecting your base. Changes that you make in a sandbox are not
+            made public until you commit the changes. You can continue to work with your data until you are
+            satisfied with the result.
+          </String>
+                </Annotation>
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of a sandbox.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="IsLoaded" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that specifies whether the sandbox is loaded into memory. Read-only.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="IsActive" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the current context is an active sandbox.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              Used when the !sandbox parameter is used as a query option.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="IsQueued" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the current context is queued and therefore read-only.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="Configuration">
+                <Key>
+                    <PropertyRef Name="ServerName"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            Specifies configuration parameters as defined in the Tm1s.cfg file for an
+            IBM Cognos TM1 server.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            For details about all of the parameters, refer to the comments in the
+            Tm1s.cfg file and the Operations Guide.
+          </String>
+                </Annotation>
+                <Property Name="ServerName" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the server.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="AdminHost" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The location where TM1 Admin Server is running.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ProductVersion" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The product version of the TM1 server.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="PortNumber" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The port number of the TM1 server, which is used to distinguish between multiple servers running on the same computer.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ClientMessagePortNumber" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A secondary port used to accept client messages concerning the progress and ultimate cancellation of a lengthy operation without tying up thread reserves.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="HTTPPortNumber" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The port number on which the TM1 server listens for incoming HTTP(S) requests.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="IntegratedSecurityMode" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the TM1 server uses integrated security modes.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="SecurityMode" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The user authentication mode to be used by TM1 server.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="PrincipalName" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The service principal name (SPN) when using Integrated Login with TM1 Web and constrained delegation.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="SecurityPackageName" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              If you configure the TM1 server to use Integrated Login, the SecurityPackageName parameter defines the security package that authenticates your user name and password in Microsoft Windows.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ClientCAMURIs" Type="Collection(Edm.String)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of URIs used to authenticate TM1 clients.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="WebCAMURI" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The URI used to authenticate TM1 Web clients.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ClientPingCAMPassport" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Indicates the interval, in seconds, that a client should ping the CAM server to keep their passport alive.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ServerCAMURI" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Specifies the URI for the internal dispatcher that the TM1 server should use to connect to Cognos Authentication Manager (CAM).
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="AllowSeparateNandCRules" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Lets you specify rule expressions for N: and C: levels on separate lines using identical AREA definitions.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="DistributedOutputDir" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Defines the directory to which TUnits are written when a Cognos Insight distributed application is deployed.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="DisableSandboxing" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether users have the ability to use sandboxes across the server.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="JobQueuing" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether users have the ability to use sandboxes across the server.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ForceReevaluationOfFeedersForFedCellsOnDataChange" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              When this parameter is set, a feeder statement is forced to be re-evaluated when data changes.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="DataBaseDirectory" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Specifies the data directory from which the server loads cubes, dimensions, and other objects.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="UnicodeUpperLowerCase" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Instructs the TM1 server to identify and handle Unicode object names, preventing the creation of identical Unicode object names that vary only in case.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <ComplexType Name="CellDescriptor">
+                <Property Name="Tuple" Type="Collection(ibm.tm1.api.v1.Element)" Nullable="false"/>
+            </ComplexType>
+            <EntityType Name="Session" OpenType="true">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+          </String>
+                </Annotation>
+                <Property Name="ID" Type="Edm.Int64">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID uniquely identifying the session.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="User" Type="ibm.tm1.api.v1.User" Partner="Sessions" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The user that is associated to this session.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Threads" Type="Collection(ibm.tm1.api.v1.Thread)" Partner="Session">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The names of users in a given group.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EnumType Name="ThreadType">
+                <Member Name="User"/>
+                <Member Name="Worker"/>
+                <Member Name="Chore"/>
+                <Member Name="System"/>
+            </EnumType>
+            <EntityType Name="Thread" OpenType="true">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A thread that can run queries concurrently on the TM1 server.
+          </String>
+                </Annotation>
+                <Property Name="ID" Type="Edm.Int64" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Type" Type="ibm.tm1.api.v1.ThreadType" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The type of thread, that is, user, worker, chore, system.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the thread.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Context" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The context of the thread.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="State" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The state of the thread.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Function" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The function of the thread.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ObjectType" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The object type of the thread.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ObjectName" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the object that the thread acts on.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="RLocks" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A shared lock that allows many threads to read from an object at the same time, but does not allow another thread to modify or write to this object until all R-locks have been released.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="IXLocks" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A lock that reserves the right for a thread to obtain a W-lock on an object when all R-locks have been released.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="WLocks" Type="Edm.Int32">
+                    <Annotation Term="Core.Description">
+                        <String>
+              An exclusive lock that allows only one thread at a time to access and write changes to an object.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ElapsedTime" Type="Edm.Duration" Precision="0">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The elapsed time of a thread in seconds.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="WaitTime" Type="Edm.Duration" Precision="0">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The wait time (delay) before a thread should start the process.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Info" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The info of the thread.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Session" Type="ibm.tm1.api.v1.Session" Partner="Threads">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The Session that this thread is currently servicing.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EnumType Name="LogLevel">
+                <Member Name="Fatal"/>
+                <Member Name="Error"/>
+                <Member Name="Warning"/>
+                <Member Name="Info"/>
+                <Member Name="Debug"/>
+                <Member Name="Unknown"/>
+                <Member Name="Off"/>
+            </EnumType>
+            <EntityType Name="MessageLogEntry" OpenType="true">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            An entry in the message log.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            The message log displays status messages on the
+            activity of the TM1 server in a log file. These messages contain
+            details on activity such as executed processes, chores, loaded cubes
+            and dimensions, and synchronized replication.
+          </String>
+                </Annotation>
+                <Property Name="ID" Type="Edm.Int64" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the message log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ThreadID" Type="Edm.Int64">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The thread ID of the message log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="SessionID" Type="Edm.Int64">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The session ID of the message log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Level" Type="ibm.tm1.api.v1.LogLevel" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The level of the message log entry, that is, Fatal, Error, Warning, Info, Debug, Unknown, Off.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="TimeStamp" Type="Edm.DateTimeOffset">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The date and time of the message log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Logger" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The logger of the message log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Message" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The message in the message log entry.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="TransactionLogEntry" OpenType="true">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            An entry in the transaction log.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            The transaction log displays the transactions recorded
+            in the Tm1s.log file when a TM1 client changes a cube value.
+          </String>
+                </Annotation>
+                <Property Name="ID" Type="Edm.Int64" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the transaction log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ChangeSetID" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the changeset in the transaction log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="TimeStamp" Type="Edm.DateTimeOffset">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The date and time of the transaction log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ReplicationTime" Type="Edm.DateTimeOffset">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The replication time of the TM1 server for the transaction log entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="User" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The user who completed the changeset in the transaction.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Cube" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cube that was acted on in the transaction.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Tuple" Type="Collection(Edm.String)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of tuples that were acted on in the transaction.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="OldValue" Type="Edm.PrimitiveType">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The previous value of the changed tuple in the transaction.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="NewValue" Type="Edm.PrimitiveType">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The new value of the changed tuple in the transaction.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="StatusMessage" Type="Edm.String">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The status message of the transaction.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EnumType Name="ChoreExecutionMode">
+                <Member Name="SingleCommit" Value="0"/>
+                <Member Name="MultipleCommit" Value="1"/>
+            </EnumType>
+            <EntityType Name="ChoreTask">
+                <Key>
+                    <PropertyRef Name="Step"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A task to be completed as part of a Chore.
+          </String>
+                </Annotation>
+                <Property Name="Step" Type="Edm.Int64" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A step in a task.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Process" Type="ibm.tm1.api.v1.Process">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The process completed in the task.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="Chore" Type="ibm.tm1.api.v1.Chore" Partner="Tasks" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The Chore that the task belongs to.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <Property Name="Parameters" Type="Collection(ibm.tm1.api.v1.ChoreTaskParameter)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of parameters for the task.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <ComplexType Name="ChoreTaskParameter">
+                <Property Name="Name" Type="Edm.String" Nullable="false"/>
+                <Property Name="Value" Type="Edm.PrimitiveType"/>
+            </ComplexType>
+            <EntityType Name="Chore">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            Objects that execute one or more processes of TM1 at a user-defined frequency.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the chore.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="StartTime" Type="Edm.DateTimeOffset" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The start time of the chore.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="DSTSensitive" Type="Edm.Boolean" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the chore start time is sensitive to daily savings time.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Active" Type="Edm.Boolean" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether the chore is active.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="ExecutionMode" Type="ibm.tm1.api.v1.ChoreExecutionMode" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The execution mode of the chore, that is, single or multiple commit.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Frequency" Type="Edm.Duration">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The frequency of the chore.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="Tasks" Type="Collection(ibm.tm1.api.v1.ChoreTask)" Partner="Chore" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of tasks that make up the chore.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Logger">
+                <Key>
+                    <PropertyRef Name="Name"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            A logger to be configured for a TM1 server.
+          </String>
+                </Annotation>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the logger.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Level" Type="ibm.tm1.api.v1.LogLevel" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The level of the logger, that is, Fatal, Error, Warning, Info, Debug, Unknown, or Off.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="Entry">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Annotation Term="Core.Description">
+                    <String>
+            An entry.
+          </String>
+                </Annotation>
+                <Property Name="ID" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Name" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The name of the entry.
+            </String>
+                    </Annotation>
+                </Property>
+                <NavigationProperty Name="ContainedBy" Type="ibm.tm1.api.v1.Folder">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The folder that contains the entries.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Document" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            An attached document.
+          </String>
+                </Annotation>
+                <Property Name="Size" Type="Edm.Int64">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The size of the document.
+            </String>
+                    </Annotation>
+                </Property>
+                <Property Name="Content" Type="Edm.Stream">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The contents of the document.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <EntityType Name="Folder" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A container for related TM1 objects.
+          </String>
+                </Annotation>
+                <NavigationProperty Name="Contents" Type="Collection(ibm.tm1.api.v1.Entry)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of entries that are in the folder.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+                <NavigationProperty Name="PrivateContents" Type="Collection(ibm.tm1.api.v1.Entry)" ContainsTarget="true">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of private entries that are in the folder.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="CubeReference" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A reference to a cube.
+          </String>
+                </Annotation>
+                <NavigationProperty Name="Cube" Type="ibm.tm1.api.v1.Cube">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cube that is referenced.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="DimensionReference" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A reference to a dimension.
+          </String>
+                </Annotation>
+                <NavigationProperty Name="Dimension" Type="ibm.tm1.api.v1.Dimension">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The dimension that is referenced.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ProcessReference" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A reference to a process.
+          </String>
+                </Annotation>
+                <NavigationProperty Name="Process" Type="ibm.tm1.api.v1.Process">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The process that is referenced.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ChoreReference" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A reference to a chore.
+          </String>
+                </Annotation>
+                <NavigationProperty Name="Chore" Type="ibm.tm1.api.v1.Chore">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The chore that is referenced.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ViewReference" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A reference to a view.
+          </String>
+                </Annotation>
+                <NavigationProperty Name="View" Type="ibm.tm1.api.v1.View">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The view that is referenced.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="SubsetReference" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A reference to a subset.
+          </String>
+                </Annotation>
+                <NavigationProperty Name="Subset" Type="ibm.tm1.api.v1.Subset">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The subset that is referenced.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="DocumentReference" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A reference to a document.
+          </String>
+                </Annotation>
+                <NavigationProperty Name="Document" Type="ibm.tm1.api.v1.Document">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The document that is referenced.
+            </String>
+                    </Annotation>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Link" BaseType="ibm.tm1.api.v1.Entry">
+                <Annotation Term="Core.Description">
+                    <String>
+            A link to another website or resource.
+          </String>
+                </Annotation>
+                <Property Name="URL" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The URL of the link.
+            </String>
+                    </Annotation>
+                </Property>
+            </EntityType>
+            <Function Name="ModelCubes" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Returns only non-control cubes in the model.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            Control cubes are used for "system use" (for example, localized attribute values) to TM1 (identified with '}').
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            Control cubes don't contain your actual data.
+          </String>
+                </Annotation>
+                <ReturnType Type="Collection(ibm.tm1.api.v1.Cube)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of non-control cubes.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              If you want all of the cubes (including control), you can use /api/vi/Cubes as a resource identifier.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Function>
+            <Function Name="ControlCubes" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Returns only control cubes in the model.
+          </String>
+                </Annotation>
+                <ReturnType Type="Collection(ibm.tm1.api.v1.Cube)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of control cubes.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Function>
+            <Function Name="ModelDimensions" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Returns only model dimensions.
+          </String>
+                </Annotation>
+                <ReturnType Type="Collection(ibm.tm1.api.v1.Dimension)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of model dimensions.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Function>
+            <Function Name="ControlDimensions" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Return only control dimensions.
+          </String>
+                </Annotation>
+                <ReturnType Type="Collection(ibm.tm1.api.v1.Dimension)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of control dimensions.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Function>
+            <Function Name="MessageLog" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Returns a collection of message log entries.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            By default, the most recent message log entry is returned first.
+          </String>
+                </Annotation>
+                <Parameter Name="Reverse" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether to order message log entries chronologically as they occurred in time.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <ReturnType Type="Collection(ibm.tm1.api.v1.MessageLogEntry)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of message log entries.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Function>
+            <Function Name="TransactionLog" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Returns a collection of transaction log entries.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            By default, the most recent transaction log entry is returned first.
+          </String>
+                </Annotation>
+                <Parameter Name="Reverse" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether to order transaction log entries chronologically as they occurred in time.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="IgnoreStatusMessages" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether to include or not include status messages in the translation log.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <ReturnType Type="Collection(ibm.tm1.api.v1.TransactionLogEntry)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of transaction log entries.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Function>
+            <Function Name="GetPartition" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Retrieves the cells of a cellset in multiple partitions.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            This allows the application to manage processing of the area of the
+            partition based on a defined boundary.
+          </String>
+                </Annotation>
+                <Parameter Name="Cellset" Type="ibm.tm1.api.v1.Cellset" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The collection of cells.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Begin" Type="Edm.Int64">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Defines the cell ordinal of the left or right corner of the closest rectangular area of your cellset.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="End" Type="Edm.Int64">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Defines the cell ordinal of the other edge of the closest rectangular area of your cellset.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <ReturnType Type="Collection(ibm.tm1.api.v1.CellsetCell)" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A collection of cellset cells.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Function>
+            <Action Name="Disconnect" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Disconnects a user but lets threads that are active continue to run until they are done.
+          </String>
+                </Annotation>
+                <Parameter Name="User" Type="ibm.tm1.api.v1.User" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The user to disconnect.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="ExecuteMDX" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Runs an MDX expression at root level.
+          </String>
+                </Annotation>
+                <Parameter Name="MDX" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A string value that represents your expression. Included in the POST body of the request.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <ReturnType Type="ibm.tm1.api.v1.Cellset" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A cellset.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Action>
+            <Action Name="BeginChangeSet" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Begins a change set.
+          </String>
+                </Annotation>
+                <ReturnType Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the change set that has begun.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Action>
+            <Action Name="EndChangeSet" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Ends a change set.
+          </String>
+                </Annotation>
+                <Parameter Name="ChangeSetID" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the change set to end.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <ReturnType Type="Edm.Int64" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The return code of the EndChangeSet action.
+            </String>
+                    </Annotation>
+                </ReturnType>
+            </Action>
+            <Action Name="UndoChangeSet" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Reverts a change set.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            Deleting the change set
+              effectively removes all changes made to-date by the session.
+          </String>
+                </Annotation>
+                <Parameter Name="ChangeSetID" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The ID of the change set to revert.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Execute" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Runs a view against the model.
+          </String>
+                </Annotation>
+                <Parameter Name="View" Type="ibm.tm1.api.v1.View" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The view to be executed, specified in the resource path of the URL.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Titles" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The values of the titles in the title axis that you are slicing the view against.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              You must specify all titles, even though you may only want change one.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="SuppressEmptyColumns" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Columns without a value are not returned in the result set.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="SuppressEmptyRows" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Rows without a value are not returned in the result set.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <ReturnType Type="ibm.tm1.api.v1.Cellset" Nullable="false"/>
+            </Action>
+            <Action Name="Execute" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Runs a process defined in Turbo Integrator.
+          </String>
+                </Annotation>
+                <Parameter Name="Process" Type="ibm.tm1.api.v1.Process" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Specifies the process.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              This value is not specified because it is obtained by the first
+              parameter in the resource path specified in the URL of a POST operation.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Parameters" Type="Collection(ibm.tm1.api.v1.NameValuePair)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Override default values (numeric or string) defined in the model.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Execute" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Drill into a cell.
+          </String>
+                </Annotation>
+                <Parameter Name="Drillthrough" Type="ibm.tm1.api.v1.CubeDrillthrough" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The drill through to use.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <ReturnType Type="ibm.tm1.api.v1.Cellset" Nullable="false"/>
+            </Action>
+            <Action Name="Execute" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Drill into a cell.
+          </String>
+                </Annotation>
+                <Parameter Name="Drillthrough" Type="ibm.tm1.api.v1.RelationalDrillthrough" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The drill through to use.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <ReturnType Type="Collection(ibm.tm1.api.v1.DrillthroughRow)" Nullable="false"/>
+            </Action>
+            <Action Name="Publish" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Publishes the contents (values) of the sandbox back to base.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            The sandbox specified is still available for use and is left unchanged.
+          </String>
+                </Annotation>
+                <Parameter Name="Sandbox" Type="ibm.tm1.api.v1.Sandbox" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Specifies the sandbox to publish.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="ConflictResolution" Type="ibm.tm1.api.v1.ConflictResolution">
+                    <Annotation Term="Core.Description">
+                        <String>
+              An enumerated value that indicates whether to resolve conflicts using the source, target, or individually.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="AllowQueueing" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether to allow queuing.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="CleanAfter" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether to clean the sandbox after merging.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Merge" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Merges the values of one sandbox with another.
+          </String>
+                </Annotation>
+                <Parameter Name="Source" Type="ibm.tm1.api.v1.Sandbox" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The sandbox to be merged with the target sandbox.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Target" Type="ibm.tm1.api.v1.Sandbox" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The sandbox target that you want to merge to.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="ConflictResolution" Type="ibm.tm1.api.v1.ConflictResolution">
+                    <Annotation Term="Core.Description">
+                        <String>
+              An enumerated value that indicates whether to resolve conflicts using the source, target, or individually.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="AllowQueueing" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether to allow queuing.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="CleanAfter" Type="Edm.Boolean">
+                    <Annotation Term="Core.Description">
+                        <String>
+              A Boolean that indicates whether to clean the sandbox after merging.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Load" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Loads the sandbox into memory on the server.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            This action sets the IsLoaded property for Sandbox entity.
+          </String>
+                </Annotation>
+                <Parameter Name="Sandbox" Type="ibm.tm1.api.v1.Sandbox" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The sandbox to be loaded.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Unload" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Unloads the sandbox from memory on the server.
+          </String>
+                </Annotation>
+                <Annotation Term="Core.LongDescription">
+                    <String>
+            This action is useful for freeing up resources when they are no longer needed.
+          </String>
+                </Annotation>
+                <Parameter Name="Sandbox" Type="ibm.tm1.api.v1.Sandbox" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The sandbox to be unloaded.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="DiscardChanges" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Resets the values in the sandbox back to the base.
+          </String>
+                </Annotation>
+                <Parameter Name="Sandbox" Type="ibm.tm1.api.v1.Sandbox" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The sandbox to be reset.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="SetComponent" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Sets the child element of a particular element, allowing you to specify the relationship to the parent.
+          </String>
+                </Annotation>
+                <Parameter Name="Parent" Type="ibm.tm1.api.v1.Element" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The parent element to set.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Element" Type="ibm.tm1.api.v1.Element" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The element to set as a child of this parent.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Before" Type="ibm.tm1.api.v1.Element">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Specifies the position where the new component should be created.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              If NULL is specified, the new component is added to the beginning of the set.
+              A POST operation appends to the end of a collection by default.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Weight" Type="Edm.Double">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The weight of the element.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="SetElement" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Inserts an element into a specified position by setting the parent.
+          </String>
+                </Annotation>
+                <Parameter Name="Hierarchy" Type="ibm.tm1.api.v1.Hierarchy" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The hierarchy where the element will be inserted.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Element" Type="ibm.tm1.api.v1.Element" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The element to insert.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Before" Type="ibm.tm1.api.v1.Element">
+                    <Annotation Term="Core.Description">
+                        <String>
+              If specified, inserts the element before the element specified.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              If NULL is specified, the new element is added to the beginning of the set.
+              A POST operation appends to the end of a collection by default.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="SetElement" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Inserts an element into a specified subset at a specified location.
+          </String>
+                </Annotation>
+                <Parameter Name="Subset" Type="ibm.tm1.api.v1.Subset" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The subset where the element will be inserted.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Element" Type="ibm.tm1.api.v1.Element" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The element to insert.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Before" Type="ibm.tm1.api.v1.Element">
+                    <Annotation Term="Core.Description">
+                        <String>
+              If specified, inserts the element before the element specified.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              If NULL is specified, the new element is added to the beginning of the set.
+              A POST operation appends to the end of a collection by default.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="After" Type="ibm.tm1.api.v1.Element">
+                    <Annotation Term="Core.Description">
+                        <String>
+              If specified, inserts the element after the element specified.
+            </String>
+                    </Annotation>
+                    <Annotation Term="Core.LongDescription">
+                        <String>
+              If NULL is specified, the new element is added to the end of the set.
+              A POST operation appends to the end of a collection by default.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="DeleteAnnotationArtifacts" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Removes all annotation-related control cubes and all things related to annotations
+            for the entire model including context facets, comments, attachments, and so on.
+            Use this action with caution because it cannot be undone.
+          </String>
+                </Annotation>
+            </Action>
+            <Action Name="Update" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Applies updates to a cell, or a range of cells, depending on the value
+            of the parameters provided.
+          </String>
+                </Annotation>
+                <Parameter Name="Cellset" Type="ibm.tm1.api.v1.Cellset" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cellset targeted by the update, specified in the resource path of the URL.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="BeginOrdinal" Type="Edm.Int64" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              Specifies the cell to update if updating a single cell, or the beginning of the range
+              if updating more than one cell.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="EndOrdinal" Type="Edm.Int64">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The last cell position when updating a range of cells.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="ReferenceCube" Type="ibm.tm1.api.v1.Cube">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cube from which the data for the ReferenceCell is sourced.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="ReferenceCell" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cell, or slice, containing the source data required by the spreading command.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Value" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The actual value, typically a spreading command, with which the cell is updated.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Update" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Applies updates to a cube, a slice of a cube, or cells of a cube, depending on the value
+            of the parameters provided.
+          </String>
+                </Annotation>
+                <Parameter Name="Cube" Type="ibm.tm1.api.v1.Cube" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cube targeted by the update, specified in the resource path of the URL.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Slice" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The slice of the cube targeted by the update.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Cells" Type="Collection(ibm.tm1.api.v1.CellDescriptor)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cells of the cube targeted by the update.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="ReferenceCube" Type="ibm.tm1.api.v1.Cube">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cube containing the source data required by the spreading command.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="ReferenceCell" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cell containing the source data required by the spreading command.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Value" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The actual value, typically a spreading command, with which the cell is updated.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Update" IsBound="false">
+                <Annotation Term="Core.Description">
+                    <String>
+            Applies updates to a cube, a slice of a cube, or cells of a cube, depending on the value
+            of the parameters provided.
+          </String>
+                </Annotation>
+                <Parameter Name="Cube" Type="ibm.tm1.api.v1.Cube" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cube targeted by the update, specified in the resource path of the URL.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Slice" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The slice of the cube targeted by the update.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Cells" Type="Collection(ibm.tm1.api.v1.CellDescriptor)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cells of the cube targeted by the update.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="ReferenceCube" Type="ibm.tm1.api.v1.Cube">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cube containing the source data required by the spreading command.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="ReferenceCell" Type="Collection(ibm.tm1.api.v1.Element)">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The cell containing the source data required by the spreading command.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="Value" Type="Edm.String" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The actual value, typically a spreading command, with which the cell is updated.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Close" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Closes the session.
+          </String>
+                </Annotation>
+                <Parameter Name="Session" Type="ibm.tm1.api.v1.Session" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The session being closed.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="CancelOperation" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Cancels an operation.
+          </String>
+                </Annotation>
+                <Parameter Name="Thread" Type="ibm.tm1.api.v1.Thread" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The thread where the action should be canceled.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Activate" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Activates a chore.
+          </String>
+                </Annotation>
+                <Parameter Name="Chore" Type="ibm.tm1.api.v1.Chore" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The chore to activate.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Deactivate" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Deactivates a chore.
+          </String>
+                </Annotation>
+                <Parameter Name="Chore" Type="ibm.tm1.api.v1.Chore" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The chore to deactivate.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="Execute" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Executes a chore.
+          </String>
+                </Annotation>
+                <Parameter Name="Chore" Type="ibm.tm1.api.v1.Chore" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The chore to execute.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <Action Name="SetServerLocalStartTime" IsBound="true">
+                <Annotation Term="Core.Description">
+                    <String>
+            Sets the local start time for a server.
+          </String>
+                </Annotation>
+                <Parameter Name="Chore" Type="ibm.tm1.api.v1.Chore" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The chore to set the server start time for.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="StartDate" Type="Edm.Date" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The start date to set for this chore.
+            </String>
+                    </Annotation>
+                </Parameter>
+                <Parameter Name="StartTime" Type="Edm.TimeOfDay" Nullable="false">
+                    <Annotation Term="Core.Description">
+                        <String>
+              The start time to set for this chore.
+            </String>
+                    </Annotation>
+                </Parameter>
+            </Action>
+            <EntityContainer Name="API">
+                <Annotation Term="Core.Description">
+                    <String>
+            Top-level container for the EDM that defines the resources that comprise the API,
+            including entity sets, singletons, actions, and functions.
+            If an item is defined in the EDM but is not defined within the API entity container,
+            it is bound to another resource defined within the model.
+          </String>
+                </Annotation>
+                <Annotation Term="Org.OData.Core.V1.DereferenceableIDs" Bool="true"/>
+                <Annotation Term="Org.OData.Core.V1.ConventionalIDs" Bool="true"/>
+                <Annotation Term="Org.OData.Capabilities.V1.ConformanceLevel">
+                    <EnumMember>
+            Org.OData.Capabilities.V1.ConformanceLevelType/Intermediate
+          </EnumMember>
+                </Annotation>
+                <Annotation Term="Org.OData.Capabilities.V1.SupportedFormats">
+                    <Collection>
+                        <String>
+              application/json
+            </String>
+                        <String>
+              application/json;odata.metadata=full
+            </String>
+                        <String>
+              application/json;odata.metadata=minimal
+            </String>
+                        <String>
+              application/json;odata.metadata=none
+            </String>
+                        <String>
+              application/json;IEEE754Compatible=false
+            </String>
+                        <String>
+              application/json;IEEE754Compatible=true
+            </String>
+                        <String>
+              application/json;odata.streaming=true
+            </String>
+                        <String>
+              application/json;IEEE754Compatible=false;odata.streaming=true
+            </String>
+                        <String>
+              application/json;IEEE754Compatible=true;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=full;IEEE754Compatible=false
+            </String>
+                        <String>
+              application/json;odata.metadata=minimal;IEEE754Compatible=false
+            </String>
+                        <String>
+              application/json;odata.metadata=none;IEEE754Compatible=false
+            </String>
+                        <String>
+              application/json;odata.metadata=full;IEEE754Compatible=true
+            </String>
+                        <String>
+              application/json;odata.metadata=minimal;IEEE754Compatible=true
+            </String>
+                        <String>
+              application/json;odata.metadata=none;IEEE754Compatible=true
+            </String>
+                        <String>
+              application/json;odata.metadata=full;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=minimal;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=none;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=full;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=minimal;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=none;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=full;IEEE754Compatible=false;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=minimal;IEEE754Compatible=false;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=none;IEEE754Compatible=false;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=full;IEEE754Compatible=true;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=minimal;IEEE754Compatible=true;odata.streaming=true
+            </String>
+                        <String>
+              application/json;odata.metadata=none;IEEE754Compatible=true;odata.streaming=true
+            </String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="Org.OData.Capabilities.V1.AsynchronousRequestsSupported" Bool="true"/>
+                <Annotation Term="Org.OData.Capabilities.V1.BatchSupported" Bool="false"/>
+                <EntitySet Name="Cubes" EntityType="ibm.tm1.api.v1.Cube">
+                    <NavigationPropertyBinding Path="Dimensions" Target="Dimensions"/>
+                    <NavigationPropertyBinding Path="Annotations" Target="Annotations"/>
+                </EntitySet>
+                <EntitySet Name="Dimensions" EntityType="ibm.tm1.api.v1.Dimension"/>
+                <EntitySet Name="Processes" EntityType="ibm.tm1.api.v1.Process"/>
+                <EntitySet Name="Annotations" EntityType="ibm.tm1.api.v1.Annotation"/>
+                <EntitySet Name="Cellsets" EntityType="ibm.tm1.api.v1.Cellset" IncludeInServiceDocument="false">
+                    <NavigationPropertyBinding Path="Cube" Target="Cubes"/>
+                </EntitySet>
+                <EntitySet Name="Users" EntityType="ibm.tm1.api.v1.User">
+                    <NavigationPropertyBinding Path="Groups" Target="Groups"/>
+                    <NavigationPropertyBinding Path="Sessions" Target="Sessions"/>
+                </EntitySet>
+                <Singleton Name="ActiveUser" Type="ibm.tm1.api.v1.User">
+                    <NavigationPropertyBinding Path="Groups" Target="Groups"/>
+                    <NavigationPropertyBinding Path="Sessions" Target="Sessions"/>
+                </Singleton>
+                <EntitySet Name="Groups" EntityType="ibm.tm1.api.v1.Group">
+                    <NavigationPropertyBinding Path="Users" Target="Users"/>
+                </EntitySet>
+                <EntitySet Name="Sandboxes" EntityType="ibm.tm1.api.v1.Sandbox"/>
+                <EntitySet Name="ApplicationContextFacets" EntityType="ibm.tm1.api.v1.ApplicationContextFacet"/>
+                <EntitySet Name="CubeAttributes" EntityType="ibm.tm1.api.v1.AttributeDefinition"/>
+                <EntitySet Name="DimensionAttributes" EntityType="ibm.tm1.api.v1.AttributeDefinition"/>
+                <Singleton Name="Configuration" Type="ibm.tm1.api.v1.Configuration"/>
+                <EntitySet Name="Sessions" EntityType="ibm.tm1.api.v1.Session">
+                    <NavigationPropertyBinding Path="User" Target="Users"/>
+                    <NavigationPropertyBinding Path="Threads" Target="Threads"/>
+                </EntitySet>
+                <Singleton Name="ActiveSession" Type="ibm.tm1.api.v1.Session">
+                    <NavigationPropertyBinding Path="User" Target="Users"/>
+                    <NavigationPropertyBinding Path="Threads" Target="Threads"/>
+                </Singleton>
+                <EntitySet Name="Threads" EntityType="ibm.tm1.api.v1.Thread">
+                    <NavigationPropertyBinding Path="Session" Target="Sessions"/>
+                </EntitySet>
+                <EntitySet Name="Chores" EntityType="ibm.tm1.api.v1.Chore"/>
+                <EntitySet Name="Contents" EntityType="ibm.tm1.api.v1.Folder"/>
+                <EntitySet Name="Loggers" EntityType="ibm.tm1.api.v1.Logger"/>
+                <EntitySet Name="MessageLogEntries" EntityType="ibm.tm1.api.v1.MessageLogEntry">
+                    <Annotation Term="Org.OData.Capabilities.V1.IndexableByKey" Bool="false"/>
+                    <Annotation Term="Org.OData.Capabilities.V1.ChangeTracking">
+                        <Record>
+                            <PropertyValue Property="Supported" Bool="true"/>
+                            <PropertyValue Property="FilterableProperties">
+                                <Collection>
+                                    <PropertyPath>ThreadID</PropertyPath>
+                                    <PropertyPath>SessionID</PropertyPath>
+                                    <PropertyPath>Level</PropertyPath>
+                                    <PropertyPath>TimeStamp</PropertyPath>
+                                    <PropertyPath>Logger</PropertyPath>
+                                    <PropertyPath>Message</PropertyPath>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="TransactionLogEntries" EntityType="ibm.tm1.api.v1.TransactionLogEntry">
+                    <Annotation Term="Org.OData.Capabilities.V1.IndexableByKey" Bool="false"/>
+                    <Annotation Term="Org.OData.Capabilities.V1.ChangeTracking">
+                        <Record>
+                            <PropertyValue Property="Supported" Bool="true"/>
+                            <PropertyValue Property="FilterableProperties">
+                                <Collection>
+                                    <PropertyPath>ChangeSetID</PropertyPath>
+                                    <PropertyPath>TimeStamp</PropertyPath>
+                                    <PropertyPath>ReplicationTime</PropertyPath>
+                                    <PropertyPath>Cube</PropertyPath>
+                                    <PropertyPath>Tuple</PropertyPath>
+                                    <PropertyPath>OldValue</PropertyPath>
+                                    <PropertyPath>NewValue</PropertyPath>
+                                    <PropertyPath>StatusMessage</PropertyPath>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <FunctionImport Name="ModelCubes" Function="ibm.tm1.api.v1.ModelCubes" EntitySet="Cubes" IncludeInServiceDocument="true"/>
+                <FunctionImport Name="ControlCubes" Function="ibm.tm1.api.v1.ControlCubes" EntitySet="Cubes" IncludeInServiceDocument="true"/>
+                <FunctionImport Name="ModelDimensions" Function="ibm.tm1.api.v1.ModelDimensions" EntitySet="Dimensions" IncludeInServiceDocument="true"/>
+                <FunctionImport Name="ControlDimensions" Function="ibm.tm1.api.v1.ControlDimensions" EntitySet="Dimensions" IncludeInServiceDocument="true"/>
+                <FunctionImport Name="MessageLog" Function="ibm.tm1.api.v1.MessageLog" IncludeInServiceDocument="true"/>
+                <FunctionImport Name="TransactionLog" Function="ibm.tm1.api.v1.TransactionLog" IncludeInServiceDocument="true"/>
+                <ActionImport Name="ExecuteMDX" Action="ibm.tm1.api.v1.ExecuteMDX" EntitySet="Cellsets"/>
+                <ActionImport Name="DeleteAnnotationArtifacts" Action="ibm.tm1.api.v1.DeleteAnnotationArtifacts"/>
+                <ActionImport Name="BeginChangeSet" Action="ibm.tm1.api.v1.BeginChangeSet"/>
+                <ActionImport Name="EndChangeSet" Action="ibm.tm1.api.v1.EndChangeSet"/>
+                <ActionImport Name="UndoChangeSet" Action="ibm.tm1.api.v1.UndoChangeSet"/>
+                <ActionImport Name="Update" Action="ibm.tm1.api.v1.Update"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

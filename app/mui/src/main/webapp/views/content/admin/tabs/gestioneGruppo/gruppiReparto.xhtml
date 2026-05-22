@@ -1,0 +1,245 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <!-- Dialog aggiunta reparti -->
+                    <p:dialog widgetVar="dlgAddRepartiToGroup" resizable="false" closable="false" width="800"
+                              styleClass="pf-dialog disable-horizontal-scroll" header="Aggiungi Reparti al Gruppo">
+                        <h:form styleClass="formAddRepartiToGroup">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p:panel header="Seleziona Reparti" style="margin-bottom: 10px;">
+                                        <p:selectManyMenu id="repartiSelector" styleClass="repartiSelector" filter="false"
+                                                          value="#{gestioneGruppi.gruppiRepartiBean.selectedReparti}"
+                                                          showCheckbox="true" style="width: 100%;">
+                                            <p:ajax event="change" update="@(.ui-confirmdialog-yes)" />
+                                            <f:converter binding="#{repartiConverter}" />
+                                            <f:selectItems value="#{gestioneGruppi.gruppiRepartiBean.availableReparti}"
+                                                           var="r" itemValue="#{r}"
+                                                           itemLabel="[#{r.codiceReparto}] #{r.descrizione}" />
+                                        </p:selectManyMenu>
+                                        <f:facet name="footer">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <p:commandButton value="Seleziona tutti" styleClass="pf-btn-confirm"
+                                                                     icon="fa fa-fw fa-check-square"
+                                                                     action="#{gestioneGruppi.selectAllReparti}"
+                                                                     disabled="#{empty gestioneGruppi.gruppiRepartiBean.availableReparti}"
+                                                                     update="@(.repartiSelector), @(.ui-confirmdialog-yes)" />
+                                                    <p:commandButton value="Deseleziona tutti"
+                                                                     styleClass="pf-btn-cancel"
+                                                                     icon="fa fa-fw fa-square"
+                                                                     action="#{gestioneGruppi.deselectAllReparti}"
+                                                                     disabled="#{empty gestioneGruppi.gruppiRepartiBean.availableReparti}"
+                                                                     update="@(.repartiSelector), @(.ui-confirmdialog-yes)" />
+                                                </div>
+                                                <div class="col-4">
+                                                    <div style="float: left; margin-top: 15px;">Tipo Accesso</div>
+                                                    <p:inputSwitch showLabels="true" label="Accesso"
+                                                                   value="#{gestioneGruppi.gruppiRepartiBean.tipoAccesso}"
+                                                                   style="margin-left: 10px; margin-top: 13px !important;"
+                                                                   onLabel="W" offLabel="R">
+                                                        <p:ajax update="@(.formAddRepartiToGroup)" />
+                                                        <f:converter binding="#{tipoAccessoConverter}" />
+                                                    </p:inputSwitch>
+                                                </div>
+                                            </div>
+                                        </f:facet>
+                                    </p:panel>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;" process="@this"
+                                                     oncomplete="PF('dlgAddRepartiToGroup').hide();" />
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton styleClass="ui-confirmdialog-yes" value="Conferma"
+                                                     actionListener="#{gestioneGruppi.addRepartoToGroup}"
+                                                     update="@(.formAddRepartiToGroup), @(.updateableContent)"
+                                                     disabled="#{empty gestioneGruppi.gruppiRepartiBean.selectedReparti}"
+                                                     oncomplete="PF('dlgAddRepartiToGroup').hide();" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </p:dialog>
+
+                    <!-- Dialog conferma copia da gruppo senza reparti -->
+                    <p:confirmDialog widgetVar="dlgGroupNoReparti" header="Attenzione" styleClass="dlgGroupNoReparti"
+                                     message="Stai copiando da un gruppo senza reparti associati. Confermi?"
+                                     severity="alert">
+                        <p:commandButton value="SI" update="@(.updateableReparti)"
+                                         action="#{gestioneGruppi.confirmCopyFromGroup}"
+                                         oncomplete="PF('dlgGroupNoReparti').hide(); PF('dlgCopyFromGroup').hide()" />
+                        <p:commandButton value="NO" onclick="PF('dlgGroupNoReparti').hide()"
+                                         style="float: right;" type="button" />
+                    </p:confirmDialog>
+
+                    <!-- Dialog copia -->
+                    <p:dialog widgetVar="dlgCopyFromGroup" resizable="false" closable="false"
+                              styleClass="pf-dialog disable-horizontal-scroll"
+                              width="600" height="25vh" header="Copia da Gruppo">
+                        <h:form id="copyFromGroupDlgForm" styleClass="dlgCopyFromGroupForm">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="copyGroup" value="Da gruppo" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="copyGroup" styleClass="input-field" style="width: 100%;"
+                                                         filter="true" filterMatchMode="contains"
+                                                         value="#{gestioneGruppi.gruppiRepartiBean.idCopyGroup}">
+                                            <p:ajax update="@(.dlgCopyFromGroupForm) @(.ui-confirmdialog-yes)" />
+                                            <f:selectItem itemLabel="Seleziona gruppo" noSelectionOption="true" />
+                                            <f:selectItems value="#{gestioneGruppi.gruppiRepartiBean.groupsForCopy}"
+                                                           var="g" itemLabel="#{g.descrizione}" itemValue="#{g.id}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                        <f:facet name="footer">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                                     action="#{gestioneGruppi.resetCopyFromGroupDialog}"
+                                                     onclick="PF('dlgCopyFromGroup').hide()" />
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton id="copyFromGroupDlgConfirmBtn" value="Copia"
+                                                     styleClass="ui-confirmdialog-yes"
+                                                     action="#{gestioneGruppi.preConfirmCopyFromGroup}"
+                                                     update="@(.dlgGroupNoReparti) @(.updateableReparti)" />
+                                </div>
+                            </div>
+                        </f:facet>
+                    </p:dialog>
+
+                    <h:form>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <p:outputLabel for="gruppo" value="Seleziona Gruppo" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="gruppo" value="#{gestioneGruppi.selectedGroupCombo}"
+                                                     class="input-field" style="width: 100%;" filter="true"
+                                                     filterMatchMode="contains">
+                                        <f:converter binding="#{groupsConverter}" />
+                                        <p:ajax update="@(.updateableReparti) @(.reparti-massive-action)" />
+                                        <f:selectItems value="#{gestioneGruppi.groupList}" var="g"
+                                                       itemLabel="#{g.codiceGruppo} - #{g.descrizione}"
+                                                       itemValue="#{g}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <p:commandButton value="Copia" id="copyFromGroup" styleClass="pf-btn-confirm"
+                                                 style="float: right;"
+                                                 action="#{gestioneGruppi.openCopyFromGroupDialog}"
+                                                 oncomplete="PF('dlgCopyFromGroup').show()"
+                                                 update="@(.dlgCopyFromGroupForm)" />
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-6">
+                                <p:panel header="Reparti Associati" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                                         styleClass="pnlGrid_Header updateableContent">
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p:commandButton action="#{gestioneGruppi.removeAllReparti}"
+                                                             styleClass="pf-btn-danger reparti-massive-action"
+                                                             style="float: right; margin-left: 10px;"
+                                                             disabled="#{empty gestioneGruppi.gruppiRepartiBean.reparti}"
+                                                             value="Elimina tutti" icon="far fa-fw fa-trash-alt"
+                                                             update="@(.updateableReparti) @(.reparti-massive-action)">
+                                                <p:confirm header="Attenzione" icon="ui-icon-alert"
+                                                           message="Confermi l'eliminazione di tutti i reparti dal gruppo?" />
+                                            </p:commandButton>
+                                            <p:commandButton action="#{gestioneGruppi.changeRepartiAllWrite}"
+                                                             styleClass="pf-btn-confirm reparti-massive-action"
+                                                             style="float: right; margin-left: 10px;"
+                                                             disabled="#{empty gestioneGruppi.gruppiRepartiBean.reparti}"
+                                                             value="Imposta WRITE tutti"
+                                                             update="@(.updateableReparti)">
+                                                <p:confirm header="Attenzione" icon="ui-icon-alert"
+                                                           message="Confermi il tipo accesso WRITE per tutti i reparti?" />
+                                            </p:commandButton>
+                                            <p:commandButton action="#{gestioneGruppi.changeRepartiAllRead}"
+                                                             styleClass="pf-btn-confirm reparti-massive-action"
+                                                             style="float: right;"
+                                                             disabled="#{empty gestioneGruppi.gruppiRepartiBean.reparti}"
+                                                             value="Imposta READ tutti"
+                                                             update="@(.updateableReparti)">
+                                                <p:confirm header="Attenzione" icon="ui-icon-alert"
+                                                           message="Confermi il tipo accesso READ per tutti i reparti?" />
+                                            </p:commandButton>
+                                        </div>
+                                    </div>
+
+                                    <p:dataTable var="r" styleClass="pf-datatable updateableReparti"
+                                                 widgetVar="repartiTable"
+                                                 value="#{gestioneGruppi.gruppiRepartiBean.reparti}"
+                                                 rowKey="#{r.id}" rowIndexVar="rowIndex">
+                                        <p:column headerText="Reparto" width="50%">
+                                            <h:outputText
+                                                    value="[#{r.reparto.codiceReparto}] #{r.reparto.descrizione}" />
+                                        </p:column>
+                                        <p:column headerText="Tipo Accesso" width="30%" style="text-align: center;">
+                                            <p:inputSwitch onLabel="W" offLabel="R" value="#{r.tipoAccesso}">
+                                                <f:converter binding="#{tipoAccessoConverter}" />
+                                                <p:ajax update="@(.repartiTable)"
+                                                        listener="#{gestioneGruppi.toggleSecurity}" />
+                                                <f:attribute value="#{r}" name="toggleEntity" />
+                                            </p:inputSwitch>
+                                        </p:column>
+                                        <p:column width="20%" style="text-align: center;">
+                                            <p:commandButton icon="ui-icon-trash" title="Elimina Reparto da Gruppo"
+                                                             action="#{gestioneGruppi.removeRepartoFromGroup}"
+                                                             update="@(.updateableContent)">
+                                                <p:confirm header="Conferma Necessaria"
+                                                           message="Confermi eliminazione reparto dal gruppo?"
+                                                           icon="ui-icon-alert" />
+                                                <f:setPropertyActionListener value="#{r}"
+                                                                             target="#{gestioneGruppi.gruppiRepartiBean.selectedGruppoReparto}" />
+                                            </p:commandButton>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <f:facet name="actions">
+                                        <p:commandLink action="#{gestioneGruppi.openAddRepartiToGroupDialog}"
+                                                       styleClass="pnlGrid_Header plusButton"
+                                                       update="@(.formAddRepartiToGroup)" />
+                                    </f:facet>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ui-inputswitch {
+            margin-top: 5px !important;
+        }
+
+        .ui-inputswitch-on > span {
+            color: #ffffff !important;
+        }
+
+        .reparti-massive-action.ui-state-disabled {
+            opacity: .35 !important;
+        }
+    </style>
+</ui:composition>
+</html>

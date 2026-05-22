@@ -1,0 +1,21 @@
+{
+  "grid": "grid1",
+  "colId": [
+    {
+      "visible": true,
+      "name": "articolo"
+    },
+    {
+      "visible": false,
+      "name": "compratore"
+    },
+    {
+      "name": "fornitore",
+      "visible": true
+    },
+    {
+      "name": "other",
+      "visible": false
+    }
+  ]
+}

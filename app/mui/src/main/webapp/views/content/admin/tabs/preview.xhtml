@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+>
+<ui:composition>
+	<div class="row">
+		<div class="col-12">
+			<p:panelGrid columns="2" style="border: none;">
+				<p:outputLabel for="@next" value="Ruolo :" />
+				<p:selectOneMenu id="availableRoles" style="width:300px"
+					value="#{gestioneMenuRole.selectedPreviewRole}">
+					<f:converter binding="#{rolesConverter}" />
+					<p:ajax event="change" listener="#{gestioneMenuRole.updatePreview}"
+						update="@(.previewTree)" />
+					<f:selectItem itemLabel="Selezionare un ruolo" noSelectionOption="true" />
+					<f:selectItems value="#{gestioneMenuRole.roles}" var="role"
+						itemLabel="#{role.name}" itemValue="#{role}" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+
+			<p:tree value="#{gestioneMenuRole.previewMenu}" var="node"
+				dynamic="false" selectionMode="single" style="width:100%"
+				styleClass="previewTree" id="previewTree">
+				<p:treeNode type="folder" expandedIcon="fa fa-fw fa-minus-square"
+					collapsedIcon="fa fa-fw fa-plus-square">
+					<h:outputText value="#{node.label}"
+						style="min-height:25px !important" />
+				</p:treeNode>
+
+				<p:treeNode type="external"
+					icon="fa fa-fw fa-external-link-square-alt">
+					<h:outputText value="#{node.label}"
+						style="min-height:25px !important" />
+				</p:treeNode>
+
+				<p:treeNode type="internal" icon="fa fa-fw fa-splotch">
+					<h:outputText value="#{node.label}"
+						style="min-height:25px !important" />
+				</p:treeNode>
+			</p:tree>
+			<p:outputPanel id="treeEmptyMessage" styleClass="previewTree">
+				<h:outputText  value="Nessuna voce di menu associata al ruolo" rendered="#{gestioneMenuRole.isPreviewEmpty()}"/>
+			</p:outputPanel>
+		</div>
+	</div>
+</ui:composition>
+</html>

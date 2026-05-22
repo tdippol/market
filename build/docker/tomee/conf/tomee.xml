@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomee>
+  <!-- see http://tomee.apache.org/containers-and-resources.html -->
+
+  <!-- activate next line to be able to deploy applications in apps -->
+  <!-- <Deployments dir="apps" /> -->
+  <Deployments dir="apps" autoDeploy="true"/> 
+
+<Resource id="jdbc/auth" type="DataSource">
+	JdbcDriver org.postgresql.Driver
+	JdbcUrl jdbc:postgresql://database:5432/postgres?currentSchema=tomee
+	maxActive = 10
+    maxIdle = 5
+	minEvictableIdleTime = 10
+	timeBetweenEvictionRuns	 = 10000
+	validationQuery	= SELECT 1
+	UserName tomee
+	Password tomee
+  </Resource> 	
+
+  <Resource id="jdbc/muipromo/dbpromo/Ora" type="DataSource" >
+	JdbcDriver org.postgresql.Driver
+	JdbcUrl jdbc:postgresql://database:5432/postgres?escapeSyntaxCallMode=callIfNoReturn&amp;currentSchema=dbpromo&amp;stringtype=unspecified
+    maxActive = 10
+    maxIdle = 5
+	minEvictableIdleTime = 10
+	timeBetweenEvictionRuns	 = 10000
+	validationQuery	= SELECT 1
+	UserName dbpromo
+	Password dbpromo
+  </Resource>
+
+  <Resource id="jdbc/muipromo/muipromo/Ora" type="DataSource">
+	JdbcDriver org.postgresql.Driver
+	JdbcUrl jdbc:postgresql://database:5432/postgres?currentSchema=muipromo
+    maxActive = 10
+    maxIdle = 5
+	minEvictableIdleTime = 10
+	timeBetweenEvictionRuns	 = 10000
+	validationQuery	= SELECT 1
+	UserName muipromo
+	Password muipromo
+  </Resource>
+
+
+  
+
+</tomee>
+

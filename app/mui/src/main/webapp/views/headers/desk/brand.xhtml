@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+<div class="k-header__brand k-grid__item" id="k_header_brand"
+	style="background-color: #2f2e38;">
+	<p:commandLink style="border: none!important;" actionListener="#{templateView.goToHomepage}" onclick="PF('globalSpinner').show()"
+				   oncomplete="PF('globalSpinner').hide();PF('mui-menu').hide();" update="@(.updateContent)">
+		<p:graphicImage styleClass="refreshImage" cache="false"
+			value="#{imageProducer.image}"
+			style="width:110px;" >
+			<f:param name="mui_image_name" value="logo-top.png" />
+		</p:graphicImage>
+	</p:commandLink>
+</div>
+</ui:composition>
+</html>

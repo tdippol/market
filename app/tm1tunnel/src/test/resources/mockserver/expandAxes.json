@@ -1,0 +1,4469 @@
+{
+    "@odata.context": "$metadata#Cellsets(Axes(Hierarchies+(Name),Tuples+(Members+(Name))))/$entity",
+    "ID": "stVqWl4-AYA8AAAg",
+    "Axes": [
+        {
+            "Ordinal": 0,
+            "Cardinality": 385,
+            "Hierarchies": [
+                {
+                    "@odata.etag": "W/\"85959dimAttributes20190912133527300\"",
+                    "Name": "Scenario"
+                },
+                {
+                    "@odata.etag": "W/\"21449dimAttributes20190912133527300\"",
+                    "Name": "Misura Timone."
+                }
+            ],
+            "Tuples": [
+                {
+                    "Ordinal": 0,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "ASSORT_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 1,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "CDD_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 2,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "CLN"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 3,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 4,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 5,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 6,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "CST_VAS"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 7,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_ART/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 8,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_ART/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 9,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 10,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 11,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 12,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 13,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 14,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 15,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 16,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 17,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOTO_ULT/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 18,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_FOT_SPEC/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 19,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_VEND/RIF"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 20,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "D_VEND/RIF_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 21,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 22,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 23,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 24,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 25,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 26,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 27,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "MUI_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 28,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "MUI_TSTII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 29,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "MUI_TSTIII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 30,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "N_ART_PROMO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 31,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "N_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 32,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 33,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 34,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 35,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "N_FOTO_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 36,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "N_FOTO_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 37,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "N_FOTO_ULT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 38,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "PGN_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 39,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "PGN_MED_A"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 40,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "PGN_MED_B"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 41,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "PGN_MGR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 42,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "PGN_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 43,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "PGN_TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 44,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "PGN_TVL_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 45,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "REDEMPTION"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 46,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "TST_FRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 47,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "TST_SRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 48,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 49,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "VENDUTO_PROMO_NETTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 50,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "VSC_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 51,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "VSC_MED"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 52,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "VSC_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 53,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "WarningNumeriche"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 54,
+                    "Members": [
+                        {
+                            "Name": "BDG"
+                        },
+                        {
+                            "Name": "TOT_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 55,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "ASSORT_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 56,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "CDD_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 57,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "CLN"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 58,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 59,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 60,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 61,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "CST_VAS"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 62,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_ART/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 63,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_ART/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 64,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 65,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 66,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 67,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 68,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 69,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 70,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 71,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 72,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOTO_ULT/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 73,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_FOT_SPEC/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 74,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_VEND/RIF"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 75,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "D_VEND/RIF_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 76,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 77,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 78,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 79,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 80,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 81,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 82,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "MUI_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 83,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "MUI_TSTII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 84,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "MUI_TSTIII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 85,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "N_ART_PROMO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 86,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "N_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 87,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 88,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 89,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 90,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "N_FOTO_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 91,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "N_FOTO_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 92,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "N_FOTO_ULT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 93,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "PGN_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 94,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "PGN_MED_A"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 95,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "PGN_MED_B"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 96,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "PGN_MGR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 97,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "PGN_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 98,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "PGN_TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 99,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "PGN_TVL_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 100,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "REDEMPTION"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 101,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "TST_FRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 102,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "TST_SRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 103,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 104,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "VENDUTO_PROMO_NETTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 105,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "VSC_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 106,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "VSC_MED"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 107,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "VSC_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 108,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "WarningNumeriche"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 109,
+                    "Members": [
+                        {
+                            "Name": "CONS"
+                        },
+                        {
+                            "Name": "TOT_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 110,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "ASSORT_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 111,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "CDD_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 112,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "CLN"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 113,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 114,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 115,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 116,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "CST_VAS"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 117,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_ART/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 118,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_ART/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 119,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 120,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 121,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 122,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 123,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 124,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 125,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 126,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 127,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOTO_ULT/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 128,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_FOT_SPEC/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 129,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_VEND/RIF"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 130,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "D_VEND/RIF_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 131,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 132,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 133,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 134,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 135,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 136,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 137,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "MUI_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 138,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "MUI_TSTII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 139,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "MUI_TSTIII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 140,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "N_ART_PROMO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 141,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "N_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 142,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 143,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 144,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 145,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "N_FOTO_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 146,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "N_FOTO_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 147,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "N_FOTO_ULT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 148,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "PGN_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 149,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "PGN_MED_A"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 150,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "PGN_MED_B"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 151,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "PGN_MGR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 152,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "PGN_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 153,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "PGN_TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 154,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "PGN_TVL_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 155,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "REDEMPTION"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 156,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "TST_FRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 157,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "TST_SRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 158,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 159,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "VENDUTO_PROMO_NETTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 160,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "VSC_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 161,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "VSC_MED"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 162,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "VSC_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 163,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "WarningNumeriche"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 164,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_DT"
+                        },
+                        {
+                            "Name": "TOT_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 165,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "ASSORT_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 166,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "CDD_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 167,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "CLN"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 168,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 169,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 170,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 171,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "CST_VAS"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 172,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_ART/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 173,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_ART/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 174,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 175,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 176,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 177,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 178,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 179,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 180,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 181,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 182,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOTO_ULT/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 183,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_FOT_SPEC/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 184,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_VEND/RIF"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 185,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "D_VEND/RIF_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 186,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 187,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 188,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 189,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 190,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 191,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 192,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "MUI_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 193,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "MUI_TSTII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 194,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "MUI_TSTIII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 195,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "N_ART_PROMO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 196,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "N_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 197,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 198,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 199,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 200,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "N_FOTO_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 201,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "N_FOTO_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 202,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "N_FOTO_ULT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 203,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "PGN_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 204,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "PGN_MED_A"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 205,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "PGN_MED_B"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 206,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "PGN_MGR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 207,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "PGN_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 208,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "PGN_TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 209,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "PGN_TVL_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 210,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "REDEMPTION"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 211,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "TST_FRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 212,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "TST_SRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 213,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 214,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "VENDUTO_PROMO_NETTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 215,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "VSC_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 216,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "VSC_MED"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 217,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "VSC_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 218,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "WarningNumeriche"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 219,
+                    "Members": [
+                        {
+                            "Name": "RIF_MKT_PR"
+                        },
+                        {
+                            "Name": "TOT_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 220,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "ASSORT_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 221,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "CDD_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 222,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "CLN"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 223,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 224,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 225,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 226,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "CST_VAS"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 227,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_ART/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 228,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_ART/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 229,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 230,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 231,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 232,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 233,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 234,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 235,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 236,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 237,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOTO_ULT/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 238,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_FOT_SPEC/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 239,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_VEND/RIF"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 240,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "D_VEND/RIF_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 241,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 242,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 243,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 244,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 245,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 246,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 247,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "MUI_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 248,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "MUI_TSTII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 249,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "MUI_TSTIII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 250,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "N_ART_PROMO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 251,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "N_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 252,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 253,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 254,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 255,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "N_FOTO_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 256,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "N_FOTO_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 257,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "N_FOTO_ULT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 258,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "PGN_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 259,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "PGN_MED_A"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 260,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "PGN_MED_B"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 261,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "PGN_MGR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 262,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "PGN_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 263,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "PGN_TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 264,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "PGN_TVL_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 265,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "REDEMPTION"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 266,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "TST_FRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 267,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "TST_SRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 268,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 269,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "VENDUTO_PROMO_NETTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 270,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "VSC_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 271,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "VSC_MED"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 272,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "VSC_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 273,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "WarningNumeriche"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 274,
+                    "Members": [
+                        {
+                            "Name": "TGT_ACQ"
+                        },
+                        {
+                            "Name": "TOT_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 275,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "ASSORT_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 276,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "CDD_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 277,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "CLN"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 278,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 279,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 280,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 281,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "CST_VAS"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 282,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_ART/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 283,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_ART/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 284,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 285,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 286,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 287,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 288,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 289,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 290,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 291,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 292,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOTO_ULT/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 293,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_FOT_SPEC/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 294,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_VEND/RIF"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 295,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "D_VEND/RIF_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 296,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 297,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 298,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 299,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 300,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 301,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 302,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "MUI_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 303,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "MUI_TSTII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 304,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "MUI_TSTIII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 305,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "N_ART_PROMO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 306,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "N_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 307,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 308,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 309,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 310,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "N_FOTO_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 311,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "N_FOTO_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 312,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "N_FOTO_ULT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 313,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "PGN_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 314,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "PGN_MED_A"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 315,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "PGN_MED_B"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 316,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "PGN_MGR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 317,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "PGN_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 318,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "PGN_TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 319,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "PGN_TVL_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 320,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "REDEMPTION"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 321,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "TST_FRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 322,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "TST_SRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 323,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 324,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "VENDUTO_PROMO_NETTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 325,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "VSC_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 326,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "VSC_MED"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 327,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "VSC_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 328,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "WarningNumeriche"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 329,
+                    "Members": [
+                        {
+                            "Name": "TGT_MKT"
+                        },
+                        {
+                            "Name": "TOT_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 330,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "ASSORT_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 331,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "CDD_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 332,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "CLN"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 333,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 334,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 335,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 336,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "CST_VAS"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 337,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_ART/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 338,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_ART/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 339,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 340,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 341,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 342,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 343,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 344,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_ACQ"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 345,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_MKT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 346,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO_SCAFF/TGT_REP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 347,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOTO_ULT/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 348,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_FOT_SPEC/TGT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 349,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_VEND/RIF"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 350,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "D_VEND/RIF_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 351,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 352,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 353,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "EXTRA_CONTR_SP_REPARTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 354,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 355,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 356,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "MARGINE_LORDO_%"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 357,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "MUI_TST"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 358,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "MUI_TSTII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 359,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "MUI_TSTIII"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 360,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "N_ART_PROMO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 361,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "N_FOTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 362,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 363,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 364,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "N_FOTO_SCAFFALE_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 365,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "N_FOTO_SPEC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 366,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "N_FOTO_TOT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 367,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "N_FOTO_ULT"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 368,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "PGN_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 369,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "PGN_MED_A"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 370,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "PGN_MED_B"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 371,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "PGN_MGR"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 372,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "PGN_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 373,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "PGN_TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 374,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "PGN_TVL_P"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 375,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "REDEMPTION"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 376,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "TST_FRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 377,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "TST_SRG"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 378,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "TVL"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 379,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "VENDUTO_PROMO_NETTO"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 380,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "VSC_GRA"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 381,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "VSC_MED"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 382,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "VSC_PIC"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 383,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "WarningNumeriche"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 384,
+                    "Members": [
+                        {
+                            "Name": "TGT_REP"
+                        },
+                        {
+                            "Name": "TOT_FOTO"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Ordinal": 1,
+            "Cardinality": 16,
+            "Hierarchies": [
+                {
+                    "@odata.etag": "W/\"23155dimAttributes20190912133527300\"",
+                    "Name": "Promozione"
+                },
+                {
+                    "@odata.etag": "W/\"85851dimAttributes20190912133527300\"",
+                    "Name": "Reparto"
+                }
+            ],
+            "Tuples": [
+                {
+                    "Ordinal": 0,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_01"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 1,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_01_01"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 2,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_01_02"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 3,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_01_03"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 4,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_01_04"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 5,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_02"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 6,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_03"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 7,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_04"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 8,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_05"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 9,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_06"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 10,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_09"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 11,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_12"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 12,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_12_01"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 13,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_12_02"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 14,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_12_04"
+                        }
+                    ]
+                },
+                {
+                    "Ordinal": 15,
+                    "Members": [
+                        {
+                            "Name": "2019_26"
+                        },
+                        {
+                            "Name": "REP_50"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Ordinal": 2,
+            "Cardinality": 1,
+            "Hierarchies": [
+                {
+                    "@odata.etag": "W/\"166065dimAttributes20190912133527300\"",
+                    "Name": "Versione"
+                }
+            ],
+            "Tuples": [
+                {
+                    "Ordinal": 0,
+                    "Members": [
+                        {
+                            "Name": "UFF"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

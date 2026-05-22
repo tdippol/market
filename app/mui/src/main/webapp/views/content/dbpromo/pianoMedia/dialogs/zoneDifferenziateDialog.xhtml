@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="zoneDifferenziateDialog" widgetVar="zoneDifferenziateDialog" modal="true" closable="true" dynamic="true"
+          header="Dettaglio differenziazione per zona"
+          onShow="loadZoneDiffGrid()"
+          width="70%" height="60vh" resizable="false"
+          styleClass="zoneDifferenziateDialogClass disable-horizontal-scroll">
+    <div class="row">
+        <div class="col-12">
+            <p:panel id="expandable_db_zoneDiff" toggleable="true" toggleSpeed="500" closable="false" closeSpeed="500"
+                     styleClass="pnlGrid_Header expandable_db_zoneDiffClass">
+                <f:facet name="header"><p:outputLabel value="" /></f:facet>
+
+                <h:panelGroup layout="block" style="height: 50vh; width: 100%;"
+                              styleClass="ag-theme-balham zoneDiffTable"
+                              pt:gridid="db_zoneDiff">
+                </h:panelGroup>
+
+                <f:facet name="actions">
+                    <p:inputText autocomplete="off" id="db_zoneDiff_quickfilter" placeholder="Filtra..."
+                                 styleClass="pnlGrid_Header filterInputText"
+                                 onkeyup="onFilterTextBoxChangedpromoGrid('db_zoneDiff', this.value)" />
+                    <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                   onclick="expandGrid('db_zoneDiff')" onerror="redirectToExpiredPage()" />
+                    <p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped"
+                                   onclick="onBtExport('db_zoneDiff', 'Dettaglio differenziazione per zona', true)"
+                                   onerror="redirectToExpiredPage()" />
+                    <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                   onclick="onBtExport('db_zoneDiff', 'Dettaglio differenziazione per zona')"
+                                   onerror="redirectToExpiredPage()" />
+                </f:facet>
+
+                <script type="text/javascript">
+                    var gridParamsZoneDiff = {
+                        gridCode: 'db_zoneDiff',
+                        gridTitle: 'Dettaglio differenziazione per zona',
+                        url_columnDefs: contextPath + '/resources/pianomediapianificazioni/pianificazioni/zoneDiff/columnDef'
+                            + addUrlParamContesto(#{muiContext}),
+                        url_customSort: contextPath + '/resources/grid/sorting/db_zoneDiff',
+                        gridOptions: {
+                            onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_zoneDiff');
+                            }
+                        }
+                    }
+
+                    // noinspection JSUnusedGlobalSymbols
+                    function loadZoneDiffGrid() {
+                        let dlg = PF('zoneDifferenziateDialog');
+                        let id = dlg.jq.data('id');
+                        creaGriglia(gridParamsZoneDiff);
+                        loadData(id);
+                    }
+
+                    function loadData(id) {
+                        showAgGridLoadingOverlay('db_zoneDiff');
+                        $.ajax({
+                            type: 'GET',
+                            url: contextPath + '/resources/pianomediapianificazioni/pianificazioni/'
+                                + id + '/zoneDiff/rowData' + addUrlParamContesto(#{muiContext}),
+                            contentType: "application/json",
+                            success: function (data) {
+                                if (data) {
+                                    getGridOptionFromGridMap('db_zoneDiff').api.setRowData(data.rowData);
+                                }
+                            },
+                            error: ajaxErrorHandler,
+                            complete: function () {
+                                hideAgGridLoadingOverlay('db_zoneDiff');
+                            }
+                        });
+                    }
+                </script>
+            </p:panel>
+        </div>
+    </div>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-12">
+                <p:commandButton value="Chiudi" type="button" styleClass="ui-confirmdialog-yes"
+                                 style="text-align: center;"
+                                 onclick="PF('zoneDifferenziateDialog').hide()" />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+</html>

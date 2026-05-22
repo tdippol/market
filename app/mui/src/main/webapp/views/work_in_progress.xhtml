@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+		<h:outputStylesheet library="vendors" name="general/bootstrap-select/dist/css/bootstrap-select.css" />
+		<h:outputStylesheet library="vendors" name="custom/line-awesome/css/line-awesome.css" />
+		<h:outputStylesheet library="vendors" name="custom/fontawesome5/css/all.css" />
+</h:head>
+<body>
+	<p:outputPanel layout="block"
+		styleClass="k-content k-grid__item k-grid__item--fluid "
+		id="k_content">
+		<!-- do not remove me -->
+		<h:panelGroup layout="block"
+			styleClass="k-portlet__body updateableContent">
+			<!-- end do not remove me -->
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-8">
+						<h:panelGroup
+							style="width: 100%;height: 100vh;text-align:center; display: flex; flex-direction: column; justify-content: center;">
+							<br />
+							<i class="fas fa-wrench" style="font-size: 15em" />
+							<br />
+							<h:outputText value="#{workInProgressView.message}"></h:outputText>
+							<a href="index.xhtml">Tenta un nuovo accesso.</a>
+						</h:panelGroup>
+					</div>
+				</div>
+			</div>
+		</h:panelGroup>
+	</p:outputPanel>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <!-- dialog conferma ripubblicazione pianificazioni per compratore -->
+                <p:confirmDialog id="ripubblicaConfirmDialog" widgetVar="ripubblicaConfirmDialog"
+                                 global="true" showEffect="fade" hideEffect="fade" closable="false"
+                                 icon="pi pi-exclamation-triangle" styleClass="muiDialog" header="Avviso"
+                                 message="Sei sicuro di voler ripubblicare le pianificazioni relative ai compratori selezionati?">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                     onclick="PF('ripubblicaConfirmDialog').hide()" />
+                    <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                     update="@(.updateableContent)"
+                                     action="#{templateView.currentView.ripubblicaPianificazioni}"
+                                     oncomplete="PF('ripubblicaConfirmDialog').hide()" />
+                </p:confirmDialog>
+
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <div class="row">
+                        <div class="col-12">
+                            <p:commandButton value="Ripubblica" id="ripubblicaBtn"
+                                             styleClass="pf-btn-confirm updateableContent ripubblicaBtnClass"
+                                             style="border-radius: 5px; float: left;"
+                                             disabled="#{templateView.currentView.ripubblicaBtnDisabled}"
+                                             oncomplete="PF('ripubblicaConfirmDialog').show()" />
+                        </div>
+                    </div>
+                    <p:panel id="expandable_db_pianificazionepianomedia_statocompratori"
+                             toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_pianificazionepianomedia_statocompratori">
+                        <f:facet name="header">
+                            <h:outputLabel value="" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      styleClass="ag-theme-balham pianificazionepianomedia_statocompratori"
+                                      pt:gridid="db_pianificazionepianomedia_statocompratori">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off"
+                                         id="pianificazionepianomedia_statocompratori_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_pianificazionepianomedia_statocompratori', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_pianificazionepianomedia_statocompratori')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_pianificazionepianomedia_statocompratori', 'PianificazionePianoMedia - Stato Compratori')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var idPianoMedia = $('.idPianoMediaCurrent').text();
+                            var gridParamsPianoMediaPianificazioneStatoCompratori = {
+                                gridTabGroup: "pianificazionePianoMediaTabs",
+                                gridTabPosition: 1,
+                                gridCode: "db_pianificazionepianomedia_statocompratori",
+                                gridTitle: "Pianificazione Piano Media - Stato Compratori",
+                                url_columnDefs: contextPath + "/resources/pianomediapianificazioni/" + idPianoMedia
+                                    + "/statocompratori/columnDef" + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + "/resources/pianomediapianificazioni/" + idPianoMedia
+                                    + "/statocompratori/rowData" + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + "/resources/grid/sorting/db_pianificazionepianomedia_statocompratori",
+                                sortColumnDefs: [{columnDefId: 'selected', newPosition: 0}],
+                                customizeColumnDefs: [{columnDefId: 'selected', property: 'editable', value: false}],
+                                gridOptions: {
+                                    rowSelection: 'multiple',
+                                    suppressRowClickSelection: true,
+                                    onSelectionChanged: onBuyerRowSelected,
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + "/resources/grid/sorting/save/db_pianificazionepianomedia_statocompratori");
+                                    },
+                                }
+                            }
+
+                            function onBuyerRowSelected(event) {
+                                var codes = [];
+                                $.each(event.api.getSelectedNodes(), function (key, value) {
+                                    codes.push(value.data.compratore.value);
+                                });
+                                compratoreSelezionato([{name: "buyerSelected", value: JSON.stringify(codes)}]);
+                            }
+
+                            $(document).ready(function () {
+                                if (getCurrentTab(gridParamsPianoMediaPianificazioneStatoCompratori.gridTabGroup) === gridParamsPianoMediaPianificazioneStatoCompratori.gridTabPosition &amp;&amp; idPianoMedia) {
+                                    creaGriglia(gridParamsPianoMediaPianificazioneStatoCompratori);
+                                }
+                            })
+                        </script>
+                    </p:panel>
+                    <p:remoteCommand name="compratoreSelezionato" update="@(.ripubblicaBtnClass)"
+                                     action="#{templateView.currentView.buyerSelected}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

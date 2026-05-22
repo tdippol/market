@@ -1,0 +1,202 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <!-- DIALOG -->
+                    <p:dialog id="managePromoStatusConfirmDialog" header="Gestione Stato"
+                              styleClass="managePromoStatusConfirmDialogClass disable-horizontal-scroll"
+                              widgetVar="managePromoStatusConfirmDialog" modal="true"
+                              width="500" height="auto" resizable="false" closable="false">
+                        <h:form id="managePromoStatusConfirmDialogForm">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div>
+                                        <p:outputLabel for="dialogPromozione" value="Promozione"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="dialogPromozione" readonly="true"
+                                                     styleClass="updateableContent" style="width: 100%;"
+                                                     value="#{templateView.currentView.promotionSelected.descrizioneEstesa}" />
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-top: 20px;">
+                                    <div>
+                                        <p:outputLabel for="dialogCurrentState" value="Stato Corrente"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="dialogCurrentState" readonly="true"
+                                                     styleClass="updateableContent" style="width: 100%;"
+                                                     value="#{templateView.currentView.statoCorrente.statoPromozioneEntity.codiceStato} - #{templateView.currentView.statoCorrente.statoPromozioneEntity.label}" />
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-top: 30px;">
+                                    <div>
+                                        <p:outputLabel for="dialogPossibleStates" value="Nuovo Stato"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="dialogPossibleStates" onchange="renderButton()"
+                                                         value="#{templateView.currentView.idStatoTransizioneCorrente}"
+                                                         class="input-field" style="width: 100%;">
+                                            <p:ajax event="change" />
+                                            <f:selectItem itemLabel="" noSelectionOption="true" />
+                                            <f:selectItems value="#{templateView.currentView.statiTransizione}" var="st"
+                                                           itemLabel="#{st.statoTransizione.codiceStato} - #{st.statoTransizione.label}"
+                                                           itemValue="#{st.statoTransizione.id}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;" oncomplete="PF('managePromoStatusConfirmDialog').hide()" 
+                                                     update="@(.managePromoStatusConfirmDialogClass)"
+                                                     action="#{templateView.currentView.resetDialog()}"/>
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton id="confirmBtn" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                                     action="#{templateView.currentView.insertNewStatus()}"
+                                                     disabled="#{templateView.currentView.confirmBtnDisabled}"
+                                                     oncomplete="closeAndRefreshData()"
+                                                     widgetVar="btn_insertNewStatus"
+                                                     onclick="PF('btn_insertNewStatus').disable()" 
+                                                     update="@(.managePromoStatusConfirmDialogClass) @(.updateCambioStato)"/>
+                                    <p:remoteCommand name="renderButton"
+                                                     action="#{templateView.currentView.isConfirmBtnStatiDisabled()}" update="confirmBtn">
+                                    </p:remoteCommand>
+                                </div>
+                            </div>
+                        </h:form>
+                    </p:dialog>
+                    <!-- DIALOG -->
+                    <div class="col-12">
+                        <p:remoteCommand name="updateGestioneStato" update="manageStatus"/>
+                        <p:commandButton value="Gestione Stato" style="margin-right: 20px; border-radius: 5px;"
+                                         id="manageStatus" class="pf-btn-confirm"
+                                         oncomplete="PF('managePromoStatusConfirmDialog').show()"
+                                         disabled="#{templateView.currentView.promotionSelected == null or templateView.currentView.manageBtnStatiDisabled or not templateView.currentView.tabEditRendered}"
+                                         update="@(.managePromoStatusConfirmDialogClass)" />
+                    </div>
+                    <p:panel id="expandable_db_schedapromo_stati" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_stati">
+                        <f:facet name="header">
+                            <p:outputLabel value="Storico Stati" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham scheda_stati"
+                                      pt:gridid="db_schedapromo_stati">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="stati_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapromo_stati',this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedapromo_stati')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedapromo_stati','Storico Stati',true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedapromo_stati','Storico Stati')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var gridParams_schedaPromoStati = {
+                                gridTabGroup: 'schedaPromo_tabs',
+                                gridTabPosition: #{templateView.currentView.indexOf('TAB_STATI')},
+                                gridCode: 'db_schedapromo_stati',
+                                gridTitle: 'SchedaPromo - Stati',
+                                url_columnDefs: contextPath + '/resources/grid/schedapromo/stati/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/grid/schedapromo/stati/rowData/' + #{ templateView.currentView.idPromozioneCorrente == null? "''" : templateView.currentView.idPromozioneCorrente },
+                                url_customSort: contextPath + '/resources/grid/sorting/db_schedapromo_stati'
+                            };
+                    		var gridOptions = {
+                    		    onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_schedaPromoStati.gridCode);
+                                }
+                            };
+                            gridParams_schedaPromoStati.customizeColumnDefs = [
+                                { columnDefId: "codice", property: "width", value: 400 }
+                            ];
+                            gridParams_schedaPromoStati.gridOptions = gridOptions;
+
+                	        $( document ).ready(function() {
+                	        	if($('.statiIdPromozione').text() !== '' &amp;&amp; currentActiveTab==gridParams_schedaPromoStati.gridTabPosition){
+									creaGriglia(gridParams_schedaPromoStati);
+									updateGestioneStato();
+									//Aggiorna Header dopo cambio di filtri
+									updateSchedaPromoHeader();
+                	        	}
+                	        });
+
+                            function closeAndRefreshData() {
+                                PF('managePromoStatusConfirmDialog').hide();
+								var idPromo = $('.statiIdPromozione').text();
+								if(idPromo !== '') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: contextPath+'/resources/grid/schedapromo/stati/rowData/' + idPromo,
+                                        contentType: "application/json",
+                                        success: function (data) {
+                                            getGridOptionFromGridMap('db_schedapromo_stati').api.setRowData(data.rowData);
+                                            refreshHeaderData();
+                                            updateGestioneStato();
+                                        },
+                                        error: ajaxErrorHandler
+                                    });
+								} else {
+								   $("div[gridid$='db_schedapromo_stati']").html("");
+						           $( '.tabScheda' ).addClass( 'ui-state-disabled');
+								}
+                            }
+
+                            function confirmPromoStatus() {
+                                var data = {
+                                    promoId: $('.statiIdPromozione').text()
+                                };
+
+                                $.ajax({
+                                    type: "PUT",
+                                    url: contextPath+"/resources/grid/schedapromo/stati/insert",
+                                    contentType: "application/json",
+                                    data: JSON.stringify(event.data),
+                                    success: function (data) {
+                                    	getGridOptionFromGridMap('db_schedapromo_stati').api.setRowData(data);
+                                    },
+									error: ajaxErrorHandler
+                                });
+                            }
+
+                        </script>
+
+                        <style>
+                            [col-id~=ag-Grid-AutoColumn]{
+                                font-weight: bold;
+                            }
+
+                            .ui-dialog-title {
+                                font-size: 18px;
+                            }
+                        </style>
+
+                        <p:outputLabel value="#{ templateView.currentView.idPromozioneCorrente }" class="statiIdPromozione" style="visibility: hidden;"/>
+
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

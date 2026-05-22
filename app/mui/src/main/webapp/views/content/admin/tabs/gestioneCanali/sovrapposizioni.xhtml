@@ -1,0 +1,165 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+				<p:commandButton value="Copia da Canale" id="sovrCopiaDaCanale" styleClass="pf-btn-confirm "
+								 action="#{templateView.currentView.sovrapposizioniConfigurateBean.openCopyFromChannelDialog}"
+								 oncomplete="PF('dlgSovrCopiaDaCanale').show()"
+								 update="@(.dlgCopyFromChannelForm)" />
+				<p:commandButton value="Copia da Meccanica" id="sovrCopiaDaMeccanica" styleClass="pf-btn-confirm"
+								 style="margin-left: 20px;"
+								 action="#{templateView.currentView.sovrapposizioniConfigurateBean.resetCopyFromMeccanicaDialog}"
+								 oncomplete="PF('dlgSovrCopiaDaMeccanica').show()"
+								 update="@(.dlgSovrCopiaDaMeccanica)"/>
+
+				<!-- Dialog copia da canale -->
+				<p:dialog widgetVar="dlgSovrCopiaDaCanale" resizable="false" closable="false"
+						  styleClass="pf-dialog disable-horizontal-scroll"
+						  width="600" height="25vh" header="Copia da Canale">
+					<h:form id="copiaSovrDaCanaleDlgForm" styleClass="dlgCopyFromChannelForm">
+						<div class="row">
+							<div class="col-6">
+								<div>
+									<p:outputLabel for="copiaSovrCanale" value="Da canale" style="font-size: 14px;" />
+								</div>
+								<div>
+									<p:selectOneMenu id="copiaSovrCanale" styleClass="input-field" style="width: 100%;"
+													 filter="true" filterMatchMode="contains"
+													 value="#{templateView.currentView.sovrapposizioniConfigurateBean.idCopyChannel}">
+										<p:ajax update="@(.dlgCopyFromChannelForm) @(.ui-confirmdialog-yes)" />
+										<f:selectItem itemLabel="Seleziona canale" noSelectionOption="true" />
+										<f:selectItems value="#{templateView.currentView.sovrapposizioniConfigurateBean.channelsForCopy}" var="c"
+													   itemLabel="#{c.descrizione}"
+													   itemValue="#{c.id}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+						</div>
+					</h:form>
+					<f:facet name="footer">
+						<div class="row">
+							<div class="col-6">
+								<p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+												 action="#{templateView.currentView.sovrapposizioniConfigurateBean.resetCopyFromChannelDialog}"
+												 onclick="PF('dlgSovrCopiaDaCanale').hide()" />
+							</div>
+							<div class="col-6">
+								<p:commandButton id="copiaSovrDaCanaleDlgConfirmBtn" value="Copia"
+												 styleClass="ui-confirmdialog-yes"
+												 disabled="#{empty templateView.currentView.sovrapposizioniConfigurateBean.idCopyChannel}"
+												 action="#{templateView.currentView.sovrapposizioniConfigurateBean.confirmCopyFromChannel}"
+												 oncomplete="PF('dlgSovrCopiaDaCanale').hide()"
+												 update="@(.sovrapposizioniTable)" />
+							</div>
+						</div>
+					</f:facet>
+				</p:dialog>
+
+				<!-- Dialog copia da meccanica -->
+				<p:dialog widgetVar="dlgSovrCopiaDaMeccanica" resizable="false" closable="false"
+						  styleClass="pf-dialog disable-horizontal-scroll"
+						  width="600" height="25vh" header="Copia da Meccanica">
+					<h:form id="copiaSovrDaMeccanicaForm" styleClass="dlgSovrCopiaDaMeccanica">
+						<div class="row">
+							<div class="col-6">
+								<div>
+									<p:outputLabel for="sovrCopiaMeccanica" value="Da Meccanica" style="font-size: 14px;" />
+								</div>
+								<div>
+									<p:selectOneMenu id="sovrCopiaMeccanica" styleClass="input-field" style="width: 100%;"
+													 filter="true" filterMatchMode="contains"
+													 value="#{templateView.currentView.sovrapposizioniConfigurateBean.idMeccanicaCopy}">
+										<p:ajax update="@(.dlgSovrCopiaDaMeccanica) @(.ui-confirmdialog-yes)" />
+										<f:selectItem itemLabel="Seleziona meccanica" noSelectionOption="true" />
+										<f:selectItems value="#{templateView.currentView.sovrapposizioniConfigurateBean.meccanicheForCopy}"
+													   var="m"
+													   itemLabel="#{m.codiceMeccanica}-#{m.descrizione}"
+													   itemValue="#{m.id}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+						</div>
+					</h:form>
+					<f:facet name="footer">
+						<div class="row">
+							<div class="col-6">
+								<p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+												 action="#{templateView.currentView.sovrapposizioniConfigurateBean.resetCopyFromMeccanicaDialog}"
+												 onclick="PF('dlgSovrCopiaDaMeccanica').hide()" />
+							</div>
+							<div class="col-6">
+								<p:commandButton id="copiaSovrDaMeccanicaDlgConfirmBtn" value="Copia"
+												 styleClass="ui-confirmdialog-yes"
+												 disabled="#{empty templateView.currentView.sovrapposizioniConfigurateBean.idMeccanicaCopy}"
+												 action="#{templateView.currentView.sovrapposizioniConfigurateBean.confirmCopyFromMeccanica}"
+												 oncomplete="PF('dlgSovrCopiaDaMeccanica').hide()"
+												 update="@(.sovrapposizioniTable)" />
+							</div>
+						</div>
+					</f:facet>
+				</p:dialog>
+
+            </div>
+		</div>
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-12">
+				<div id="k_grid_portletpromoGrid" class="k-portlet">
+					<div class="row">
+						<div class="col-3">
+							<h:form>
+								<p:dataTable var="m" styleClass="pf-datatable meccanicheTable"
+											 widgetVar="meccanicheTable" selectionMode="single"
+											 value="#{templateView.currentView.sovrapposizioniConfigurateBean.meccaniche}"
+											 rowKey="#{m.codiceMeccanica}" rowIndexVar="rowIndex"
+											 selection="#{templateView.currentView.sovrapposizioniConfigurateBean.meccanicaSelezionata}">
+									<p:ajax event="rowSelect" update="@(.sovrapposizioniTable)" />
+									<p:column headerText="Codice" width="20%">
+										<h:outputText value="#{m.codiceMeccanica}" />
+									</p:column>
+									<p:column headerText="Descrizione" width="80%">
+										<h:outputText value="#{m.descrizione}" />
+									</p:column>
+								</p:dataTable>
+							</h:form>
+						</div>
+						<div class="col-9">
+							<h:form>
+								<p:dataTable var="s" styleClass="pf-datatable sovrapposizioniTable" style="width: 75%"
+											 widgetVar="sovrapposizioniTable"
+											 value="#{templateView.currentView.sovrapposizioniConfigurateBean.sovrapposizioni}"
+											 rowKey="#{s.id}" rowIndexVar="rowIndex">
+									<p:column headerText="Codice" width="15%">
+										<h:outputText value="#{s.codice}" />
+									</p:column>
+									<p:column headerText="Descrizione" width="30%">
+										<h:outputText value="#{s.descrizione}" />
+									</p:column>
+									<p:column headerText="Compatibilità" width="15%" style="text-align: center;">
+										<p:selectBooleanCheckbox value="#{s.compatibilita}"
+																 disabled="#{not s.selected}">
+											<p:ajax update="@(.meccanicheTable) @(.sovrapposizioniTable)" event="valueChange"
+													listener="#{templateView.currentView.sovrapposizioniConfigurateBean.updateCompatibilita(s)}" />
+										</p:selectBooleanCheckbox>
+									</p:column>
+									<p:column headerText="Seleziona" width="15%" style="text-align: center;">
+										<p:selectBooleanCheckbox value="#{s.selected}">
+											<p:ajax update="@(.meccanicheTable) @(.sovrapposizioniTable)" event="valueChange"
+													listener="#{templateView.currentView.sovrapposizioniConfigurateBean.updateSelected(s)}" />
+										</p:selectBooleanCheckbox>
+									</p:column>
+								</p:dataTable>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</ui:composition>
+</html>

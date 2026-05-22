@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+>
+<p:dialog id="creaObiettivoDialog" widgetVar="creaObiettivoDialog" modal="true" closable="false" resizable="true"
+          header="Crea nuovo obiettivo" width="800" height="auto"
+          styleClass="disable-horizontal-scroll">
+    <h:form id="creaObiettivoDialogForm" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="creaObiettivoDialogForm">
+        <div class="row">
+            <div class="col-8">
+                <div>
+                    <p:outputLabel for="promozione" value="Promozione" styleClass="input-field-label" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="promozione" styleClass="input-field" style="width: 100%;"
+                                     filter="true" filterMatchMode="contains"
+                                     value="#{templateView.currentView.obiettivoBean.idPromozioneSelected}">
+                        <p:ajax update="@(.updateableBuonoPremio)" />
+                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.obiettivoBean.promozioniPremio}" var="p"
+                                       itemLabel="#{p.descrizioneEstesa}" itemValue="#{p.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2rem;">
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="target" value="Target" styleClass="input-field-label" />
+                </div>
+                <div>
+                    <p:inputNumber id="target" styleClass="updateableObiettivo input-field" style="width: 100%;"
+                                   value="#{templateView.currentView.obiettivoBean.target}">
+                        <p:ajax />
+                    </p:inputNumber>
+                </div>
+            </div>
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="buonoPremio" value="Buono Premio" styleClass="input-field-label" />
+                </div>
+                <div>
+                    <p:inputNumber id="buonoPremio" styleClass="updateableObiettivo updateableBuonoPremio input-field"
+                                   style="width: 100%;"
+                                   disabled="#{templateView.currentView.obiettivoBean.buonoPremioFieldDisabled}"
+                                   value="#{templateView.currentView.obiettivoBean.buonoPremio}">
+                        <p:ajax />
+                    </p:inputNumber>
+                </div>
+            </div>
+            <div class="col-4">
+                <div>
+                    <p:outputLabel for="flagAttivo" value="Attivo" styleClass="input-field-label" />
+                </div>
+                <div>
+                    <p:selectBooleanCheckbox id="flagAttivo" styleClass="updateableObiettivo"
+                                             value="#{templateView.currentView.obiettivoBean.attivo}">
+                        <p:ajax />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+        </div>
+    </h:form>
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="PF('creaObiettivoDialog').hide()" update="@(.updateableObiettivo)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="creaObiettivoDialogConfirmButton" value="Crea" styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('creaObiettivoDialog').hide()"
+                                 action="#{templateView.currentView.obiettivoBean.confirmObiettivo}"
+                                 update="@(.updateableObiettivo)">
+                    <p:ajax />
+                </p:commandButton>
+            </div>
+        </div>
+    </f:facet>
+    <style>
+        .ui-state-active,
+        .ui-widget-content .ui-state-active,
+        .ui-widget-header .ui-state-active,
+        a.ui-button:active,
+        .ui-button:active,
+        .ui-button.ui-state-active:hover {
+            border: none !important;
+            background: none !important;
+            font-weight: normal;
+            color: #000000 !important;
+        }
+    </style>
+</p:dialog>
+</html>

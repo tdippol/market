@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form>
+                        <p:dataTable var="status" styleClass="pf-datatable updateableWorkflow" style="width: 40%;"
+                                     widgetVar="statiTable" value="#{templateView.currentView.availableStatuses}"
+                                     rowKey="#{status.stato.id}" rowIndexVar="rowIndex">
+                            <p:column headerText="Stato" width="80%">
+                                <h:outputText value="#{status.stato.codiceStato} - #{status.stato.label}" />
+                            </p:column>
+                            <p:column headerText="Consentito" width="20%" style="text-align: center;">
+                                <p:selectBooleanCheckbox value="#{status.available}">
+                                    <p:ajax event="valueChange" update="@(.statiTable)"
+                                            listener="#{templateView.currentView.toggleStatusVisible(status)}" />
+                                </p:selectBooleanCheckbox>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

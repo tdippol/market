@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+
+    <p:remoteCommand name="removePromo" update="deletePromoDialog" action="#{templateView.currentView.eliminaPromozione}" />
+
+    <p:confirmDialog widgetVar="dbPromoGlobalConfirmDialog" global="true" showEffect="fade" hideEffect="fade" id="deletePromoDialog"
+                     header="Avviso" message="Confermi la cancellazione della promozione #{templateView.currentView.descrizioneEstesaPromozione} ?"
+                     icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left" />
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                         oncomplete="dbPromoGlobalConfirmDialog.hide()" onclick="deleteAjax()" />
+    </p:confirmDialog>
+    <p:inputText type="hidden" widgetVar="rowData" value="" />
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_grid_modificaPromo" toggleable="true" toggleSpeed="500"
+                             closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+                        <f:facet name="header">
+                            <p:outputLabel value="Modifica Promozioni" />
+                            <!-- <p:outputLabel styleClass="pnlGrid_Header_Subtitle" value="Ultimo Aggiornamento: "/> -->
+                        </f:facet>
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham grid_modificaPromo"
+                                      pt:gridid="db_grid_modificaPromo">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="some_grid_id_from_backend_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_modificaPromo',this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_modificaPromo')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_modificaPromo','Modifica Promozioni',true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_modificaPromo','Modifica Promozioni')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+                            var gridParams = {
+                                gridCode: 'db_grid_modificaPromo',
+                                gridTitle: 'Modifica Promozione',
+                                url_columnDefs: contextPath+'/resources/grid/columnDef/modificaPromo' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath+'/resources/grid/rowData/modificaPromo'+addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_grid_modificaPromo'
+                            }
+                            var gridOptions = {
+                                onCellValueChanged: function (event) {
+                                    var rowIndex = getRowNodeId(event);
+                                    var rowData = getRowData('db_grid_modificaPromo');
+                                    $.ajax({
+                                        type: "POST",
+                                        url: contextPath+'/resources/grid/promo/update' + addUrlParamContesto(#{muiContext}),
+                                        contentType: "text/plain",
+                                        data: JSON.stringify(rowData[rowIndex]),
+                                        success: function (data) {
+                                            rowData[rowIndex] = data;
+                                            getGridOptionFromGridMap('db_grid_modificaPromo').api.setRowData(rowData);
+                                        },
+										error: function(jqXHR, exception, thrownError){
+											ajaxErrorHandler(jqXHR, exception, thrownError,event)
+										}
+                                        
+                                    });
+                                },
+                                processCellFromClipboard: function processCellFromClipboard(params) {
+                                    let field=params.column.colId
+                                    if(field==='newDescrizione'){
+                                        return params.value.toUpperCase();
+                                    }
+                                },
+						        onCellDoubleClicked: openSchedaPromo,
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams.gridCode);
+                                }
+                            };
+
+                            gridParams.additionColumnDefs=[{ headerName: '', width: 50, cellRenderer: 'ModifcaPromo_DeletePromoRenderer',position:'prepend' }];
+                            gridParams.customizeColumnDefs=[
+                                {columnDefId:"newDescrizione",property:"cellEditorParams",value:{transform_getValue: 'uppercase'}},
+                                {columnDefId:"newDataInizio",property:"cellEditorParams",value:{optionDate_startDate: '+1d'}},
+                                {columnDefId:"newDataFine",property:"cellEditorParams",value:{optionDate_startDate: '+0d'}}
+                            ];
+                            gridParams.gridOptions = gridOptions;
+                            $(document).ready(function () {
+                                creaGriglia(gridParams);
+                            });
+
+                            function openSchedaPromo(param) {
+                                if(param.colDef.field=='codice' || param.colDef.field=='descrizione'){
+                                    linkButton_scheda([ {name:'menuId', value:#{templateView.currentView.landingPage}},
+						                                {name:'currentPromoId', value: param.data.id.value}]);
+                                }
+                            }
+
+                            function deleteAjax() {
+                                const rd = PF('rowData').jq.val();
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: contextPath+'/resources/grid/promo/delete',
+                                    contentType: "application/json",
+                                    data: rd,
+                                    success: function (data) {
+                                        var description = data.promoDeletedDescription;
+                                        var message = 'Promozione ' + description + ' eliminata con successo';
+                                        // reload data grid
+                                        $.get(gridParams.url_rowData, function (data, status) {
+                                            PF('dbPromoGlobalConfirmDialog').hide();
+                                            // show growl
+                                            addInfoGrowl([{ name: 'title', value: 'Modifica Promozioni' }, {name: 'message',value: message}]);
+                                            getGridOptionFromGridMap('db_grid_modificaPromo').api.setRowData(data.rowData);
+                                        });
+                                    },
+									error: ajaxErrorHandler
+                                });
+                            }
+                        </script>
+                        
+                     <p:remoteCommand name="linkButton_scheda" action="#{templateView.simulateMenuClick()}" />
+
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

@@ -1,0 +1,14 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Reparto",
+      "field": "descrizioneEstesa",
+      "width": 350,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

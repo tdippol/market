@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<p:dialog id="dlgGestioneStatoIniziativa" header="Gestione Stato"
+          styleClass="dlgGestioneStatoIniziativaClass disable-horizontal-scroll"
+          widgetVar="dlgGestioneStatoIniziativa" modal="true"
+          width="500" height="auto" resizable="false" closable="false">
+    <h:form id="dlgGestioneStatoIniziativaForm">
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <p:outputLabel for="lblIniziativa" value="Iniziativa" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputText id="lblIniziativa" readonly="true" style="width: 100%;"
+                                 value="#{templateView.currentView.iniziativaSelected.descrizione}" />
+                </div>
+            </div>
+            <div class="col-12" style="margin-top: 20px;">
+                <div>
+                    <p:outputLabel for="lblStatoCorrente" value="Stato Corrente" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:inputText id="lblStatoCorrente" readonly="true" style="width: 100%;"
+                                 value="#{templateView.currentView.statoIniziativaSelected}" />
+                </div>
+            </div>
+            <div class="col-12" style="margin-top: 20px;">
+                <div>
+                    <p:outputLabel for="lblStatoProssimo" value="Nuovo Stato" style="font-size: 14px;" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="lblStatoProssimo" styleClass="input-fielf" style="width: 100%;"
+                                     onchange="renderButton()" value="#{templateView.currentView.idStatoTransizione}">
+                        <p:ajax event="change" />
+                        <f:selectItem itemLabel="" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.statiTransizione}" var="st"
+                                       itemLabel="#{st.codiceStato} - #{st.label}" itemValue="#{st.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 oncomplete="PF('dlgGestioneStatoIniziativa').hide()"
+                                 update="@(.dlgGestioneStatoIniziativaClass)"
+                                 action="#{templateView.currentView.prepareDlgGestioneStatoIniziativa}" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="confirmBtn" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 action="#{templateView.currentView.confirmNuovoStato}"
+                                 widgetVar="btnConfirmNuovoStato"
+                                 onclick="PF('btnConfirmNuovoStato').disable()"
+                                 update="@(.growlClass) @(.formSchedaIniziativa) @(.tabSchedaIniziativa) @(.dlgGestioneStatoIniziativaClass) @(.updateCambioStato) @(.btnGestioneStatoClass)" />
+                <p:remoteCommand name="renderButton"
+                                 action="#{templateView.currentView.isConfirmBtnStatiDisabled}" update="confirmBtn" />
+            </div>
+        </div>
+    </h:form>
+</p:dialog>
+</html>

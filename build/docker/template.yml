@@ -1,0 +1,73 @@
+services:
+    database:
+        image: mui-postgres:1.0.0 
+        build: 
+            context: ./postgres/
+            dockerfile: postgres.dockerfile
+            args:
+                UID: user_id 
+        container_name: mui_postgres
+        environment:
+            - POSTGRES_PASSWORD=password
+        healthcheck:
+            test: ["CMD", "pg_isready", "-U", "postgres"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+        ports:
+            - 5432:5432
+        volumes:
+            - ./database:/var/lib/postgresql/data
+            - ./data_directory/01_users.sql:/docker-entrypoint-initdb.d/01_users.sql
+            - ./data_directory/02_public.sql:/docker-entrypoint-initdb.d/02_public.sql
+            - ./data_directory/03_tomee.sql:/docker-entrypoint-initdb.d/03_tomee.sql
+            - ./data_directory/04_dbpromo.sql:/docker-entrypoint-initdb.d/04_dbpromo.sql
+            - ./data_directory/05_muipromo.sql:/docker-entrypoint-initdb.d/05_muipromo.sql
+            - ./data_directory/06_grants.sql:/docker-entrypoint-initdb.d/06_grants.sql
+        networks:
+            - axmui
+
+    tomee:
+        image: mui-app:1.0.4 
+        container_name: mui_tomee
+        depends_on: 
+            database:
+                condition: service_healthy
+        profiles:
+            - tomee
+        environment:
+            - JPDA_ADDRESS=0.0.0.0:8000
+            - TZ=Europe/Rome
+        build: 
+            context: ./tomee/
+            dockerfile: mui.dockerfile
+            args:
+                UID: user_id 
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8080/mui/health/status"]
+            interval: 60s
+            timeout: 5s
+            retries: 10
+            start_period: 60s
+        ports:
+            - "8080:8080"
+            - "8000:8000"
+            - "9010:9010"            
+        volumes:
+            - ./apps:/usr/local/tomee/apps
+            - ./logs:/usr/local/tomee/logs        
+            - ./documents:/usr/local/tomee/documents                    
+            - ./webapps:/usr/local/tomee/webapps
+##configurazione librerie, datasources e utenti/ruoli
+            - ./tomee/postgresql/lib/postgresql-42.6.0.jar:/usr/local/tomee/lib/postgresql-42.6.0.jar
+            - ./tomee/conf/catalina.properties:/usr/local/tomee/conf/catalina.properties
+            - ./tomee/conf/server.xml:/usr/local/tomee/conf/server.xml
+            - ./tomee/conf/tomee.xml:/usr/local/tomee/conf/tomee.xml
+            - ./tomee/conf/logging.properties:/usr/local/tomee/conf/logging.properties
+            - ./tomee/bin/setenv.sh:/usr/local/tomee/bin/setenv.sh
+        networks:
+            - axmui
+
+networks:
+    axmui:
+        driver: bridge

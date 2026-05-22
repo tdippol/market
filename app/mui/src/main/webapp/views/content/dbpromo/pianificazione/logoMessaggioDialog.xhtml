@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<!-- dialog pending changes -->
+<p:dialog header="Attenzione" widgetVar="dlgPendingChanges" styleClass="disable-horizontal-scroll"
+          width="400" modal="true" resizable="false" draggable="false" closable="false">
+    <div class="row">
+        <div class="col-12">
+            <p>Ci sono delle modifiche non salvate</p>
+            <p>Si prega di salvare o scartare</p>
+        </div>
+    </div>
+    <f:facet name="footer">
+        <p:commandButton styleClass="pf-btn-cancel" style="float: right; margin-left: 20px;" value="Annulla"
+                         onclick="PF('dlgPendingChanges').hide()"/>
+        <p:commandButton styleClass="pf-btn-danger" style="float: right; margin-left: 20px;" value="Scarta modifiche"
+                         update="@(.updatableMessageContent)"
+                         oncomplete="refreshForm()"
+                         actionListener="#{templateView.currentView.messaggiCastellettiBean.discardChanges}"/>
+        <p:commandButton styleClass="pf-btn-confirm" style="float: right;" value="Salva"
+                         update="@(.updatableMessageContent)"
+                         oncomplete="refreshGrid(); refreshForm()"
+                         actionListener="#{templateView.currentView.messaggiCastellettiBean.saveChanges}"/>
+    </f:facet>
+</p:dialog>
+
+<p:dialog id="logoMessaggioDialog" widgetVar="logoMessaggioDialog" modal="true" closable="false" dynamic="true"
+          resizable="true" maximizable="true" header="Gestione Messaggi e Castelletti" width="75%" height="70vh"
+          fitViewport="true" styleClass="logoMessaggioDialogClass disable-horizontal-scroll">
+    <h:form id="logoMessaggioDialogForm" styleClass="logoMessaggioDialogFormClass">
+        <div class="row">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="logoMessaggioCodicePromo" value="Codice Promozione" class="input-field-label" />
+                </div>
+                <div>
+                    <p:inputText id="logoMessaggioCodicePromo" class="input-field" readonly="true"
+                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                 value="#{empty templateView.currentView.messaggiCastellettiBean.codicePromo ? '' : templateView.currentView.messaggiCastellettiBean.codicePromo}" />
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="logoMessaggioMeccanica" value="Meccanica" class="input-field-label" />
+                </div>
+                <div>
+                    <p:inputText id="logoMessaggioMeccanica" class="input-field" readonly="true"
+                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                 value="#{empty templateView.currentView.messaggiCastellettiBean.meccanica ? '' : templateView.currentView.messaggiCastellettiBean.meccanica}" />
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="logoMessaggioRadice" value="Radice" class="input-field-label" />
+                </div>
+                <div>
+                    <p:inputText id="logoMessaggioRadice" class="input-field" readonly="true"
+                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                 value="#{empty templateView.currentView.messaggiCastellettiBean.radice ? '' : templateView.currentView.messaggiCastellettiBean.radice}" />
+                </div>
+            </div>
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="logoMessaggioProgressivo" value="Progressivo" class="input-field-label" />
+                </div>
+                <div>
+                    <p:inputText id="logoMessaggioProgressivo" class="input-field" readonly="true"
+                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                 value="#{empty templateView.currentView.messaggiCastellettiBean.progressivo ? '' : templateView.currentView.messaggiCastellettiBean.progressivo}" />
+                </div>
+            </div>
+        </div>
+        <p:outputLabel styleClass="idPianificazioneClass" style="visibility: hidden;"
+                       value="#{templateView.currentView.messaggiCastellettiBean.idPianificazione}" />
+
+    </h:form>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-12">
+            <p:tabView dynamic="true" cache="false" styleClass="dispositivi-tabs" widgetVar="outerTab"
+                       onTabChange="return handleTabChange('outerTab', index);" onTabShow="handleTabShow(index)"
+                       activeIndex="#{templateView.currentView.messaggiCastellettiBean.selectedTab}">
+                <p:tab id="messaggiTab" title="Messaggi" rendered="#{templateView.currentView.messaggiCastellettiBean.logoMessaggiRendered}">
+                    <ui:include src="dialogTabs/messaggiTab.xhtml" />
+                </p:tab>
+                <p:tab id="castellettiTab" title="Castelletti" rendered="#{templateView.currentView.messaggiCastellettiBean.castellettiRendered}">
+                    <ui:include src="dialogTabs/castellettiTab.xhtml" />
+                </p:tab>
+                <p:tab id="categoriaBuoniTab" title="Categoria Buoni">
+                    <ui:include src="dialogTabs/categoriaBuoniTab.xhtml"/>
+                </p:tab>
+            </p:tabView>
+        </div>
+    </div>
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-12">
+                <p:commandButton value="Chiudi" styleClass="ui-confirmdialog-no"
+                                 actionListener="#{templateView.currentView.messaggiCastellettiBean.onDlgLogoMessaggioClosed}"/>
+            </div>
+        </div>
+    </f:facet>
+    <p:outputLabel styleClass="devicesClass" style="visibility: hidden;"
+                   value="#{templateView.currentView.messaggiCastellettiBean.dispositiviList}" />
+
+    <p:remoteCommand name="askServerCanChange"
+                     actionListener="#{templateView.currentView.messaggiCastellettiBean.handleTabChanged}"
+                     oncomplete="handleTabChangedResponse(args)"
+                     update="@(.updatableMessageContent)"/>
+    <p:remoteCommand name="prepareDispositiviTabChange"
+                     actionListener="#{templateView.currentView.messaggiCastellettiBean.prepareDispositiviTabChange}"
+                     update="@(.updatableMessageContent)"/>
+    <p:remoteCommand name="prepareOuterTabChange"
+                     actionListener="#{templateView.currentView.messaggiCastellettiBean.prepareOuterTabChange}"
+                     update="@(.updatableMessageContent)"/>
+    <p:remoteCommand name="handleTabCategoriaBuoni"
+                     actionListener="#{templateView.currentView.messaggiCastellettiBean.handleTabCategoriaBuoni}"
+                     update="@(.addCategoriaBuonoBtnClass)"/>
+
+    <script type="text/javascript">
+        var changeAllowed = false;
+        var targetTabIndex = 0;
+        var currentTabName = 'dispositiviTab';
+
+        function handleTabChange(tabName, index) {
+            currentTabName = tabName;
+            if (changeAllowed) {
+                changeAllowed = false;
+                return true;
+            }
+            if (tabName === 'dispositiviTab') {
+                targetTabIndex = index;
+                askServerCanChange();
+                prepareDispositiviTabChange([{name: 'index', value: index}]);
+                return false;
+            } else if (tabName === 'outerTab') {
+                var currentIndex = PF(tabName).getActiveIndex();
+                if (currentIndex === 0 &amp;&amp; index !== 0) {
+                    targetTabIndex = index;
+                    askServerCanChange();
+                    prepareOuterTabChange([{name: 'index', value: index}]);
+                    return false;
+                }
+                return true;
+            }
+            return true;
+        }
+
+        function handleTabShow(index) {
+            handleTabCategoriaBuoni();
+        }
+
+        function handleTabChangedResponse(args) {
+            if (args &amp;&amp; args.canChangeTab &amp;&amp; currentTabName) {
+                changeAllowed = true;
+                PF(currentTabName).select(targetTabIndex);
+            } else {
+                PF('dlgPendingChanges').show();
+            }
+        }
+    </script>
+
+    <style>
+        .logoMessaggioDialogClass .ui-dialog-titlebar-maximize .ui-icon {
+            background: none !important;
+            text-indent: 0 !important;
+            display: inline-block;
+            text-align: center;
+            width: auto !important;
+            height: 1.5rem !important;
+            line-height: 1.5rem !important;
+            padding-top: 2px !important;
+            padding-right: 2px !important;
+        }
+
+        .logoMessaggioDialogClass .ui-dialog-titlebar-maximize .ui-icon-extlink::before {
+            content: "\f2d0";
+            font-family: "FontAwesome";
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .logoMessaggioDialogClass .ui-dialog-titlebar-maximize .ui-icon-newwin::before {
+            content: "\f2d2";
+            font-family: "FontAwesome";
+            font-size: 1.5rem;
+            color: #333;
+        }
+    </style>
+</p:dialog>
+</html>

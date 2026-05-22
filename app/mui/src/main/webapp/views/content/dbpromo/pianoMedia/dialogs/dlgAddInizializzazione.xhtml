@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<p:dialog id="dlgAddInizializzazione" widgetVar="dlgAddInizializzazione" modal="true" closable="false"
+          header="Aggiunta Inizializzazione Media" width="30%" height="20vh" resizable="false"
+          styleClass="disable-horizontal-scroll">
+    <h:form id="formAddInizializzazione" styleClass="formAddInizializzazione" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-8">
+                <div>
+                    <div><p:outputLabel for="media" value="Media" styleClass="label-txt" /></div>
+                </div>
+                <div>
+                    <p:selectOneMenu id="media" styleClass="input-field media"
+                                     style="width: 100%;"
+                                     value="#{templateView.currentView.selectedMedia}">
+                        <f:selectItem itemLabel="Seleziona" itemValue="-1" />
+                        <f:selectItems value="#{templateView.currentView.mediaList}" var="media"
+                                       itemLabel="#{media.descrizione}" itemValue="#{media.id}" />
+                        <p:ajax update="@(.ui-confirmdialog-yes) @this" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton id="btnCancelAddInizializzazione" value="Annulla" styleClass="ui-confirmdialog-no"
+                                 style="float: left;"
+                                 oncomplete="PF('dlgAddInizializzazione').hide()"
+                                 update="@(.formAddInizializzazione)"
+                                 action="#{templateView.currentView.resetDialogAddInizializzazione}" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="btnConfirmAddInizializzazione" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 disabled="#{templateView.currentView.btnConfirmAddInizializzazioneDisabled}"
+                                 update="@(.updateableMediaInizializzazione) @(.formAddInizializzazione)"
+                                 action="#{templateView.currentView.confirmDialogAddInizializzazione}" />
+            </div>
+        </div>
+    </f:facet>
+
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+    </style>
+</p:dialog>
+</html>

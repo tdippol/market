@@ -1,0 +1,15 @@
+[
+  {
+    "grid": "grid1",
+    "colId": [
+      {
+        "name": "TIPO_ELEMENTO",
+        "visible": true
+      },
+      {
+        "name": "ID_MECCANICA",
+        "visible": false
+      }
+    ]
+  }
+]

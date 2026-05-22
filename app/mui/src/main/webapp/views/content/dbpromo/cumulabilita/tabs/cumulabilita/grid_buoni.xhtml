@@ -1,0 +1,165 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <ui:include src="./dialog/addBuono.xhtml" />
+
+    <div class="col-7" style="padding:0;">
+        <p:panel id="gridCodeexpandable_db_buoni" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                 styleClass="pnlGrid_Header updateableContent expandable_db_buoni">
+            <f:facet name="header">
+                <p:commandButton title="Aggiungi Buono"
+                                 value="+"
+                                 disabled="#{templateView.currentView.btnAddBuonoDisabled}"
+                                 style="margin: 0 10px 0 0; border-radius: 5px;"
+                                 action="#{templateView.currentView.initBuonoDialog}"
+                                 oncomplete="PF('addBuonoDialog').show()"
+                                 update="@(.addBuonoDialogClass) @(.idCumulabilitaSelected) addBuonoDialogConfirmBtn"
+                                 id="gridCodecumulabilitaAddBuono"
+                                 class="pf-btn-confirm btnAddBuono" />
+                <p:outputLabel value="Dettaglio Prefissi #{templateView.currentView.currentTab.title}" />
+            </f:facet>
+
+            <h:panelGroup layout="block" style="height: 50vh; width: 100%;" class="ag-theme-balham"
+                          pt:gridid="db_buoni">
+            </h:panelGroup>
+
+            <f:facet name="actions">
+                <p:inputText autocomplete="off" id="gridCodedb_planning_buoni_quickfilter" placeholder="Filtra..."
+                             styleClass="pnlGrid_Header filterInputText"
+                             onkeyup="onFilterTextBoxChangedpromoGrid('db_buoni',this.value)" />
+                <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                               onclick="expandGrid('db_buoni')" onerror="redirectToExpiredPage()" />
+                <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                               onclick="onBtExport('db_buoni','Cumulabilità Buoni')" onerror="redirectToExpiredPage()" />
+            </f:facet>
+
+            <script type="text/javascript">
+                var gridParams_buoni = {
+                    gridCode: 'db_buoni',
+                    gridTitle: 'Cumulabilità - Buoni',
+                    url_columnDefs: contextPath + '/resources/grid/cumulabilita/buoni/columnDef' + addUrlParamContesto(#{muiContext}),
+                url_rowData: '',
+                    url_customSort: contextPath + '/resources/grid/sorting/db_buoni',
+                    subordinate_rowData: true
+                };
+                var gridOptions = {
+                    onSortChanged: function (event) {
+                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_buoni.gridCode);
+                    }
+                };
+
+                gridParams_buoni.additionColumnDefs = [
+                    { headerName: '', width: 45, cellRenderer: 'Buoni_BtnCellRenderer', position:'prepend', pinned: 'left' }
+                ];
+
+                gridParams_buoni.gridOptions = gridOptions;
+
+                $(document).ready(function() {
+                    creaGriglia(gridParams_buoni);
+                });
+
+                function refreshRowData_buoni(idCumulabilita) {
+                    if (idCumulabilita !== undefined) {
+                        showAgGridLoadingOverlay('db_buoni');
+                        $.ajax({
+                            type: "GET",
+                            url: contextPath + "/resources/grid/cumulabilita/" + idCumulabilita + '/buoni/rowData',
+                            contentType: "application/json",
+                            success: function (data) {
+                                if (data != undefined) {
+                                    getGridOptionFromGridMap('db_buoni').api.setRowData(data.rowData);
+                                    LT('Refreshed row data "' + gridParams_buoni.gridTitle + '" => ', data.rowData);
+                                }
+                            },
+                            error: ajaxErrorHandler,
+                            complete: function() {
+                                hideAgGridLoadingOverlay('db_buoni');
+                            }
+                        });
+                    } else {
+                        getGridOptionFromGridMap('db_buoni').api.setRowData([]);
+                        getGridOptionFromGridMap('db_buoni').api.showNoRowsOverlay();
+                    }
+                }
+
+                function loadBuoniDisponibili() {
+                    var idCumulabilita = $('.idCumulabilitaSelected').eq(0).text();
+                    if (idCumulabilita) {
+                        var params = {
+                            gridCode: 'db_add_buoni',
+                            gridTitle: 'Cumulabilità - Aggiungi Buoni',
+                            url_columnDefs: contextPath + '/resources/grid/cumulabilita/buoni/available/columnDef' + addUrlParamContesto(#{muiContext}),
+                            url_rowData: contextPath + '/resources/grid/cumulabilita/' + idCumulabilita + '/buoni/available',
+                            url_customSort: contextPath + '/resources/grid/sorting/db_add_buoni',
+                            gridOptions: {
+                            rowSelection: 'multiple',
+                                onSelectionChanged: onRowSelected,
+                                onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_add_buoni');
+                            }
+                        }
+                    };
+                        creaGriglia(params);
+                    }
+                }
+
+                function onRowSelected(event) {
+                    var ids = [];
+                    $.each(event.api.getSelectedNodes(), function (key, value) {
+                        ids.push(value.data.id.value);
+                    });
+                    selezionaPianificazioni([{ name: "itemSelected", value: JSON.stringify(ids) }]);
+                }
+
+                function deleteBuono() {
+                    var idCumulabilita = $('.remove_idCumulabilita').text();
+                    var idBuono = $('.remove_idBuono').text();
+                    if (idCumulabilita != '' &amp;&amp; idBuono != '') {
+                        $.ajax({
+                            type: "DELETE",
+                            url: contextPath + '/resources/grid/cumulabilita/' + idCumulabilita + '/buoni/' + idBuono,
+                            contentType: "text/plain",
+                            success: function (data) {
+                                getGridOptionFromGridMap('db_buoni').api.setRowData(data.rowData);
+                                addInfoGrowl([
+                                    { name: 'title', value: 'Elimina Buono' },
+                                    {name: 'message',value: data.callbackMessage}
+                                ]);
+                            },
+                            error: ajaxErrorHandler
+                        });
+                    }
+                    PF('removeBuono_dialog').hide();
+                }
+            </script>
+
+            <p:remoteCommand name="selezionaPianificazioni" update="addBuonoDialogConfirmBtn"
+                             action="#{templateView.currentView.selezionaPianificazioni}" />
+
+            <p:remoteCommand name="removeBuono" update="gridCoderemoveBuono_dialog, @(.remove_idBuono), @(.remove_idCumulabilita)"
+                             action="#{templateView.currentView.removeBuono}" />
+
+            <!-- Dialog conferma eliminazione buono -->
+            <p:confirmDialog id="gridCoderemoveBuono_dialog" widgetVar="removeBuono_dialog" global="true" showEffect="fade"
+                             hideEffect="fade" icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog"
+                             header="Avviso" message="#{templateView.currentView.confirmCancelMessage}">
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                 onclick="PF('removeBuono_dialog').hide()"/>
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                 onclick="deleteBuono()" />
+            </p:confirmDialog>
+
+        </p:panel>
+    </div>
+    <style>
+        button.ui-state-disabled {
+            background-color: lightgray !important;
+        }
+    </style>
+</ui:composition>
+</html>

@@ -1,0 +1,223 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <h:form id="totalizzatoriPromoForm" styleClass="updateableContent">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="promotions" value="Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promotions"
+                                                     value="#{templateView.currentView.idPromozioneCorrente}" class="input-field currentPromo"
+                                                     filter="true" filterMatchMode="contains"
+                                                     style="width: 100%; background-color: white;" >
+                                        <p:ajax update="@(.updateableContent) @(.tabScheda) @(.linkPianificazione) @(.promoDataInizio) @(.promoDataFine) @(.tabTotalizzatori)" />
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.promozioni}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.id}" />
+                                    </p:selectOneMenu>
+                                    <p:remoteCommand name="refreshHeaderData" update="totalizzatoriPromoForm"
+                                                     action="#{templateView.currentView.applyFilterToPromozioni}" />
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="codice" value="Codice" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="codice" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.codicePromozione : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="descrizione" value="Descrizione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText styleClass="updateableContent" class="input-field" style="width: 100%; background-color: transparent;"
+                                                 id="descrizione" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.descrizione : ''}" />
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="gruppo" value="Gruppo" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="gruppo" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.muiCanalePromozione.gruppoPromozioneEntity.descrizione  : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="canale" value="Tipo Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="canale" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.muiCanalePromozione.descrizione : ''}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="anno" value="Anno" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="anno" readonly="true" styleClass="updateableContent"
+                                                 class="input-field" style="width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.anno : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataInizio" value="Data inizio" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizio" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.dataInizio : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataFine" value="Data fine" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataFine" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.dataFine : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="stato" value="Stato" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="stato" readonly="true" styleClass="updateableContent updateCambioStato"
+                                                 class="input-field" style="#{templateView.currentView.statoStyleError}"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.statoCorrente.statoPromozioneEntity.codiceStato : ''} #{templateView.currentView.promotionSelected != null ? '-' : ''} #{templateView.currentView.promotionSelected != null ? templateView.currentView.statoCorrente.statoPromozioneEntity.label : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataInizioStato" value="Data inizio stato"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizioStato" readonly="true" styleClass="updateableContent updateCambioStato"
+                                                 class="input-field" style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.statoCorrente.dataInizioStato : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataUltimaPubblicazione" value="Ultima pubblicazione"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataUltimaPubblicazione" readonly="true"
+                                                 styleClass="updateableContent updateCambioStato" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                                 value="#{templateView.currentView.promotionSelected != null ?templateView.currentView.ultimaPubblicazione : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                        </div>
+                        <p:remoteCommand name="updateCurrentTab" update="@(.currentActiveTab) @(.updateableContent)"
+                                         actionListener="#{templateView.currentView.updateCurrentTab}" />
+                        <script type="text/javascript">
+                            var currentActiveTab = 0;
+
+                            function handleTabChange(index) {
+                                currentActiveTab = index;
+                                // noinspection JSUnresolvedReference
+                                updateCurrentTab([{name: 'tabIndex', value: index}]);
+                            }
+
+                            function updateSchedaPromoHeader() {
+                                // noinspection JSUnresolvedReference
+                                refreshHeaderData();
+                            }
+                        </script>
+                        <style>
+                            .input-field {
+                                border-radius: 3px;
+                                border-color: gray;
+                            }
+
+                            .input-field-label {
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: black;
+                            }
+
+                            .ui-tabs {
+                                padding: 0;
+                            }
+
+                            .ui-tabs-nav {
+                                background: #ececec !important;
+                            }
+
+                            .ui-tabs-panels {
+                                border: 1px solid gray;
+                                background: white;
+                                border-radius: 3px;
+                            }
+
+                            .ui-tabs .ui-tabs-panel {
+                                padding-top: 0;
+                                padding-bottom: 0;
+                            }
+
+                            .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+                                border-top-left-radius: 5px;
+                                border-top-right-radius: 5px;
+                            }
+
+                            .ui-icon-carat-1-s {
+                                transform: rotate(180deg) !important;
+                            }
+                        </style>
+                    </h:form>
+                </div>
+                <p:tabView dynamic="true" widgetVar="totalizzatoriTabs" styleClass="tabTotalizzatori"
+                           activeIndex="#{templateView.currentView.activeTab}"
+                           onTabChange="handleTabChange(index)">
+                    <p:tab id="totalizzatoriTab" title="Totalizzatori">
+                        <ui:include src="totalizzatori/totalizzatori.xhtml" />
+                    </p:tab>
+                    <p:tab id="obiettiviPremioTab" title="Obiettivi Premio"
+                           rendered="#{templateView.currentView.tabObiettiviPremioRendered}">
+                        <ui:include src="totalizzatori/obiettiviPremio.xhtml" />
+                    </p:tab>
+                </p:tabView>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

@@ -1,0 +1,14 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Meccanica",
+      "field": "descrizioneEsteso",
+      "width": 350,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog id="showBarcodeDialog" widgetVar="showBarcodeDialog" modal="true" closable="false" dynamic="true"
+          header="Anteprima Barcode"
+          width="30%"  resizable="false"
+          onShow="loadBarcodeImage()"
+          styleClass="showBarcodeDialogClass disable-horizontal-scroll">
+    <h:form id="addHeaderDialogForm2" style="margin-top: 10px; margin-bottom: 30px;"
+            styleClass="showBarcodeDialogClass addHeaderDialogForm2">
+        <div class="row">
+            <div class="col-12">
+                <div style="width: 100%;">
+                    <img src="" 
+                        class="barcodeImage" 
+                            id="barcodeImg" />
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+<style>
+.barcodeImage{
+    display: block;
+    margin:0 auto;
+    margin-top:20px;
+    padding:15px;
+    border:1px solid black;
+}
+
+</style>
+    <script>
+        
+        function loadBarcodeImage(){
+            let id=$('.idPromoPianificazione').val()
+            
+            $("#barcodeImg").attr('src',contextPath+"/resources/barcode/ean13/" + id);
+        }
+
+
+        function downloadImage(){
+            var a = $("<a />")
+                .attr("href", $("#barcodeImg").attr('src'))
+                .attr("download", "Barcode.png")
+                .appendTo("body");
+
+            a[0].click();
+
+            a.remove();
+
+            //closeDialogBarcode()
+        }
+
+
+        function closeDialogBarcode(){
+            
+            $("#barcodeImg").attr('src','');
+            PF('showBarcodeDialog').hide()
+        }
+
+    </script>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Chiudi" type="button" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 onclick="closeDialogBarcode()"
+                                 update="@(.showBarcodeDialogClass)" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="addHeaderDialogConfirmBtn" value="Scarica"
+                                 styleClass="ui-confirmdialog-yes"
+                                 disabled=""
+                                 onclick="downloadImage()"
+                                  />
+            </div>
+        </div>
+    </f:facet>
+</p:dialog>
+
+</html>

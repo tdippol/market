@@ -1,0 +1,140 @@
+{
+  "columnDef": [
+    {
+      "field": "anno",
+	  "rowGroup": true,
+      "width": 80,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "field": "canale",
+	  "rowGroup": true,
+      "width": 500,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "field": "promozione",
+	  "rowGroup": true,
+      "width": 500,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "field": "compratore",
+	  "rowGroup": true,
+      "width": 500,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "field": "contributo",
+      "width": 300,
+	  "hide": true,
+      "type": "string",
+	  "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Prestazione",
+      "field": "prestazione",
+      "width": 300,
+	  "hide": false,
+      "type": "string",
+	  "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Data Liquidazione",
+      "field": "dataLiquidazione",
+      "width": 150,
+      "hide": false,
+      "type": "date",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "cellClass": "pull-right"
+    },
+    {
+      "headerName": "Applicato",
+      "field": "applicato",
+      "width": 150,
+      "hide": false,
+      "type": "numeric",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "aggFunc": "sum",
+      "cellClass": "pull-right"
+    },
+    {
+      "headerName": "Stato Rata",
+      "field": "statoRata",
+      "width": 400,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Saldo",
+      "field": "saldo",
+      "width": 150,
+      "hide": false,
+      "type": "numeric",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "aggFunc": "sum",
+      "cellClass": "pull-right"
+    },
+    {
+      "headerName": "Note Compratore",
+      "field": "noteCompratore",
+      "width": 400,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Note Fatturazione",
+      "field": "noteFatturazione",
+      "width": 400,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

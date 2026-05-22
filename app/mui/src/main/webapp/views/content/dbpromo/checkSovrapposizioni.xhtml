@@ -1,0 +1,214 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <h:form id="checkSovrForm" styleClass="checkSovr">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="promozione" value="Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promozione"
+                                                     value="#{templateView.currentView.idPromozioneCorrente}"
+                                                     class="input-field"
+                                                     filter="true" filterMatchMode="contains"
+                                                     style="width: 100%; background-color: white;">
+                                        <p:ajax update="@(.updatableCheckSovr) @(.idPromozione)" />
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.promozioni}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataFine" value="Data fine" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataFine" class="input-field updatableCheckSovr"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                                 readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.dataFine : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="stato" value="Stato" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText class="input-field updatableCheckSovr"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                                 id="stato" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.statoPromozioneSelected.codiceStato : ''} #{templateView.currentView.promotionSelected != null ? '-': ''} #{templateView.currentView.promotionSelected != null ? templateView.currentView.statoPromozioneSelected.label : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="gruppo" value="Gruppo" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="gruppo" class="input-field updatableCheckSovr"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ?  templateView.currentView.promotionSelected.muiCanalePromozione.gruppoPromozioneEntity.descrizione : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="canale" value="Tipo Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="canale" class="input-field updatableCheckSovr"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ?  templateView.currentView.promotionSelected.muiCanalePromozione.descrizione : ''}" />
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:confirmDialog widgetVar="changeEccezioneDialog" header="Avviso" closable="false"
+                                     styleClass="changeEccezioneDialog" severity="alert"
+                                     message="#{templateView.currentView.changeEccezioneDialogMsg}">
+                        <p:commandButton id="changeEccezioneDialogNoBtn" value="No"
+                                         styleClass="ui-confirmdialog-no" style="float: left;"
+                                         oncomplete="PF('changeEccezioneDialog').hide()"
+                                         action="#{templateView.currentView.dialogCancel}"
+                                         update="@(.panelCheckSovr)" />
+                        <p:commandButton id="changeEccezioneDialogYesBtn" value="Si"
+                                         styleClass="ui-confirmdialog-yes"
+                                         oncomplete="PF('changeEccezioneDialog').hide()"
+                                         action="#{templateView.currentView.dialogConfirm}"
+                                         update="@(.panelCheckSovr)" />
+                    </p:confirmDialog>
+
+                    <h:panelGroup layout="block" styleClass="col-12" id="panelButtons">
+                        <p:commandButton value="Eccezione SI" id="selectedYesBtn"
+                                         widgetVar="selectedYesBtn"
+                                         styleClass="pf-btn-confirm selectedYesBtn"
+                                         icon="fa fa-fw fa-check"
+                                         style="margin-right: 20px; border-radius: 5px;"
+                                         onclick="prepareAndOpenDialog(true)"
+                                         rendered="#{templateView.currentView.selectedYesBtnRendered}" />
+                        <p:commandButton value="Eccezione NO" id="selectedNoBtn"
+                                         widgetVar="selectedNoBtn"
+                                         styleClass="pf-btn-confirm selectedNoBtn"
+                                         icon="fa fa-fw fa-ban"
+                                         style="margin-right: 20px; border-radius: 5px;"
+                                         onclick="prepareAndOpenDialog(false)"
+                                         rendered="#{templateView.currentView.selectedNoBtnRendered}" />
+                    </h:panelGroup>
+
+                    <p:panel id="expandable_db_checkSovr" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updatableCheckSovr panelCheckSovr">
+                        <f:facet name="header"><p:outputLabel value="" /></f:facet>
+
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham grid_checkSovr"
+                                      pt:gridid="db_checkSovr">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_checkSovr_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_checkSovr', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_checkSovr')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_checkSovr', 'Escludi Check Sovrapposizioni', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_checkSovr', 'Escludi Check Sovrapposizioni')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+                            var idPromozione = $('.idPromozione').text();
+                            var gridParamsCheckSovr = {
+                                gridCode: 'db_checkSovr',
+                                gridTitle: 'checkSovr',
+                                url_columnDefs: contextPath + '/resources/pianificazionepromo/checksovr/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/pianificazionepromo/checksovr/rowData/' + idPromozione + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_checkSovr',
+                                gridOptions: {
+                                    rowSelection: 'multiple',
+                                    onSelectionChanged: onItemSelected,
+                                    onCellValueChanged: function (event) {
+                                        updateCell(event)
+                                    },
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_checkSovr');
+                                    },
+                                }
+                            };
+
+                            function onItemSelected(event) {
+                                var ids = [];
+                                $.each(event.api.getSelectedNodes(), function (key, value) {
+                                    ids.push(Number(value.data.id.value));
+                                });
+                                handleItemSelected([{name: 'itemSelected', value: JSON.stringify(ids)}]);
+                            }
+
+                            function updateCell(event) {
+                                const gridCode = 'db_checkSovr'
+                                var rowIndex = getRowNodeId(event);
+                                var rowData = getRowData(gridCode);
+                                var rowToUpdate = rowData[rowIndex]
+                                var idToUpdate = rowToUpdate.id.value
+                                let url = contextPath + '/resources/pianificazionepromo/checksovr/' + idToUpdate + '/toggle'
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        rowData[rowIndex] = data.rowData;
+                                        getGridOptionFromGridMap(gridCode).api.setRowData(rowData);
+                                        addInfoGrowl([
+                                            {name: 'title', value: 'Modifica effettuata'},
+                                            {name: 'message', value: data.callbackMessage}
+                                        ]);
+                                    },
+                                    error: function (jqXHR, exception, thrownError) {
+                                        ajaxErrorHandler(jqXHR, exception, thrownError, event)
+                                    }
+                                });
+                            }
+
+                            function prepareAndOpenDialog(flag) {
+                                prepareMessage([{name: 'flag', value: flag}]);
+                            }
+
+                            $(document).ready(function () {
+                                if (idPromozione !== undefined &amp;&amp; idPromozione !== '') {
+                                    creaGriglia(gridParamsCheckSovr);
+                                }
+                            });
+                        </script>
+
+                        <p:remoteCommand name="handleItemSelected" update="panelButtons @(.changeEccezioneDialog)"
+                                         action="#{templateView.currentView.handleItemSelected}" />
+
+                        <p:remoteCommand name="prepareMessage" update="@(.changeEccezioneDialog)"
+                                         action="#{templateView.currentView.prepareDialogMessage}" />
+
+                        <p:outputLabel value="#{templateView.currentView.idPromozioneCorrente}"
+                                       styleClass="idPromozione" style="visibility: hidden;" />
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

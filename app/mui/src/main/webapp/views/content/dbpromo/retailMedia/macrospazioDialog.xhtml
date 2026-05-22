@@ -1,0 +1,124 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<p:dialog id="macrospaziDialog" widgetVar="macrospaziDialog" modal="true" closable="false" dynamic="true"
+          resizable="false" header="#{templateView.currentView.macrospazioDialog.title}" width="50%" height="45vh"
+          styleClass="macrospazioDialogClass disable-horizontal-scroll">
+    <h:form id="macrospazioMessaggioDialogForm" styleClass="updateableMacrospaziContent">
+        <div class="row">
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="macrospazioCodice" value="Codice Macrospazio *" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:inputText id="macrospazioCodice" class="input-field"
+                                 style="text-transform: uppercase; width: 100%; background-color: transparent;"
+                                 styleClass="updateableMacrospaziContent"
+                                 disabled="#{templateView.currentView.macrospazioDialog.used}"
+                                 maxlength="10"
+                                 value="#{templateView.currentView.macrospazioDialog.bean.codice}">
+                        <p:ajax event="change" listener="#{templateView.currentView.macrospazioDialog.onCodiceChange}"
+                                update="@(.addMacrospazioBtn)"/>
+                    </p:inputText>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="macrospazioDescrizione" value="Descrizione *" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:inputText id="macrospazioDescrizione" class="input-field"
+                                 style="text-transform: uppercase; width: 100%; background-color: transparent;"
+                                 styleClass="updateableMacrospaziContent"
+                                 disabled="#{templateView.currentView.macrospazioDialog.used}"
+                                 value="#{templateView.currentView.macrospazioDialog.bean.descrizione}">
+                        <p:ajax event="change"
+                                listener="#{templateView.currentView.macrospazioDialog.onDescrizioneChange}"
+                                update="@(.addMacrospazioBtn)"/>
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="macrospazioListino" value="Listino *" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:inputNumber id="macrospazioListino" symbol=" €"
+                                   symbolPosition="s" decimalSeparator="," thousandSeparator="."
+                                   styleClass="updateableMacrospaziContent"
+                                   style="text-transform: capitalize; width: 100%; background-color: transparent;"
+                                   value="#{templateView.currentView.macrospazioDialog.bean.listino}"
+                                   minValue="0" decimalPlaces="2">
+                        <p:ajax event="change" listener="#{templateView.currentView.macrospazioDialog.onListinoChange}"
+                                update="@(.addMacrospazioBtn)"/>
+                    </p:inputNumber>
+                </div>
+            </div>
+            <div class="col-6">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="macrospazioDataInizio" value="Data inizio" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:datePicker widgetVar="macrospazioDataInizio" id="macrospazioDataInizio" class="input-field"
+                                  style="background-color: transparent;"
+                                  value="#{templateView.currentView.macrospazioDialog.bean.dataInizio}"
+                                  readonlyInput="true" pattern="dd/MM/yyyy"
+                                  disabled="#{templateView.currentView.macrospazioDialog.dataInizioDisabled}"
+                                  styleClass="updateableMacrospaziContent">
+                        <p:ajax event="dateSelect"
+                                listener="#{templateView.currentView.macrospazioDialog.onDataInizioSelect}"
+                                update="@(.addMacrospazioBtn)"/>
+                        <f:ajax event="change"
+                                listener="#{templateView.currentView.macrospazioDialog.onDataInizioChange}"
+                                update="@(.addMacrospazioBtn)"/>
+                    </p:datePicker>
+                    <p:commandButton update="macrospazioDataInizio @(.addMacrospazioBtn)" value="Reset"
+                                     disabled="#{templateView.currentView.macrospazioDialog.dataInizioDisabled}"
+                                     actionListener="#{templateView.currentView.macrospazioDialog.clearDataInizio}"/>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <p:outputLabel for="macrospazioDataFine" value="Data fine" class="input-field-label"/>
+                </div>
+                <div>
+                    <p:datePicker widgetVar="macrospazioDataFine" id="macrospazioDataFine" class="input-field"
+                                  style="background-color: transparent;"
+                                  value="#{templateView.currentView.macrospazioDialog.bean.dataFine}"
+                                  readonlyInput="true" pattern="dd/MM/yyyy"
+                                  styleClass="updateableMacrospaziContent">
+                        <p:ajax event="dateSelect"
+                                listener="#{templateView.currentView.macrospazioDialog.onDataFineSelect}"
+                                update="@(.addMacrospazioBtn)"/>
+                        <f:ajax event="change"
+                                listener="#{templateView.currentView.macrospazioDialog.onDataFineChange}"
+                                update="@(.addMacrospazioBtn)"/>
+                    </p:datePicker>
+                    <p:commandButton update="macrospazioDataFine @(.addMacrospazioBtn)" value="Reset"
+                                     actionListener="#{templateView.currentView.macrospazioDialog.clearDataFine}"/>
+                </div>
+            </div>
+        </div>
+    </h:form>
+    <div class="row footer-row">
+        <div class="col-6" style="align-content: start">
+            <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                             onclick="PF('macrospaziDialog').hide()"/>
+        </div>
+        <div class="col-6">
+            <p:commandButton value="Salva" styleClass="ui-confirmdialog-yes addMacrospazioBtn"
+                             action="#{templateView.currentView.addMacrospazio}"
+                             oncomplete="PF('macrospaziDialog').hide()"
+                             disabled="#{templateView.currentView.macrospazioDialog.addMacrospazioBtnDisabled}"
+                             update="@(.eventiContent)"/>
+        </div>
+    </div>
+</p:dialog>
+</html>

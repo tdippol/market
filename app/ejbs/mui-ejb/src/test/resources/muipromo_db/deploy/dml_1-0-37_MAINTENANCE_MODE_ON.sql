@@ -1,0 +1,2 @@
+update MUIPROMO.USERS set USERS.OLD_ROLE_ID = USERS.ROLE_ID where ROLE_ID != 1 ;
+update MUIPROMO.USERS set USERS.ROLE_ID = 10 where ROLE_ID != 1 ;

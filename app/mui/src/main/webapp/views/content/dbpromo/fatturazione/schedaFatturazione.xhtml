@@ -1,0 +1,279 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <ui:include src="dlgAddArticoli.xhtml" />
+
+    <p:confirmDialog id="confirmDlgDeleteRata" widgetVar="confirmDlgDeleteRata" global="true"
+                     styleClass="muiDialog confirmDlgDeleteRata"
+                     showEffect="fade" hideEffect="fade" closable="false" icon="pi pi-exclamation-triangle"
+                     header="Attenzione" message="#{templateView.currentView.dlgDeleteRataMessage}">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                         onclick="PF('confirmDlgDeleteRata').hide()" />
+        <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                         oncomplete="PF('confirmDlgDeleteRata').hide()"
+                         update="@(.formSchedaFatturazione)"
+                         actionListener="#{templateView.currentView.deleteRata}" />
+    </p:confirmDialog>
+
+    <p:confirmDialog id="confirmDlgDeleteArticoli" widgetVar="confirmDlgDeleteArticoli" global="true" styleClass="muiDialog"
+                     showEffect="fade" hideEffect="fade" closable="false" icon="pi pi-exclamation-triangle"
+                     header="Attenzione" message="Sei sicuro di voler eliminare gli articoli selezionati?">
+        <p:commandButton value="No" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                         oncomplete="PF('confirmDlgDeleteArticoli').hide()"
+                         update="@(.btnDeleteArticoli) @(.panelArticoli)"
+                         actionListener="#{templateView.currentView.cancelDlgDeleteArticoli}" />
+        <p:commandButton value="Si" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                         oncomplete="PF('confirmDlgDeleteArticoli').hide()"
+                         update="@(.formSchedaFatturazione)"
+                         actionListener="#{templateView.currentView.deleteArticoli}" />
+    </p:confirmDialog>
+
+    <p:confirmDialog id="errorDlgDeleteArticoli" widgetVar="errorDlgDeleteArticoli" global="true" styleClass="muiDialog"
+                     showEffect="fade" hideEffect="fade" closable="false" icon="pi pi-exclamation-triangle"
+                     header="Attenzione" message="Deve esistere almeno un articolo all'interno della rata">
+        <p:commandButton value="Chiudi" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                         oncomplete="PF('errorDlgDeleteArticoli').hide()" />
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <h:form id="formSchedaFatturazione" styleClass="formSchedaFatturazione" style="margin-top: 10px; margin-bottom: 30px;">
+            <div class="row">
+                <div class="col-6">
+                    <div><p:outputLabel for="selectPromoScheda" value="Promozione" styleClass="label-txt" /></div>
+                    <div>
+                        <p:selectOneMenu id="selectPromoScheda" widgetVar="selectPromoScheda" filter="true" filterMatchMode="contains"
+                                         styleClass="input-field selectPromoScheda" style="width: 100%; background-color: white;"
+                                         value="#{templateView.currentView.idPromozioneSelected}">
+                            <p:ajax update="@(.selectRata) @(.updatableField) @(.panelArticoli)" />
+                            <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                            <f:selectItems value="#{templateView.currentView.promozioni}" var="p"
+                                           itemLabel="#{p.descrizioneEstesa}" itemValue="#{p.id}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div><p:outputLabel for="selectRata" value="Rata" styleClass="label-txt" /></div>
+                    <div>
+                        <p:selectOneMenu id="selectRata" widgetVar="selectRata" filter="true" filterMatchMode="contains"
+                                         styleClass="input-field selectRata" style="width: 100%; background-color: white;"
+                                         disabled="#{empty templateView.currentView.idPromozioneSelected}"
+                                         value="#{templateView.currentView.idRataSelected}">
+                            <p:ajax update="@(.updatableField) @(.panelArticoli)" />
+                            <f:selectItem itemLabel="Seleziona rata" noSelectionOption="true" />
+                            <f:selectItems value="#{templateView.currentView.rate}" var="r"
+                                           itemLabel="#{r.label}" itemValue="#{r.id}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-3">
+                    <div><p:outputLabel for="selectPrestazioneScheda" value="Prestazione" styleClass="label-txt" /></div>
+                    <div>
+                        <p:selectOneMenu id="selectPrestazioneScheda" widgetVar="selectPrestazioneScheda"
+                                         styleClass="input-field updatableField selectPrestazioneScheda"
+                                         style="width: 100%; background-color: white;"
+                                         disabled="#{not templateView.currentView.editingEnabled}"
+                                         value="#{templateView.currentView.codicePrestazioneSelected}">
+                            <p:ajax listener="#{templateView.currentView.changeTipoPrestazione}" />
+                            <f:selectItem itemLabel="Seleziona prestazione" noSelectionOption="true" />
+                            <f:selectItems value="#{templateView.currentView.prestazioni}" var="p"
+                                           itemLabel="#{p.descrizionePrestazione}" itemValue="#{p.codicePrestazione}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div><p:outputLabel for="dataLiquidazione" value="Data Liquidazione" styleClass="label-txt" /></div>
+                    <div>
+                        <p:datePicker id="dataLiquidazione" inputStyle="width: 100%; color: #495057;"
+                                      styleClass="updatableField" inputStyleClass="input-field"
+                                      showOn="button" pattern="dd-MM-yyyy" locale="it"
+                                      mindate="#{templateView.currentView.minDataLiquidazione}"
+                                      disabled="#{not templateView.currentView.editingEnabled}"
+                                      value="#{templateView.currentView.dataLiquidazione}">
+                            <p:ajax event="dateSelect" listener="#{templateView.currentView.changeDataLiquidazione}" />
+                            <p:ajax event="change" listener="#{templateView.currentView.changeDataLiquidazione}" />
+                        </p:datePicker>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div><p:outputLabel for="valore" value="Valore Applicato" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputNumber id="valore" styleClass="input-field updatableField" style="width: 100%;"
+                                       inputStyleClass="input-field"
+                                       decimalPlaces="2" decimalSeparator="," thousandSeparator="."
+                                       disabled="#{not templateView.currentView.editingEnabled}"
+                                       value="#{templateView.currentView.valore}">
+                            <p:ajax event="valueChange" listener="#{templateView.currentView.changeValore}" />
+                        </p:inputNumber>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div><p:outputLabel for="saldo" value="Saldo" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputNumber id="saldo" styleClass="input-field updatableField" style="width: 100%;"
+                                       inputStyleClass="input-field"
+                                       decimalPlaces="2" decimalSeparator="," thousandSeparator="."
+                                       disabled="true" value="#{templateView.currentView.saldo}" />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div><p:outputLabel for="noteCompratore" value="Note Compratore" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputText id="noteCompratore" styleClass="input-field updatableField" style="width: 100%;"
+                                     disabled="#{not templateView.currentView.editingEnabled}"
+                                     value="#{templateView.currentView.noteCompratore}">
+                            <p:ajax event="valueChange" listener="#{templateView.currentView.changeNoteCompratore}" />
+                        </p:inputText>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-3">
+                    <div><p:outputLabel for="statoRata" value="Stato Rata" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputText id="statoRata" styleClass="input-field updatableField" style="width: 100%;"
+                                     disabled="true" value="#{templateView.currentView.statoRata}" />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div><p:outputLabel for="noteFatturazione" value="Note Fatturazione" styleClass="label-txt" /></div>
+                    <div>
+                        <p:inputText id="noteFatturazione" styleClass="input-field updatableField" style="width: 100%;"
+                                     disabled="true" value="#{templateView.currentView.noteFatturazione}" />
+                    </div>
+                </div>
+                <div class="col-3 offset-3">
+                    <p:commandButton value="Aggiungi Articoli" id="btnAddArticoli" widgetVar="btnAddArticoli"
+                                     styleClass="pf-btn-confirm updatableField"
+                                     style="border-radius: 5px; margin-top: 20px;"
+                                     disabled="#{not templateView.currentView.editingEnabled}"
+                                     action="#{templateView.currentView.prepareDialogAddArticoli}"
+                                     oncomplete="PF('dlgAddArticoli').show()"
+                                     update="@(.selectTipologiaArticoli)" />
+                    <p:commandButton value="Riepilogo" id="btnRiepilogo" widgetVar="btnRiepilogo"
+                                     styleClass="pf-btn-confirm"
+                                     style="border-radius: 5px; margin-top: 20px; margin-left: 50px; float: right; background-color: #5578eb !important;"
+                                     actionListener="#{templateView.simulateMenuClick()}"
+                                     onclick="setLoadingStatus(this)">
+                        <f:param name="menuId" value="#{templateView.currentView.landingPage}" />
+                    </p:commandButton>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12">
+                    <p:panel id="expandable_grid_fatturazione_articoli" closable="false" toggleable="true"
+                             toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header panelArticoli">
+                        <f:facet name="header"><p:outputLabel value="" /></f:facet>
+
+                        <h:panelGroup layout="block" style="height: 50vh; width: 100%;" styleClass="ag-theme-balham"
+                                      pt:gridid="db_grid_fatturazione_dettaglio_articoli">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="fatturazione_articoli_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_fatturazione_dettaglio_articoli', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_fatturazione_dettaglio_articoli')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_fatturazione_dettaglio_articoli', 'Fatturazione - Dettaglio Articoli', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_fatturazione_dettaglio_articoli', 'Fatturazione - Dettaglio Articoli', false)"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                    </p:panel>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p:commandButton value="Elimina Rata" id="btnDeleteRata" widgetVar="btnDeleteRata"
+                                     styleClass="pf-btn-danger updatableField"
+                                     icon="far fa-fw fa-trash-alt" style="border-radius: 5px;"
+                                     update="@(.confirmDlgDeleteRata)"
+                                     disabled="#{not templateView.currentView.editingEnabled}"
+                                     actionListener="#{templateView.currentView.prepareDialogDeleteRata}" />
+                </div>
+                <div class="col-6">
+                    <p:commandButton value="Elimina Articoli" id="btnDeleteArticoli" widgetVar="btnDeleteArticoli"
+                                     styleClass="pf-btn-danger updatableField btnDeleteArticoli"
+                                     icon="far fa-fw fa-trash-alt" style="border-radius: 5px; float: right;"
+                                     disabled="#{not templateView.currentView.editingEnabled or empty templateView.currentView.itemsIdSelected}"
+                                     action="#{templateView.currentView.prepareDialogDeleteArticoli}" />
+                </div>
+            </div>
+
+            <p:remoteCommand name="onItemSelected" update="btnDeleteArticoli"
+                             action="#{templateView.currentView.itemSelected}" />
+
+            <p:remoteCommand name="refreshGrid" update="@(.panelArticoli)" autoRun="true"
+                             rendered="#{templateView.currentView.autoreloadGrid}" />
+        </h:form>
+    </div>
+
+    <script type="text/javascript">
+        function loadGridFatturazioneDettaglioArticoli(idPromozione, idRata) {
+            var params = {
+                gridCode: 'db_grid_fatturazione_dettaglio_articoli',
+                gridTitle: 'Fatturazione - Dettaglio Articoli',
+                url_columnDefs: contextPath + '/resources/fatturazione/articoli/columnDef' + addUrlParamContesto(#{muiContext}),
+                url_rowData: contextPath + '/resources/fatturazione/articoli/rowData/promozione/' + idPromozione
+                    + '/rata/' + idRata + addUrlParamContesto(#{muiContext}),
+                url_customSort: contextPath + '/resources/grid/sorting/db_grid_fatturazione_dettaglio_articoli',
+                gridOptions: {
+                    rowSelection: 'multiple',
+                    suppressRowClickSelection: true,
+                    onSelectionChanged: onFatturazioneDettaglioRowSelected,
+                    onSortChanged: function (event) {
+                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_fatturazione_dettaglio_articoli');
+                    }
+                },
+                sortColumnDefs: [
+                    { columnDefId: 'selected', newPosition: 7 }
+                ]
+            };
+            if (idRata &amp;&amp; idPromozione) {
+                creaGriglia(params);
+            }
+        }
+
+        function onFatturazioneDettaglioRowSelected(event) {
+            var ids = event.api.getSelectedNodes().map(x => x.data.id.value);
+            onItemSelected([{ name: "itemsIds", value: JSON.stringify(ids) }]);
+        }
+    </script>
+
+    <style>
+        .ui-inputfield.ui-state-hover {
+            background-color: white !important;
+        }
+
+        .ui-state-disabled {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        .selectPrestazioneScheda.ui-state-disabled > label {
+            background-color: #F0F0F2;
+        }
+
+        .input-field {
+            border-radius: 3px;
+            border-color: gray;
+        }
+
+        .label-txt {
+            color: black;
+            font-size: 14px;
+        }
+    </style>
+</ui:composition>
+</html>

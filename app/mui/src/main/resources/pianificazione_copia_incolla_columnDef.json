@@ -1,0 +1,32 @@
+  {
+    "columnDef":[
+      {
+        "headerName": "Row",
+        "valueGetter": "node.rowIndex + 1",
+        "width":20
+      },{
+        "headerName":"Codice",
+        "field":"codice",
+        "width":200,
+        "type": "string",
+        "editable":true,
+        "hide":false,
+        "rowGroup":false,
+        "checkboxSelection":false,
+        "headerCheckboxSelection":false,
+        "headerCheckboxSelectionFilteredOnly":false
+      },
+      {
+        "headerName":"Descrizione",
+        "field":"descrizione",
+        "width":500,
+        "type": "string",
+        "editable":false,
+        "hide":false,
+        "rowGroup":false,
+        "checkboxSelection":false,
+        "headerCheckboxSelection":false,
+        "headerCheckboxSelectionFilteredOnly":false
+      }
+    ]
+  }

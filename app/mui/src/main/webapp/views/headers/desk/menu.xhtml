@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition>
+
+	<p:commandLink
+		styleClass="menuPagBtn"
+		id="menuPagPrev"
+        style="display:none !important;"
+        onclick=""><i class="fa fa-fw fa-chevron-left"></i></p:commandLink>
+
+	<h:form styleClass="ax-menu-container" style="width:100%;">
+		<p:menubar autoDisplay="false" model="#{templateView.mainMenu}" styleClass="mui-menubar" />
+	</h:form>
+	
+	<p:commandLink
+		styleClass="menuPagBtn"
+		id="menuPagNext"
+        style="display:none !important;"
+        onclick=""><i class="fa fa-fw fa-chevron-right"></i></p:commandLink>
+
+</ui:composition>
+
+</html>

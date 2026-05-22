@@ -1,0 +1,185 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+      <div class="row">
+          <div class="col-12">
+              <p:commandButton value="Aggiungi" id="addTransition" styleClass="pf-btn-confirm"
+                               action="#{templateView.currentView.openAddTransitionDialog}"
+                               oncomplete="PF('dlgAddTransition').show()"
+                               update="@(.dlgAddTransitionForm)" />
+          </div>
+          <div class="col-12">
+              <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                  <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="true">
+                      <p:commandButton value="annulla" type="button" styleClass="ui-confirmdialog-no" />
+                      <p:commandButton value="conferma" type="button" styleClass="ui-confirmdialog-yes" />
+                  </p:confirmDialog>
+
+                  <p:dialog widgetVar="dlgAddTransition" resizable="false" closable="false"
+                            styleClass="pf-dialog disable-horizontal-scroll"
+                            width="800" height="50vh" header="Aggiungi transizione">
+                      <h:form id="addTransitionDlgForm" styleClass="dlgAddTransitionForm">
+                          <div class="row">
+                              <div class="col-6">
+                                  <div>
+                                      <p:outputLabel for="fromStato" value="Da stato" style="font-size: 14px;" />
+                                  </div>
+                                  <div>
+                                      <p:selectOneMenu id="fromStato" class="input-field" style="width: 100%;"
+                                                       value="#{templateView.currentView.idFromStatus}">
+                                          <p:ajax update="@(.dlgAddTransitionForm) @(.ui-confirmdialog-yes)" />
+                                          <f:selectItem itemLabel="Seleziona stato" noSelectionOption="true" />
+                                          <f:selectItems value="#{templateView.currentView.statusesList}" var="s"
+                                                         itemLabel="#{s.codiceStato} - #{s.label}"
+                                                         itemValue="#{s.id}" />
+                                      </p:selectOneMenu>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-top: 10px;">
+                              <div class="col-6">
+                                  <div>
+                                      <p:outputLabel for="toStato" value="A stato" style="font-size: 14px;" />
+                                  </div>
+                                  <div>
+                                      <p:selectOneMenu id="toStato" class="input-field" style="width: 100%;"
+                                                       value="#{templateView.currentView.idToStatus}">
+                                          <p:ajax update="@(.dlgAddTransitionForm) @(.ui-confirmdialog-yes)" />
+                                          <f:selectItem itemLabel="Seleziona stato" noSelectionOption="true" />
+                                          <f:selectItems value="#{templateView.currentView.statusesList}" var="s"
+                                                         itemLabel="#{s.codiceStato} - #{s.label}"
+                                                         itemValue="#{s.id}" />
+                                      </p:selectOneMenu>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-top: 10px;">
+                              <div class="col-6">
+                                  <div>
+                                      <p:outputLabel for="errStato" value="Stato errore" style="font-size: 14px;" />
+                                  </div>
+                                  <div>
+                                      <p:selectOneMenu id="errStato" class="input-field" style="width: 100%;"
+                                                       value="#{templateView.currentView.idErrStatus}">
+                                          <p:ajax update="@(.dlgAddTransitionForm) @(.ui-confirmdialog-yes)" />
+                                          <f:selectItem itemLabel="Seleziona stato" noSelectionOption="true" />
+                                          <f:selectItems value="#{templateView.currentView.statusesList}" var="s"
+                                                         itemLabel="#{s.codiceStato} - #{s.label}"
+                                                         itemValue="#{s.id}" />
+                                      </p:selectOneMenu>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-top: 10px;">
+                              <div class="col-3">
+                                  <div>
+                                      <p:outputLabel for="flagPublish" value="Pubblica" style="font-size: 14px;" />
+                                  </div>
+                                  <div>
+                                      <p:selectBooleanCheckbox id="flagPublish"
+                                                               value="#{templateView.currentView.flagPublish}">
+                                          <p:ajax update="@(.dlgAddTransitionForm) @(.ui-confirmdialog-yes)" />
+                                      </p:selectBooleanCheckbox>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div>
+                                      <p:outputLabel for="flagControl" value="Controlli" style="font-size: 14px;" />
+                                  </div>
+                                  <div>
+                                      <p:selectBooleanCheckbox id="flagControl"
+                                                               value="#{templateView.currentView.flagControl}">
+                                          <p:ajax update="@(.dlgAddTransitionForm) @(.ui-confirmdialog-yes)" />
+                                      </p:selectBooleanCheckbox>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-top: 10px;">
+                              <div class="col-6">
+                                  <div>
+                                      <p:outputLabel for="tipologia" value="Tipologia" style="font-size: 14px;" />
+                                  </div>
+                                  <div>
+                                      <p:selectOneMenu id="tipologia" class="input-field" style="width: 100%;"
+                                                       value="#{templateView.currentView.flagAutomatico}">
+                                          <p:ajax update="@(.dlgAddTransitionForm) @(.ui-confirmdialog-yes)" />
+                                          <f:selectItem itemLabel="Manuale" itemValue="false" />
+                                          <f:selectItem itemLabel="Automatico" itemValue="true" />
+                                      </p:selectOneMenu>
+                                  </div>
+                              </div>
+                          </div>
+                      </h:form>
+
+                      <f:facet name="footer">
+                          <div class="row">
+                              <div class="col-6">
+                                  <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                                   action="#{templateView.currentView.resetAddTransitionDialog}"
+                                                   onclick="PF('dlgAddTransition').hide()" />
+                              </div>
+                              <div class="col-6">
+                                  <p:commandButton id="addTransitionDlgConfirmBtn" value="Conferma"
+                                                   styleClass="ui-confirmdialog-yes planningConfirmBtn"
+                                                   action="#{templateView.currentView.confirmTransaction}"
+                                                   disabled="#{templateView.currentView.confirmTransactionBtnDisabled}"
+                                                   oncomplete="PF('dlgAddTransition').hide()"
+                                                   update="@(.updateableWorkflow}" />
+                              </div>
+                          </div>
+                      </f:facet>
+                  </p:dialog>
+
+                  <h:form>
+                      <p:dataTable var="t" styleClass="pf-datatable updateableWorkflow"
+                                   widgetVar="statiTable" value="#{templateView.currentView.transitions}"
+                                   rowKey="#{t.id}" rowIndexVar="rowIndex">
+                          <p:column width="5%" style="text-align: center;">
+                              <p:commandButton styleClass="rowDeleteButton" icon="ui-icon-trash" title="Elimina transizione"
+                                               action="#{templateView.currentView.deleteTransition}"
+                                               update="@(.updateableWorkflow)">
+                                  <p:confirm header="Conferma necessaria" message="Confermi eliminazione transizione?"
+                                             icon="ui-icon-alert" />
+                                  <f:setPropertyActionListener value="#{t}"
+                                                               target="#{templateView.currentView.selectedTransition}" />
+                              </p:commandButton>
+                          </p:column>
+                          <p:column headerText="Da Stato" width="25%">
+                              <h:outputText value="#{t.statoPromozione.codiceStato} - #{t.statoPromozione.label}" />
+                          </p:column>
+                          <p:column headerText="A Stato" width="25%">
+                              <h:outputText value="#{t.statoTransizione.codiceStato} - #{t.statoTransizione.label}" />
+                          </p:column>
+                          <p:column headerText="Pubblica" width="5%" style="text-align: center;">
+                              <p:selectBooleanCheckbox value="#{t.flagPubblica}">
+                                  <p:ajax event="valueChange" update="@(.statiTable)"
+                                          listener="#{templateView.currentView.toggleStatoTransizioneFlag(t)}" />
+                              </p:selectBooleanCheckbox>
+                          </p:column>
+                          <p:column headerText="Controlli" width="5%" style="text-align: center;">
+                              <p:selectBooleanCheckbox value="#{t.flagControlli}">
+                                  <p:ajax event="valueChange" update="@(.statiTable)"
+                                          listener="#{templateView.currentView.toggleStatoTransizioneFlag(t)}" />
+                              </p:selectBooleanCheckbox>
+                          </p:column>
+                          <p:column headerText="Stato Errore" width="25%">
+                              <h:outputText value="#{t.statoErrore.codiceStato} - #{t.statoErrore.label}" />
+                          </p:column>
+                          <p:column headerText="Tipo" width="10%" style="text-align: center;">
+                              <h:outputText value="#{t.tipo}" />
+                          </p:column>
+                      </p:dataTable>
+                  </h:form>
+              </div>
+          </div>
+      </div>
+    </div>
+</ui:composition>
+
+</html>

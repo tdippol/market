@@ -1,0 +1,33 @@
+{
+  "columnDef": [
+    {
+      "headerName": "",
+      "width": 50,
+      "cellRenderer": "Sottoscrizioni_DeleteSottoscrizioneRenderer",
+      "position": "prepend",
+      "pinned": "left"
+    },
+    {
+      "headerName": "Id",
+      "field": "id",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": true
+    },
+    {
+      "headerName": "Codice",
+      "field": "codice",
+      "width": 100,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "width": 300,
+      "type": "string",
+      "editable": false
+    }
+  ]
+}

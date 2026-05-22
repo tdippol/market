@@ -1,0 +1,15 @@
+[
+  {
+    "grid": "grid1",
+    "colId": [
+      {
+        "name": "grm",
+        "visible": true
+      },
+      {
+        "name": "subGrm",
+        "visible": false
+      }
+    ]
+  }
+]

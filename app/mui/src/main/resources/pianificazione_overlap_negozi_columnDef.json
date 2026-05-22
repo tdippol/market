@@ -1,0 +1,75 @@
+{
+  "columnDef":[
+    {
+      "headerName":"Codice Negozio",
+      "field":"codiceNegozio",
+      "width":80,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Negozio",
+      "field":"descrizione",
+      "width":500,
+      "type": "string",
+      "editable":false,
+      "hide":true,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Codice Società",
+      "field":"societa",
+      "width":100,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Società",
+      "field":"descrizioneSocieta",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Codice Zona",
+      "field":"codiceZona",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Zona",
+      "field":"descrizioneZona",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+}

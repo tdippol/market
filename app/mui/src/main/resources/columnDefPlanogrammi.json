@@ -1,0 +1,65 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Codice Categoria",
+      "field": "categoriaEspositiva",
+      "width": 150,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Descr. Categoria",
+      "field": "descrizioneCategoria",
+      "width": 300,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },    
+    {
+      "headerName": "Dimensione",
+      "field": "dimensione",
+      "width": 150,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Tipologia",
+      "field": "tipologia",
+      "width": 300,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Codice CICS",
+      "field": "codiceCics",
+      "width": 150,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Planogramma",
+      "field": "codicePlano",
+      "width": 300,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+   
+  ]
+}

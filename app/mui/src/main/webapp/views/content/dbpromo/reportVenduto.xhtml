@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <h:form id="reportVendutoForm" styleClass="reportVencuto">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="promozione" value="Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promozione"
+                                                     value="#{templateView.currentView.idPromozioneCorrente}"
+                                                     class="input-field"
+                                                     filter="true" filterMatchMode="contains"
+                                                     style="width: 100%; background-color: white;">
+                                        <p:ajax update="@(.updateableReportVenduto) @(.idPromozione)" />
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.promozioni}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                    <p:panel id="expandable_db_grid_reportVenduto" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableReportVenduto">
+                        <f:facet name="header"><p:outputLabel value="" /></f:facet>
+
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham grid_reportVenduto"
+                                      pt:gridid="db_grid_reportVenduto">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="db_grid_reportVenduto_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_reportVenduto', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_grid_reportVenduto')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_grid_reportVenduto', 'Report Venduto', true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_grid_reportVenduto', 'Report Venduto')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+                            var idPromozione = $('.idPromozione').text();
+                            var gridParamsReportVenduto = {
+                                gridCode: 'db_grid_reportVenduto',
+                                gridTitle: 'Report Venduto',
+                                url_columnDefs: contextPath + '/resources/reportVenduto/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/reportVenduto/rowData/' + idPromozione + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_grid_reportVenduto',
+                                gridOptions: {
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_reportVenduto');
+                                    }
+                                }
+                            };
+
+                            $(document).ready(function () {
+                                creaGriglia(gridParamsReportVenduto);
+                            });
+                        </script>
+
+                        <p:outputLabel value="#{templateView.currentView.idPromozioneCorrente}"
+                                       styleClass="idPromozione" style="visibility: hidden;" />
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

@@ -1,0 +1,160 @@
+{
+  "columnDef":[
+    {
+      "headerName":"",
+      "field":"descrizioneEstesa",
+      "width":80,
+      "type": "string",
+      "editable":false,
+      "hide":true,
+      "rowGroup":true,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Promozione",
+      "field":"negozio",
+      "width":500,
+      "type": "string",
+      "editable":false,
+      "hide":true,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Sigla",
+      "field":"sigla",
+      "width":100,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Zona",
+      "field":"zona",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Cluster",
+      "field":"cluster",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Tipo Punto Vendita",
+      "field":"tipoPuntoVendita",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Canale Consegna",
+      "field":"tipoConsegna",
+      "width":200,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Cedi",
+      "field":"cedi",
+      "width":100,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Configurazione Default",
+      "field":"defaultFlag",
+      "width":160,
+      "type": "string",
+      "editable":false,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName":"Promozione Attiva",
+      "field":"flag",
+      "width":160,
+      "type": "string",
+      "editable":true,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 100,
+      "type": "date",
+      "editable":true,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 100,
+      "type": "date",
+      "editable":true,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Cod Meccanica",
+      "field": "codiceMeccanica",
+      "width": 100,
+      "type": "string",
+      "editable": true,
+      "hide": false,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

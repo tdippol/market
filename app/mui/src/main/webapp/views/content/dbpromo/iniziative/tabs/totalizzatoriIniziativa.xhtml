@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_schedainiziativa_totalizzatori" toggleable="true" toggleSpeed="500"
+                             closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedainiziativa_totalizzatori">
+                        <f:facet name="header">
+                            <p:outputLabel value="" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      styleClass=""
+                                      class="ag-theme-balham schedainiziativa_totalizzatori"
+                                      pt:gridid="db_schedainiziativa_totalizzatori">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="totalizzatoriiniziativa_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedainiziativa_totalizzatori',this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedainiziativa_totalizzatori')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedainiziativa_totalizzatori','Totalizzatori Iniziativa',true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedainiziativa_totalizzatori','Totalizzatori Iniziativa')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var idIniziativa = $('.idIniziativaSelected').text();
+                            var gridParamsSchedaIniziativaTotalizzatori = {
+                                gridTabGroup: 'tabViewSchedaIniziativa',
+                                gridTabPosition: 0,
+                                gridCode: 'db_schedainiziativa_totalizzatori',
+                                gridTitle: 'Scheda Iniziativa - Totalizzatori',
+                                url_columnDefs: contextPath + '/resources/iniziative/totalizzatori/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/iniziative/' + idIniziativa
+                                    + '/totalizzatori/rowData' + addUrlParamContesto(#{muiContext}),
+                                url_customSort: contextPath + '/resources/grid/sorting/db_schedainiziativa_totalizzatori',
+                                gridOptions: {
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_schedainiziativa_totalizzatori');
+                                    }
+                                }
+                            }
+
+                            $(document).ready(function () {
+                                if (idIniziativa &amp;&amp; currentActiveTab == gridParamsSchedaIniziativaTotalizzatori.gridTabPosition) {
+                                    creaGriglia(gridParamsSchedaIniziativaTotalizzatori);
+                                }
+                            });
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

@@ -1,0 +1,202 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+<ui:composition>
+    <p:confirmDialog widgetVar="cancellaRepartoConfirmDialog" global="true" showEffect="fade" hideEffect="fade"
+                     header="Avviso" message="Confermi la cancellazione del reparto ?" closable="false" styleClass="muiDialog">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" onclick="PF('cancellaRepartoConfirmDialog').hide()"/>
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                         onclick="deleteReparto(); aggiornaPromozione()" />
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:remoteCommand action="#{templateView.currentView.deleteReparto()}" name="aggiornaPromozione"> </p:remoteCommand>
+                    <p:panel id="expandable_db_schedapromo_reparti" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_reparti">
+                        <f:facet name="header">
+                            <p:outputLabel value="Reparti" />
+                        </f:facet>
+                        <!-- DIALOG -->
+                        <p:dialog id="repartiDialog" widgetVar="repartiDialog" header="Gestione Reparti"
+                                  styleClass="repartiDialog disable-horizontal-scroll" modal="true"
+                                  width="500" height="auto" resizable="false" closable="false">
+                            <h:form id="repartiDialogDialogForm">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div>
+                                            <p:outputLabel for="dialogPromozione" value="Promozione" style="font-size: 14px;" />
+                                        </div>
+                                        <div>
+                                            <p:inputText id="dialogPromozione" readonly="true" styleClass="updateableContent"
+                                                         style="width: 100%;"
+                                                         value="#{templateView.currentView.promotionSelected.descrizioneEstesa}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="margin-top: 20px;">
+                                        <div>
+                                            <p:outputLabel for="dialogCurrentStatePT" value="Stato Corrente"
+                                                           style="font-size: 14px;" />
+                                        </div>
+                                        <div>
+                                            <p:inputText id="dialogCurrentStatePT" readonly="true"
+                                                         styleClass="updateableContent" style="width: 100%;"
+                                                         value="#{templateView.currentView.statoCorrente.statoPromozioneEntity.codiceStato} - #{templateView.currentView.statoCorrente.statoPromozioneEntity.label}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="margin-top: 20px;">
+                                        <div>
+                                            <p:outputLabel for="repartiPossibili" value="Reparti Disponibili"
+                                                           style="font-size: 14px;" />
+                                        </div>
+                                        <div>
+                                            <p:selectOneMenu id="repartiPossibili"
+                                                             filter="true" filterMatchMode="contains"
+                                                             value="#{templateView.currentView.reparti.nuovoReparto}"
+                                                             class="input-field" style="width: 100%;" immediate="true">
+                                                <p:ajax update="@(.ui-confirmdialog-yes)"/>
+                                                <f:selectItem itemLabel="" noSelectionOption="true" />
+                                                <f:selectItems value="#{templateView.currentView.reparti.repartiPossibili}"
+                                                               var="st"
+                                                               itemLabel="#{st.codiceReparto} - #{st.descrizione}"
+                                                               itemValue="#{st.id}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                         style="float: left;"
+                                                         oncomplete="PF('repartiDialog').hide()" />
+                                    </div>
+                                    <div class="col-6">
+                                        <p:commandButton id="repartiConfirmBtn" value="Conferma"
+                                                         styleClass="ui-confirmdialog-yes"
+                                                         disabled="#{empty templateView.currentView.reparti.nuovoReparto}"
+                                                         action="#{templateView.currentView.reparti.aggiungiReparto}"
+                                                         oncomplete="PF('repartiDialog').hide()"/>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </p:dialog>
+                        <!--END DIALOG -->
+                        <div class="col-12">
+                            <h:form>
+
+                                <p:remoteCommand name="updateAggiungiReparti" update="aggiungiReparti"/>
+                                <p:commandButton
+                                        value="Aggiungi"
+                                        style="margin-right: 20px; border-radius: 5px;"
+                                        id="aggiungiReparti" class="pf-btn-confirm"
+                                        oncomplete="PF('repartiDialog').show()" action="#{templateView.currentView.reparti.prepareDialog}"
+                                        disabled="#{templateView.currentView.reparti.btnAggiungiDisabled or not templateView.currentView.btnAggiungiRepartiActive}"
+                                        update="#{p:component('repartiDialog')}"/>
+                            </h:form>
+                        </div>
+                        <h:panelGroup
+                                layout="block"
+                                style="height: 60vh; width: 100%;"
+                                class="ag-theme-balham reparti"
+                                pt:gridid="db_schedapromo_reparti" />
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="reparti_quickfilter" placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText" onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapromo_reparti',this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton" onclick="expandGrid('db_schedapromo_reparti')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped" onclick="onBtExport('db_schedapromo_reparti','Reparti',true)" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton" onclick="onBtExport('db_schedapromo_reparti','some title from backend')" onerror="redirectToExpiredPage()" />
+                        </f:facet>
+                        <script type="text/javascript">
+
+
+              		var promoID = #{templateView.currentView.idPromozioneCorrente};
+                    var idReparto;
+
+
+             		var gridParams_schedaPromoReparti={
+                        gridId:'reparti',
+                        gridTabGroup:'schedaPromo_tabs',
+                        gridTabPosition: #{templateView.currentView.indexOf('TAB_REPARTI')},
+                        gridCode:'db_schedapromo_reparti',
+                        gridTitle:'SchedaPromo - Reparti',
+                        url_columnDefs:contextPath+'/resources/grid/schedapromo/reparti/columnDef' + addUrlParamContesto(#{muiContext}),
+                        url_rowData:contextPath+'/resources/grid/schedapromo/reparti/rowData/' + promoID,
+                        url_customSort: contextPath + '/resources/grid/sorting/db_schedapromo_reparti'
+             		}
+
+
+             		var gridOptions={
+                        onSortChanged: function (event) {
+                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_schedaPromoReparti.gridCode);
+                        }
+                    };
+
+             		gridParams_schedaPromoReparti.additionColumnDefs=[{ headerName: '', width: 50, cellRenderer: 'SchedaPromoReparti_DeleteRepartiRenderer', position:'prepend' }];
+             		gridParams_schedaPromoReparti.gridOptions=gridOptions;
+
+            		$( document ).ready(function() {
+            			if(currentActiveTab==gridParams_schedaPromoReparti.gridTabPosition)
+            			{
+							creaGriglia(gridParams_schedaPromoReparti);
+        	        	}
+                    });
+           		
+                        function updateRowDataReparto(promozione){
+                            $.ajax({
+                                    type: "GET",
+                                    url: contextPath+'/resources/grid/schedapromo/reparti/rowData/' + promozione,
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                    	getGridOptionFromGridMap('db_schedapromo_reparti').api.setRowData(data.rowData);
+                                    },
+									error: ajaxErrorHandler
+                                });
+
+                        }
+
+                        function deleteReparto(){
+                               PF('cancellaRepartoConfirmDialog').hide();
+                               $.ajax({
+                                   type: "DELETE",
+                                   url: contextPath+'/resources/grid/promoReparto/delete/' + #{ templateView.currentView.idPromozioneCorrente },
+                                   contentType: "text/plain",
+                                   data: {"idPromoReparto" : idReparto},
+                                   success: function (data) {
+                                               addInfoGrowl([{ name: 'title', value: 'Elimina Reparto' }, {name: 'message',value: 'Reparto eliminata con successo'}]);
+                                               idReparto = "";
+                                               console.log(data);
+                                               getGridOptionFromGridMap('db_schedapromo_reparti').api.setRowData(data.rowData);
+											   updateAggiungiReparti();
+                                   },
+                                   error: ajaxErrorHandler,
+                                   complete: function (jqXHR, exception) {
+                                        idReparto = "";
+                                       PF('cancellaRepartoConfirmDialog').hide();
+                                   }
+
+                               });
+                           }
+
+                          function updateAddButtonReparti() {
+                              updateAggiungiReparti();
+                          }
+                     </script>
+                     <style>
+					     .pnlGrid_Header .ui-state-disabled {
+                             opacity: 0.5!important
+                         }
+					 </style>
+                    </p:panel>
+                </div>
+            </div>
+            <!--col -->
+        </div>
+        <!--row-->
+    </div>
+</ui:composition>
+</html>

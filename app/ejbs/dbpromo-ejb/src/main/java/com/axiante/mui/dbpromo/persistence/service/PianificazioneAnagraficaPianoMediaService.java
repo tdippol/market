@@ -1,0 +1,9 @@
+package com.axiante.mui.dbpromo.persistence.service;
+
+import com.axiante.mui.dbpromo.persistence.entities.PianificazioneAnagraficaPianoMediaEntity;
+import com.axiante.mui.dbpromo.persistence.entities.PianificazionePianoMediaEntity;
+import com.axiante.mui.dbpromo.persistence.entities.PianoMediaPianificazioneDettaglioEntity;
+
+public interface PianificazioneAnagraficaPianoMediaService extends DbPromoService<PianificazioneAnagraficaPianoMediaEntity> {
+    PianificazioneAnagraficaPianoMediaEntity findByPianificazioneDettaglioAndPianificazioneMedia(PianoMediaPianificazioneDettaglioEntity pianificazioneDettaglio, PianificazionePianoMediaEntity pianificazioneMedia);
+}

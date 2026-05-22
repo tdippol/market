@@ -1,0 +1,197 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <h:panelGroup layout="block" id="k_sub_header" class="k-sub-header k-grid__item forUpdateFilterInView">
+        <!-- begin:: Sub-header Title -->
+        <div class="k-sub-header__title">
+            <div class="k-sub-header__breadcrumbs"><font class="k-sub-header__breadcrumbs-link"> #{templateView.breadCrumb}</font></div>
+        </div>
+        <!-- end:: Sub-header Title -->
+        <!-- begin:: Sub-header toolbar -->
+        <div class="k-sub-header__toolbar">
+            <div class="k-sub-header__toolbar-wrapper">
+                <h:form id="filterSelection" styleClass="filterSelection">
+                    <p:remoteCommand name="loadSelectedFilters" actionListener="#{templateView.updateCurrentJsonFilter}" update="@(.updateContent) @(.forUpdateFilterInView)" onerror="redirectToExpiredPage()"/>
+                    <span id="header_filter_cache">
+                        <ui:repeat var="dimension" value="#{templateView.filterSelected.dimensions}">
+                        <!--  -->
+                        <p:panel id="btn_dimension_filter" styleClass="btn_activeFilters" style="padding-right: 5px;" rendered="#{templateView.isConnectionAvailable(dimension)}">
+                                <span class="badge badge-light">
+                                    #{templateView.filterSelected.map.get(dimension).size()}
+                                </span>
+                                <ui:repeat var="firstDimension" value="#{templateView.filterSelected.map.get(dimension).get(0)}"> #{firstDimension.dimension} </ui:repeat>
+                                
+                                <p:commandLink class="filterDeleteBtn" onclick="sessionStorage.removeItem('currentJsonData')" actionListener="#{templateView.removeDimensionFilter}" update="@(.updateContent) @(.forUpdateFilterInView)"
+                                               onerror="redirectToExpiredPage()" >
+                                    <f:param name="dimension" value="#{dimension}"/>
+                                </p:commandLink>
+                        </p:panel>
+
+                        <p:overlayPanel for="btn_dimension_filter" styleClass="mui-overlay-top"
+                                        hideEffect="fade" showEvent="mouseover" hideEvent="mouseleave">
+                                        <p:outputPanel  style="text-align:right;">
+                                            <ui:repeat var="listAttribute" value="#{templateView.filterSelected.map.get(dimension)}">
+                                               
+                                                        <a href="#" class="badge badge-primary" >
+                                                            <b>#{listAttribute.attribute}</b>
+                                                        </a>
+                                                        <ui:repeat var="values" value="#{listAttribute.printableValues}" varStatus="count">
+                                                                #{values}#{!count.last?" | ":""}
+                                                        </ui:repeat>
+                                            </ui:repeat>
+                                        </p:outputPanel>
+                            </p:overlayPanel>
+                        </ui:repeat>
+                    </span>
+                    <p:commandLink
+                        title="#{templateView.currentView.disableButtonFilters?'Nessun filtro disponibile per questa form.':'Filtri'}"
+                        disabled="#{templateView.currentView.disableButtonFilters}"
+                        styleClass="btn btn-default btn-sm btn-bold btn-upper btn-circle btn-icon"
+                        style="width: 34px !important; height: 34px !important;"
+                        update="@(.formFilterDialog)"
+                        onclick="showFilterSpinner();PF('wxfilterDialog').show();"
+                        oncomplete="createCombinedPicklist(#{templateView.currentView.currentJsonFilter});"
+                        onerror="redirectToExpiredPage()">
+                        <i class="fa fa-filter"></i>
+                    </p:commandLink>
+                </h:form>
+                    <!-- global grid filters -->
+                    <p:dialog widgetVar="globalGridFilters"  
+                            header="Filter" 
+                            minimizable="true" maximizable="true" id="globalGridFilters" styleClass="filterDialog"
+                            closable="true"
+                            dynamic="true"
+                            draggable="true"
+                            width="1200"
+                            height="580"
+                            minWidth="1200"
+                            minHeight="580"
+                            resizable="false"
+                            modal="true"
+                    >
+                        <p:panel style="border: none!important;">
+                            <div class="row" style="text-align: center;">
+                                <div class="col-md-4">
+                                    <h:commandButton type="button" id="pppclose_selection"  onclick="PF('globalGridFilters').hide();"
+                                                     class="btn btn-secondary mr-auto" value="Chiudi" style="float:left !important;"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" id="pppreset_all_selection" onclick="alert('stoclick')"
+                                            class="btn btn-secondary mr-auto" style="text-align:center !important;">Reset</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <h:commandButton type="button" value="Aggiorna valori filtri" id="pppupdate_all_filter_values" onclick="alert('stoclick')"
+                                            class="btn btn-secondary mr-auto" style="text-align:center !important;"/>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <p:commandButton type="button" id="pppapplicate_selection" onclick="PF('globalGridFilters').hide(); return false;"
+                                                     class="btn btn-brand mr-auto" value="Applica Filtri" style="float:right !important;" onerror="redirectToExpiredPage()" update="@('.k-content')"/>
+                                </div>
+                            </div>
+                        </p:panel>
+                    </p:dialog>
+                    <p:dialog header="Filter" widgetVar="wxfilterDialog"
+                              minimizable="true" maximizable="true" id="filterDialog" styleClass="filterDialog"
+                              closable="true"
+                              dynamic="true"
+                              draggable="true"
+                              width="1200"
+                              height="650"
+                              minWidth="1200"
+                              minHeight="650"
+                              resizable="false"
+                              modal="true"
+                    >
+                        <div class="filter-spinner" style='width: 100%;margin-top: 270px;text-align: center;'><i class='loading-spin'/></div>
+                        <h:form id="formFilterDialog" style="display: none;" styleClass="formFilterDialog">
+                        <ui:insert name="header">
+                            <ui:include src="../filter/filterPanel.xhtml" />
+                        </ui:insert>
+                        <p:panel style="border: none!important;">
+                            <div class="row" style="text-align: center;">
+                                <div
+                                    class="#{templateView.agGridView eq true ? 'col-md-4' : 'col-md-3' }" 
+                                >
+                                    <h:commandButton type="button" id="close_selection"  onclick="PF('wxfilterDialog').hide();"
+                                                     class="btn btn-secondary mr-auto" value="Chiudi" style="float:left !important;"/>
+                                </div>
+                                <div
+                                    class="#{templateView.agGridView eq true ? 'col-md-4' : 'col-md-3' }" 
+                                >
+                                    <button type="button" id="reset_all_selection" onclick="resetPanelFilters(#{templateView.currentView.jsonFilter});"
+                                            class="btn btn-secondary mr-auto" style="text-align:center !important;">Reset</button>
+                                </div>
+
+
+                                <ui:fragment rendered="#{not templateView.agGridView}">
+                                    <div
+                                        class="#{templateView.agGridView eq true ? 'col-md-4' : 'col-md-3' }" 
+                                    >
+                                        <h:commandButton 
+                                            type="button" 
+                                            value="Aggiorna Filtri" 
+                                            id="update_all_filter_values" 
+                                            onclick="showFilterSpinner();update_all_filter_values_RMComand()"
+                                            class="btn btn-secondary mr-auto" 
+                                            style="text-align:center !important;" 
+                                            />
+                                        <p:remoteCommand 
+                                                name="update_all_filter_values_RMComand" 
+                                                actionListener="#{templateView.currentView.prepareDBPromoJsonFilter}" 
+                                                oncomplete="createCombinedPicklist(#{templateView.currentView.currentJsonFilter});"
+                                                update="@(.k_sub_header) @(.formFilterDialog)"
+                                                onerror="redirectToExpiredPage()"
+                                            />
+                                        <script type="text/javascript">
+                                            refreshGlobalFilters(#{templateView.currentView.jsonFilter});
+                                        </script>
+                                    </div>
+                                </ui:fragment>
+
+                                
+                                <div
+                                    class="#{templateView.agGridView eq true ? 'col-md-4' : 'col-md-3' }" 
+                                >
+                                    <h:commandButton type="button" id="applicate_selection" onclick="applyFilters(); PF('wxfilterDialog').hide(); return false;"
+                                                     class="btn btn-brand mr-auto" value="Applica Filtri" style="float:right !important;" onerror="redirectToExpiredPage()"/>
+                                </div>
+                            </div>
+                        </p:panel>
+                        </h:form>
+
+
+                        
+
+
+                    </p:dialog>
+            </div>
+        </div>
+        <!-- end:: Sub-header toolbar -->
+    </h:panelGroup>
+    <!-- override prime-faces color -->
+    <style type="text/css">
+        .ui-widget-header{
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+        }
+        .ui-icon-minus .ui-icon-newind .ui-icon-extlink{
+            color: #1cac81 !important;
+        }
+        .ui-icon-closethick{
+            color: red !important;
+
+        }
+
+    </style>
+</ui:composition>
+
+</html>

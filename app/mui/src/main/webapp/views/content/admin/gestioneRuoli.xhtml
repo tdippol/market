@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+	<div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+                    <p:tabView dynamic="true" cache="false" widgetVar="gestioneRuoli_tabs"
+                               activeIndex="#{gestioneRuoli.activeTab}">
+                        <p:ajax event="tabChange" listener="#{gestioneRuoli.tabChanged}" />
+                        <p:tab title="Lista Ruoli" styleClass="tabScheda">
+                            <ui:include src="tabs/gestioneRuoli/listaRuoli.xhtml" />
+                        </p:tab>
+                        <p:tab title="Gestione Documenti" styleClass="tabScheda">
+                            <ui:include src="tabs/gestioneRuoli/gestioneDocumenti.xhtml" />
+                        </p:tab>
+                        <p:tab title="Utenti" styleClass="tabScheda">
+                            <ui:include src="tabs/gestioneRuoli/ruoliUtenti.xhtml" />
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ui-tabs {
+            padding: 0;
+        }
+        .ui-tabs-nav {
+            background: #ececec !important;
+        }
+        .ui-tabs-panels {
+            border: 1px solid gray;
+            background: white;
+            border-radius: 3px;
+        }
+        .ui-tabs .ui-tabs-panel {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+        .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+    </style>
+</ui:composition>
+</html>

@@ -1,0 +1,154 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<ui:composition>
+    <ui:include src="addTipoElementoDialog.xhtml" />
+    <div class="col-4" style="padding:0px">
+        <p:panel id="expandable_db_planning_elemento" toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent expandable_db_planning_elemento">
+        
+                <f:facet name="header">
+                    <p:commandButton title="Aggiungi Tipo Elemento"
+                                     value="+"
+                                     disabled="#{templateView.currentView.btnAddTipoElementoDisabled}"
+                                     style="margin:0px; margin-right: 10px; border-radius: 5px;"
+                                     action="#{templateView.currentView.initTipoElementoDialog}"
+                                     oncomplete="PF('addTipoElementoDialog').show()"
+                                     update="@(.addTipoElementoDialogClass)"
+                                     id="planningAddTipoElemento"
+                                     class="pf-btn-confirm btnAddTipoElemento" />
+                    <p:outputLabel value="Tipo Elemento" />
+                </f:facet>
+
+                <h:panelGroup layout="block" style="height: 30vh; width: 100%;" class="ag-theme-balham"
+                        pt:gridid="db_planning_elemento">
+                </h:panelGroup>
+        <f:facet name="actions">
+            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton" onclick="expandGrid('db_planning_elemento')" onerror="redirectToExpiredPage()" />
+            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton" onclick="onBtExport('db_planning_elemento','Tipo Elemento')" onerror="redirectToExpiredPage()" />
+	    </f:facet>
+
+        <script type="text/javascript">
+            var idCurrentSet = '#{templateView.currentView.idSetPianificazioneCorrente}';
+            var gridParams_PlanningElemento = {
+                gridCode: 'db_planning_elemento',
+                gridTitle: 'Pianificazione - Tipo Elemento',
+                url_columnDefs: contextPath + '/resources/configuration/columnDef/planningElemento' + addUrlParamContesto(#{muiContext}),
+                url_rowData: '',
+                url_customSort: contextPath + '/resources/grid/sorting/db_planning_elemento',
+                subordinate_rowData: true
+            };
+            var gridOptions = {
+                onCellValueChanged: function(event) {updateCell_TipoElemento(event)},
+                onSortChanged: function (event) {
+                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_PlanningElemento.gridCode);
+                }
+            };
+
+            gridParams_PlanningElemento.additionColumnDefs=[
+                               { headerName: '', width: 45, cellRenderer: 'PianConfig_TipoElemento_BtnCellRenderer',position:'prepend' ,pinned: 'left' }
+                        ];
+
+            gridParams_PlanningElemento.gridOptions = gridOptions;
+
+            $(document).ready(function() {
+                if(idCurrentSet!=''){
+                    creaGriglia(gridParams_PlanningElemento);
+                }
+            });
+
+            function refreshRowData_tipoElemento(idHeader){
+                if(idHeader!==undefined){
+                    showAgGridLoadingOverlay('db_planning_elemento')
+                    $.ajax({
+                        type: "GET",
+                        url: contextPath+"/resources/configuration/rowData/planningElemento/" + idHeader,
+                        contentType: "application/json",
+                        success: function (data) {
+                            if(data!=undefined){
+                                getGridOptionFromGridMap('db_planning_elemento').api.setRowData(data.rowData);
+                                LT('Refreshed row data "'+gridParams_PlanningElemento.gridTitle+'" => ',data.rowData)
+                            }
+                        },
+                        error: ajaxErrorHandler,
+                        complete: function(){
+                            hideAgGridLoadingOverlay('db_planning_elemento')
+                        }
+                    });
+                }else{
+                    getGridOptionFromGridMap('db_planning_elemento').api.setRowData([]);
+                    getGridOptionFromGridMap('db_planning_elemento').api.showNoRowsOverlay();
+                }
+            }
+
+
+            function updateCell_TipoElemento(event){
+
+                let gridCode='db_planning_elemento'
+                var rowIndex = getRowNodeId(event);
+                var rowData = getRowData(gridCode);
+                var rowToUpdate = rowData[rowIndex]
+                var idToUpdate = rowToUpdate.id.value
+                let url=contextPath+'/resources/configuration/planningTipoElemento/'+idToUpdate
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(rowData[rowIndex]),
+                    success: function (data) {
+                        rowData[rowIndex] = data;
+                        getGridOptionFromGridMap(gridCode).api.setRowData(rowData);
+                        addInfoGrowl([{ name: 'title', value: 'Modifica tipo elemento' }, {name: 'message',value: data.callbackMessage}]);
+                    },
+                    error: function(jqXHR, exception, thrownError){
+						ajaxErrorHandler(jqXHR, exception, thrownError,event)
+                    }
+                });
+
+                }
+
+
+            function deletePlanningTipoElemento(){
+                var removePlanning_idTipoElemento = $('.removePlanning_idTipoElemento').text();
+                        
+                if(removePlanning_idTipoElemento!=''){
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: contextPath+'/resources/configuration/planningTipoElemento/'+ removePlanning_idTipoElemento,
+                                    contentType: "text/plain",
+                                    success: function (data) {
+                                    	getGridOptionFromGridMap('db_planning_elemento').api.setRowData(data.rowData);
+                                        addInfoGrowl([{ name: 'title', value: 'Elimina Tipo Elemento' }, {name: 'message',value: data.callbackMessage}]);
+                                    },
+                                    error: ajaxErrorHandler,
+                                    complete:function(){
+                                    }
+                                });
+                }
+                PF('removePlanningTipoElemento_dialog').hide()
+
+            }
+
+        </script>
+
+            <p:remoteCommand name="removePlanningTipoElemento"
+                             update="removePlanningTipoElemento_dialog @(.removePlanning_idTipoElemento)"
+                             action="#{templateView.currentView.removePlanningTipoElemento}" />
+            <p:confirmDialog id="removePlanningTipoElemento_dialog" widgetVar="removePlanningTipoElemento_dialog" global="true" showEffect="fade" hideEffect="fade" icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog" header="Avviso" message="#{templateView.currentView.confirmDeleteMessage}">
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left" onclick="PF('removePlanningTipoElemento_dialog').hide()"/>
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right" onclick="deletePlanningTipoElemento()" />
+            </p:confirmDialog>
+
+            <p:outputLabel value="#{ templateView.currentView.removePlanningIdTipoElemento }" class="removePlanning_idTipoElemento" style="visibility: hidden;"/>
+
+        </p:panel>
+    </div>
+
+</ui:composition>
+
+</html>

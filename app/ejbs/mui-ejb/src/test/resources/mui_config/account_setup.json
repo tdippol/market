@@ -1,0 +1,246 @@
+{
+	"connection": "pippo",
+	"show-version": false,
+	"configurations": [
+		{
+			"name": "gridContainer",
+			"logMemory": true,
+			"logTime": true,
+			"skip": true,
+			"MDX": {
+				"ROWS": {
+					"NON_EMPTY": true,
+					"DIMENSIONS": {
+						"Account": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Account] )}, 0)}, ASC)}}"
+					}
+				},
+				"COLS": {
+					"NON_EMPTY": false,
+					"DIMENSIONS": {
+						"Account Set Up": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Account Set Up] )}, 0)}, ASC)}}"
+					}
+				},
+				"FROM": "[Account Set Up]",
+				"WHERE": {
+					"Legal Entity": "[E134]"
+				}
+			},
+
+			"ExecuteMDX": {
+				"Members": [
+					"Name",
+					"Attributes"
+				],
+				"Cells": [
+					"Ordinal",
+					"Value",
+					"Updateable",
+					"Consolidated",
+					"HasPicklist",
+					"PicklistValues"
+				]
+			},
+			"autoGroupColumnDef": {
+				
+			},
+			"columnDefs": [
+				{
+					"headerName": "Account",
+					"field": "Account.Alias",
+					"width": 400,
+					"hide": false,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "G Account",
+					"field": "Account.GAccountAlias",
+					"width": 400,
+					"hide": false,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "Check Box",
+					"field": "AccountSetUp$CheckBoxTest",
+					"width": 100,
+					"editable": true,
+					"type": [
+						"TM1DataColumnCheckbox"
+					]
+				},
+				{
+					"headerName": "Check Box R",
+					"field": "AccountSetUp$CheckBoxTestReadOnly",
+					"width": 200,
+					"editable": true,
+					"type": [
+						"TM1DataColumnCheckbox"
+					]
+				},
+				{
+					"headerName": "Date",
+					"field": "AccountSetUp$DateTest",
+					"width": 100,
+					"editable": true,
+					"type": [
+						"TM1DataColumnDate"
+					]
+				},
+				{
+					"headerName": "Date R",
+					"field": "AccountSetUp$DateTestReadOnly",
+					"width": 200,
+					"editable": true,
+					"type": [
+						"TM1DataColumnDate"
+					]
+				},
+				{
+					"headerName": "Detail",
+					"field": "AccountSetUp$Detail",
+					"width": 100,
+					"editable": true,
+					"type": [
+						"TM1DataColumnText"
+					]
+				},
+				{
+					"headerName": "Message",
+					"field": "AccountSetUp$Message",
+					"width": 200,
+					"editable": true,
+					"type": [
+						"TM1DataColumnText"
+					]
+				},
+				{
+					"headerName": "Reporting HR Alias",
+					"field": "AccountSetUp$ReportingHRAlias",
+					"width": 400,
+					"editable": true,
+					"type": [
+						"TM1DataColumnText"
+					]
+				},
+				{
+					"headerName": "Warn",
+					"field": "AccountSetUp$Warn",
+					"width": 100,
+					"editable": true,
+					"type": [
+						"TM1DataColumnText"
+					]
+				}
+			]
+		},
+		{
+			"name": "account setup",
+			"logMemory": true,
+			"logTime": true,
+			"skip": true,
+			"MDX": {
+				"ROWS": {
+					"NON_EMPTY": true,
+					"DIMENSIONS": {
+						"Account": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Account] )}, 0)}, ASC)}}"
+					}
+				},
+				"COLS": {
+					"NON_EMPTY": false,
+					"DIMENSIONS": {
+						"Account Set Up": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Account Set Up] )}, 0)}, ASC)}}"
+					}
+				},
+				"FROM": "[Account Set Up]",
+				"WHERE": {
+					"Legal Entity": "[E134]"
+				}
+			},
+			"ElementSelector": {
+				"LegalEntity": {
+					"lable": "Entity",
+					"Dimension": "Legal Entity",
+					"Show": "Alias",
+					"mdx": "{{TM1SORT( {TM1FILTERBYLEVEL( {TM1SUBSETALL( [Legal Entity] )}, 0)}, ASC)}} ",
+					"enabled": true
+				}
+			},
+			"ExecuteMDX": {
+				"Members": [
+					"Name",
+					"Attributes"
+				],
+				"Cells": [
+					"Ordinal",
+					"Value",
+					"Updateable",
+					"Consolidated",
+					"HasPicklist",
+					"PicklistValues"
+				]
+			},
+			"autoGroupColumnDef": {
+				
+			},
+			"columnDefs": [
+				{
+					"headerName": "Account",
+					"field": "Account.Alias",
+					"width": 400,
+					"hide": false,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "G Account",
+					"field": "Account.GAccountAlias",
+					"width": 400,
+					"hide": false,
+					"type": [
+						"TM1Element"
+					]
+				},
+				{
+					"headerName": "Detail",
+					"field": "AccountSetUp$Detail",
+					"width": 100,
+					"editable": true,
+					"type": [
+						"TM1DataColumnText"
+					]
+				},
+				{
+					"headerName": "Message",
+					"field": "AccountSetUp$Message",
+					"width": 200,
+					"editable": true,
+					"type": [
+						"TM1DataColumnText"
+					]
+				},
+				{
+					"headerName": "Reporting HR Alias",
+					"field": "AccountSetUp$ReportingHRAlias",
+					"width": 400,
+					"editable": true,
+					"type": [
+						"TM1DataColumnText"
+					]
+				},
+				{
+					"headerName": "Warn",
+					"field": "AccountSetUp$Warn",
+					"width": 100,
+					"editable": true,
+					"type": [
+						"TM1DataColumnText"
+					]
+				}
+			]
+		}
+	]
+}

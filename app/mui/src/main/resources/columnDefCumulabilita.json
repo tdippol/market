@@ -1,0 +1,82 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID",
+      "field": "id",
+      "width": 75,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Prefisso",
+      "field": "prefisso",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 150,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 150,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "width": 250,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Pubblicazione",
+      "field": "dataPubblicazione",
+      "width": 150,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Annullamento",
+      "field": "dataAnnullamento",
+      "width": 150,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.axiante</groupId>
+		<artifactId>esselunga-mui</artifactId>
+		<version>${revision}${sha1}${changelist}</version>
+	</parent>
+	<artifactId>ear</artifactId>
+	<packaging>ear</packaging>
+
+	<name>ear assembly</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.axiante</groupId>
+			<artifactId>mui-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.axiante</groupId>
+			<artifactId>dbpromo-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.axiante</groupId>
+			<artifactId>mui</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.axiante</groupId>
+			<artifactId>common</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.axiante</groupId>
+			<artifactId>tm1tunnel</artifactId>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>wls</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-ear-plugin</artifactId>
+						<version>3.0.1</version>
+						<configuration>
+							<defaultLibBundleDir>APP-INF/lib</defaultLibBundleDir>
+							<libraryDirectoryMode>NONE</libraryDirectoryMode>
+							<modules>
+								<jarModule>
+									<groupId>com.axiante</groupId>
+									<artifactId>common</artifactId>
+									<bundleDir>APP-INF/lib</bundleDir>
+								</jarModule>
+								<jarModule>
+									<groupId>com.axiante</groupId>
+									<artifactId>tm1tunnel</artifactId>
+									<bundleDir>APP-INF/lib</bundleDir>
+								</jarModule>
+							</modules>
+						</configuration>
+					</plugin>
+				</plugins>
+				<finalName>muipromo-${version}</finalName>
+			</build>
+		</profile>
+		<profile>
+			<id>glassfish</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-ear-plugin</artifactId>
+						<version>3.0.1</version>
+						<configuration>
+							<defaultLibBundleDir>APP-INF/lib</defaultLibBundleDir>
+							<libraryDirectoryMode>DEFAULT</libraryDirectoryMode>
+							<modules>
+								<jarModule>
+									<groupId>com.axiante</groupId>
+									<artifactId>common</artifactId>
+									<bundleDir>APP-INF/lib</bundleDir>
+								</jarModule>
+								<jarModule>
+									<groupId>com.axiante</groupId>
+									<artifactId>tm1tunnel</artifactId>
+									<bundleDir>APP-INF/lib</bundleDir>
+								</jarModule>
+							</modules>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+	<build>
+		<plugins>
+			<!-- shows the current profile -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-help-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>show-profiles</id>
+						<phase>package</phase>
+						<goals>
+							<goal>active-profiles</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,336 @@
+{
+  "columnDef": [
+    {
+      "headerName": "ID",
+      "field": "idCfgPianificazione",
+      "width": 100,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "ID_CFG_CONF_HEADER",
+      "field": "idCfgConfHeader",
+      "width": 100,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Tipo Riga",
+      "field": "tipoRiga",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Campo",
+      "field": "campo",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Nome Campo",
+      "field": "nomeCampo",
+      "width": 200,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Codice Campo",
+      "field": "codiceCampo",
+      "width": 200,
+      "hide": true,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+
+    {
+      "headerName": "Hide",
+      "field": "hide",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Mandatory",
+      "field": "mandatory",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Invisible",
+      "field": "invisible",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Lista",
+      "field": "lista",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Lista Condizionale",
+      "field": "listaCondizionale",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Chiave",
+      "field": "chiave",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Tipo Lista",
+      "field": "tipo_lista",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Render As ComboBox",
+      "field": "renderAsCombo",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Ordine",
+      "field": "ordinamento",
+      "width": 100,
+      "sort": "asc",
+      "hide": false,
+      "type": "numeric",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Lunghezza",
+      "field": "length",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Sicurezza R/W",
+      "field": "sicurezza",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Propaga",
+      "field": "propaga",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Multiselect",
+      "field": "flag_multiselect",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Default Value",
+      "field": "def_value",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Warning",
+      "field": "warn",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Valido Se Raggruppamento",
+      "field": "VALIDO_SE_RAGGRUPPAMENTO",
+      "width": 200,
+      "hide": false,
+      "type": "numeric",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Allow Zero",
+      "field": "ALLOW_ZERO",
+      "width": 200,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },    
+    {
+      "headerName": "Min Length",
+      "field": "MIN_LENGTH",
+      "width": 100,
+      "hide": false,
+      "type": "numeric",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Lookup Attribute",
+      "field": "LOOKUP_ATTRIBUTE",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Lookup Value",
+      "field": "VALUE",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Value Type",
+      "field": "VALUE_TYPE",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Abilita Formula",
+      "field": "FORMULA_ENABLED",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable": true,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Formula",
+      "field": "FORMULA",
+      "width": 250,
+      "hide": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

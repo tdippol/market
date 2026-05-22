@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+    <div class="row">
+        <div class="col-12">
+
+            <!-- DIALOG -->
+            <ui:include src="../dialog/deleteAuditLog.xhtml" />
+            <ui:include src="../dialog/exportAuditLog.xhtml" />
+
+            <p:panel toggleable="true" toggleSpeed="500" closeSpeed="500" styleClass="pnlGrid_Header updateableContent">
+                <f:facet name="header">
+                    <p:commandButton id="cancellaAuditLog" styleClass="ui-confirmdialog-yes trashButton"
+                                     oncomplete="PF('cancellaAuditLogDialog').show()"  action="#{gestioneApplicazione.auditLog.prepareDeleteButtonDialog}"
+                                     update="@(.cancellaAuditLogDialog}"/>
+                    <p:tooltip for="cancellaAuditLog" value="Cancella Audit Log"/>
+                    <p:commandButton id="exportAuditLog" styleClass="ui-confirmdialog-yes exportAuditLogButton"
+                                     oncomplete="PF('exportAuditLogDialog').show()"  action="#{gestioneApplicazione.auditLog.prepareExportButtonDialog}"
+                                     update="@(.exportAuditLogDialog}"/>
+                    <p:tooltip for="exportAuditLog" value="Esporta Audit Log"/>
+                </f:facet>
+
+                <h:form>
+                    <p:dataTable var="log" value="#{gestioneApplicazione.auditLogDataModel}" paginator="true" rows="20"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="20,50,100" lazy="true"
+                                 sortMode="multiple">
+                        <p:column headerText="#{gestioneApplicazione.auditLog.labelData}" sortBy="#{log.logDate}" filterBy="#{log.logDate}" filterMatchMode="contains">
+                            <h:outputText value="#{log.logDate}">
+                                <f:convertDateTime pattern="dd.MM.yyyy HH:mm:SS" timeZone="Europe/Rome"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{gestioneApplicazione.auditLog.labelUtente}" sortBy="#{log.userName}" filterBy="#{log.userName}" filterMatchMode="contains">
+                            <h:outputText value="#{log.userName}" />
+                        </p:column>
+
+                        <p:column headerText="#{gestioneApplicazione.auditLog.labelTipoAzione}" filterBy="#{log.action}" filterMatchMode="contains">
+                            <h:outputText value="#{log.action}"/>
+                        </p:column>
+
+                        <p:column headerText="#{gestioneApplicazione.auditLog.labelPaginaBottone}">
+                            <h:outputText value="#{log.path}" />
+                        </p:column>
+
+                        <f:facet name="paginatorTopLeft">
+                            <p:commandButton type="button" icon="pi pi-refresh" />
+                        </f:facet>
+
+                        <f:facet name="paginatorBottomRight">
+                            <p:commandButton type="button" icon="pi pi-cloud-upload" />
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+                <div>
+                    <p:outputLabel value="Sono presenti #{gestioneApplicazione.auditLog.dataSize} righe di log" />
+                </div>
+            </p:panel>
+        </div>
+    </div>
+
+    <style type="text/css">
+	    .pnlGrid_Header .trashButton {
+            float: right;
+            background-color: #1cac81;
+            border-color: #1cac81;
+            height: 2.25rem;
+            width: 2.25rem;
+            border-radius: 50%;
+            margin-top: -2px;
+            margin-right: 2px;
+            margin-left: 2px
+        }
+
+        .pnlGrid_Header .trashButton span {
+            display: none
+        }
+
+        .pnlGrid_Header .trashButton:before {
+            display: inline-block;
+            color: #fff;
+            line-height: 26px;
+            color: white;
+            width: 26px;
+            height: 26px;
+            text-align: center;
+            vertical-align: bottom;
+            padding: .3em;
+            font: normal normal normal 16px/1 "LineAwesome";
+            content: '\f34c'
+        }
+
+        .pnlGrid_Header .trashButton:hover {
+            background-color: #178b68
+        }
+
+		.pnlGrid_Header .exportAuditLogButton {
+            float: right;
+            background-color: #1cac81;
+            border-color: #1cac81;
+            height: 2.25rem;
+            width: 2.25rem;
+            border-radius: 50%;
+            margin-top: -2px;
+            margin-right: 2px;
+            margin-left: 2px
+        }
+
+        .pnlGrid_Header .exportAuditLogButton span {
+            display: none
+        }
+
+        .pnlGrid_Header .exportAuditLogButton:before {
+            display: inline-block;
+            color: #fff;
+            line-height: 26px;
+            color: white;
+            width: 26px;
+            height: 26px;
+            text-align: center;
+            vertical-align: bottom;
+            padding: .3em;
+            font: normal normal normal 16px/1 "LineAwesome";
+            content: '\f1e3'
+        }
+
+        .pnlGrid_Header .exportAuditLogButton:hover {
+            background-color: #178b68
+        }
+    </style>
+</ui:composition>
+</html>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form prependId="false">
+		<p:idleMonitor timeout="1800000">
+			<p:ajax event="idle" oncomplete="startIdleMonitor();"  />
+			<p:ajax event="active" listener="#{templateView.keepSessionAlive}" oncomplete="PF('timeoutDialog').hide();stopCount();" />
+		</p:idleMonitor>
+
+		<p:dialog id="timeoutSession"
+				  header="Sessione in scadenza"
+				  widgetVar="timeoutDialog"
+				  showEffect="fade" hideEffect="fade"
+				  modal="true"
+				  width="400"
+				  closable="false"
+				  draggable="false"
+				  resizable="false"
+				  appendToBody="true"
+				  onShow="doTimer()">
+				<p:panel style="text-align: center;">
+					<br/>
+					<i class="far fa-clock" style="font-size: 7em"/>
+					<br/><br/>
+					La sessione scadrà tra
+					<span id="dialog-countdown" style="font-weight: bold"/>
+					secondi.
+					<br/>
+				</p:panel>
+		</p:dialog>
+	</h:form>
+	<script type="text/javascript">
+		var TIME = 60; // in seconds
+		var countTimer = TIME;
+		var processTimer;
+		var timer_is_on = 0;
+		var redirectPage = "#{request.contextPath}/views/sessionExpired.xhtml";
+		var countDownDiv = "dialog-countdown";
+		var txtCountDown = null;
+		if (!txtCountDown)
+			txtCountDown = document.getElementById(countDownDiv);
+
+		function redirectToExpiredPage(){
+			stopCount();
+			window.location.href = redirectPage;
+		}
+
+		function startIdleMonitor() {
+			countTimer = TIME;
+			txtCountDown.innerHTML = countTimer;
+			PF('timeoutDialog').show();
+		}
+		function timedCount() {
+			txtCountDown.innerHTML = countTimer;
+			if (countTimer == 0) {
+				stopCount();
+				window.location.href = redirectPage;
+				return;
+			}
+			countTimer = countTimer - 1;
+			processTimer = setTimeout("timedCount()", 1000);
+		}
+		function doTimer() {
+			if (!timer_is_on) {
+				timer_is_on = 1;
+				timedCount();
+			}
+		}
+		function stopCount() {
+			clearTimeout(processTimer);
+			timer_is_on = 0;
+		}
+	</script>
+</ui:composition>
+</html>

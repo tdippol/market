@@ -1,0 +1,62 @@
+{
+  "columnDef": [
+    {
+      "headerName":"Compratore",
+      "field":"compratore",
+      "editable":false,
+      "width":400,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },
+    {
+      "headerName":"Data",
+      "field":"data",
+      "editable":false,
+      "width":300,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"date"
+    },
+    {
+      "headerName":"Utente Ultimo Aggiornamento",
+      "field":"lastEditor",
+      "editable":false,
+      "width":250,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },    {
+      "headerName":"Esito",
+      "field":"esito",
+      "editable":false,
+      "width":150,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    },    {
+      "headerName":"Modificato e non Pubblicato",
+      "field":"modificato",
+      "editable":false,
+      "width":150,
+      "hide":false,
+      "rowGroup":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false,
+      "type":"string"
+    }
+  ]
+}

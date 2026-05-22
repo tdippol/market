@@ -1,0 +1,119 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<p:dialog id="dlgAddArticoli" widgetVar="dlgAddArticoli" modal="true" closable="false"
+          header="Aggiungi Articoli" width="90%" height="80vh" resizable="false"
+          styleClass="disable-horizontal-scroll">
+    <h:form id="formAddArticoli" styleClass="formAddArticoli" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-3">
+                <div>
+                    <p:outputLabel for="selectTipologiaArticoliAddDialog" value="Articoli" styleClass="label-txt" />
+                </div>
+                <div>
+                    <p:selectOneMenu id="selectTipologiaArticoliAddDialog" widgetVar="selectTipologiaArticoliAddDialog"
+                                     styleClass="input-field selectTipologiaArticoli" style="width: 100%;"
+                                     value="#{templateView.currentView.tipologiaArticoliSelected}">
+                        <p:ajax update="@(.formAddArticoli) @(.ui-confirmdialog-yes)" />
+                        <f:selectItem itemLabel="Seleziona tipologia articoli" noSelectionOption="true" />
+                        <f:selectItems value="#{templateView.currentView.tipologiaArticoli}" var="a"
+                                       itemLabel="#{a.label}" itemValue="#{a}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-12">
+                <p:panel id="expandable_db_grid_fatturazione_articoli" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                         closable="false" styleClass="pnlGrid_Header panelAddArticoli">
+                    <f:facet name="header"><p:outputLabel value="" /></f:facet>
+
+                    <h:panelGroup layout="block" style="height: 60vh; width: 100%;" styleClass="ag-theme-balham"
+                                  pt:gridid="db_grid_fatturazione_add_articoli">
+                    </h:panelGroup>
+
+                    <f:facet name="actions">
+                        <p:inputText autocomplete="off" id="fatturazione_add_articoli_quickfilter" placeholder="Filtra..."
+                                     styleClass="pnlGrid_Header filterInputText"
+                                     onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_fatturazione_add_articoli', this.value)" />
+                        <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                       onclick="expandGrid('db_grid_fatturazione_add_articoli')" onerror="redirectToExpiredPage()" />
+                        <p:commandLink title="Esporta con raggruppamenti"
+                                       styleClass="pnlGrid_Header exportButtonGrouped"
+                                       onclick="onBtExport('db_grid_fatturazione_add_articoli', 'Fatturazione - Add Articoli', true)"
+                                       onerror="redirectToExpiredPage()" />
+                        <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                       onclick="onBtExport('db_grid_fatturazione_add_articoli', 'Fatturazione - Add Articoli', false)"
+                                       onerror="redirectToExpiredPage()" />
+                    </f:facet>
+                </p:panel>
+
+                <p:remoteCommand name="onAddItemSelected" update="@(.ui-confirmdialog-yes)"
+                                 action="#{templateView.currentView.addItemSelected}" />
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton id="btnCancelAddArticoli" value="Annulla" styleClass="ui-confirmdialog-no"
+                                 style="float: left;"
+                                 oncomplete="PF('dlgAddArticoli').hide()"
+                                 update="@(.formAddArticoli) @(.ui-confirmdialog-yes)"
+                                 action="#{templateView.currentView.resetDialogAddArticoli}" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="btnConfirmAddArticoli" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('dlgAddArticoli').hide()"
+                                 disabled="#{templateView.currentView.btnConfirmAddArticoliDisabled}"
+                                 update="@(.formAddArticoli) @(.panelArticoli) @(.ui-confirmdialog-yes)"
+                                 action="#{templateView.currentView.confirmDialogAddArticoli}" />
+            </div>
+        </div>
+    </f:facet>
+
+    <script type="text/javascript">
+        function loadGridFatturazioneAddArticoli(idPromozione, codiceCompratore, codiceFornitore, tipologia) {
+            var gridParamsFatturazioneAddArticoli = {
+                gridCode: 'db_grid_fatturazione_add_articoli',
+                gridTitle: 'Fatturazione - Add Articoli',
+                url_columnDefs: contextPath + '/resources/fatturazione/articoli/add/columnDef' + addUrlParamContesto(#{muiContext}),
+                url_rowData: contextPath + '/resources/fatturazione/articoli/rowData/promozione/' + idPromozione
+                    + '/compratore/' + codiceCompratore + '/fornitore/' + codiceFornitore + '/' + tipologia
+                    + addUrlParamContesto(#{muiContext}),
+                url_customSort: contextPath + '/resources/grid/sorting/db_grid_fatturazione_add_articoli',
+                gridOptions: {
+                    rowSelection: 'multiple',
+                    suppressRowClickSelection: true,
+                    onSelectionChanged: onFatturazioneAddItemRowSelected,
+                    onSortChanged: function (event) {
+                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_fatturazione_add_articoli');
+                    }
+                }
+            };
+            if (idPromozione &amp;&amp; codiceCompratore &amp;&amp; codiceFornitore) {
+                creaGriglia(gridParamsFatturazioneAddArticoli);
+            }
+        }
+
+        function onFatturazioneAddItemRowSelected(event) {
+            var ids = event.api.getSelectedNodes().map(x => x.data.id.value);
+            onAddItemSelected([{ name: "itemsIds", value: JSON.stringify(ids) }]);
+        }
+    </script>
+
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+    </style>
+</p:dialog>
+</html>

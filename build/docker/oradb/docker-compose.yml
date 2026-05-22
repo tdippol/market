@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+    ora_db:
+        image: oracle:18.4.0-xe
+        profiles:
+          - oracle
+        volumes:
+          - ./oradata:/opt/oracle/oradata 
+          - ./scripts/setup:/opt/oracle/scripts/setup
+        ports:
+            - "1521:1521"
+        restart: "no"
+        shm_size: '1gb' 
+        environment:
+            ORACLE_PWD: Axiante20

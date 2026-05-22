@@ -1,0 +1,125 @@
+{
+  "columnDef": [
+    {
+      "field": "anno",
+	  "rowGroup":true,
+      "width": 80,
+      "hide": true,
+      "type":"string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "field": "canale",
+	  "rowGroup":true,
+      "width": 500,
+      "hide": true,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Promozione",
+      "field": "descrizioneEstesa",
+      "width": 300,
+	  "hide":true,
+      "type": "string",
+	  "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Riferimento",
+      "field": "riferimento",
+      "width": 300,
+	  "hide":false,
+      "type": "string",
+	  "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 200,
+      "hide": false,
+      "type": "date",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 200,
+      "hide": false,
+      "editable":false,
+      "type": "date",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Ora Inizio",
+      "field": "oraInizio",
+      "width": 100,
+      "hide": false,
+      "type": "time",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Ora Fine",
+      "field": "oraFine",
+      "width": 100,
+      "hide": false,
+      "editable":false,
+      "type": "time",
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Stato Promozione",
+      "field": "stato",
+      "width": 350,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Owner",
+      "field": "owner",
+      "width": 100,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    },
+    {
+      "headerName": "Note",
+      "field": "noteMarketing",
+      "width": 400,
+      "hide": false,
+      "type": "string",
+      "editable":false,
+      "checkboxSelection":false,
+      "headerCheckboxSelection":false,
+      "headerCheckboxSelectionFilteredOnly":false
+    }
+  ]
+}

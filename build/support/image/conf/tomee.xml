@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomee>
+  <!-- see http://tomee.apache.org/containers-and-resources.html -->
+
+  <!-- activate next line to be able to deploy applications in apps -->
+  <!-- <Deployments dir="apps" /> -->
+  <Deployments dir="apps" autoDeploy="true"/> 
+
+<Resource id="jdbc/auth" type="DataSource">
+	JdbcDriver org.postgresql.Driver
+	JdbcUrl jdbc:postgresql://database.mui-db:5432/postgres?currentSchema=tomee&amp;assumeMinServerVersion=10
+	maxTotal 10
+	maxActive 10
+    maxIdle 10
+	minIdle 3
+	minEvictableIdleTime = 1
+	timeBetweenEvictionRuns	 = 10000
+	validationQuery	= SELECT 1
+	UserName tomee
+	Password tomee
+	serviceId authenticator
+	LogSql true
+	maxConnLifetimeMillis 180000
+	removeAbandonedOnMaintenance true
+	logAbandoned true
+  </Resource> 	
+
+  <Resource id="jdbc/muipromo/dbpromo/Ora" type="DataSource" >	
+	JdbcDriver org.postgresql.Driver
+	JdbcUrl jdbc:postgresql://database.mui-db:5432/postgres?escapeSyntaxCallMode=callIfNoReturn&amp;currentSchema=dbpromo&amp;stringtype=unspecified&amp;assumeMinServerVersion=10
+	maxTotal 10
+    maxActive 10
+    maxIdle 10
+	minIdle 3
+	minEvictableIdleTime = 1
+	timeBetweenEvictionRuns	 = 10000
+	validationQuery	= SELECT 1
+	UserName dbpromo
+	Password dbpromo
+	serviceId dbpromo
+	maxConnLifetimeMillis 600000
+	removeAbandonedOnMaintenance true
+	logAbandoned true
+  </Resource>
+
+  <Resource id="jdbc/muipromo/muipromo/Ora" type="DataSource">
+	JdbcDriver org.postgresql.Driver
+	JdbcUrl jdbc:postgresql://database.mui-db:5432/postgres?currentSchema=muipromo&amp;assumeMinServerVersion=10
+	maxTotal 10
+    maxActive 10
+    maxIdle 10
+	minIdle 3
+	minEvictableIdleTime 1
+	timeBetweenEvictionRuns 10000
+	validationQuery SELECT 1
+	UserName muipromo
+	Password muipromo
+	serviceId muipromo
+	maxConnLifetimeMillis 600000
+	removeAbandonedOnMaintenance true	
+	logAbandoned true
+  </Resource>
+  
+
+</tomee>
+

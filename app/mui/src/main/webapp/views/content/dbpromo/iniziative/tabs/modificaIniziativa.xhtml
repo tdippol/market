@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <!-- Dialog conferma eliminazione iniziativa -->
+    <p:confirmDialog widgetVar="dlgDeleteIniziativa" header="Conferma eliminazione" styleClass="dlgDeleteIniziativa"
+                     message="Sei sicuro di voler eliminare l'iniziativa #{templateView.currentView.editIniziativaBean.iniziativa.descrizione} ?"
+                     severity="alert">
+        <p:commandButton value="SI" action="#{templateView.currentView.deleteIniziativa}"
+                         update="@(.formEditIniziativa) @(.tabSchedaIniziativa) @(.formSchedaIniziativa)"
+                         style="float: right;"
+                         oncomplete="PF('dlgDeleteIniziativa').hide()" />
+        <p:commandButton value="NO" type="button" onclick="PF('dlgDeleteIniziativa').hide()" />
+    </p:confirmDialog>
+
+    <!-- Dialog conferma annullare modifiche -->
+    <p:confirmDialog widgetVar="dlgDiscardEditIniziativa" header="Conferma necessaria"
+                     message="Scartare le modifiche?" severity="alert">
+        <p:commandButton value="SI" action="#{templateView.currentView.discardEditIniziativa}"
+                         update="@(.formEditIniziativa) @(.tabSchedaIniziativa) @(.formSchedaIniziativa)"
+                         style="float: right;"
+                         oncomplete="PF('dlgDiscardEditIniziativa').hide()" />
+        <p:commandButton value="NO" type="button" onclick="PF('dlgDiscardEditIniziativa').hide()" />
+    </p:confirmDialog>
+
+    <!-- Dialog conferma salvare modifiche -->
+    <p:confirmDialog widgetVar="dlgSaveEditIniziativa" header="Conferma necessaria"
+                     message="Salvare le modifiche?" severity="alert">
+        <p:commandButton value="SI" action="#{templateView.currentView.saveEditIniziativa}"
+                         update="@(.formEditIniziativa) @(.tabSchedaIniziativa) @(.formSchedaIniziativa)"
+                         style="float: right;"
+                         oncomplete="PF('dlgSaveEditIniziativa').hide()" />
+        <p:commandButton value="NO" type="button" onclick="PF('dlgSaveEditIniziativa').hide()" />
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form styleClass="formEditIniziativa">
+                        <div class="row">
+                            <div class="col-12">
+                                <p:commandButton value="UNLOCK" style="float: right;"
+                                                 styleClass="#{templateView.currentView.editIniziativaBean.locked
+                                                    ? 'pf-btn-danger' : 'pf-btn-confirm'}"
+                                                 icon="#{templateView.currentView.editIniziativaBean.locked
+                                                    ? 'fa fa-fw fa-lock' : 'fa fa-fw fa-lock-open'}"
+                                                 update="@(.formEditIniziativa) @(.actionButtons)
+                                                         @(.formSchedaIniziativa) @(.tabSchedaIniziativa)"
+                                                 disabled="#{templateView.currentView.editIniziativaBean.btnUnlockDisabled}"
+                                                 action="#{templateView.currentView.unlockEditIniziativa}" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div><p:outputLabel value="Descrizione" styleClass="label-txt" /></div>
+                                <div>
+                                    <p:inputText styleClass="input-field"
+                                                 disabled="#{templateView.currentView.editIniziativaBean.locked}"
+                                                 value="#{templateView.currentView.editIniziativaBean.descrizione}">
+                                        <p:ajax update="@this" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div><p:outputLabel value="Nome Oggetto" styleClass="label-txt" /></div>
+                                <div>
+                                    <p:inputText styleClass="input-field"
+                                                 disabled="#{templateView.currentView.editIniziativaBean.locked}"
+                                                 value="#{templateView.currentView.editIniziativaBean.oggetto}">
+                                        <p:ajax update="@this" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div><p:outputLabel value="Decimali" styleClass="label-txt" /></div>
+                                <div>
+                                    <p:selectBooleanCheckbox  styleClass="input-field"
+                                                              disabled="#{templateView.currentView.editIniziativaBean.locked}"
+                                                              value="#{templateView.currentView.editIniziativaBean.flagDecimale}">
+                                        <p:ajax update="@this" />
+                                    </p:selectBooleanCheckbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-3">
+                                <div><p:outputLabel value="Data Inizio" styleClass="label-txt" /></div>
+                                <div>
+                                    <p:datePicker inputStyleClass="input-field"
+                                                  disabled="#{templateView.currentView.editIniziativaBean.dataInizioDisabled}"
+                                                  value="#{templateView.currentView.editIniziativaBean.dataInizio}"
+                                                  mindate="#{templateView.currentView.editIniziativaBean.minDataInizio}"
+                                                  showOn="button" pattern="dd-MM-yyyy" locale="it">
+                                        <p:ajax event="dateSelect" update="@(.dataFineIniziativa)" />
+                                        <p:ajax event="change" update="@(.dataFineIniziativa)" />
+                                    </p:datePicker>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div><p:outputLabel value="Data Fine" styleClass="label-txt" /></div>
+                                <div>
+                                    <p:datePicker inputStyleClass="input-field" styleClass="dataFineIniziativa"
+                                                  disabled="#{templateView.currentView.editIniziativaBean.locked}"
+                                                  value="#{templateView.currentView.editIniziativaBean.dataFine}"
+                                                  mindate="#{templateView.currentView.editIniziativaBean.minDataFine}"
+                                                  showOn="button" pattern="dd-MM-yyyy" locale="it"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-9">
+                                <div><p:outputLabel value="Note" styleClass="label-txt" /></div>
+                                <div>
+                                    <p:inputText styleClass="input-field"
+                                                 disabled="#{templateView.currentView.editIniziativaBean.locked}"
+                                                 value="#{templateView.currentView.editIniziativaBean.note}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px;">
+                            <div class="col-12">
+                                <p:commandButton value="Elimina" styleClass="pf-btn-danger actionButtons"
+                                                 style="float: left;" icon="far fa-fw fa-trash-alt"
+                                                 disabled="#{templateView.currentView.editIniziativaBean.btnDeleteDisabled}"
+                                                 oncomplete="PF('dlgDeleteIniziativa').show()" />
+                                <p:commandButton value="Salva" styleClass="pf-btn-confirm actionButtons"
+                                                 style="float: right;" icon="fa fa-fw fa-check"
+                                                 disabled="#{templateView.currentView.editIniziativaBean.btnSaveDisabled}"
+                                                 oncomplete="PF('dlgSaveEditIniziativa').show()" />
+                                <p:commandButton value="Annulla" styleClass="pf-btn-cancel actionButtons"
+                                                 style="float: right; margin-right: 20px;" icon="fa fa-fw fa-times"
+                                                 disabled="#{templateView.currentView.editIniziativaBean.btnCancelDisabled}"
+                                                 oncomplete="PF('dlgDiscardEditIniziativa').show()" />
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

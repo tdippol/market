@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<p:dialog id="cercaArticoloDialog" widgetVar="cercaArticoloDialog" modal="true" closable="false"
+          header="Cerca Articolo" width="95%" height="80vh" resizable="false"
+          styleClass="cercaArticoloDialog disable-horizontal-scroll">
+    <p:tabView dynamic="true" cache="false" styleClass="pianificazione_dialog"
+               onTabShow="handleTabChange(index)"
+               widgetVar="cercaArticoloDialogTabs">
+        <p:ajax event="tabChange" update="@(.cercaArticoloDialogConfirmBtnClass)"
+                listener="#{templateView.currentView.onTabChange}" />
+        <p:tab id="tab-copia-incolla" title="Copia / Incolla">
+            <ui:include src="dialogTabs/copiaIncollaTab.xhtml" />
+        </p:tab>
+        <p:tab id="tab-selezione" title="Selezione">
+            <ui:include src="dialogTabs/selezioneTab.xhtml" />
+        </p:tab>
+    </p:tabView>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no" style="float: left;"
+                                 action="#{templateView.currentView.resetCercaArticoloDialogAction}"
+                                 onclick="PF('cercaArticoloDialog').hide()" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="cercaArticoloDialogConfirmBtn" value="Conferma"
+                                 styleClass="ui-confirmdialog-yes cercaArticoloDialogConfirmBtnClass"
+                                 oncomplete="PF('cercaArticoloDialog').hide()"
+                                 disabled="#{templateView.currentView.cercaArticoloDialogConfirmBtnDisabled}"
+                                 action="#{templateView.currentView.cercaArticoloConfirmBtnAction}"
+                                 onclick="setLoadingStatus(this)"
+                                 update="codiceArticolo descrizioneArticolo cercaInCorsoFuturi cercaCompletati @(.updateablePanelContent)" />
+            </div>
+        </div>
+    </f:facet>
+    <style>
+        .ui-tabs {
+            padding: 0;
+        }
+
+        .ui-tabs-nav {
+            background: #ececec !important;
+        }
+
+        .ui-tabs-panels {
+            border: 1px solid gray;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .ui-tabs .ui-tabs-panel {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+        .ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+    </style>
+</p:dialog>
+</html>

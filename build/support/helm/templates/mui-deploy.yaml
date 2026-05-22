@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mui-application-deployment
+  labels:
+    app: mui
+    {{- include "mui_app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas.app }}
+  selector:
+    matchLabels:
+      app: mui
+  template:
+    metadata:
+      labels:
+        app: mui
+    spec:
+      containers:
+      - name: mui
+        image: {{ .Values.images.app.image_full_name }}
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: dockerkey
+      # livenessProbe:
+      #   httpGet:
+      #     path: /mui/health/status
+      #     port: 8080
+      #   initialDelaySeconds: 60
+      #   periodSeconds: 60
+      # readinessProbe:
+      #   httpGet:
+      #     path: /mui/health/status
+      #     port: 8080
+      #   initialDelaySeconds: 60
+      #   periodSeconds: 30        
+      #   successThreshold: 1
+      #   failureThreshold: 30

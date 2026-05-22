@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+>
+<p:confirmDialog widgetVar="saveAllPianoMediaConfirmDialog" global="true" showEffect="fade" hideEffect="fade"
+                 header="Avviso" message="Confermi la creazione massiva dei piano media?"
+                 icon="pi pi-exclamation-triangle" closable="false" styleClass="muiDialog">
+    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                     onclick="PF('saveAllPianoMediaConfirmDialog').hide()" />
+    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                     onclick="saveAllPianoMedia()"
+                     oncomplete="PF('saveAllPianoMediaConfirmDialog').hide()" />
+
+    <script type="text/javascript">
+        function saveAllPianoMedia() {
+            PF('saveAllPianoMediaConfirmDialog').hide();
+            showAgGridLoadingOverlay('db_grid_creaPianoMedia');
+            var rowData = getRowData('db_grid_creaPianoMedia').filter(r => r.createEnabled?.value === 'true');
+            $.ajax({
+                type: "POST",
+                url: contextPath + '/resources/pianomedia/creaPianoMedia/saveAll' + addUrlParamContesto(#{muiContext}),
+                contentType: "application/json",
+                data: JSON.stringify(rowData),
+                success: function (data) {
+                    if (data.isPianoMediaSaved) {
+                        addInfoGrowl([
+                            {name: 'title', value: 'Crea Piani Media'},
+                            {name: 'message', value: 'Piani Media creati'}
+                        ]);
+                    } else {
+                        addInfoGrowl([
+                            {name: 'title', value: 'Attenzione'},
+                            {name: 'message', value: 'Non ci sono Piani Media da salvare'}
+                        ]);
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: contextPath + '/resources/pianomedia/creaPianoMedia/rowData'
+                            + addUrlParamContesto(#{muiContext}),
+                        contentType: "application/json",
+                        success: function (data) {
+                            getGridOptionFromGridMap('db_grid_creaPianoMedia').api.setRowData(data.rowData);
+                        }
+                    });
+                },
+                error: function (jqXHR, exception, thrownError, event, callback_obj) {
+                    ajaxErrorHandler(jqXHR, exception, thrownError, event, callback_obj);
+                    let response = jqXHR.responseJSON;
+                    if (response.pianiMediaSaved != undefined &amp;&amp; response.pianiMediaSaved != '') {
+                        // ricarico griglia, almeno un piano media salvato
+                        $.ajax({
+                            type: "GET",
+                            url: contextPath + '/resources/pianomedia/creaPianoMedia/rowData'
+                                + addUrlParamContesto(#{muiContext}),
+                            contentType: "application/json",
+                            success: function (data) {
+                                getGridOptionFromGridMap('db_grid_creaPianoMedia').api.setRowData(data.rowData);
+                            }
+                        });
+                    }
+                },
+                complete: function () {
+                    hideAgGridLoadingOverlay('db_grid_creaPianoMedia');
+                }
+            })
+        }
+    </script>
+</p:confirmDialog>
+</html>

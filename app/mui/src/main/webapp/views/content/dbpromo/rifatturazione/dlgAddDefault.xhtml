@@ -1,0 +1,237 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+>
+<p:dialog id="dlgAddDefault" widgetVar="dlgAddDefault" modal="true" closable="false"
+          header="#{templateView.currentView.dlgAddDefaultTitle} Default" width="50%" height="60vh" resizable="false"
+          styleClass="disable-horizontal-scroll dlgAddDefaultClass">
+    <h:form id="formAddDefault" styleClass="formAddDefault" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-4">
+                <div><p:outputLabel for="selectCompratore" value="Compratore" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="selectCompratore" widgetVar="selectCompratore" filter="true"
+                                     filterMatchMode="contains"
+                                     styleClass="input-field selectCompratore" style="width: 100%;"
+                                     disabled="#{templateView.currentView.selectCompratoreDisabled or templateView.currentView.editMode}"
+                                     value="#{templateView.currentView.idCompratoreSelected}">
+                        <p:ajax update="btnConfirmAddDefault @(.selectFornitore) @(.slotEmptyClass)"/>
+                        <f:selectItem itemLabel="Seleziona compratore" noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.compratori}" var="c"
+                                       itemLabel="#{c.fullDescription}" itemValue="#{c.id}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-4">
+                <div><p:outputLabel for="selectFornitore" value="Fornitore" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="selectFornitore" widgetVar="selectFornitore" filter="true"
+                                     filterMatchMode="contains"
+                                     styleClass="input-field selectFornitore" style="width: 100%;"
+                                     disabled="#{empty templateView.currentView.idCompratoreSelected or templateView.currentView.editMode}"
+                                     value="#{templateView.currentView.idFornitoreSelected}">
+                        <p:ajax update="btnConfirmAddDefault selectTipologia @(.slotEmptyClass)"/>
+                        <f:selectItem itemLabel="Seleziona fornitore" noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.fornitori}" var="f"
+                                       itemLabel="#{f.fullDescription}" itemValue="#{f.id}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-4">
+                <div><p:outputLabel for="selectTipologia" value="Tipo Promozione" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="selectTipologia" widgetVar="selectTipologia" filter="true"
+                                     filterMatchMode="contains"
+                                     styleClass="input-field selectTipologia" style="width: 100%;"
+                                     disabled="#{empty templateView.currentView.idCompratoreSelected or empty templateView.currentView.idFornitoreSelected or templateView.currentView.editMode}"
+                                     value="#{templateView.currentView.idTipologiaSelected}">
+                        <p:ajax update="btnConfirmAddDefault @(.slotEmptyClass)"/>
+                        <f:selectItem itemLabel="Seleziona tipo promozione" noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.tipologie}" var="t"
+                                       itemLabel="#{t.descrizione}" itemValue="#{t.codice}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div><p:outputLabel for="selectRifatturazione" value="Rifatturazione" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="selectRifatturazione" widgetVar="selectRifatturazione"
+                                     styleClass="input-field selectRifatturazione" style="width: 100%;"
+                                     value="#{templateView.currentView.flagRifatturazione}">
+                        <p:ajax update="btnConfirmAddDefault @(.inputVariabileFisso) @(.selectVariabilePct) @(.selectAbbattimento) @(.selectNcNd) @(.inputCapMin) @(.inputCapMax) @(.selectSovrapposizioni)"
+                                listener="#{templateView.currentView.onSelectRifatturazioneValueChange}"/>
+                        <f:selectItems value="#{templateView.currentView.yesNoChoices}" var="c"
+                                       itemLabel="#{c.label}" itemValue="#{c.value}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-6">
+                <div><p:outputLabel for="selectNcNd" value="NC / ND" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="selectNcNd" widgetVar="selectNcNd"
+                                     styleClass="input-field selectNcNd" style="width: 100%;"
+                                     disabled="#{templateView.currentView.selectNcNdDisabled}"
+                                     value="#{templateView.currentView.ncNd}">
+                        <p:ajax update="btnConfirmAddDefault @(.selectAbbattimento)"
+                                listener="#{templateView.currentView.onSelectNcNdValueChange}"/>
+                        <f:selectItem noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.ncNdChoices}" var="c"
+                                       itemLabel="#{c.label}" itemValue="#{c.label}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div><p:outputLabel for="inputVariabileFisso" value="Variabile Fisso" styleClass="label-txt"/></div>
+                <div>
+                    <div class="ui-inputgroup">
+                        <p:inputNumber id="inputVariabileFisso" widgetVar="inputVariabileFisso" decimalPlaces="2"
+                                       styleClass="input-field inputVariabileFisso inputVariabileFissoFld"
+                                       inputStyle="width: 100%;"
+                                       disabled="#{templateView.currentView.inputVariabileFissoDisabled}"
+                                       value="#{templateView.currentView.variabileFisso}">
+                            <p:ajax event="keyup"
+                                    update="btnConfirmAddDefault @(.selectVariabilePct) @(.selectAbbattimento) @(.inputCapMin) @(.inputCapMax)"
+                                    listener="#{templateView.currentView.onInputVariabileFissoKeyup}"/>
+                        </p:inputNumber>
+                        <span class="ui-inputgroup-addon" style="padding-left: 10px; padding-right: 10px;">€</span>
+                        <p:commandButton value="Clear" styleClass="inputVariabileFisso"
+                                         disabled="#{templateView.currentView.inputVariabileFissoDisabled}"
+                                         update="btnConfirmAddDefault @(.inputVariabileFissoFld) @(.selectVariabilePct) @(.selectAbbattimento) @(.inputCapMin) @(.inputCapMax)"
+                                         actionListener="#{templateView.currentView.onInputVariabileFissoClear}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div><p:outputLabel for="inputCapMin" value="Cap MIN" styleClass="label-txt"/></div>
+                <div>
+                    <div class="ui-inputgroup">
+                        <p:inputNumber id="inputCapMin" widgetVar="inputCapMin" decimalPlaces="2"
+                                       styleClass="input-field inputCapMin inputCapMinFld" inputStyle="width: 100%;"
+                                       disabled="#{templateView.currentView.inputCapMinDisabled}"
+                                       value="#{templateView.currentView.capMin}">
+                            <p:ajax update="btnConfirmAddDefault"/>
+                        </p:inputNumber>
+                        <span class="ui-inputgroup-addon" style="padding-left: 10px; padding-right: 10px;">€</span>
+                        <p:commandButton value="Clear" styleClass="inputCapMin"
+                                         disabled="#{templateView.currentView.inputCapMinDisabled}"
+                                         update="btnConfirmAddDefault @(.inputCapMinFld)"
+                                         actionListener="#{templateView.currentView.onInputCapMinClear}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div><p:outputLabel for="selectVariabilePct" value="Variabile %" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="selectVariabilePct" widgetVar="selectVariabilePct"
+                                     styleClass="input-field selectVariabilePct" style="width: 100%;"
+                                     disabled="#{templateView.currentView.selectVariabilePctDisabled}"
+                                     value="#{templateView.currentView.variabilePct}">
+                        <p:ajax update="btnConfirmAddDefault @(.inputVariabileFisso)"
+                                listener="#{templateView.currentView.onSelectVariabilePctValueChange}"/>
+                        <f:selectItem noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.variabilePctChoices}" var="pct"
+                                       itemLabel="#{pct}" itemValue="#{pct}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-6">
+                <div><p:outputLabel for="inputCapMax" value="Cap MAX" styleClass="label-txt"/></div>
+                <div>
+                    <div class="ui-inputgroup">
+                        <p:inputNumber id="inputCapMax" widgetVar="inputCapMax" decimalPlaces="2"
+                                       styleClass="input-field inputCapMax inputCapMaxFld" inputStyle="width: 100%;"
+                                       disabled="#{templateView.currentView.inputCapMaxDisabled}"
+                                       value="#{templateView.currentView.capMax}">
+                            <p:ajax update="btnConfirmAddDefault"/>
+                        </p:inputNumber>
+                        <span class="ui-inputgroup-addon" style="padding-left: 10px; padding-right: 10px;">€</span>
+                        <p:commandButton value="Clear" styleClass="inputCapMax"
+                                         disabled="#{templateView.currentView.inputCapMaxDisabled}"
+                                         update="btnConfirmAddDefault @(.inputCapMaxFld)"
+                                         actionListener="#{templateView.currentView.onInputCapMaxClear}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <div><p:outputLabel for="selectAbbattimento" value="Abbattimento" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="selectAbbattimento" widgetVar="selectAbbattimento"
+                                     styleClass="input-field selectAbbattimento" style="width: 100%;"
+                                     disabled="#{templateView.currentView.selectAbbattimentoDisabled}"
+                                     value="#{templateView.currentView.flagAbbattimento}">
+                        <p:ajax update="btnConfirmAddDefault"
+                                listener="#{templateView.currentView.onSelectAbbattimentoValueChange}"/>
+                        <f:selectItem noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.yesNoChoices}" var="c"
+                                       itemLabel="#{c.label}" itemValue="#{c.value}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="col-6">
+                <div><p:outputLabel for="selectSovrapposizioni" value="Sovrapposizioni" styleClass="label-txt"/></div>
+                <div>
+                    <p:selectOneMenu id="selectSovrapposizioni" widgetVar="selectSovrapposizioni"
+                                     styleClass="input-field selectSovrapposizioni" style="width: 100%;"
+                                     disabled="#{templateView.currentView.selectSovrapposizioniDisabled}"
+                                     value="#{templateView.currentView.flagSovrapposizioni}">
+                        <p:ajax update="btnConfirmAddDefault"
+                                listener="#{templateView.currentView.onSelectSovrapposizioniValueChange}"/>
+                        <f:selectItem noSelectionOption="true"/>
+                        <f:selectItems value="#{templateView.currentView.yesNoChoices}" var="c"
+                                       itemLabel="#{c.label}" itemValue="#{c.value}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <h:panelGroup styleClass="row slotEmptyClass" style="margin-top: 10px;">
+            <h:panelGroup styleClass="col-12"
+                          rendered="#{not templateView.currentView.editMode and templateView.currentView.currentSlotEmpty}">
+                <p:outputLabel
+                        value="#{not templateView.currentView.editMode and templateView.currentView.currentSlotEmptyMessage}"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton id="btnCancelAddDefault" value="Annulla" styleClass="ui-confirmdialog-no"
+                                 style="float: left;"
+                                 oncomplete="PF('dlgAddDefault').hide()"
+                                 update="@(.formAddDefault)"
+                                 action="#{templateView.currentView.resetDialogAddDefault}"/>
+            </div>
+            <div class="col-6">
+                <p:commandButton id="btnConfirmAddDefault" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('dlgAddDefault').hide()"
+                                 disabled="#{templateView.currentView.btnConfirmAddDefaultDisabled}"
+                                 update="@(.updateableDefault) @(.formAddDefault) @(.updateableInitialLoad) addFatturazioneDefault missingDefaultsBlock @(.updateableMissingDefaults)"
+                                 action="#{templateView.currentView.confirmDialogAddDefault}"/>
+            </div>
+        </div>
+    </f:facet>
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+
+        .label-txt-error {
+            color: darkred;
+            font-size: 16px;
+        }
+    </style>
+</p:dialog>
+</html>

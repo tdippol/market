@@ -1,0 +1,177 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletCercaArticoloSelezioneTab" class="k-portlet">
+                    <h:form>
+                        <p:panel id="expandableCercaArticoloSelezioneTab" toggleable="true"
+                                 toggleSpeed="500" closeSpeed="500"
+                                 styleClass="pnlGrid_Header updateableContent expandableCercaArticoloSelezioneTab"
+                                 style="text-align: center;">
+                            <f:facet name="header">
+                                <ui:include src="filtriSelezioneTab.xhtml" />
+                            </f:facet>
+
+                            <div id="selezioneTabLoader" class="spinnerContainerSelezione">
+                                <i class="loading-spin"
+                                   style="position: absolute; line-height: 30vh; display: none; z-index: 9999; "></i>
+                            </div>
+
+                            <h:panelGroup layout="block" style="height: 52vh; width: 100%;"
+                                          styleClass="ag-theme-balham selezioneTab updateableGridArticoliInPromo"
+                                          pt:gridid="db_cerca_articolo_dialog_selezione">
+                            </h:panelGroup>
+
+                            <f:facet name="actions">
+                                <p:inputText autocomplete="off" id="selezioneTab_quickfilter" placeholder="Filtra..."
+                                             styleClass="pnlGrid_Header filterInputText"
+                                             onkeyup="onFilterTextBoxChangedpromoGrid('db_cerca_articolo_dialog_selezione', this.value)" />
+                                <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                               onclick="expandGrid('db_cerca_articolo_dialog_selezione')"
+                                               onerror="redirectToExpiredPage()" />
+                                <p:commandLink title="Esporta con raggruppamenti"
+                                               styleClass="pnlGrid_Header exportButtonGrouped"
+                                               onclick="onBtExport('db_cerca_articolo_dialog_selezione', 'Articoli in Promo', true)"
+                                               onerror="redirectToExpiredPage()" />
+                                <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                               onclick="onBtExport('db_cerca_articolo_dialog_selezione', 'Articoli in Promo')"
+                                               onerror="redirectToExpiredPage()" />
+                            </f:facet>
+
+                            <script type="text/javascript">
+                                var buyerIdSelected = $('.buyerChosen').text();
+                                var supplierIdSelected = $('.supplierChosen').text();
+                                var departmentIdSelected = $('.departmentChosen').text();
+                                var categoryIdSelected = $('.categoryChosen').text();
+                                var grmIdSelected = $('.grmChosen').text();
+                                var marchioPrivIdSelected = $('.marchioPrivChosen').text();
+
+                                $(document).ready(function () {
+                                    if (buyerIdSelected == "") {
+                                        buyerIdSelected = null;
+                                    }
+                                    if (supplierIdSelected == "") {
+                                        supplierIdSelected = null;
+                                    }
+                                    if (departmentIdSelected == "") {
+                                        departmentIdSelected = null;
+                                    }
+                                    if (categoryIdSelected == "") {
+                                        categoryIdSelected = null;
+                                    }
+                                    if (grmIdSelected == "") {
+                                        grmIdSelected = null;
+                                    }
+                                    if (marchioPrivIdSelected == "") {
+                                        marchioPrivIdSelected = null;
+                                    }
+                                    loadSelezioneGrid(buyerIdSelected, supplierIdSelected, departmentIdSelected,
+                                        categoryIdSelected, grmIdSelected, marchioPrivIdSelected);
+                                });
+
+                                function loadSelezioneGrid(idCompratoreSelezionato, idFornitoreSelezionato,
+                                                           idRepartoSelezionato, idCategoriaSelezionata,
+                                                           idGrmSelezionato, codiceMarchioPrivSelezionato) {
+                                    var gridParamsCercaArticoloDialogSelezioneTab = {
+                                        gridId: 'db_cerca_articolo_dialog_selezione',
+                                        gridTabGroup: 'cercaArticoloDialogTabs',
+                                        gridTabPosition: 1,
+                                        gridCode: 'db_cerca_articolo_dialog_selezione',
+                                        gridTitle: 'Cerca Articolo - Selezione',
+                                        url_columnDefs: contextPath + '/resources/reportArticoloInPromo/selezioneTab/columnDef',
+                                        url_customSort: contextPath + '/resources/grid/sorting/db_cercaArticoloDialogCopiaIncollaTab'
+                                    };
+                                    gridParamsCercaArticoloDialogSelezioneTab.gridOptions = {
+                                        onSelectionChanged: onItemRowSelected,
+                                        onSortChanged: function (event) {
+                                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_cerca_articolo_dialog_selezione');
+                                        }
+                                    };
+
+                                    $(document).ready(function () {
+                                        if (getCurrentTab(gridParamsCercaArticoloDialogSelezioneTab.gridTabGroup) == gridParamsCercaArticoloDialogSelezioneTab.gridTabPosition) {
+                                            creaGriglia(gridParamsCercaArticoloDialogSelezioneTab);
+                                        }
+                                    });
+                                }
+
+                                function onItemRowSelected(event) {
+                                    jsonObj = [];
+                                    $.each(event.api.getSelectedNodes(), function (key, value) {
+                                        jsonObj.push({
+                                            idItem: value.data.id.value,
+                                            codice: value.data.codiceArticolo.value,
+                                            descrizione: value.data.elemento.value
+                                        });
+                                    });
+                                    selezionaItem([{name: "itemSelected", value: JSON.stringify(jsonObj)}]);
+                                }
+
+                                function showLoading_gridData() {
+                                    getGridOptionFromGridMap('db_cerca_articolo_dialog_selezione').api.setRowData([]);
+                                    getGridOptionFromGridMap('db_cerca_articolo_dialog_selezione').api.showLoadingOverlay();
+                                }
+
+                                function updateSelezioneGrid(idCompratoreSelezionato, idFornitoreSelezionato,
+                                                             idRepartoSelezionato, idCategoriaSelezionata,
+                                                             idGrmSelezionato, codiceMarchioPrivSelezionato) {
+                                    let payload = {
+                                        idCompratoreSelected: isNaN(idCompratoreSelezionato) ? undefined : Number(idCompratoreSelezionato),
+                                        idFornitoreSelected: isNaN(idFornitoreSelezionato) ? undefined : Number(idFornitoreSelezionato),
+                                        idRepartoSelected: isNaN(idRepartoSelezionato) ? undefined : Number(idRepartoSelezionato),
+                                        idCategoriaSelected: isNaN(idCategoriaSelezionata) ? undefined : Number(idCategoriaSelezionata),
+                                        idGrmSelected: isNaN(idGrmSelezionato) ? undefined : Number(idGrmSelezionato),
+                                        codiceMarchioPrivSelected: codiceMarchioPrivSelezionato === "null" ? undefined : codiceMarchioPrivSelezionato
+                                    }
+                                    $.ajax({
+                                        type: "POST",
+                                        url: contextPath + '/resources/reportArticoloInPromo/selezioneTab/rowData',
+                                        contentType: "application/json",
+                                        data: JSON.stringify(payload),
+                                        success: function (data) {
+                                            getGridOptionFromGridMap('db_cerca_articolo_dialog_selezione').api.setRowData(data.rowData);
+                                            $(".loading-spin").hide();
+                                        },
+                                        error: ajaxErrorHandler
+                                    });
+                                }
+                            </script>
+
+                            <style>
+                            </style>
+                        </p:panel>
+                        <p:remoteCommand name="selezionaItem" update="cercaArticoloDialogConfirmBtn"
+                                         action="#{templateView.currentView.selezionaItemAction}" />
+                    </h:form>
+                    <p:outputLabel
+                            value="#{templateView.currentView.cercaDialogBackingBean.idCompratoreCorrente}"
+                            class="buyerChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{templateView.currentView.cercaDialogBackingBean.idFornitoreCorrente}"
+                            class="supplierChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{templateView.currentView.cercaDialogBackingBean.idRepartoCorrente}"
+                            class="departmentChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{templateView.currentView.cercaDialogBackingBean.idCategoriaCorrente}"
+                            class="categoryChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{templateView.currentView.cercaDialogBackingBean.idGrmCorrente}"
+                            class="grmChosen" style="visibility: hidden;" />
+                    <p:outputLabel
+                            value="#{templateView.currentView.cercaDialogBackingBean.idMarchioPrivCorrente}"
+                            class="marchioPrivChosen" style="visibility: hidden;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

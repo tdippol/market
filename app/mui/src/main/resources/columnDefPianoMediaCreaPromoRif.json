@@ -1,0 +1,60 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Codice",
+      "field": "codice",
+      "editable": false,
+      "width": 100,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Descrizione",
+      "field": "descrizione",
+      "editable": true,
+      "width": 300,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Gruppo",
+      "field": "gruppo",
+      "editable": true,
+      "width": 200,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Canale",
+      "field": "canale",
+      "editable": true,
+      "width": 200,
+      "hide": false,
+      "type": "string"
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "editable": true,
+      "width": 150,
+      "hide": false,
+      "type": "date"
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "editable": true,
+      "width": 150,
+      "hide": false,
+      "type": "date"
+    },
+    {
+      "headerName": "Stato",
+      "field": "stato",
+      "editable": true,
+      "width": 200,
+      "hide": false,
+      "type": "string"
+    }
+  ]
+}

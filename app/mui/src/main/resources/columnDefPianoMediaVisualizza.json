@@ -1,0 +1,44 @@
+{
+  "columnDef": [
+    {
+      "field": "anno",
+      "rowGroup": true,
+      "width": 100,
+      "hide": true,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Descrizione Piano Media",
+      "field": "descrizione",
+      "width": 400,
+      "hide": true,
+      "type": "string",
+      "editable": false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 200,
+      "hide": false,
+      "type": "date",
+      "editable": false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 200,
+      "hide": false,
+      "type": "date",
+      "editable": false
+    },
+    {
+      "headerName": "Stato",
+      "field": "stato",
+      "width": 400,
+      "hide": false,
+      "type": "string",
+      "editable": false
+    }
+  ]
+}

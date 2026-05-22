@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<p:dialog id="dlgAddIniziativa" widgetVar="dlgAddIniziativa" modal="true" closable="false"
+          header="Creazione Iniziativa" width="50%" height="50vh" resizable="false"
+          styleClass="disable-horizontal-scroll">
+    <h:form id="formAddIniziativa" styleClass="formAddIniziativa" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-8">
+                <div><p:outputLabel for="descrizioneIniziativa" value="Descrizione" styleClass="label-txt" /></div>
+                <div>
+                    <p:inputText id="descrizioneIniziativa" styleClass="input-field descrizioneIniziativa"
+                                 style="width: 100%;"
+                                 maxlength="#{templateView.currentView.descrizioneMaxLength}"
+                                 value="#{templateView.currentView.descrizioneIniziativa}">
+                        <p:ajax update="@(.ui-confirmdialog-yes) @this" />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-8">
+                <div><p:outputLabel for="descrizioneOggetto" value="Nome Oggetto" styleClass="label-txt" /></div>
+                <div>
+                    <p:inputText id="descrizioneOggetto" styleClass="input-field descrizioneIniziativa"
+                                 style="width: 100%;"
+                                 maxlength="#{templateView.currentView.oggettoMaxLength}"
+                                 value="#{templateView.currentView.oggettoIniziativa}">
+                        <p:ajax update="@(.ui-confirmdialog-yes) @this" />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-8">
+                <div><p:outputLabel for="flagDecimali" value="Decimali" styleClass="label-txt" /></div>
+                <div>
+                    <p:selectBooleanCheckbox id="flagDecimali" styleClass="input-field descrizioneIniziativa"
+                                             style="width: 100%;"
+                                             value="#{templateView.currentView.flagDecimali}">
+                        <p:ajax update="@(.ui-confirmdialog-yes) @this" />
+                    </p:selectBooleanCheckbox>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-4">
+                <div><p:outputLabel for="dataInizioIniziativa" value="Data Inizio" styleClass="label-txt" /></div>
+                <div>
+                    <p:datePicker id="dataInizioIniziativa" inputStyle="width: 100%;" styleClass="dataInizioIniziativa"
+                                  showOn="button" pattern="dd-MM-yyyy" locale="it"
+                                  mindate="#{templateView.currentView.minDataInizioIniziativa}"
+                                  value="#{templateView.currentView.dataInizioIniziativa}">
+                        <p:ajax event="dateSelect" update="@(.ui-confirmdialog-yes) @(.dataFineIniziativa)" />
+                        <p:ajax event="change" update="@(.ui-confirmdialog-yes) @(.dataFineIniziativa)" />
+                    </p:datePicker>
+                </div>
+            </div>
+            <div class="col-4">
+                <div><p:outputLabel for="dataFineIniziativa" value="Data Fine" styleClass="label-txt" /></div>
+                <div>
+                    <p:datePicker id="dataFineIniziativa" inputStyle="width: 100%;" styleClass="dataFineIniziativa"
+                                  showOn="button" pattern="dd-MM-yyyy" locale="it"
+                                  mindate="#{templateView.currentView.minDataFineIniziativa}"
+                                  value="#{templateView.currentView.dataFineIniziativa}">
+                        <p:ajax event="dateSelect" update="@(.ui-confirmdialog-yes)" />
+                        <p:ajax event="change" update="@(.ui-confirmdialog-yes)" />
+                    </p:datePicker>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-8">
+                <div><p:outputLabel for="noteIniziativa" value="Note" styleClass="label-txt" /></div>
+                <div>
+                    <p:inputText id="noteIniziativa" styleClass="input-field noteIniziativa" style="width: 100%;"
+                                 value="#{templateView.currentView.noteIniziativa}">
+                        <p:ajax />
+                    </p:inputText>
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+    <f:facet name="footer">
+        <div class="row">
+            <div class="col-6">
+                <p:commandButton id="btnCancelAddIniziativa" value="Annulla" styleClass="ui-confirmdialog-no"
+                                 style="float: left;"
+                                 oncomplete="PF('dlgAddIniziativa').hide()"
+                                 update="@(.formAddIniziativa)"
+                                 action="#{templateView.currentView.resetDialogAddIniziativa}" />
+            </div>
+            <div class="col-6">
+                <p:commandButton id="btnConfirmAddIniziativa" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                 oncomplete="PF('dlgAddIniziativa').hide()"
+                                 disabled="#{templateView.currentView.btnConfirmAddIniziativaDisabled}"
+                                 update="@(.updateableIniziative) @(.formAddIniziativa)"
+                                 action="#{templateView.currentView.confirmDialogAddIniziativa}" />
+            </div>
+        </div>
+    </f:facet>
+
+    <style>
+        .ui-dialog-title {
+            font-size: 20px !important;
+        }
+
+        .label-txt {
+            font-size: 14px;
+        }
+    </style>
+</p:dialog>
+</html>

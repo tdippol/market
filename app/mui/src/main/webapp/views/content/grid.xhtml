@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    
+    <ui:composition>
+        
+		<h:panelGroup rendered="#{templateView.gridParamHashMap[gridId].css ne null}" id="styleCssHMGrid_#{gridId}" >
+            <style type="text/css" >
+                #{templateView.gridParamHashMap[gridId].css}
+            </style>
+        </h:panelGroup>
+
+		
+		
+        <p:dialog
+            header="Selezionare Valori"
+            widgetVar="dlgIngridSelections_#{gridId}"
+            id="dlgIngridSelections_#{gridId}"
+            styleClass="dlgSelezioniActions"
+            resizable="false"
+            modal="true"
+            draggable="false"
+        >
+            <ui:include src="/views/content/ingridFilterDialog.xhtml">
+            </ui:include>
+        </p:dialog>
+        
+        <p:panel rendered="#{renderGrid ne null ? renderGrid : true }" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                 styleClass="pnlGrid_Header updateableContent expandable_#{gridId}">
+            <f:facet name="header">
+                <p:outputLabel value="#{templateView.gridParamHashMap[gridId].title}"/>
+                <p:outputLabel styleClass="pnlGrid_Header_Subtitle" rendered="#{templateView.version ne null}" value="Ultimo Aggiornamento: #{templateView.version}"/>
+            </f:facet>
+            <div id="loading_#{gridId}" class="spinnerContainer">
+                <i class="loading-spin" style="height: #{templateView.gridParamHashMap[gridId].height}vh;line-height: #{templateView.gridParamHashMap[gridId].height}vh;"/>
+            </div>
+            <h:panelGroup layout="block"
+                          style="height: #{templateView.gridParamHashMap[gridId].height}vh; width: 100%;"
+                          class="ag-theme-balham #{gridId}"
+                          pt:gridid="#{gridId}">
+            </h:panelGroup>
+            <f:facet name="actions">
+                <p:inputText id="#{gridId}_quickfilter" placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText" onkeyup="onFilterTextBoxChangedpromoGrid('#{gridId}',this.value)"/>
+                <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton" onclick="expandGrid('#{gridId}')" onerror="redirectToExpiredPage()" />
+                <p:commandLink title="Esporta con raggruppamenti" styleClass="pnlGrid_Header exportButtonGrouped" onclick="onBtExportGrouped('#{gridId}','#{templateView.gridParamHashMap[gridId].title}')" onerror="redirectToExpiredPage()" />
+                <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton" onclick="onBtExport('#{gridId}','#{templateView.gridParamHashMap[gridId].title}')" onerror="redirectToExpiredPage()" />
+                <p:commandLink disabled="#{!templateView.renderCumpulsoryFilters}" title="Ricarica Griglia" styleClass="pnlGrid_Header reloadButton" onclick="showSpinner('#{gridId}');updateRemoteView([{name:'grid', value: '#{gridId}'},{name:'reload', value:'true'}])" onerror="redirectToExpiredPage()"/>
+                <p:commandLink title="Soppressione Colonne" rendered="#{templateView.gridParamHashMap[gridId].colSuppressionEnabled}" styleClass="pnlGrid_Header settingsRadioCols" onclick="showSpinner('#{gridId}');suppressStatus('#{gridId}','columns')" onerror="redirectToExpiredPage()"/>
+                <p:commandLink title="Soppressione Righe" rendered="#{templateView.gridParamHashMap[gridId].rowSuppressionEnabled}" styleClass="pnlGrid_Header settingsRadioRows" onclick="showSpinner('#{gridId}');suppressStatus('#{gridId}','rows')" onerror="redirectToExpiredPage()"/>
+        
+                <p:commandLink title="Filtri in griglia" 
+                    rendered="#{templateView.gridParamHashMap[gridId].gridFilterEnabled}" 
+                    styleClass="pnlGrid_Header settingsGridFilter"
+                    action="#{templateView.currentView.getIngridPicklistValues(gridId)}" 
+                    onsuccess="PF('dlgIngridSelections_#{gridId}').show()"
+                    onerror="redirectToExpiredPage()"
+                    update="@(.dataGridSelections)"
+                />              
+                       
+            </f:facet>
+            <script type="text/javascript">
+                      $(document).ready(function() {
+                          setSuppressStatus('#{gridId}','rows', '#{templateView.currentView.getSuppressStatus(gridId,"rows")}');
+                          setSuppressStatus('#{gridId}','columns', '#{templateView.currentView.getSuppressStatus(gridId,"columns")}');
+                      });
+            </script>
+              <ui:fragment rendered="#{templateView.renderCumpulsoryFilters and templateView.preselectedGridMap[gridId] eq null}">
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        showSpinner('#{gridId}');
+                        updateRemoteView([{name:'grid', value: '#{gridId}'}]);
+                    });
+                </script>
+            </ui:fragment>
+        </p:panel>
+    </ui:composition>
+</html>

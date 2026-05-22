@@ -1,0 +1,60 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Zona",
+      "field": "zona",
+      "width": 200,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Meccanica",
+      "field": "meccanica",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Condizione",
+      "field": "condizione",
+      "width": 200,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Valore Off",
+      "field": "valoreOff",
+      "width": 150,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Data Inizio",
+      "field": "dataInizio",
+      "width": 150,
+      "type": "date",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Data Fine",
+      "field": "dataFine",
+      "width": 150,
+      "type": "date",
+      "editable": false,
+      "hide": false
+    },
+    {
+      "headerName": "Volantino",
+      "field": "volantino",
+      "width": 100,
+      "type": "string",
+      "editable": false,
+      "hide": false
+    }
+  ]
+}

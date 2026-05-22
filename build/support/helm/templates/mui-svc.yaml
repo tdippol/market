@@ -1,0 +1,17 @@
+{{- if .Values.muiService.enabled }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: mui-service
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+    cloud.google.com/backend-config: '{"default": "mui-becfg"}'
+  labels:
+    {{- include "mui_app.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.muiService.type }}
+  selector:
+    app: mui
+  ports:
+  - port: 8080
+{{- end }}

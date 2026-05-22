@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <p:dialog widgetVar="addMenu" minimizable="true" maximizable="true"
+            width="800" resizable="false" draggable="true" closable="true"
+            header="Aggiungi Voce di Menu" styleClass="pf-dialog pgAddDialog updatableDialog"
+            dynamic="true" appendTo="@(body)">
+            <ui:include src="dialog/addMenu.xhtml"/>                    
+        </p:dialog>
+        <h:form id="menuRoles">
+            <p:tabView dynamic="true" cache="false">
+                <p:tab title="Gestione Menu">
+                    <p:dialog widgetVar="editLayout" id="editLayout" modal="true" 
+                        minheight="100" closeable="true"
+                        header="Modifica Layout per #{gestioneMenuRole.selectedMenuNode.label}"
+                        resizable="false" closable="false"  dynamic="true" styleClass="updatableDialog">
+                        <ui:include src="dialog/editLayout.xhtml"/>
+                    </p:dialog>
+
+                    <p:dialog widgetVar="editLabel" id="editLabel" modal="true"
+                        minheight="100" closeable="false"
+                        header="Modifica Label per #{gestioneMenuRole.selectedMenuNode.label}"
+                        resizable="false" styleClass="editLabel updatableDialog" dynamic="true" >
+                        <ui:include src="dialog/editLabel.xhtml"/>
+                    </p:dialog>
+
+                    <p:dialog widgetVar="confirmDelete" id="confirmDelete" modal="true"
+                        minheight="100" closeable="false" header="ATTENZIONE"
+                        resizable="false" dynamic="true" styleClass="updatableDialog">
+                        <ui:include src="dialog/confirmDelete.xhtml"/>
+                    </p:dialog>
+
+                    <p:dialog widgetVar="editConfig" id="editConfig" modal="false" 
+                        closeable="false"
+                        header="Modifica Configurazioni per menu #{gestioneMenuRole.selectedMenuNode.label}"
+                        position="center center" styleClass="editConfig updatableDialog"
+                        style="max-width:80%; min-width: 500px !important" onShow="PF('editConfig').initPosition()"
+                        dynamic="true" >
+                    <ui:include src="dialog/editConfig.xhtml"/>
+                    </p:dialog>
+
+                    <ui:include src="tabs/gestioneMenu.xhtml"/>
+                </p:tab>
+                <p:tab title="Preview">
+                    <ui:include src="tabs/preview.xhtml" />
+                </p:tab>
+                <p:tab title="Filtri Disponibili">
+                    <ui:include src="tabs/filtriDisponibili.xhtml"/>
+                </p:tab>
+                
+                <p:tab title="Configurazione Welcome Page">
+                    <ui:include src="tabs/welcomePage.xhtml"/>
+                </p:tab>
+            </p:tabView>
+        </h:form>
+    </div>
+</ui:composition>
+</html>

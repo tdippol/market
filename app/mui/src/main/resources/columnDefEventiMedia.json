@@ -1,0 +1,103 @@
+{
+  "columnDef": [
+    {
+      "headerName": "Id Evento",
+      "field": "id",
+      "editable": false,
+      "width": 300,
+      "hide": true,
+      "rowGroup": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false,
+      "type": "string"
+    },
+    {
+      "headerName": "ID Macrospazio",
+      "field": "id_macrospazio",
+      "width": 300,
+      "hide": true,
+      "rowGroup": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Macrospazio",
+      "field": "macrospazio",
+      "width": 300,
+      "hide": false,
+      "rowGroup": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Fornitore",
+      "field": "fornitore",
+      "width": 300,
+      "hide": false,
+      "rowGroup": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "DataInizio",
+      "field": "dataInizio",
+      "width": 200,
+      "rowGroup": false,
+      "hide": false,
+      "type": "date",
+      "cellRenderer": "datePickerRenderer"
+    },
+    {
+      "headerName": "DataFine",
+      "field": "dataFine",
+      "width": 200,
+      "hide": false,
+      "rowGroup": false,
+      "type": "date",
+      "cellRenderer": "datePickerRenderer"
+    },
+    {
+      "headerName": "Causale",
+      "field": "causale",
+      "width": 300,
+      "hide": false,
+      "rowGroup": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    },
+    {
+      "headerName": "Valore contributo",
+      "field": "contributo",
+      "width": 140,
+      "hide": false,
+      "rowGroup": false,
+      "type": "numeric",
+      "editable": false
+    },
+    {
+      "headerName": "Note",
+      "field": "note",
+      "width": 300,
+      "hide": false,
+      "rowGroup": false,
+      "type": "string",
+      "editable": false,
+      "checkboxSelection": false,
+      "headerCheckboxSelection": false,
+      "headerCheckboxSelectionFilteredOnly": false
+    }
+  ]
+}

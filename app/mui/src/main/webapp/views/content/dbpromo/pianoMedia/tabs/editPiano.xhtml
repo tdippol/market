@@ -1,0 +1,195 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <!-- Dialog conferma per annullare le modifiche -->
+                    <p:confirmDialog widgetVar="dlgDiscardEditPiano" header="Conferma necessaria"
+                                     message="Scartare le modifiche?" severity="alert">
+                        <p:commandButton value="SI" action="#{templateView.currentView.discardEditPiano}"
+                                         update="@(.updateableContent)"
+                                         oncomplete="PF('dlgDiscardEditPiano').hide()" />
+                        <p:commandButton value="NO" onclick="PF('dlgDiscardEditPiano').hide()"
+                                         style="float: right;" type="button" />
+                    </p:confirmDialog>
+
+                    <!-- Dialog conferma per salvare le modifiche -->
+                    <p:confirmDialog widgetVar="dlgSaveEditPiano" header="Conferma necessaria"
+                                     message="Salvare le modifiche?" severity="alert">
+                        <p:commandButton value="SI" action="#{templateView.currentView.saveEditPiano}"
+                                         update="@(.updateableContent)"
+                                         oncomplete="PF('dlgSaveEditPiano').hide()" />
+                        <p:commandButton value="NO" onclick="PF('dlgSaveEditPiano').hide()"
+                                         style="float: right;" type="button" />
+                    </p:confirmDialog>
+
+                    <!-- Dialog conferma per eliminare la Piano -->
+                    <p:confirmDialog widgetVar="dlgDeletePiano" header="Conferma eliminazione"
+                                     styleClass="dlgDeletePianoClass"
+                                     message="Sei sicuro di voler cancellare il Piano Media #{templateView.currentView.currentPianoMedia.descrizione}?"
+                                     severity="alert">
+                        <p:commandButton value="SI" action="#{templateView.currentView.deletePiano}"
+                                         update="@(.updateableContent)"
+                                         oncomplete="PF('dlgDeletePiano').hide()" />
+                        <p:commandButton value="NO" onclick="PF('dlgDeletePiano').hide()"
+                                         style="float: right;" type="button" />
+                    </p:confirmDialog>
+
+                    <h:form styleClass="updateableContent">
+                        <div class="row">
+                            <div class="col-12">
+                                <p:commandButton value="UNLOCK" id="lockUnlockBtn" style="float: right;"
+                                                 styleClass="#{templateView.currentView.editEnabled
+                                                             ? 'pf-btn-danger' : 'pf-btn-confirm'}"
+                                                 update="@(.updateableContent) "
+                                                 icon="#{templateView.currentView.editEnabled
+                                                       ? 'fa fa-fw fa-lock' : 'fa fa-fw fa-lock-open'}"
+                                                 disabled="#{templateView.currentView.editLocked or not templateView.currentView.writeSchedaFlag}"
+                                                 action="#{templateView.currentView.unlockEditPiano}" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <p:outputLabel for="description" value="Descrizione" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:inputText id="description" style="width: 100%;"
+                                                 disabled="#{!templateView.currentView.descrizioneEditable}"
+                                                 value="#{templateView.currentView.pianoMediaEditBean.descrizione}" />
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div>
+                                    <p:outputLabel for="startDate" value="Data Inizio" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:datePicker id="startDate" inputStyle="width: 100%;"
+                                                  disabled="#{!templateView.currentView.dataInizioEditable}"
+                                                  value="#{templateView.currentView.pianoMediaEditBean.dataInizio}"
+                                                  showOn="button" pattern="dd-MM-yyyy" locale="it">
+                                    </p:datePicker>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div>
+                                    <p:outputLabel for="endDate" value="Date Fine" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:datePicker id="endDate" inputStyle="width: 100%;"
+                                                  disabled="#{!templateView.currentView.dataFineEditable}"
+                                                  value="#{templateView.currentView.pianoMediaEditBean.dataFine}"
+                                                  showOn="button" pattern="dd-MM-yyyy" locale="it">
+                                    </p:datePicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+
+
+                            <div class="col-4">
+                                <div>
+                                    <p:outputLabel for="promomaster" value="Promozione Master" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promomaster"
+                                                     value="#{templateView.currentView.pianoMediaEditBean.promoMaster}" class="input-field"
+                                                     filter="true" filterMatchMode="contains"
+                                                     disabled="#{!templateView.currentView.promoMasterEditable}"
+                                                     style="width: 100%; background-color: white;" >
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.pianoMediaEditBean.promoMasterList}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.codicePromozione}" />
+                                        <p:ajax update="@(.updateableContent)"  />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div>
+                                    <p:outputLabel for="promoSecondaryA" value="Promozione Secondaria A" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promoSecondaryA"
+                                                     value="#{templateView.currentView.pianoMediaEditBean.promoSecondaryA}" class="input-field"
+                                                     filter="true" filterMatchMode="contains"
+                                                     disabled="#{!templateView.currentView.promoSecondaryAEditable}"
+                                                     style="width: 100%; background-color: white;" >
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.pianoMediaEditBean.promoSecondaryListA}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.codicePromozione}"
+                                                        />
+                                        <p:ajax update="@(.updateableContent)"  />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div>
+                                    <p:outputLabel for="promoSecondaryB" value="Promozione Secondaria B" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promoSecondaryB"
+                                                     value="#{templateView.currentView.pianoMediaEditBean.promoSecondaryB}" class="input-field"
+                                                     filter="true" filterMatchMode="contains"
+                                                     disabled="#{!templateView.currentView.promoSecondaryBEditable}"
+                                                     style="width: 100%; background-color: white;" >
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.pianoMediaEditBean.promoSecondaryListB}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.codicePromozione}"
+                                                       />
+                                        <p:ajax update="@(.updateableContent)"  />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div>
+                                    <p:outputLabel for="promoSecondaryC" value="Promozione Secondaria C" style="font-size: 14px;" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promoSecondaryC"
+                                                     value="#{templateView.currentView.pianoMediaEditBean.promoSecondaryC}" class="input-field"
+                                                     filter="true" filterMatchMode="contains"
+                                                     disabled="#{!templateView.currentView.promoSecondaryCEditable}"
+                                                     style="width: 100%; background-color: white;" styleClass="updateableContent">
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.pianoMediaEditBean.promoSecondaryListC}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.codicePromozione}" />
+                                        <p:ajax update="@(.updateableContent)"  />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="row" style="margin-top: 30px;">
+                            <div class="col-12">
+                                <p:commandButton value="Elimina" styleClass="pf-btn-danger" style="float: left"
+                                                 icon="far fa-fw fa-trash-alt"
+                                                 disabled="#{!templateView.currentView.buttonDeleteEnabled}"
+                                                 update="@(.dlgDeletePianoClass)"
+                                                 oncomplete="PF('dlgDeletePiano').show()" />
+                                <p:commandButton value="Salva" styleClass="pf-btn-confirm" style="float: right;"
+                                                 disabled="#{!templateView.currentView.editEnabled}"
+                                                 oncomplete="PF('dlgSaveEditPiano').show()" />
+                                <p:commandButton value="Annulla" styleClass="pf-btn-cancel"
+                                                 style="float: right; margin-right: 20px;"
+                                                 disabled="#{!templateView.currentView.editEnabled}"
+                                                 oncomplete="PF('dlgDiscardEditPiano').show()" />
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

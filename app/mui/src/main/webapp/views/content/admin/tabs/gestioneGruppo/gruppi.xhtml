@@ -1,0 +1,174 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="true">
+                        <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no" />
+                        <p:commandButton value="Conferma" type="button" styleClass="ui-confirmdialog-yes" />
+                    </p:confirmDialog>
+
+                    <p:dialog widgetVar="dlgAddGroupWV" resizable="false" closable="false" width="800"
+                              styleClass="pf-dialog disable-horizontal-scroll" header="Aggiungi Gruppo">
+                        <h:form styleClass="formAddDialog">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="codiceAdd" value="Codice Gruppo" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="codiceAdd"
+                                                     value="#{gestioneGruppi.selectedGroup.codiceGruppo}"
+                                                     style="width: 100%;" maxlength="#{gestioneGruppi.maxCodeLength}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="descriptionAdd" value="Descrizione" style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="descriptionAdd"
+                                                     value="#{gestioneGruppi.selectedGroup.descrizione}"
+                                                     style="width: 100%;" maxlength="#{gestioneGruppi.maxDescrizioneLength}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 40px;">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;" process="@this"
+                                                     oncomplete="PF('dlgAddGroupWV').hide();" />
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton styleClass="ui-confirmdialog-yes" value="Conferma"
+                                                     actionListener="#{gestioneGruppi.addGroup}"
+                                                     update="@(.formAddDialog), @(.updateableContent)" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </p:dialog>
+
+                    <p:dialog widgetVar="dlgDuplicaGruppoWV" resizable="false" closable="false" width="800"
+                              styleClass="pf-dialog disable-horizontal-scroll" header="Duplica Gruppo">
+                        <h:form styleClass="formDuplicaGruppoDialog">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="codice" value="Codice * " style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="codice"
+                                                     value="#{gestioneGruppi.duplicateGroup.codiceGruppo}"
+                                                     style="width: 100%;" maxlength="#{gestioneGruppi.maxCodeLength}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-6">
+                                    <div>
+                                        <p:outputLabel for="description" value="Descrizione * " style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="description"
+                                                     value="#{gestioneGruppi.duplicateGroup.descrizione}"
+                                                     style="width: 100%;" maxlength="#{gestioneGruppi.maxDescrizioneLength}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 40px;">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;" process="@this"
+                                                     oncomplete="PF('dlgDuplicaGruppoWV').hide();" />
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton styleClass="ui-confirmdialog-yes" value="Conferma"
+                                                     actionListener="#{gestioneGruppi.copyGroup}"
+                                                     update="@(.formDuplicaGruppoDialog), @(.updateableContent)" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </p:dialog>
+
+                    <h:form>
+                        <p:panel header="Lista Gruppi" toggleable="true"
+                                 toggleSpeed="500" closeSpeed="500"
+                                 styleClass="pnlGrid_Header updateableContent">
+                            <p:dataTable var="group" styleClass="pf-datatable"
+                                         widgetVar="gruppiTable" value="#{gestioneGruppi.groupList}"
+                                         editable="true" rows="20" paginator="true"
+                                         resizableColumns="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="20,50,100"
+                                         rowKey="#{group.id}" rowIndexVar="rowIndex"
+                                         filteredValue="#{gestioneGruppi.filteredGroupList}">
+                                <p:ajax event="rowEdit" listener="#{gestioneGruppi.editGroup}" />
+
+                                <p:column headerText="Codice" sortBy="#{group.codiceGruppo}"
+                                          filterBy="#{group.codiceGruppo}" filterMatchMode="contains">
+                                    <h:outputText value="#{group.codiceGruppo}" />
+                                </p:column>
+                                <p:column headerText="Descrizione"
+                                          sortBy="#{group.descrizione}" filterBy="#{group.descrizione}"
+                                          filterMatchMode="contains">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <div onclick="selectCurrentRow(#{rowIndex});">
+                                                <p:outputLabel value="#{group.descrizione}" />
+                                            </div>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <div onclick="selectCurrentRow(#{rowIndex});">
+                                                <p:inputText value="#{group.descrizione}" />
+                                            </div>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column style="width:40px; padding:3px !important;">
+                                    <p:rowEditor styleClass="rowEditorButton" />
+                                </p:column>
+
+                                <p:column style="width:40px; padding:3px !important;">
+                                    <p:commandButton icon="fa fa-fw fa-clone"
+                                                     title="Duplica Gruppo" update="@(.formDuplicaGruppoDialog)"
+                                                     action="#{gestioneGruppi.openDuplicaGroupDialog}">
+                                        <f:setPropertyActionListener value="#{group}"
+                                                                     target="#{gestioneGruppi.selectedGroup}" />
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column style="width:40px; padding:3px !important;">
+                                    <p:commandButton icon="ui-icon-trash" title="Elimina Gruppo"
+                                                     action="#{gestioneGruppi.deleteGroup}"
+                                                     update="@(.updateableContent)">
+                                        <p:confirm header="Conferma Necessaria"
+                                                   message="Confermi eliminazione Gruppo?"
+                                                   icon="ui-icon-alert" />
+                                        <f:setPropertyActionListener value="#{group}"
+                                                                     target="#{gestioneGruppi.selectedGroup}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+
+                            <f:facet name="actions">
+                                <p:commandLink action="#{gestioneGruppi.openAddGroupDialog}"
+                                               styleClass="pnlGrid_Header plusButton"
+                                               update="@(.formAddDialog)" />
+                            </f:facet>
+                        </p:panel>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

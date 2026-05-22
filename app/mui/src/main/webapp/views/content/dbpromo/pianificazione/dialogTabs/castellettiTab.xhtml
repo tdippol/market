@@ -1,0 +1,212 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content"
+         style="margin-bottom: 0 !important; padding-bottom: 0 !important;">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form styleClass="castellettiTabForm">
+                        <div class="row">
+                            <div class="col-2">
+                                <p:commandButton value="Inizializza Castelletti"
+                                                 styleClass="rounded-button ui-button-success "
+                                                 disabled="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.buttonInizializzaDisabled}"
+                                                 actionListener="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.inizializzaCastelletti}"
+                                                 update="@(.updatableCastellettoContent), @(.castellettiTabForm)" />
+                            </div>
+                            <div class="col-2">
+                                <p:commandButton value="Elimina Castelletti"
+                                                 styleClass="rounded-button ui-button-danger "
+                                                 disabled="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.buttonEliminaDisabled}"
+                                                 actionListener="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.eliminaCastelletti}"
+                                                 update="@(.updatableCastellettoContent), @(.castellettiTabForm)" />
+                            </div>
+                            <div class="col-8">
+                                <p:spacer width="100"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p:inputText
+                                        value="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.id}"
+                                        disabled="true" style="visibility: hidden" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="row">
+                                    <p:outputLabel value="Seq. Stampa"  styleClass="input-field-label" />
+                                </div>
+                                <div class="row">
+                                    <p:inputText
+                                            value="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.sequenza}"
+                                            disabled="true" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <p:outputLabel value="Sezione" styleClass="input-field-label" />
+                                </div>
+                                <div class="row">
+                                    <p:selectOneMenu
+                                            value="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.sezione}"
+                                            styleClass="input-field" >
+                                        <f:selectItems
+                                                value="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.sezioni}"
+                                                var="f" itemLabel="#{f}" itemValue="#{f}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="row">
+                                    <p:outputLabel value="Descrizione Castelletto" styleClass="input-field-label" />
+                                </div>
+                                <div class="row">
+                                    <p:inputText
+                                            value="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.testo}"
+                                            maxlength="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.testoMaxLength}"
+                                            styleClass="formCastelletto" />
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <p:commandButton id="updateCastelletto" value="Aggiorna" styleClass="pf-btn-confirm"
+                                                 style="float: right; margin-top: 60px;" update="@(.castellettiTabForm), @(.updatableCastellettoContent)"
+                                                 actionListener="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.aggiorna}"
+                                                 disabled="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.buttonEliminaDisabled}"/>
+
+                            </div>
+                            <div class="col-1">
+                                <p:commandButton id="resetCastelletto" value="Reset" styleClass="pf-btn-cancel"
+                                                 style="float: right; margin-top: 60px;" update="@(.castellettiTabForm)"
+                                                 actionListener="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.reset}"
+                                                 disabled="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.buttonEliminaDisabled}"/>
+
+                            </div>
+                        </div>
+                    </h:form>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-12">
+                            <p:panel id="expandable_pianificazioneCastelletti" toggleable="true" toggleSpeed="500"
+                                     closeSpeed="500" styleClass="pnlGrid_Header updatableCastellettoContent">
+                                <f:facet name="header">
+                                    <p:outputLabel value="" />
+                                </f:facet>
+                                <h:panelGroup layout="block" styleClass="ag-theme-balham"
+                                              style="width: 100%; height: 30vh;"
+                                              pt:gridid="pianificazione_castelletti_grid">
+                                </h:panelGroup>
+                                <f:facet name="actions">
+                                    <p:inputText autocomplete="off" id="pianificazione_castelletti_quickfilter"
+                                                 placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                                 onkeyup="onFilterTextBoxChangedpromoGrid('pianificazione_castelletti_grid', this.value)" />
+                                    <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                                   onclick="expandGrid('pianificazione_castelletti_grid')"
+                                                   onerror="redirectToExpiredPage()" />
+                                    <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                                   onclick="onBtExport('pianificazione_castelletti_grid', 'Pianificazione - Castelletti')"
+                                                   onerror="redirectToExpiredPage()" />
+                                </f:facet>
+
+                                <script type="text/javascript">
+                                    var idPianificazione = $('.idPianificazioneClass').text();
+                                    var gridParamsPianificazioneCastelletti = {
+                                        gridId: 'db_pianificazione_castelletti_grid',
+                                        gridTabGroup: 'pianificazione_castelletti_grid_tabs',
+                                        gridTabPosition: 0,
+                                        gridCode: 'pianificazione_castelletti_grid',
+                                        url_columnDefs: contextPath + '/resources/pianificazionepromo/castelletti/columnDef'
+                                            + addUrlParamContesto(#{muiContext}),
+                                        url_rowData: contextPath + '/resources/pianificazionepromo/castelletti/rowData/'
+                                            + idPianificazione + addUrlParamContesto(#{muiContext}),
+                                        url_customSort: contextPath + '/resources/grid/sorting/pianificazione_castelletti_grid',
+                                        gridOptions: {
+                                            onSortChanged: function (event) {
+                                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/pianificazione_castelletti_grid');
+                                            },
+                                            onSelectionChanged: onRowSelected
+                                        },
+                                        additionColumnDefs: [
+                                            {
+                                                headerName: '',
+                                                width: 75,
+                                                cellRenderer: 'CastellettoPianificazione_DeleteBtnRenderer',
+                                                position: 'prepend',
+                                                pinned: 'left'
+                                            }
+                                        ]
+                                    }
+
+                                    function onRowSelected(event) {
+                                        var nodes = event.api.getSelectedNodes();
+                                        if (nodes &amp;&amp; nodes.length > 0) {
+                                            selezionaCastelletto([{
+                                                name: 'castellettoSelected',
+                                                value: Number(nodes[0].data.id.value)
+                                            }]);
+                                        }
+                                    }
+                                    $(document).ready(function () {
+                                        if (getCurrentTab(gridParamsPianificazioneCastelletti.gridTabGroup) == gridParamsPianificazioneCastelletti.gridTabPosition) {
+                                            creaGriglia(gridParamsPianificazioneCastelletti);
+                                        }
+                                    });
+
+                                    function deleteCastellettoWs() {
+                                        var idCastelletto = $('.idCastellettoToBeDeletedClass').text();
+                                        if (idCastelletto &amp;&amp; idCastelletto != '') {
+                                            $.ajax({
+                                                type: "DELETE",
+                                                url: contextPath + '/resources/pianificazionepromo/castelletto/' + idCastelletto,
+                                                contentType: "text/plain",
+                                                success: function (data) {
+                                                    getGridOptionFromGridMap('pianificazione_castelletti_grid').api.setRowData(data.rowData);
+                                                    addInfoGrowl([
+                                                        {name: 'title', value: 'Castelletto eliminato'},
+                                                        {
+                                                            name: 'message',
+                                                            value: 'Il castelletto è stato eliminato correttamente'
+                                                        }
+                                                    ]);
+                                                },
+                                                error: ajaxErrorHandler
+                                            })
+                                        }
+                                        PF('deleteCastellettoConfirmDialog').hide();
+                                    }
+                                </script>
+                            </p:panel>
+                        </div>
+                    </div>
+                    <p:remoteCommand name="selezionaCastelletto" update="@(.castellettiTabForm)"
+                                     action="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.selezionaCastelletto}" />
+
+                    <p:remoteCommand name="deleteCastelletto" update="deleteCastellettoConfirmDialog"
+                                     action="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.prepareDeleteCastellettoDialog}" />
+
+                    <!-- dialog conferma eliminazione riga messaggio -->
+                    <p:confirmDialog id="deleteCastellettoConfirmDialog" widgetVar="deleteCastellettoConfirmDialog"
+                                     global="true" showEffect="fade" hideEffect="fade" closable="false"
+                                     icon="pi pi-exclamation-triangle" styleClass="muiDialog" header="Avviso"
+                                     message="Sei sicuro di voler cancellare la riga di castelletto corrente?">
+                        <p:commandButton value="No" type="button"
+                                         styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                                         onclick="PF('deleteCastellettoConfirmDialog').hide()" />
+                        <p:commandButton value="Si" type="button"
+                                         styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                                         update="@(.updatableCastellettoContent)"
+                                         onclick="deleteCastellettoWs()" />
+                        <p:outputLabel
+                                value="#{templateView.currentView.messaggiCastellettiBean.castellettiBean.idCastellettoToBeDeleted}"
+                                class="idCastellettoToBeDeletedClass" style="visibility: hidden;" />
+                    </p:confirmDialog>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

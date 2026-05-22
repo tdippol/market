@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_schedapianomedia_controlli"
+                             toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapianomedia_controlli">
+                        <f:facet name="header">
+                            <p:outputLabel value="Controlli Pianificazoni Piano Media" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                      styleClass="ag-theme-balham schedaPianoMedia_controlli"
+                                      pt:gridid="db_schedapianomedia_controlli">
+                        </h:panelGroup>
+
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="schedapianomedia_controlli_quickfilter"
+                                         placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapianomedia_controlli', this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedapianomedia_controlli')"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedapianomedia_controlli', 'PianoMedia - Controlli')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var idPianoMedia = $('.statiIdPianoMedia').text();
+                            var gridParams_schedaPianoMediaControlli = {
+                                gridTabGroup: "schedaPromo_tabs",
+                                gridTabPosition: 2,
+                                gridCode: "db_schedapianomedia_controlli",
+                                gridTitle: "Scheda Piano Media - Controlli",
+                                url_columnDefs: contextPath + "/resources/pianomedia/controlli/columnDef"
+                                    + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + "/resources/pianomedia/" + idPianoMedia + "/controlli/rowData",
+                                url_customSort: contextPath + "/resources/grid/sorting/db_schedapianomedia_controlli",
+                                gridOptions: {
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + "/resources/grid/sorting/save/db_schedapianomedia_controlli");
+                                    }
+                                }
+                            };
+
+                            $(document).ready(function () {
+                                if (getCurrentTab(gridParams_schedaPianoMediaControlli.gridTabGroup) === gridParams_schedaPianoMediaControlli.gridTabPosition) {
+                                    creaGriglia(gridParams_schedaPianoMediaControlli);
+                                }
+                            })
+                        </script>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

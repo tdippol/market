@@ -1,0 +1,289 @@
+819d09fbc decode of confirm message delete event
+134132a8b locks the calendar to the macrospazio dates
+fa7c53ec0 check coherence of event date with macrospazio
+88b61fe49 missing flag check on add event
+7d6414a23 missing flag on edit
+26f3ea1db Improves build speed with parallel compilation
+85e54be4d Updates maven-compiler-plugin version
+1e8d08932 Changes error message to warning message
+ec1318863 Merge remote-tracking branch 'origin/feature/retail_media' into feature/retail_media
+b4dff5120 fixes #5552
+d5f356541 fixes #5553: prevents tabs reset after deletion
+281dd8547 fixes #5553: prevents tabs reset after deletion
+65ea4535c fixed failing tests after rebase and merge
+cc0fa8065 Merge remote-tracking branch 'origin/feature/retail_media' into feature/retail_media
+2c9f8f52d fixes #5561
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/util/UiUtils.java
+9cafab1ba fixxes #5556
+39a9bd01a fixes #5588
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/dbpromo/macrospaziMedia/EventiDialog.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/dbpromo/macrospaziMedia/MacrospazioDialog.java
+e5e680303 wip
+8b10dd252 Refactors macrospazio date validation
+06f35eb29 Removes @AllArgsConstructor annotation
+69640e783 Adds constructor to handle different Number types
+795204d5e Refactors MacrospazioWithEventsDTO and query.
+868e1524a fixed failing tests
+f733c8b97 fixes #5538
+41f38dd81 fixes #5545: Updates event validation logic
+1f84d6065 fixes #5541: Orders Macrospazio media by code
+d434eacb9 fixes #5540: Updates macrospazio dialog save button
+6a1c1d6b1 fixes #5531: Updates macrospazio dialog on date selection
+32615b718 fixes #5536: Refreshes event grid after macrospazio selection
+33a703302 refactoring delete
+1f9857018 fixes #5526: cancellazione macrospazio
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dto/MacrospazioWithEventsDTO.java
+fd6cf453e fixes #5528
+928aaed04 fixes #5530: Validates list price for MacrospaziMedia
+e81f474a7 fixes #5532: Updates macrospazio code input to uppercase
+ee01633f6 fixes #5533 : Adds filtering to supplier and causal dropdowns
+4f1018789 fixes #5527: Simplifies retail event validation
+7eda07e99 fixes #5532 : Normalizes macrospazio code upon creation
+6bc2746a6 fixes #5529 : Prevents duplicate Macrospazio creation
+27817af3b optimized imports
+fbfcb92a5 bump version
+93046903e bump version
+46f52262b ui fixes
+42ef16192 controllo duplicazione macrospazio
+0a08b08d0 edit evento
+b8960fa82 interazioni eventi
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/admin/converter/MacrospazioRetailConverter.java
+84801a39a dialog behavior
+09102cb02 rowdata for eventi fiddling
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/EventiMediaRowdataUtils.java
+bbcc91ab0 added buttons for retail events
+9d3238626 fixes bug in macrospazi list
+7b5717f51 fix show and fetch of data in events
+a7ca7dc27 check for nulls before fiddling with macrospazi list
+f6af5f6a4 issue with transaction
+d670d689f prepping for dialog
+be9d0c145 styling bottoni
+a10505158 skelton for eventi grid
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/EventiiMediaServiceResource.java
+A	app/mui/src/main/resources/columnDefEventiMedia.json
+05032c426 consistent default sorting
+2ee893ef2 alignment of label
+8ac233d76 macrospazi list
+0fb450d02 align footer buttons
+0326ce58b refresh griglia
+407a2de84 edit macrospazio
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaRowdataUtils.java
+R098	app/mui/src/test/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtilsTest.java	app/mui/src/test/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaResourceUtilsTest.java
+2a537caf2  fixes #5591 : UI
+A	app/mui/src/main/webapp/views/content/dbpromo/retailMedia/eventoDialog.xhtml
+A	app/mui/src/main/webapp/views/content/dbpromo/retailMedia/macrospazioDialog.xhtml
+c2c4bde9e fixed transaction problems
+393465c13 Refactors EventoRetailUtils for testability
+d68f41392 fixes #5510, #5514, #5515, #5511
+D	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtils.java
+bf2cd65df fixes #5511
+ca9c5e003 fixes #5510
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtils.java
+aa5b28288 fixes #5517: Adds Retail Media Event functionality
+D	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventiRetailEntity.java
+35b0fae8a fixes #5517: Adds MuiMacrospazioMedia entity and services
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventiRetailEntity.java
+6f87c7946 fixes $5516: Adds FornitoriRetail data access layer
+d1b93e28f fixes #5516: Adds retail causes persistence
+4d62f922c fixed transaction problems
+A	app/mui/src/main/webapp/views/content/dbpromo/retailMedia/macrospazi.xhtml
+e1c14157a Refactors EventoRetailUtils for testability
+A	app/mui/src/test/java/com/axiante/mui/webapp/utils/EventoRetailUtilsTest.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/utils/MacrospaziDateUtilsTest.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/views/content/dbpromo/MacrospaziMediaViewTest.java
+255bc5492 fixes #5510, #5514, #5515, #5511
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/EventoRetailUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/MacrospaziDateUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/MacrospaziMediaUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/dbpromo/MacrospaziMediaView.java
+D	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtils.java
+10a35697c fixes #5511
+e80233b85 fixes #5507
+A	app/mui/src/main/resources/columnDefMacrospaziMedia.json
+6874a08ab fixes #5510
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/MacrospaziMediaServiceResource.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtils.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtilsTest.java
+fe34567f1 fixes #5517: Adds Retail Media Event functionality
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/MuiEventoRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaMuiEventoRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dto/EventoRetailDTO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dto/MacrospazioMediaDTO.java
+D	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventiRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventoRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/MuiEventoRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/MuiEventoRetailServiceImpl.java
+136ef75a4 fixes #5517: Adds MuiMacrospazioMedia entity and services
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/MuiMacrospazioMediaDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaMuiMacrospazioMediaDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventiRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiMacrospazioMediaEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/MuiMacrospazioMediaService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/MuiMacrospazioMediaServiceImpl.java
+f2c5211c3 fixes $5516: Adds FornitoriRetail data access layer
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/FornitoriRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaFornitoriRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/FornitoriRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/FornitoriRetailServiceImpl.java
+afca78fbc fixes #5516: Adds retail causes persistence
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/CausaliRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaCausaliRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/CausaliRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/FornitoriRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/CausaliRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/CausaliRetailServiceImpl.java
+21e774fbf fixes #5561
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/util/UiUtils.java
+a041a0452 fixxes #5556
+3fab90916 fixes #5588
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/dbpromo/macrospaziMedia/EventiDialog.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/dbpromo/macrospaziMedia/MacrospazioDialog.java
+aaccca5bb wip
+00d130c0d Refactors macrospazio date validation
+c1a39d013 Removes @AllArgsConstructor annotation
+f0edbdf76 Adds constructor to handle different Number types
+a4ec5c7b7 Refactors MacrospazioWithEventsDTO and query.
+32bdfee2a fixed failing tests
+b99060961 fixes #5538
+b6cf768bf fixes #5545: Updates event validation logic
+2e274ee89 fixes #5541: Orders Macrospazio media by code
+031d3b62d fixes #5540: Updates macrospazio dialog save button
+11e18b67e fixes #5531: Updates macrospazio dialog on date selection
+5ac99e6e2 fixes #5536: Refreshes event grid after macrospazio selection
+b5061db52 refactoring delete
+456774420 fixes #5526: cancellazione macrospazio
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dto/MacrospazioWithEventsDTO.java
+a8c8ca326 fixes #5528
+9186a9426 fixes #5530: Validates list price for MacrospaziMedia
+fea5c0a92 fixes #5532: Updates macrospazio code input to uppercase
+d74196318 fixes #5533 : Adds filtering to supplier and causal dropdowns
+f795d2752 fixes #5527: Simplifies retail event validation
+565116b6a fixes #5532 : Normalizes macrospazio code upon creation
+55872f77c fixes #5529 : Prevents duplicate Macrospazio creation
+165b009e9 optimized imports
+2275b05be bump version
+4cf60ed3e bump version
+2340be7ef ui fixes
+3e225acbd controllo duplicazione macrospazio
+cbb002819 edit evento
+9fc7e678d interazioni eventi
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/admin/converter/MacrospazioRetailConverter.java
+b9a6febf3 dialog behavior
+5715318fa rowdata for eventi fiddling
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/EventiMediaRowdataUtils.java
+54156c2b9 added buttons for retail events
+ade278c72 fixes bug in macrospazi list
+09f28f26e fix show and fetch of data in events
+4683bcef6 check for nulls before fiddling with macrospazi list
+48521112f issue with transaction
+128538e10 prepping for dialog
+553cb4be6 styling bottoni
+be91b96b2 skelton for eventi grid
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/EventiiMediaServiceResource.java
+A	app/mui/src/main/resources/columnDefEventiMedia.json
+b53ddcb80 consistent default sorting
+19fa58b01 alignment of label
+e9de17092 macrospazi list
+bfeb1cac0 align footer buttons
+a074d4e8e refresh griglia
+a38e77230 edit macrospazio
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaRowdataUtils.java
+R098	app/mui/src/test/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtilsTest.java	app/mui/src/test/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaResourceUtilsTest.java
+9b792f24f  fixes #5591 : UI
+A	app/mui/src/main/webapp/views/content/dbpromo/retailMedia/eventoDialog.xhtml
+A	app/mui/src/main/webapp/views/content/dbpromo/retailMedia/macrospazioDialog.xhtml
+fc769bd3c Merge remote-tracking branch 'origin/feature/retail_media' into feature/retail_media
+26fdc9ea0 fixed transaction problems
+A	app/mui/src/main/webapp/views/content/dbpromo/retailMedia/macrospazi.xhtml
+f79e40460 Refactors EventoRetailUtils for testability
+A	app/mui/src/test/java/com/axiante/mui/webapp/utils/EventoRetailUtilsTest.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/utils/MacrospaziDateUtilsTest.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/views/content/dbpromo/MacrospaziMediaViewTest.java
+beb4899c3 fixes #5510, #5514, #5515, #5511
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/EventoRetailUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/MacrospaziDateUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/MacrospaziMediaUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/dbpromo/MacrospaziMediaView.java
+D	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtils.java
+e364ea560 fixes #5511
+9297478e4 fixes #5507
+A	app/mui/src/main/resources/columnDefMacrospaziMedia.json
+1d0108503 fixes #5510
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/MacrospaziMediaServiceResource.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtils.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtilsTest.java
+5efccce45 fixes #5517: Adds Retail Media Event functionality
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/MuiEventoRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaMuiEventoRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dto/EventoRetailDTO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dto/MacrospazioMediaDTO.java
+D	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventiRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventoRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/MuiEventoRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/MuiEventoRetailServiceImpl.java
+2bcb410b7 fixes #5517: Adds MuiMacrospazioMedia entity and services
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/MuiMacrospazioMediaDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaMuiMacrospazioMediaDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventiRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiMacrospazioMediaEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/MuiMacrospazioMediaService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/MuiMacrospazioMediaServiceImpl.java
+880980d62 fixes $5516: Adds FornitoriRetail data access layer
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/FornitoriRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaFornitoriRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/FornitoriRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/FornitoriRetailServiceImpl.java
+ac99dde00 fixes #5516: Adds retail causes persistence
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/CausaliRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaCausaliRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/CausaliRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/FornitoriRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/CausaliRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/CausaliRetailServiceImpl.java
+8d96e9111 fixed transaction problems
+A	app/mui/src/main/webapp/views/content/dbpromo/retailMedia/macrospazi.xhtml
+43d2d8926 Refactors EventoRetailUtils for testability
+A	app/mui/src/test/java/com/axiante/mui/webapp/utils/EventoRetailUtilsTest.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/utils/MacrospaziDateUtilsTest.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/views/content/dbpromo/MacrospaziMediaViewTest.java
+21e23e0bf fixes #5510, #5514, #5515, #5511
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/EventoRetailUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/MacrospaziDateUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/utils/MacrospaziMediaUtils.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/views/content/dbpromo/MacrospaziMediaView.java
+D	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtils.java
+b114fda0e fixes #5511
+81610f87d fixes #5507
+A	app/mui/src/main/resources/columnDefMacrospaziMedia.json
+f4de21293 fixes #5510
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/MacrospaziMediaServiceResource.java
+A	app/mui/src/main/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtils.java
+A	app/mui/src/test/java/com/axiante/mui/webapp/webservice/util/MacrospaziMediaUtilsTest.java
+055fd63f4 fixes #5517: Adds Retail Media Event functionality
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/MuiEventoRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaMuiEventoRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dto/EventoRetailDTO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dto/MacrospazioMediaDTO.java
+D	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventiRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventoRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/MuiEventoRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/MuiEventoRetailServiceImpl.java
+8a058362b fixes #5517: Adds MuiMacrospazioMedia entity and services
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/MuiMacrospazioMediaDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaMuiMacrospazioMediaDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiEventiRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/MuiMacrospazioMediaEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/MuiMacrospazioMediaService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/MuiMacrospazioMediaServiceImpl.java
+82ebcd6a2 fixes $5516: Adds FornitoriRetail data access layer
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/FornitoriRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaFornitoriRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/FornitoriRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/FornitoriRetailServiceImpl.java
+58964634a fixes #5516: Adds retail causes persistence
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/CausaliRetailDAO.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/dao/impl/JpaCausaliRetailDAOImpl.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/CausaliRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/entities/FornitoriRetailEntity.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/CausaliRetailService.java
+A	app/ejbs/dbpromo-ejb/src/main/java/com/axiante/mui/dbpromo/persistence/service/impl/CausaliRetailServiceImpl.java

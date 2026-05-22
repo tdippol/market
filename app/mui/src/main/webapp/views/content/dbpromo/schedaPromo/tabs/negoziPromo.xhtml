@@ -1,0 +1,506 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <!-- Dialog conferma Bulk update on split buttons -->
+    <p:confirmDialog widgetVar="dlgBulkUpdate" header="Avviso" styleClass="dlgBulkUpdate"
+                     message="#{templateView.currentView.negoziPromoBean.dlgConfirmMessage}" severity="alert">
+        <p:commandButton value="SI" update="@(.growlClass)"
+                         action="#{templateView.currentView.negoziPromoBean.callBulkUpdateWs}"
+                         oncomplete="PF('dlgBulkUpdate').hide()"/>
+        <p:commandButton value="NO" onclick="PF('dlgBulkUpdate').hide()"
+                         style="float: right;" type="button"/>
+    </p:confirmDialog>
+
+    <p:confirmDialog widgetVar="dlgBulkUpdateAll" header="Avviso" styleClass="dlgBulkUpdateAll"
+                     message="#{templateView.currentView.negoziPromoBean.dlgConfirmMessageAll}" severity="alert">
+        <p:commandButton value="SI" update="@(.growlClass)"
+                         action="#{templateView.currentView.negoziPromoBean.callBulkUpdateAllWs}"
+                         oncomplete="PF('dlgBulkUpdateAll').hide()"/>
+        <p:commandButton value="NO" onclick="PF('dlgBulkUpdateAll').hide()"
+                         style="float: right;" type="button"/>
+    </p:confirmDialog>
+
+    <!-- Dialog conferma Reset All -->
+    <p:confirmDialog widgetVar="dlgResetAll" header="Avvisto" styleClass="dlgResetAll" severity="alert"
+                     message="Sei sicuro di voler riportare a Default tutti i Negozi ?">
+        <p:commandButton value="SI" update="@(.growlClass)"
+                         action="#{templateView.currentView.negoziPromoBean.callResetAllWs}"
+                         oncomplete="PF('dlgResetAll').hide()"/>
+        <p:commandButton value="NO" onclick="PF('dlgResetAll').hide()"
+                         style="float: right;" type="button"/>
+    </p:confirmDialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <h:form style="width: 100%">
+            <div class="row">
+                <div class="col-3">
+                    <p:panel header="Tipo punto vendita"
+                             style="border: 1px solid #bdc3c7; text-align: center; min-height: 85px;"
+                             rendered="#{templateView.currentView.tipoPuntoVenditaRendered}">
+                        <p:splitButton id="impostaF" value="Imposta NO"
+                                       update="@(.growlClass) @(.dlgBulkUpdateAll)"
+                                       disabled="#{not templateView.currentView.tabEditRendered}"
+                                       class="splitButtonStyle"
+                                       action="#{templateView.currentView.negoziPromoBean.prepareDialogAll(false)}"
+                                       model="#{templateView.currentView.negoziPromoBean.menuModelF}" />
+                        <p:splitButton id="impostaB" value="Imposta SI"
+                                       update="@(.growlClass) @(.dlgBulkUpdateAll)"
+                                       disabled="#{not templateView.currentView.tabEditRendered}"
+                                       class="splitButtonStyle"
+                                       action="#{templateView.currentView.negoziPromoBean.prepareDialogAll(true)}"
+                                       model="#{templateView.currentView.negoziPromoBean.menuModelB}" />
+                    </p:panel>
+                </div>
+                <div class="col-3">
+                    <p:panel header="Canale Consegna"
+                             style="border: 1px solid #bdc3c7; text-align: center; min-height: 85px;"
+                             rendered="#{templateView.currentView.canaleConsegnaRendered}">
+                        <p:splitButton id="impostaCF" value="Imposta NO"
+                                       update="@(.growlClass) @(.dlgBulkUpdateAll)"
+                                       disabled="#{not templateView.currentView.tabEditRendered}"
+                                       class="splitButtonStyle"
+                                       action="#{templateView.currentView.negoziPromoBean.prepareDialogAll(false)}"
+                                       model="#{templateView.currentView.negoziPromoBean.menuModelCF}" />
+                        <p:splitButton id="impostaCB" value="Imposta SI"
+                                       update="@(.growlClass) @(.dlgBulkUpdateAll)"
+                                       disabled="#{not templateView.currentView.tabEditRendered}"
+                                       class="splitButtonStyle"
+                                       action="#{templateView.currentView.negoziPromoBean.prepareDialogAll(true)}"
+                                       model="#{templateView.currentView.negoziPromoBean.menuModelCB}" />
+                    </p:panel>
+                </div>
+                <div class="col-3">
+                    <p:panel header="Zona"
+                             style="border: 1px solid #bdc3c7; text-align: center; min-height: 85px;"
+                             rendered="#{templateView.currentView.negoziZonaRendered}">
+                        <p:splitButton id="impostaZonaNo" value="Imposta NO"
+                                       update="@(.growlClass) @(.dlgBulkUpdateAll)"
+                                       disabled="#{not templateView.currentView.tabEditRendered}"
+                                       model="#{templateView.currentView.negoziPromoBean.menuModelZonaNo}"
+                                       action="#{templateView.currentView.negoziPromoBean.prepareDialogAll(false)}"
+                                       class="splitButtonStyle" />
+                        <p:splitButton id="impostaZonaSi" value="Imposta SI"
+                                       update="@(.growlClass) @(.dlgBulkUpdateAll)"
+                                       disabled="#{not templateView.currentView.tabEditRendered}"
+                                       model="#{templateView.currentView.negoziPromoBean.menuModelZonaYes}"
+                                       action="#{templateView.currentView.negoziPromoBean.prepareDialogAll(true)}"
+                                       class="splitButtonStyle" />
+                    </p:panel>
+                </div>
+                <div class="col-3">
+                    <p:panel header="Cedi"
+                             style="border: 1px solid #bdc3c7; text-align: center; min-height: 85px;"
+                             rendered="#{templateView.currentView.negoziCediRendered}">
+                        <p:splitButton id="impostaCediNo" value="Imposta NO"
+                                       update="@(.growlClass) @(.dlgBulkUpdateAll)"
+                                       disabled="#{not templateView.currentView.tabEditRendered}"
+                                       model="#{templateView.currentView.negoziPromoBean.menuModelCediNo}"
+                                       action="#{templateView.currentView.negoziPromoBean.prepareDialogAll(false)}"
+                                       class="splitButtonStyle" />
+                        <p:splitButton id="impostaCediSi" value="Imposta SI"
+                                       update="@(.growlClass) @(.dlgBulkUpdateAll)"
+                                       disabled="#{not templateView.currentView.tabEditRendered}"
+                                       model="#{templateView.currentView.negoziPromoBean.menuModelCediYes}"
+                                       action="#{templateView.currentView.negoziPromoBean.prepareDialogAll(true)}"
+                                       class="splitButtonStyle" />
+                    </p:panel>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-3">
+                    <h:panelGroup layout="block"
+                                  style="display: flex; border: 1px solid #bdc3c7; text-align: center; min-height: 85px;"
+                                  rendered="#{templateView.currentView.uploadNegoziRendered}">
+                        <p:panel header="Caricamento negozi" style="width: 70%;">
+                            <p:fileUpload class="schedaNegoziPromoFileUpload" label="Seleziona file"
+                                          invalidFileMessage="Formato del file non valido"
+                                          fileUploadListener="#{templateView.currentView.negoziPromoBean.handleFileUpload}"
+                                          disabled="#{not templateView.currentView.tabEditRendered}"
+                                          dragDropSupport="false" auto="true" mode="advanced"
+                                          allowTypes="/(\.|\/)(xls|xlsx)$/"
+                                          rendered="#{templateView.currentView.uploadNegoziRendered}"
+                                          update="@this" />
+                        </p:panel>
+                        <p:panel header="Template">
+                            <h:commandLink>
+                                <p:fileDownload
+                                        value="#{templateView.currentView.negoziPromoBean.downloadTemplate}" />
+                                <div class="spacer" style="padding-top: 5px;" />
+                                <i class="fa fa-file-excel-o fa-lg" style="color: green; "
+                                   title="Download template"
+                                   aria-hidden="true"></i>
+                            </h:commandLink>
+                        </p:panel>
+                    </h:panelGroup>
+                </div>
+                <div class="col-3">
+                    <h:panelGroup layout="block"
+                                  style="display: flex; border: 1px solid #bdc3c7; text-align: center; min-height: 85px;"
+                                  rendered="#{templateView.currentView.differenziazioneMeccanicaRendered}">
+                        <p:panel header="Differenziazione per meccanica">
+                            <p:inputSwitch value="${templateView.currentView.differenziazioneMeccanicaAbilitata}">
+                                <p:ajax update="@(.updateableContent)" />
+                            </p:inputSwitch>
+                        </p:panel>
+                    </h:panelGroup>
+                </div>
+                <div class="col-3 offset-3">
+                    <p:panel header="" style="border: 1px solid #bdc3c7; text-align: center; min-height: 85px;">
+                        <p:commandButton value="Riporta a Default" type="button" id="resetDefaultValues"
+                                         style="border-radius: 5px; background-color: #1cac81 !important; color: #ffffff !important;"
+                                         disabled="#{not templateView.currentView.tabEditRendered}"
+                                         onclick="PF('dlgResetAll').show()" />
+                    </p:panel>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-12">
+                    <p:panel>
+                        <p:selectOneRadio id="promoShopsRadioButton"
+                                          value="#{templateView.currentView.negoziPromoBean.visualizzaStatus}"
+                                          style="display: inline-table; vertical-align: top; margin-left: 20px;">
+                            <p:ajax partialSubmit="true" oncomplete="refreshGridFilterByRadioCheck()"/>
+                            <f:selectItem itemLabel="Visualizza Tutto" itemValue="ALL"/>
+                            <f:selectItem itemLabel="Visualizza Variazioni su Default" itemValue="CHANGED"/>
+                            <f:selectItem itemLabel="Visualizza SI" itemValue="SI"/>
+                            <f:selectItem itemLabel="Visualizza NO" itemValue="NO"/>
+                        </p:selectOneRadio>
+                        <p:outputLabel value="#{templateView.currentView.tabStoresMessage}"
+                                       style="float: right; font-weight: bold;"
+                                       rendered="#{templateView.currentView.textBoxWarningNegozi}"/>
+                    </p:panel>
+                    <p:inputText value="#{templateView.currentView.negoziPromoBean.selectedRows}" type="hidden"
+                                 disabled="#{not templateView.currentView.tabEditRendered}"/>
+                </div>
+            </div>
+        </h:form>
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <p:panel id="expandable_db_schedapromo_negoziPromo" toggleable="true" toggleSpeed="500"
+                             closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapromo_negoziPromo">
+                        <f:facet name="header">
+                            <p:outputLabel value="Negozi Promo"/>
+                        </f:facet>
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham grid_negoziPromo"
+                                      pt:gridid="db_schedapromo_negoziPromo">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="some_grid_id_from_backend_quickfilter"
+                                         placeholder="Filtra..." styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapromo_negoziPromo',this.value)"/>
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedapromo_negoziPromo')"
+                                           onerror="redirectToExpiredPage()"/>
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedapromo_negoziPromo','Negozi Promo',true)"
+                                           onerror="redirectToExpiredPage()"/>
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedapromo_negoziPromo','Negozi Promo')"
+                                           onerror="redirectToExpiredPage()"/>
+                        </f:facet>
+
+                        <h:outputScript>
+
+                            // Hack: mostro error messages file-upload nel growl globale (in alto a destra)
+                            (function($) {
+                            var originalShowFunction = $.fn.show;
+                            $.fn.show = function() {
+                            this.trigger("show");
+                            return originalShowFunction.apply(this, arguments);
+                            };
+                            })(jQuery);
+
+                            $(document).on("show", ".ui-fileupload-content>.ui-messages", function() {
+                            $(this).children().hide().find("li").each(function(index, message) {
+                            var $message = $(message);
+                            PF("growl").renderMessage({
+                            summary: $(".ui-messages-error-summary", $message).text(),
+                            detail: $(".ui-messages-error-detail", $message).text()
+                            });
+                            });
+                            });
+
+                            UpdatePromoShop=function(event) {
+                            var rowIndex = getRowNodeId(event);
+                            var rowData=getLeafRowData('db_schedapromo_negoziPromo');
+                            var radioChecked = $('input[type=radio]:checked', '[id$=promoShopsRadioButton]').val();
+
+                            $.ajax({
+                            type: "POST",
+                            url: contextPath+"/resources/grid/updatePromoShop/" + radioChecked,
+                            contentType: "application/json",
+                            data: JSON.stringify(event.data),
+                            success: function (data) {
+
+                            var rowNode =
+                            getGridOptionFromGridMap('db_schedapromo_negoziPromo').api.getRowNode(event.node.id);
+
+                            if(data.hideRow === true) {
+                            getGridOptionFromGridMap('db_schedapromo_negoziPromo').api.updateRowData({ remove:
+                            [rowNode.data]});
+                            } else {
+                            rowNode.setData(data);
+                            }
+
+                            addInfoGrowl([{name: 'title', value: 'Negozi Promo'}, {name: 'message',value:
+                            data.updateMessage}]);
+
+                            },
+                            error: function(jqXHR, exception, thrownError){
+                            ajaxErrorHandler(jqXHR, exception, thrownError,event)
+                            }
+                            });
+                            };
+
+                            var gridParams_negoziPromo={
+                            gridTabGroup:'schedaPromo_tabs',
+                            gridTabPosition: #{templateView.currentView.indexOf('TAB_NEGOZI')},
+                            gridCode:'db_schedapromo_negoziPromo',
+                            gridTitle:'Negozi Promo',
+                            url_columnDefs:contextPath+'/resources/grid/columnDef/schedaNegozi' +
+                            addUrlParamContesto(#{muiContext}),
+                            url_customSort: contextPath + '/resources/grid/sorting/db_schedapromo_negoziPromo'
+
+                            }
+
+                            var radioChecked = $('input[type=radio]:checked', '[id$=promoShopsRadioButton]').val();
+
+                            if(checkPageOrTab()==='tab') {
+                            promoIdSelected = "#{templateView.currentView.idPromozioneCorrente}";
+                            gridParams_negoziPromo.url_rowData =
+                            contextPath+"/resources/grid/rowData/schedaNegozi/changeView/" + radioChecked + "/" +
+                            promoIdSelected+addUrlParamContesto(#{muiContext});
+                            } else if(checkPageOrTab()==='page'){
+                            gridParams_negoziPromo.url_rowData
+                            =contextPath+'/resources/grid/rowData/schedaNegozi'+addUrlParamContesto(#{muiContext});
+                            }
+
+                            var gridOptions={
+                            autoGroupColumnDef: {
+                            headerName: 'Promozione',
+                            width: 500,
+                            field: 'negozio.value',
+                            cellRendererParams: {
+                            suppressCount : true
+                            }
+                            },
+                            onCellValueChanged: UpdatePromoShop,
+                            onSortChanged: function (event) {
+                            onSortChanged(event, contextPath + '/resources/grid/sorting/save/' +
+                            gridParams_negoziPromo.gridCode);
+                            }
+                            };
+                            gridParams_negoziPromo.gridOptions=gridOptions;
+
+                            $( document ).ready(function() {
+                            if(checkPageOrTab()==='tab'){
+
+                            if(currentActiveTab==gridParams_negoziPromo.gridTabPosition){
+                            creaGriglia(gridParams_negoziPromo);
+                            }
+                            }else{
+                            //Controllo per refresh pagina scheda negozi
+                            var radioChecked = $('input[type=radio]:checked', '[id$=promoShopsRadioButton]').val();
+                            gridParams_negoziPromo.url_rowData =
+                            contextPath+"/resources/grid/rowData/schedaNegozi/changeView/" + radioChecked +
+                            "/null"+addUrlParamContesto(#{muiContext});
+                            creaGriglia(gridParams_negoziPromo);
+                            }
+                            });
+
+                            function refreshGridFilterByRadioCheck(promoIdSelected,showsOverlay) {
+
+                            if(showsOverlay!=undefined &amp;&amp; showsOverlay===true){
+                            getGridOptionFromGridMap('db_schedapromo_negoziPromo').api.setRowData([]);
+                            getGridOptionFromGridMap('db_schedapromo_negoziPromo').api.showLoadingOverlay();
+                            }
+
+                            promoIdSelected = "#{templateView.currentView.idPromozioneCorrente}";
+                            radioChecked = $('input[type=radio]:checked', '[id$=promoShopsRadioButton]').val();
+
+                            if(promoIdSelected === undefined || promoIdSelected === '') {
+                            promoIdSelected = "null";
+                            }
+
+
+                            showAgGridLoadingOverlay('db_schedapromo_negoziPromo')
+
+                            $.ajax({
+                            type: "GET",
+                            url: contextPath+"/resources/grid/rowData/schedaNegozi/changeView/" + radioChecked + "/" +
+                            promoIdSelected+addUrlParamContesto(#{muiContext}),
+                            contentType: "application/json",
+                            success: function (data) {
+                            getGridOptionFromGridMap('db_schedapromo_negoziPromo').api.setRowData(data.rowData);
+                            hideAgGridLoadingOverlay('db_schedapromo_negoziPromo')
+                            CL()
+                            LT('Refreshed row data => ',data.rowData)
+                            },
+                            error: ajaxErrorHandler
+                            });
+                            }
+
+
+                            function updateShops(type, flag, ...params) {
+                            let payload = {};
+                            payload.type = type;
+                            payload.flag = flag;
+                            switch (type) {
+                            case "NEGOZIO":
+                            payload.idTipoNegozio = params[0];
+                            break;
+                            case "CONSEGNA":
+                            payload.tipoConsegna = params[0];
+                            break;
+                            case "ZONA":
+                            payload.zonaSocieta = params[0];
+                            payload.zonaCodice = params[1];
+                            break;
+                            case "CEDI":
+                            payload.codiceCedi = params[0];
+                            }
+
+                            let filterValue =
+                            getGridOptionFromGridMap('db_schedapromo_negoziPromo').columnApi.columnModel.gridApi.filterManager.quickFilter;
+                            let filterColumnValue =
+                            getGridOptionFromGridMap('db_schedapromo_negoziPromo').api.getFilterModel();
+
+                            if (radioChecked === 'ALL') {
+                            if (filterValue === null &amp;&amp; Object.keys(filterColumnValue).length === 0) {
+                            payload.negozi = null;
+                            } else {
+                            payload.negozi = getAllVisiblePK();
+                            }
+                            } else if (radioChecked === 'CHANGED' || radioChecked === 'SI' || radioChecked === 'NO') {
+                            payload.negozi = getAllVisiblePK();
+                            }
+
+                            if (checkPageOrTab() === 'tab') {
+                            payload.idPromozione = Number("#{templateView.currentView.idPromozioneCorrente}");
+                            } else {
+                            payload.idPromozione = null;
+                            }
+
+                            //Ajax call + ricarico dati di prima con gli stessi filtri
+                            $.ajax({
+                            type: "POST",
+                            url: contextPath + "/resources/grid/bulkUpdatePromoShops" +
+                            addUrlParamContesto(#{muiContext}),
+                            contentType: "application/json",
+                            data: JSON.stringify(payload),
+                            success: function (data) {
+                            addInfoGrowl([{ name: 'title', value: 'Modifica Negozi' }, { name: 'message', value:
+                            data.message }]);
+                            refreshGridFilterByRadioCheck()
+                            },
+                            error: ajaxErrorHandler
+                            });
+                            }
+
+                            function getAllVisiblePK(){
+                            return getLeafRowDataAfterFilter('db_schedapromo_negoziPromo').map(a => a.promoShopId.value)
+                            }
+
+
+                            function checkPageOrTab(){
+                            if($(".k-sub-header__breadcrumbs-link").text().indexOf("Scheda")==-1){
+                            return 'page'
+                            }else{
+                            return 'tab'
+                            }
+                            }
+                        </h:outputScript>
+                        <style>
+                            [col-id~=ag-Grid-AutoColumn], [col-id~=tipoPuntoVendita], [col-id~=defaultFlag] {
+                                font-weight: bold;
+                            }
+
+                            [col-id~=flag], [col-id~=dataInizio], [col-id~=dataFine] {
+                                background-color: white;
+                            }
+
+                            .ag-header-cell {
+                                background-color: inherit !important;
+                            }
+
+                            body .splitButtonStyle .ui-button {
+                                background-color: #1cac81 !important;
+                                color: #ffffff;
+                            }
+
+                            body .splitButtonStyle .ui-button.ui-state-hover {
+                                background-color: #178b68 !important
+                            }
+
+                            body .splitButtonStyle .ui-button.ui-state-focus {
+                                background-color: #178b68 !important;
+                                outline: 0 none;
+                            }
+
+                            .menuItemStyle {
+                                background-color: #178b68 !important;
+                                color: #ffffff !important;
+                            }
+
+                            .menuItemStyle a {
+                                background-color: #178b68 !important;
+                                color: #ffffff !important;
+                            }
+
+                            .menuItemStyle a:hover {
+                                background-color: #178b68 !important;
+                                color: #ffffff !important;
+                            }
+
+                            a .ui-menuitem-text {
+                                color: #000000;
+                            }
+
+                            a:hover .ui-menuitem-text {
+                                color: #28a745;
+                            }
+
+                            #updateContent div div div div[data-widget^=widget_j] {
+                                background-color: inherit !important;
+                            }
+
+                            [id$=promoShopsRadioButton] tbody tr td div span {
+                                border-radius: 15px;
+                                background-color: #ffffff;
+                            }
+
+                            .ui-fileupload-content {
+                                display: none !important;
+                            }
+
+                            .ui-fileupload-buttonbar {
+                                border: 0px solid black !important;
+                            }
+
+                            .ui-fileupload-choose {
+                                background-color: #1cac81 !important;
+                                color: #ffffff !important;
+                            }
+
+                            .ui-widget.ui-widget-content, .ui-widget-header {
+                                border: none;
+                            }
+                        </style>
+
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

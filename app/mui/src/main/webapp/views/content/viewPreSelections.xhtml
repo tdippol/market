@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+<ui:composition>
+	<h:form >
+		<p:panel rendered="#{templateView.availablePreSelections ne null and fn:length(templateView.availablePreSelections) >0}" styleClass="mui_invisiblePanel">
+			<ui:repeat var="preSelection" value="#{templateView.availablePreSelections}">
+				<p:panel rendered="#{preSelection.visible}" class="col-3" style="display: inline-flex;">
+					<div class="col-12 dropdown bootstrap-select show-tick form-control k_ CombinedPicklist CombinedPicklist_#{preSelection.dimCode} CombinedPicklist_#{preSelection.dimCode}_#{preSelection.attrCode}">
+						<p:outputLabel class="col-4" styleClass="preselectionLabel" value="#{preSelection.dimension}: " />
+						<select id="#{preSelection.id}" onchange="onPreselectionChange(this)"  onerror="redirectToExpiredPage()"
+							name="#{preSelection.attrCode}" data-live-search="true"
+							class="col-8 preselections form-control k_selectpicker CombinedPicklist CombinedPicklist_#{preSelection.dimCode} CombinedPicklist_#{preSelection.dimCode}_#{preSelection.attrCode}"
+							dim-code="#{preSelection.dimCode}" dim-columnName="#{preSelection.dimColumnName}"
+							attr-code="#{preSelection.attrCode}" attr-columnName="#{preSelection.attrColumnName}">
+						<option value=''></option>
+					</select>
+				</div>
+				</p:panel>
+			</ui:repeat>
+		</p:panel>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				loadPreselections(document.getElementsByClassName("preselections"),'#{templateView.currentJsonFilter}');
+			},false);
+		</script>
+	</h:form>
+</ui:composition>
+</html>

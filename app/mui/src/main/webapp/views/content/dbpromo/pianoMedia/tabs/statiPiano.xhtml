@@ -1,0 +1,179 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <!-- DIALOG -->
+                    <p:dialog id="managePianoStatusConfirmDialog" header="Gestione Stato"
+                              styleClass="managePianoStatusConfirmDialogClass disable-horizontal-scroll"
+                              widgetVar="managePianoStatusConfirmDialog" modal="true"
+                              width="500" height="auto" resizable="false" closable="false">
+                        <h:form id="managePianoStatusConfirmDialogForm">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div>
+                                        <p:outputLabel for="dialogPianoMedia" value="PianoMedia"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="dialogPianoMedia" readonly="true"
+                                                     styleClass="updateableContent" style="width: 100%;"
+                                                     value="#{templateView.currentView.currentPianoMedia.descrizione}" />
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-top: 20px;">
+                                    <div>
+                                        <p:outputLabel for="dialogCurrentState" value="Stato Corrente"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:inputText id="dialogCurrentState" readonly="true"
+                                                     styleClass="updateableContent" style="width: 100%;"
+                                                     value="#{templateView.currentView.stato}" />
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-top: 30px;">
+                                    <div>
+                                        <p:outputLabel for="dialogStatiPossibili" value="Nuovo Stato"
+                                                       style="font-size: 14px;" />
+                                    </div>
+                                    <div>
+                                        <p:selectOneMenu id="dialogStatiPossibili" onchange="renderButton()"
+                                                         value="#{templateView.currentView.idStatoTransizioneCorrente}"
+                                                         class="input-field" style="width: 100%;">
+                                            <p:ajax event="change" />
+                                            <f:selectItem itemLabel="" noSelectionOption="true" />
+                                            <f:selectItems value="#{templateView.currentView.statiTransizione}" var="st"
+                                                           itemLabel="#{st.statoTransizione.codiceStato} - #{st.statoTransizione.label}"
+                                                           itemValue="#{st.statoTransizione.id}" />
+
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p:commandButton value="Annulla" styleClass="ui-confirmdialog-no"
+                                                     style="float: left;" oncomplete="PF('managePianoStatusConfirmDialog').hide()"
+                                                     update="@(.managePianoStatusConfirmDialogClass)"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <p:commandButton id="confirmPianoBtn" value="Conferma" styleClass="ui-confirmdialog-yes"
+                                                     oncomplete="closeAndRefreshData()"
+                                                     action="#{templateView.currentView.insertNewStatus()}"
+                                                     widgetVar="btn_insertNewPianoStatus"
+                                                     onclick="PF('btn_insertNewPianoStatus').disable()"
+                                                     update="@(.managePianoStatusConfirmDialogClass) @(.updateCambioStato)"/>
+                                    <p:remoteCommand name="renderButton"
+                                                     update="confirmPianoBtn">
+                                    </p:remoteCommand>
+                                </div>
+                            </div>
+                        </h:form>
+                    </p:dialog>
+                    <!-- DIALOG -->
+
+                    <div class="col-12">
+                        <p:remoteCommand name="updateGestioneStato" update="manageStatus"/>
+                        <p:commandButton value="Gestione Stato" style="margin-right: 20px; border-radius: 5px;"
+                                         id="manageStatus" class="pf-btn-confirm"
+                                         disabled="#{not templateView.currentView.writeSchedaFlag}"
+                                         oncomplete="PF('managePianoStatusConfirmDialog').show()"
+                                         update="@(.managePianoStatusConfirmDialogClass)" />
+                    </div>
+                    <p:panel id="expandable_db_schedapiano_stati" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                             styleClass="pnlGrid_Header updateableContent expandable_db_schedapiano_stati">
+                        <f:facet name="header">
+                            <p:outputLabel value="Storico Stati" />
+                        </f:facet>
+
+                        <h:panelGroup layout="block"
+                                      style="height: 60vh; width: 100%;"
+                                      class="ag-theme-balham scheda_stati"
+                                      pt:gridid="db_schedapiano_stati">
+                        </h:panelGroup>
+                        <f:facet name="actions">
+                            <p:inputText autocomplete="off" id="stati_quickfilter" placeholder="Filtra..."
+                                         styleClass="pnlGrid_Header filterInputText"
+                                         onkeyup="onFilterTextBoxChangedpromoGrid('db_schedapiano_stati',this.value)" />
+                            <p:commandLink title="Espandi Griglia" styleClass="pnlGrid_Header expandButton"
+                                           onclick="expandGrid('db_schedapiano_stati')" onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta con raggruppamenti"
+                                           styleClass="pnlGrid_Header exportButtonGrouped"
+                                           onclick="onBtExport('db_schedapiano_stati','Storico Stati',true)"
+                                           onerror="redirectToExpiredPage()" />
+                            <p:commandLink title="Esporta Excel" styleClass="pnlGrid_Header exportButton"
+                                           onclick="onBtExport('db_schedapiano_stati','Storico Stati')"
+                                           onerror="redirectToExpiredPage()" />
+                        </f:facet>
+
+                        <script type="text/javascript">
+                            var gridParams_schedapianoStati = {
+                                gridTabGroup: 'schedapiano_tabs',
+                                gridTabPosition: 'salcazzo',
+                                gridCode: 'db_schedapiano_stati',
+                                gridTitle: 'schedapiano - Stati',
+                                url_columnDefs: contextPath + '/resources/pianomedia/stati/columnDef' + addUrlParamContesto(#{muiContext}),
+                                url_rowData: contextPath + '/resources/pianomedia/stati/rowData/' + #{ templateView.currentView.idPianoMediaSelected == null? "''" : templateView.currentView.idPianoMediaSelected },
+                                url_customSort: contextPath + '/resources/grid/sorting/db_schedapiano_stati'
+                            };
+                            var gridOptions = {
+                                onSortChanged: function (event) {
+                                    onSortChanged(event, contextPath + '/resources/grid/sorting/save/' + gridParams_schedapianoStati.gridCode);
+                                }
+                            };
+                            gridParams_schedapianoStati.customizeColumnDefs = [
+                                { columnDefId: "codice", property: "width", value: 400 }
+                            ];
+                            gridParams_schedapianoStati.gridOptions = gridOptions;
+
+                            $( document ).ready(function() {
+                                if($('.statiIdPianoMedia').text() !== '' ){
+                                    creaGriglia(gridParams_schedapianoStati);
+                                    updateGestioneStato();
+                                }
+                            });
+
+                            function closeAndRefreshData() {
+                                PF('managePianoStatusConfirmDialog').hide();
+                                var idPromo = $('.statiIdPianoMedia').text();
+                                if(idPromo !== '') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: contextPath+'/resources/pianomedia/stati/rowData/' + idPromo,
+                                        contentType: "application/json",
+                                        success: function (data) {
+                                            getGridOptionFromGridMap('db_schedapiano_stati').api.setRowData(data.rowData);
+                                            updateGestioneStato();
+                                        },
+                                        error: ajaxErrorHandler
+                                    });
+                                } else {
+                                    $("div[gridid$='db_schedapiano_stati']").html("");
+                                    $( '.tabScheda' ).addClass( 'ui-state-disabled');
+                                }
+                            }
+                        </script>
+
+                        <style>
+                            [col-id~=ag-Grid-AutoColumn]{
+                                font-weight: bold;
+                            }
+
+                            .ui-dialog-title {
+                                font-size: 18px;
+                            }
+                        </style>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>

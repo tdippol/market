@@ -1,0 +1,277 @@
+version: '3'
+
+vars:
+  MVNGOAL: '{{default "clean" .MVNGOAL}}'
+  
+  # Estrazione versione cross-platform
+  PROJECT_VERSION:
+    sh: |
+      {{if eq OS "windows"}}
+      powershell -Command "if (Test-Path '../app/pom.xml') { [xml]$pom = Get-Content '../app/pom.xml'; if ($pom.project.revision) { $pom.project.revision } else { 'unknown' } } else { 'unknown' }"
+      {{else}}
+      cd ../app && cat pom.xml | grep "<revision>" | cut -d '>' -f 2 | cut -d '<' -f 1 || echo "unknown"
+      {{end}}
+      
+  CHANGELIST:
+    sh: |
+      {{if eq OS "windows"}}
+      powershell -Command "if (Test-Path '../app/pom.xml') { [xml]$pom = Get-Content '../app/pom.xml'; if ($pom.project.changelist) { $pom.project.changelist } else { '' } } else { '' }"
+      {{else}}
+      cd ../app && cat pom.xml | grep "<changelist>" | cut -d '>' -f 2 | cut -d '<' -f 1 || echo ""
+      {{end}}
+      
+  SHA1: ""
+  
+  # Windows non ha il concetto di UID Unix. Usiamo 1000 come fallback standard per i container
+  UID:
+    sh: '{{if eq OS "windows"}}echo 1000{{else}}id -u{{end}}'
+    
+  # Directory e path
+  CURRENT_DIR: '{{.ROOT_DIR}}'
+  APPS: '{{.CURRENT_DIR}}/docker/apps'
+  WLSDIR: '{{.CURRENT_DIR}}/docker/weblogic'
+  LOGS: '{{.CURRENT_DIR}}/docker/logs'
+  MAVEN_CACHE_DIR: '{{.CURRENT_DIR}}/docker/maven'
+  DATA_ARCHIVES: 'sql_data.tar.gz'
+  INIT_SCRIPT_DIR: 'temp_data'
+  DATABASE: '{{.CURRENT_DIR}}/docker/database'
+  DATA_DIRECTORY: '{{.CURRENT_DIR}}/docker/{{.INIT_SCRIPT_DIR}}'
+  MAVEN_ARCHIVE: '{{.CURRENT_DIR}}/docker/maven.tar.gz'
+  OUTPUT_FILE: '{{.CURRENT_DIR}}/docker/docker-compose.yml'
+  MVN_VERSION: '3.8.1-adoptopenjdk-8'
+  DOCKER_COMPOSE_FILE: '{{.CURRENT_DIR}}/docker/docker-compose.yaml'
+  DOCKER_COMPOSE_TEMPLATE: '{{.CURRENT_DIR}}/docker/template.yml'
+  EAR_TARGET_DIR: '{{.CURRENT_DIR}}/../app/ear/target'
+  EAR_TARGET_FILE: '{{.EAR_TARGET_DIR}}/muipromo-{{.PROJECT_VERSION}}{{.SHA1}}{{.CHANGELIST}}.ear'
+  SRC_DIR: '{{.CURRENT_DIR}}/../app'
+  DOCUMENT_DIR: '{{.CURRENT_DIR}}/docker/documents'
+  WEBAPPS_DIR: '{{.CURRENT_DIR}}/docker/webapps'
+  PROFILE: '{{default "tomee" .PROFILE}}'
+  DOMAINS_DIR: 'domains'
+  DOMAIN: 'base_domain'
+  SOURCEBASE: '{{.CURRENT_DIR}}/../app'
+
+tasks:
+
+  default:
+    cmds:
+      - task -l
+    silent: true
+
+  help:
+    desc: Mostra l'elenco dei task disponibili
+    cmds:
+      - task -l
+      - |
+        echo -e "\nPuoi sovrascrivere le variabili usando: task [nome-task] VAR=valore"
+        echo -e "Esempio: task up PROFILE=weblogic"
+    silent: true
+
+  checkdocker:
+    internal: true
+    cmds:
+      # 'command -v' è POSIX e supportato nativamente dall'interprete shell interno di Taskfile su tutti gli OS
+      - command -v docker >/dev/null || (echo "Could not find docker"; exit 1)
+      - echo "found docker and docker-compose"
+    silent: true
+
+  setup-data-archives:
+    internal: true
+    cmds:
+      - |
+        echo "checking {{.DATA_DIRECTORY}}"
+        if [ ! -d "{{.DATA_DIRECTORY}}" ] ; then
+           echo "creating empty {{.DATA_DIRECTORY}}"
+           mkdir -p "{{.DATA_DIRECTORY}}"
+        fi
+        if [ ! -f "{{.DATA_DIRECTORY}}/01_users.sql" ]; then
+          echo "extracting archive {{.DATA_ARCHIVES}} to {{.DATA_DIRECTORY}}"
+          tar -xzf "{{.CURRENT_DIR}}/docker/{{.DATA_ARCHIVES}}" --directory="{{.DATA_DIRECTORY}}"
+        fi
+    silent: true
+
+  generate:
+    desc: Setup Generates the docker-compose file and the directories
+    deps: [setup-data-archives]
+    cmds:
+      - |
+        echo "Checking directories ..."
+        [ ! -d "{{.APPS}}" ] && echo -e "\tcreating {{.APPS}}" && mkdir -p "{{.APPS}}" || true
+        [ ! -d "{{.LOGS}}" ] && echo -e "\tcreating {{.LOGS}}" && mkdir -p "{{.LOGS}}" || true
+        
+        if [ ! -d "{{.MAVEN_CACHE_DIR}}" ] ; then
+          if [ -f "{{.MAVEN_ARCHIVE}}" ]; then
+            echo -e "\tuncompressing lib archive {{.MAVEN_ARCHIVE}}"
+            tar -xzf "{{.MAVEN_ARCHIVE}}" --directory="{{.CURRENT_DIR}}/docker"
+          else
+            echo -e "\tcreating empty {{.MAVEN_CACHE_DIR}}"
+            mkdir -p "{{.MAVEN_CACHE_DIR}}"
+          fi
+        fi
+        
+        [ ! -d "{{.DATABASE}}" ] && echo -e "\tcreating {{.DATABASE}}" && mkdir -p "{{.DATABASE}}" || true
+        [ ! -d "{{.DOCUMENT_DIR}}" ] && echo -e "\tcreating {{.DOCUMENT_DIR}}" && mkdir -p "{{.DOCUMENT_DIR}}" || true
+        [ ! -d "{{.WEBAPPS_DIR}}" ] && echo -e "\tcreating {{.WEBAPPS_DIR}}" && mkdir -p "{{.WEBAPPS_DIR}}" || true
+        
+        echo "checking configuration files ..."
+        if [ ! -f "{{.DOCKER_COMPOSE_FILE}}" ]; then
+          echo -e "\tgenerating {{.DOCKER_COMPOSE_FILE}}"
+          {{if eq OS "windows"}}
+          powershell -Command "(Get-Content '{{.DOCKER_COMPOSE_TEMPLATE}}') -replace 'user_id','{{.UID}}' -replace 'data_directory','{{.INIT_SCRIPT_DIR}}' | Set-Content '{{.DOCKER_COMPOSE_FILE}}'"
+          {{else}}
+          sed -e 's/user_id/{{.UID}}/g' -e 's/data_directory/{{.INIT_SCRIPT_DIR}}/g' "{{.DOCKER_COMPOSE_TEMPLATE}}" > "{{.DOCKER_COMPOSE_FILE}}"
+          {{end}}
+        fi
+    silent: true
+
+  mvn:
+    desc: Esegue il wrapper maven all'interno di docker
+    deps: [checkdocker, generate]
+    vars:
+      MVNFLAG: '{{default "" .MVNFLAG}}'
+      MVNPROFILE: '{{default "" .MVNPROFILE}}'
+      MVNGOAL: '{{default "clean" .MVNGOAL}}'
+      MVNCOMMAND:
+        # Usa simple string replacement in go template invece di sed per compatibilità OS
+        sh: echo "{{.MVNFLAG}} {{.MVNPROFILE}} {{.MVNGOAL}}" | awk '{$1=$1;print}' || echo "{{.MVNFLAG}} {{.MVNPROFILE}} {{.MVNGOAL}}"
+    cmds:
+      - |
+        echo "flags : {{.MVNFLAG}}"
+        echo "profile : {{.MVNPROFILE}}"
+        echo "goal : {{.MVNGOAL}}"
+        echo -e "will run the following command: \ndocker run -v {{.MAVEN_CACHE_DIR}}:/var/maven/.m2 -v {{.SRC_DIR}}:/var/mui -e MAVEN_CONFIG=/var/maven/.m2 -u {{.UID}} -ti --rm -w /var/mui maven:{{.MVN_VERSION}} mvn -Duser.home=/var/maven {{.MVNCOMMAND}}"
+        docker run -v "{{.MAVEN_CACHE_DIR}}:/var/maven/.m2" -v "{{.SRC_DIR}}:/var/mui" -e MAVEN_CONFIG=/var/maven/.m2 -u {{.UID}} -ti --rm -w /var/mui maven:{{.MVN_VERSION}} mvn -Duser.home=/var/maven {{.MVNCOMMAND}}
+
+  build-ear:
+    internal: true
+    cmds:
+      - |
+        if [ "{{.PROFILE}}" = "create-domain" ]; then
+          echo "skipping application package"
+        else
+          if [ -f "{{.EAR_TARGET_FILE}}" ]; then
+            echo "no need to recompile "
+          else
+            echo "missing {{.EAR_TARGET_FILE}}: repackaging"
+            task mvn MVNFLAG="-DskipTests" MVNPROFILE="-Pproduction" MVNGOAL="clean package"
+          fi
+        fi
+
+  deploy:
+    desc: Deploys the ear artifact into apps directory of container
+    deps: [checkdocker, generate, build-ear]
+    cmds:
+      - |
+        if [ "{{.PROFILE}}" = "create-domain" ]; then
+          echo "skipping application deployment"
+        elif [ "{{.PROFILE}}" = "weblogic" ]; then
+          echo "deploying application {{.EAR_TARGET_FILE}} to {{.WLSDIR}}/{{.DOMAINS_DIR}}/{{.DOMAIN}}/autodeploy ..."
+          cp "{{.EAR_TARGET_FILE}}" "{{.WLSDIR}}/{{.DOMAINS_DIR}}/{{.DOMAIN}}/autodeploy/muipromo.ear"
+        else
+          echo "deploying application {{.EAR_TARGET_FILE}} to {{.APPS}} ..."
+          cp "{{.EAR_TARGET_FILE}}" "{{.APPS}}/muipromo.ear"
+        fi
+    silent: true
+
+  up:
+    desc: Run - Compiles artifatcs, packages app, runs app server and db and deploy application
+    deps: [checkdocker, deploy]
+    cmds:
+      - echo "trying to start docker-compose with profile {{.PROFILE}}"
+      - docker compose -f "{{.DOCKER_COMPOSE_FILE}}" --profile "{{.PROFILE}}" up -d
+
+  down:
+    desc: Run - stops the application and the running containers
+    cmds:
+      - docker compose -f "{{.DOCKER_COMPOSE_FILE}}" --profile "{{.PROFILE}}" down --remove-orphans
+
+  wipe:
+    desc: Setup - Runs a mvn clean and then removes all generated directoryes and files (including the database data)
+    deps: [clean]
+    cmds:
+      - echo "Wiping up... {{.OUTPUT_FILE}}"
+      - rm -f "{{.OUTPUT_FILE}}"
+      - rm -rf "{{.APPS}}" "{{.LOGS}}" "{{.MAVEN_CACHE_DIR}}" "{{.WLSDIR}}" "{{.DATA_DIRECTORY}}" "{{.DATABASE}}"
+
+  wipe-ear:
+    desc: Setup - Removes the generated ear file and directory
+    cmds:
+      - echo "Wiping up... {{.EAR_TARGET_DIR}} and {{.APPS}}"
+      - rm -rf "{{.EAR_TARGET_DIR}}" "{{.APPS}}"
+
+  update:
+    desc: Dev - Packages application with a production profile. No tests are run
+    cmds:
+      - task mvn MVNGOAL="package" MVNFLAG="-DskipTests" MVNPROFILE="-Pproduction"
+      - task deploy
+
+  test:
+    desc: Dev - Runs junit tests
+    cmds:
+      - task mvn MVNGOAL="test"
+
+  coverage:
+    desc: Docs - Runs junit tests and produces coverage report
+    cmds:
+      - task mvn MVNGOAL="verify"
+      - |
+        if [ -d "{{.SOURCEBASE}}/coverage/target/site/jacoco-aggregate" ] ; then
+          echo "copying aggregated results"
+          rm -rf "{{.SOURCEBASE}}/../coverage"
+          cp -R "{{.SOURCEBASE}}/coverage/target/site/jacoco-aggregate" "{{.SOURCEBASE}}/../"
+          mv "{{.SOURCEBASE}}/../jacoco-aggregate" "{{.SOURCEBASE}}/../coverage"
+          {{if eq OS "windows"}}
+          powershell -Command "$lines = Get-Content '{{.SOURCEBASE}}/../coverage/jacoco.csv' | Select-Object -Skip 1; $ins = 0; $cov = 0; foreach ($line in $lines) { $parts = $line -split ','; $ins += [int]$parts[3] + [int]$parts[4]; $cov += [int]$parts[4] }; Write-Host \"$cov / $ins instructions covered\"; Write-Host \"$([math]::Round(100.0 * $cov / $ins, 2)) % covered\""
+          {{else}}
+          awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, "instructions covered"; print 100*covered/instructions, "% covered" }' "{{.SOURCEBASE}}/../coverage/jacoco.csv"
+          {{end}}
+        fi
+
+  compile:
+    desc: Dev - Compiles all the code base
+    cmds:
+      - task mvn MVNGOAL="compile" MVNFLAG="-T 4 -Dmaven.test.skip=true" MVNPROFILE=""
+
+  test-compile:
+    desc: Dev - Compiles the tests without running them
+    cmds:
+      - task mvn MVNGOAL="test-compile" MVNFLAG="-T 4" MVNPROFILE=""
+
+  package:
+    desc: Dev - Packages application with production profile
+    cmds:
+      - task mvn MVNGOAL="package" MVNFLAG="-DskipTests" MVNPROFILE="-Pproduction"
+
+  clean:
+    desc: Dev - Cleans the compiled code base
+    cmds:
+      - task mvn MVNGOAL="clean" MVNPROFILE="" MVNFLAG=""
+      - task undeploy
+
+  undeploy:
+    desc: Internal - removes deployed resources from APPS - do not run while app is on
+    cmds:
+      - |
+        echo "Undeploy task"
+        if [ -f "{{.APPS}}/muipromo.ear" ] ; then
+          echo -e "\tremoving deployed resources from {{.APPS}}"
+          rm "{{.APPS}}/muipromo.ear"
+          rm -rf "{{.APPS}}/muipromo"
+        fi
+    silent: true
+
+  build:
+    desc: Dev - Build docker images
+    deps: [checkdocker]
+    cmds:
+      - echo "Building images"
+      - docker compose -f "{{.DOCKER_COMPOSE_FILE}}" build database tomee
+
+  mvn_version:
+    desc: Stampa a schermo la versione del progetto estratta da maven
+    cmds:
+      - |
+        echo -e "will run the following command: \ndocker run -v {{.MAVEN_CACHE_DIR}}:/var/maven/.m2 -v {{.SRC_DIR}}:/var/mui -e MAVEN_CONFIG=/var/maven/.m2 -u {{.UID}} -ti --rm -w /var/mui maven:{{.MVN_VERSION}} mvn -Duser.home=/var/maven -q -Dexec.executable=\"echo\" -Dexec.args=\"'\$${project.version}'\" --non-recursive exec:exec"
+        PROJECT_VERSION=$(docker run -v "{{.MAVEN_CACHE_DIR}}:/var/maven/.m2" -v "{{.SRC_DIR}}:/var/mui" -e MAVEN_CONFIG=/var/maven/.m2 -u {{.UID}} -ti --rm -w /var/mui maven:{{.MVN_VERSION}} mvn -Duser.home=/var/maven -q -Dexec.executable="echo" -Dexec.args="'\${project.version}'" --non-recursive exec:exec)
+        echo "$PROJECT_VERSION"
+    silent: true

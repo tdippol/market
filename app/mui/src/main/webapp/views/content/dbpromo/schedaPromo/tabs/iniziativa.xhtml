@@ -1,0 +1,234 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+    <p:remoteCommand name="iniziativaSelected" update="@(.ui-confirmdialog-yes)"
+                     actionListener="#{templateView.currentView.iniziativaBean.selezionaIniziativa}" />
+
+    <!-- Dialog conferma scelta iniziativa -->
+    <p:confirmDialog widgetVar="confirmScegliIniziativa" header="Avviso" styleClass="dlgBulkUpdate"
+                     message="#{templateView.currentView.iniziativaBean.dlgConfirmMessage}" severity="alert">
+        <p:commandButton value="SI" update="@(.growlClass), @(.updateableContent)"
+                         actionListener="#{templateView.currentView.scegliIniziativa}"
+                         oncomplete="PF('dlgScegliIniziativa').hide();PF('confirmScegliIniziativa').hide()"
+                         disabled="#{empty templateView.currentView.iniziativaBean.iniziativaSelected}" />
+        <p:commandButton value="NO" onclick="PF('confirmScegliIniziativa').hide()"
+                         style="float: right;" type="button" />
+    </p:confirmDialog>
+
+    <!-- Dialog conferma eliminazione associazione -->
+    <p:confirmDialog widgetVar="confirmRemoveIniziativa" header="Avviso" styleClass="dlgEliminaIniziativa"
+                     message="#{templateView.currentView.iniziativaBean.dlgRemoveRifMessage}" severity="alert">
+        <p:commandButton value="SI" update="@(.growlClass), @(.updateableContent)"
+                         actionListener="#{templateView.currentView.removeIniziativa}"
+                         oncomplete="PF('confirmRemoveIniziativa').hide();" />
+        <p:commandButton value="NO" onclick="PF('confirmRemoveIniziativa').hide()"
+                         style="float: right;" type="button" />
+    </p:confirmDialog>
+
+    <!-- Dialog scelta iniziativa -->
+    <p:dialog widgetVar="dlgScegliIniziativa" modal="true" showEffect="fade" hideEffect="fade" closable="false"
+              styleClass="muiDialog" width="95%">
+        <p:panel id="expandable_db_grid_selezionaIniziativa" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                 styleClass="pnlGrid_Header updateableContent">
+            <f:facet name="header">
+                <p:outputLabel value="Seleziona Iniziativa" />
+            </f:facet>
+            <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                          styleClass="ag-theme-balham grid_selezionaIniziativa"
+                          pt:gridid="db_grid_selezionaIniziativa">
+            </h:panelGroup>
+            <f:facet name="actions">
+                <p:inputText autocomplete="off" id="selezionaIniziativa_quickfilter" placeholder="Filtra..."
+                             styleClass="pnlGrid_Header filterInputText"
+                             onkeyup="onFilterTextBoxChangedpromoGrid('db_grid_selezionaIniziativa', this.value)" />
+            </f:facet>
+            <script>
+                $(document).ready(function () {
+                    var gridParamsSelezionaIniziativa = {
+                        gridCode: 'db_grid_selezionaIniziativa',
+                        gridTitle: 'Seleziona Iniziativa',
+                        url_columnDefs: contextPath + '/resources/iniziative/columnDef/selezionaIniziativa'
+                            + addUrlParamContesto(#{muiContext}),
+                        url_rowData: contextPath + '/resources/iniziative/rowData/selezionaIniziativa'
+                            + addUrlParamDateAndContesto(#{muiContext}),
+                        url_customSort: contextPath + '/resources/grid/sorting/db_grid_selezionaIniziativa',
+                        gridOptions: {
+                            rowSelection: 'single',
+                            onSelectionChanged: onIniziativaRowSelected,
+                            onSortChanged: function (event) {
+                                onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_grid_selezionaIniziativa');
+                            }
+                        }
+                    };
+                    creaGriglia(gridParamsSelezionaIniziativa);
+                })
+
+                function addUrlParamDateAndContesto(contesto) {
+                    var c = addUrlParamContesto(contesto);
+                    var dataInizio = $('.promoDataInizio').text();
+                    var dataFine = $('.promoDataFine').text();
+                    var s = c ? c + "&amp;" : "?";
+                    return s + "dataInizio=" + dataInizio + "&amp;dataFine=" + dataFine;
+                }
+
+                function onIniziativaRowSelected(event) {
+                    iniziativaSelected([{name: 'iniziativaSelected', value: event.api.getSelectedRows()[0].id.value}]);
+                }
+            </script>
+        </p:panel>
+        <f:facet name="footer">
+            <p:commandButton value="Annulla" type="button" styleClass="ui-confirmdialog-no ax-dialog-btn-push-left"
+                             onclick="PF('dlgScegliIniziativa').hide()" />
+            <p:commandButton value="Conferma" styleClass="ui-confirmdialog-yes ax-dialog-btn-push-right"
+                             oncomplete="PF('confirmScegliIniziativa').show()"
+                             actionListener="#{templateView.currentView.iniziativaBean.confirmScegliIniziativa}"
+                             disabled="#{empty templateView.currentView.iniziativaBean.iniziativaSelected}"
+                             update="@(.dlgBulkUpdate)" />
+        </f:facet>
+    </p:dialog>
+
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet">
+                    <h:form id="formIniziativa" styleClass="updateableContent">
+                        <div class="row">
+                            <div class="col-12">
+                                <p:commandButton value="Scegli Iniziativa" id="btnScegliIniziativa"
+                                                 styleClass="pf-btn-confirm" style="margin:0; border-radius: 5px"
+                                                 disabled="#{not templateView.currentView.btnScegliIniziativaActive}"
+                                                 actionListener="#{templateView.currentView.iniziativaBean.prepareIniziativaDialog}"
+                                                 oncomplete="PF('dlgScegliIniziativa').show()"
+                                                 update="@(.muiDialog)" />
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="descIniziativa" value="Descrizione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="descIniziativa" readonly="true" styleClass="updateableContent"
+                                                 class="input-field" style="width: 100%;"
+                                                 value="#{templateView.currentView.iniziativaBean.iniziativaFullDescription}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="oggettoIniziativa" value="Nome Oggetto"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="oggettoIniziativa" readonly="true" styleClass="updateableContent"
+                                                 class="input-field" style="width: 100%;"
+                                                 value="#{templateView.currentView.iniziativaBean.iniziativa != null ? templateView.currentView.iniziativaBean.iniziativa.oggetto : '' }" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel value="Decimali" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <h:panelGroup layout="block"
+                                                  rendered="#{templateView.currentView.iniziativaBean.iniziativa != null and templateView.currentView.iniziativaBean.iniziativa.flagDecimale}">
+                                        <i class="far fa-fw fa-check-square fa-2x"
+                                           style="font-size: xx-large; color: #646C9A !important;"></i>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block"
+                                                  rendered="#{empty templateView.currentView.iniziativaBean.iniziativa or not templateView.currentView.iniziativaBean.iniziativa.flagDecimale}">
+                                        <i class="far fa-fw fa-square fa-2x"
+                                           style="font-size: xx-large; color: #646C9A !important;"></i>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="dataInizioIniziativa" value="Data Inizio"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataInizioIniziativa" styleClass="updateableContent"
+                                                 class="input-field" readonly="true" style="text-transform: capitalize"
+                                                 value="#{empty templateView.currentView.iniziativaBean.iniziativa
+                                                    ? '' : templateView.currentView.iniziativaBean.iniziativa.dataInizio}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="dataFineIniziativa" value="Data Fine"
+                                                   class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataFineIniziativa" styleClass="updateableContent"
+                                                 class="input-field" readonly="true" style="text-transform: capitalize"
+                                                 value="#{empty templateView.currentView.iniziativaBean.iniziativa
+                                                    ? '' : templateView.currentView.iniziativaBean.iniziativa.dataFine}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="statoIniziativa" value="Stato" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="statoIniziativa" styleClass="updateableContent" class="input-field"
+                                                 readonly="true"
+                                                 value="#{empty templateView.currentView.iniziativaBean.iniziativa
+                                                    ? '' : templateView.currentView.iniziativaBean.statoIniziativa}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="noteIniziativa" value="Note" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="noteIniziativa" styleClass="updateableContent" class="input-field"
+                                                 readonly="true"
+                                                 value="#{empty templateView.currentView.iniziativaBean.iniziativa
+                                                    ? '' : templateView.currentView.iniziativaBean.iniziativa.note}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ui-g-12 ui-md-6 ui-lg-12">
+                                <p:commandButton value="Elimina Associazione" id="deleteIniziativaBtn"
+                                                 styleClass="pf-btn-confirm"
+                                                 style="margin: 0; border-radius: 5px; float: right"
+                                                 actionListener="#{templateView.currentView.prepareRemoveIniziativaDialog}"
+                                                 oncomplete="PF('confirmRemoveIniziativa').show()"
+                                                 disabled="#{not templateView.currentView.btnEliminaIniziativaActive}"
+                                                 update="@(.dlgEliminaIniziativa), @(.updateableContent)" />
+                            </div>
+                        </div>
+                        <h:outputLabel value="#{templateView.currentView.iniziativaBean.dataInizioPromo}"
+                                       styleClass="promoDataInizio" style="visibility: hidden;" />
+                        <h:outputLabel value="#{templateView.currentView.iniziativaBean.dataFinePromo}"
+                                       styleClass="promoDataFine" style="visibility: hidden;" />
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .input-field {
+            border-radius: 3px;
+            border-color: gray;
+            width: 100%;
+            background-color: transparent;
+        }
+    </style>
+</ui:composition>
+
+</html>

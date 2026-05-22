@@ -1,0 +1,171 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletCercaArticoloCopiaIncollaTab" class="k-portlet">
+                    <h:form>
+                        <p:panel id="expandable_cercaArticoloDialogCopiaIncollaTab" toggleable="true" toggleSpeed="500" closeSpeed="500"
+                                 styleClass="pnlGrid_Header updateableContent expandable_cercaArticoloDialogCopiaIncollaTab">
+                            <f:facet name="header">
+                                <p:outputLabel value="Copia / Incolla" />
+                            </f:facet>
+                            <h:panelGroup layout="block" style="height: 60vh; width: 100%;"
+                                          class="ag-theme-balham copiaIncollaTab"
+                                          pt:gridid="db_cercaArticoloDialogCopiaIncollaTab">
+                            </h:panelGroup>
+
+                            <script type="text/javascript">
+                                var gridParamsCercaArticoloDialogCopiaIncollaTab = {
+                                    gridId: 'db_cercaArticoloDialogCopiaIncollaTab',
+                                    gridTabGroup: 'cercaArticoloDialogTabs',
+                                    gridTabPosition: 0,
+                                    gridCode: 'db_cercaArticoloDialogCopiaIncollaTab',
+                                    gridTitle: 'Cerca Articolo - Copia/Incolla',
+                                    url_columnDefs: contextPath + '/resources/reportArticoloInPromo/copiaIncollaTab/columnDef',
+                                    url_rowData: contextPath + '/resources/reportArticoloInPromo/copiaIncollaTab/rowData',
+                                    url_customSort: contextPath + '/resources/grid/sorting/db_cercaArticoloDialogCopiaIncollaTab'
+                                };
+
+                                var gridOptionsArticoloDialogCopiaIncollaTab = {
+                                    onCellEditingStopped: function (params) {
+                                    },
+                                    onPasteStart: function (params) {
+                                    },
+                                    onPasteEnd: function (params) {
+                                        showAgGridLoadingOverlay('db_cercaArticoloDialogCopiaIncollaTab');
+                                        setTimeout(function () {
+                                            validateService(params)
+                                        }, 200);
+                                    },
+                                    onCellValueChanged: function (event) {
+                                        showAgGridLoadingOverlay('db_cercaArticoloDialogCopiaIncollaTab');
+                                        setTimeout(function () {
+                                            validateService(event)
+                                        }, 200);
+                                    },
+                                    onSortChanged: function (event) {
+                                        onSortChanged(event, contextPath + '/resources/grid/sorting/save/db_cercaArticoloDialogCopiaIncollaTab');
+                                    }
+                                };
+
+                                gridParamsCercaArticoloDialogCopiaIncollaTab.customizeColumnDefs = [
+                                    {
+                                        columnDefId: "codice",
+                                        property: "cellClassRules",
+                                        value: {'notValidCode': 'data.isValidCode === false'}
+                                    },
+                                    {
+                                        columnDefId: "descrizione",
+                                        property: "cellClassRules",
+                                        value: {'notValidCode': 'data.isValidCode === false'}
+                                    }
+                                ];
+                                gridParamsCercaArticoloDialogCopiaIncollaTab.additionColumnDefs = [
+                                    {headerName: 'idItem', field: 'idItem', width: 150, hide: true},
+                                    {headerName: 'isValidCode', field: 'isValidCode', width: 150, hide: true},
+                                    {headerName: 'itemBuyerId', field: 'itemBuyerId', width: 150, hide: true}
+                                ];
+                                gridParamsCercaArticoloDialogCopiaIncollaTab.overrideRowData = [
+                                    {field: "codice", newValue: ' '}
+                                ];
+
+                                gridParamsCercaArticoloDialogCopiaIncollaTab.gridOptions = gridOptionsArticoloDialogCopiaIncollaTab;
+
+                                $(document).ready(function () {
+                                    if (getCurrentTab(gridParamsCercaArticoloDialogCopiaIncollaTab.gridTabGroup) == gridParamsCercaArticoloDialogCopiaIncollaTab.gridTabPosition) {
+                                        creaGriglia(gridParamsCercaArticoloDialogCopiaIncollaTab);
+                                    }
+                                });
+
+                                function validateService(params) {
+                                    var rowData = getRowData(gridParamsCercaArticoloDialogCopiaIncollaTab.gridCode);
+                                    $.each(rowData, function(i, row) {
+                                        var rowIndex = i;
+                                        let itemCode = row.codice.value.trim();
+                                        if (itemCode === "") {
+                                            itemCode = null;
+                                            rowData[rowIndex].descrizione.value = "";
+                                            delete rowData[rowIndex].isValidCode;
+                                        } else {
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: contextPath + '/resources/reportArticoloInPromo/copiaIncollaTab/validate/'
+                                                    + itemCode,
+                                                contentType: 'application/json',
+                                                async: false,
+                                                success: function(data) {
+                                                    rowData[rowIndex].descrizione.value = data.descrizione;
+                                                    if (data.isValid) {
+                                                        rowData[rowIndex]['isValidCode'] = true;
+                                                        rowData[rowIndex]['idItem'] = data.idItem;
+                                                    } else {
+                                                        rowData[rowIndex]['isValidCode'] = false;
+                                                    }
+                                                },
+                                                error: function(jqXHR, exception, thrownError) {
+                                                    ajaxErrorHandler(jqXHR, exception, thrownError, event, {
+                                                        condition: 'always',
+                                                        action: 'callback_err_validate',
+                                                        params: [gridParamsCercaArticoloDialogCopiaIncollaTab.gridCode]
+                                                    })
+                                                }
+                                            });
+                                        }
+                                        if (rowData.length === (i + 1)) {
+                                            addItemValidated();
+                                            getGridOptionFromGridMap(gridParamsCercaArticoloDialogCopiaIncollaTab.gridCode)
+                                                .api.setRowData(rowData);
+                                            getGridOptionFromGridMap(gridParamsCercaArticoloDialogCopiaIncollaTab.gridCode)
+                                                .api.refreshCells();
+                                            hideAgGridLoadingOverlay(gridParamsCercaArticoloDialogCopiaIncollaTab.gridCode);
+                                        }
+                                    });
+                                }
+
+                                function callback_err_validate(params) {
+                                    let gridCode = params[1];
+                                    getGridOptionFromGridMap(gridCode).api.hideOverlay();
+                                    getGridOptionFromGridMap(gridCode).api.refreshCells();
+                                }
+
+                                function addItemValidated() {
+                                    let updatedRowData = getLeafRowData(gridParamsCercaArticoloDialogCopiaIncollaTab.gridCode);
+                                    let pastedRows = [];
+                                    $.each(updatedRowData, function(key, row) {
+                                        if (row.isValidCode != undefined) {
+                                            pastedRows.push(row);
+                                        }
+                                    });
+                                    selezionaItem([{ name: "itemSelected", value: JSON.stringify(pastedRows) }]);
+                                }
+                            </script>
+
+                            <style>
+                                .ag-header-cell {
+                                    background-color: inherit !important;
+                                }
+
+                                .notValidCode {
+                                    background-color: #f8d7da !important;
+                                    color: #721c24 !important;
+                                    font-weight: bold !important;
+                                }
+                            </style>
+                        </p:panel>
+                        <p:remoteCommand name="selezionaItem" update="cercaArticoloDialogConfirmBtn"
+                                         action="#{templateView.currentView.selezionaItemAction}" />
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

@@ -1,0 +1,185 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <div class="k-content k-grid__item k-grid__item--fluid col-12" id="k_content">
+        <div class="row">
+            <div class="col-12">
+                <div id="k_grid_portletpromoGrid" class="k-portlet" style="background: #ececec;">
+
+                    <ui:include src="pianificazionePromoDialog.xhtml" />
+                    <ui:include src="promozioneRiferimentoDialog.xhtml" />
+                    <ui:include src="planoRiferimentoDialog.xhtml" />
+
+                    <h:form id="pianificazionePromoForm" styleClass="updateableContent incl-escl">
+                        <div class="ui-g-12" style="padding: 10px;">
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <div>
+                                    <p:outputLabel for="promotions" value="Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:selectOneMenu id="promotions"
+                                                     value="#{templateView.currentView.idPromozioneCorrente}" class="input-field"
+                                                     style="width: 100%; background-color: white;" filter="true" filterMatchMode="contains">
+                                        <p:ajax update="@(.updateableContent),@(.newPlanningBtn),@(.pianificazioneRadioButton),@(.updateAddPlanningBtn),@(.linkScheda),@(.tabPianificazione)" />
+                                        <f:selectItem itemLabel="Seleziona promozione" noSelectionOption="true" />
+                                        <f:selectItems value="#{templateView.currentView.promozioni}" var="pr"
+                                                       itemLabel="#{pr.descrizioneEstesa}" itemValue="#{pr.id}" />
+                                    </p:selectOneMenu>
+                                    <p:remoteCommand name="refreshHeaderData" update="pianificazionePromoForm" action="#{templateView.currentView.applyFilterToPromozioni}">
+                                    </p:remoteCommand>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="dataFine" value="Data fine" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="dataFine" styleClass="updateableContent" class="input-field"
+                                                 style="text-transform: capitalize; width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.promotionSelected.dataFine : ''}">
+                                        <f:convertDateTime pattern="E dd-MM-yyyy" locale="it_IT" />
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <div>
+                                    <p:outputLabel for="stato" value="Stato" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText styleClass="updateableContent" class="input-field"
+                                                 style="#{templateView.currentView.statoStyleError}"
+                                                 id="stato" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ? templateView.currentView.statoPromozioneSelected.codiceStato : ''} #{templateView.currentView.promotionSelected != null ? '-': ''} #{templateView.currentView.promotionSelected != null ? templateView.currentView.statoPromozioneSelected.label : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <div>
+                                    <p:outputLabel for="gruppo" value="Gruppo" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="gruppo" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ?  templateView.currentView.promotionSelected.muiCanalePromozione.gruppoPromozioneEntity.descrizione : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div>
+                                    <p:outputLabel for="canale" value="Tipo Promozione" class="input-field-label" />
+                                </div>
+                                <div>
+                                    <p:inputText id="canale" styleClass="updateableContent" class="input-field"
+                                                 style="width: 100%; background-color: transparent;" readonly="true"
+                                                 value="#{templateView.currentView.promotionSelected != null ?  templateView.currentView.promotionSelected.muiCanalePromozione.descrizione : ''}" />
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1" style="padding-top: 15px !important;">
+                                <p:commandButton
+                                        id="linkButton_scheda"
+                                        value="Scheda Promo"
+                                        styleClass="pf-btn-confirm linkScheda" style="margin-right: 0.5em; background-color:#5578eb !important;"
+                                        action="#{templateView.simulateMenuClick()}"
+                                        update="@(.updateableContent)"
+                                        onclick="setLoadingStatus(this)"
+                                        disabled="#{templateView.currentView.promotionSelected == null or templateView.currentView.btnPianificazioneDisabled}" >
+                                    <f:param name="menuId" value="#{templateView.currentView.landingPage}" />
+                                    <f:param name="currentPromoId" value="#{templateView.currentView.idPromozioneCorrente}" />
+                                </p:commandButton>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+						    function updatePianificazioneHeader() {
+						        refreshHeaderData();
+						    }
+						     function updatePianificazioneTab() {
+						        $("div[gridid$='db_pianificazione']").html("");
+						        $( '.tabPianificazione' ).addClass( 'ui-state-disabled');
+						    }
+						</script>
+                        <style>
+                            .input-field {
+                                border-radius: 3px;
+                                border-color: gray;
+                            }
+                            .input-field-label {
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: black;
+                            }
+                            .ui-tabs {
+                                padding: 0;
+                            }
+                            .ui-tabs-nav {
+                                background: #ececec !important;
+                            }
+                            .ui-tabs-panels {
+                                border: 1px solid gray;
+                                background: white;
+                                border-radius: 3px;
+                            }
+                            .ui-tabs .ui-tabs-panel {
+                                padding-top: 0px;
+                                padding-bottom: 0px;
+                            }
+                            .ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+                                border-top-left-radius: 5px;
+                                border-top-right-radius: 5px;
+                            }
+
+                            li[role=tab].incl-escl {
+                                background-color: #{templateView.currentView.inclusioneEsclusioneTabClass};
+                            }
+                        </style>
+                    </h:form>
+                    <p:tabView dynamic="true" cache="false"
+                               onTabShow="handleTabChange(index)"
+                               widgetVar="schedaPianificazione_tabs"
+                               disabled="#{templateView.currentView.promotionSelected == null}" class="tabPianificazione">
+                        <p:ajax event="tabChange" listener="#{templateView.currentView.pianificazionePromoDialogBackingBean.onTabPlanningChange}"/>
+                        <p:tab title="Pianificazione"
+                               disabled="#{templateView.currentView.promotionSelected == null}"
+                               class="tabPianificazione">
+                            <ui:include src="tabs/pianificazionePromo.xhtml" />
+                        </p:tab>
+                        <p:tab title="Storico Upload"
+                               rendered="#{templateView.currentView.tabStoricoUploadRendered}"
+                               disabled="#{templateView.currentView.promotionSelected == null}"
+                               class="tabPianificazione">
+                            <ui:include src="tabs/complementariPromo.xhtml" />
+                        </p:tab>
+                        <p:tab title="Compratori"
+                               rendered="#{templateView.currentView.tabCompratoriRendered}"
+                               disabled="#{templateView.currentView.promotionSelected == null}"
+                               class="tabPianificazione">
+                            <ui:include src="tabs/compratori.xhtml" />
+                        </p:tab>
+                        <p:tab title="Controlli"
+                               rendered="#{templateView.currentView.tabControlliRendered}"
+                               disabled="#{templateView.currentView.promotionSelected == null}"
+                               class="tabPianificazione">
+                            <ui:include src="tabs/controlliPianificazione.xhtml" />
+                        </p:tab>
+                        <p:tab title="Sovrapposizioni"
+                               rendered="#{templateView.currentView.tabSovrapposizioniRendered}"
+                               disabled="#{templateView.currentView.promotionSelected == null}"
+                               class="tabPianificazione">
+                            <ui:include src="tabs/sovrapposizioniPianificazione.xhtml" />
+                        </p:tab>
+                        <p:tab title="Inclusione/Esclusione"
+                               rendered="#{templateView.currentView.tabInclEsclRendered}"
+                               disabled="#{templateView.currentView.promotionSelected == null}"
+                               titleStyleClass="incl-escl"
+                               class="tabPianificazione">
+                            <ui:include src="tabs/inclusioneEsclusione.xhtml"/>
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
+</html>
